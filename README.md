@@ -2,7 +2,7 @@
 [![codecov](https://codecov.io/gh/Arquisoft/radarin_en3b/branch/master/graph/badge.svg?token=M6s7O8AMdS)](https://codecov.io/gh/Arquisoft/radarin_en3b)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/22f1c3ad5a654632885a7e40830a22b5)](https://www.codacy.com/gh/Arquisoft/radarin_en3b/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Arquisoft/radarin_en3b&amp;utm_campaign=Badge_Grade)
 # Radarin project structure
-Link to the deployed sample application: [radarin0](https://radarin0webapp.herokuapp.com/). Note that sometimes **it can take a while to load** because Heroku in the free plan, takes the containers to sleep when they are not used for some time and taking them up takes time.
+Link to the deployed sample application: [radarinen3b](https://radarinen3bwebapp.herokuapp.com/). Note that sometimes **it can take a while to load** because Heroku in the free plan, takes the containers to sleep when they are not used for some time and taking them up takes time.
 
 ## Quick start guide
 If you want to execute the project you will need [git](https://git-scm.com/downloads), [Node.js and npm](https://www.npmjs.com/get-npm) and [Docker](https://docs.docker.com/get-docker/). Make sure the three of them are installed in your system. Download the project with `git clone https://github.com/pglez82/radarin_0`. The fastest way to launch everything is with docker:
