@@ -44,5 +44,5 @@ You should be able to access the application in [http://localhost:3000](http://l
 - [Álvaro Requejo](http://github.com/alvarorece)
 - [Marcos Tobías](https://github.com/MarcosTobias)
 - [Carmen Rendueles](http://github.com/carmen279)
-- [Juan Rodríguez] (https://github.com/uo271773)
+- [Juan Rodríguez](https://github.com/uo271773)
 - [Miguel Ligero](http://github.com/uo270927)
