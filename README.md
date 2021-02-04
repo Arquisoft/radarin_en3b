@@ -41,3 +41,4 @@ You should be able to access the application in [http://localhost:3000](http://l
 
 [Jose Labra](http://github.com/labra)
 [Álvaro Requejo](http://github.com/alvarorece)
+[Miguel Ligero] (http://github.com/uo270927)
