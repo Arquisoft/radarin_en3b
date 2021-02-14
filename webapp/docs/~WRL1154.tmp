@@ -11,12 +11,13 @@ Describes the relevant requirements and the driving forces that software archite
 ****
 
 Radarin is a project for the course of Software Architecture of the University of Oviedo. This version will be depeloped by the members of the team EN3B which are:
-• Juan Buenaga Díaz
-• Miguel Ligero Arbesú
-• Carmen Rendueles Martínez
-• Álvaro Requejo Cembellín
-• Juan Rodríguez de la Fuente
-• Marcos Tobias Muñiz
+
+- Juan Buenaga Díaz
+- Miguel Ligero Arbesú
+- Carmen Rendueles Martínez
+- Álvaro Requejo Cembellín
+- Juan Rodríguez de la Fuente
+- Marcos Tobias Muñiz
 
 Radarin is an application to allow users to find friends that are close to his/her position by receiving a notification when one of them is close enough.
 This will be done with a mobile application that will store the location of the users by using pods, following the SOLID approach to ensure that users privacy is respected.
@@ -41,6 +42,22 @@ If requirements documents exist this overview should refer to these documents.
 
 Keep these excerpts as short as possible. Balance readability of this document with potential redundancy w.r.t to requirements documents.
 ****
+
+The application will run basically in the server, the information will be stored in users pod as locations and timestamps. No more information than that will be stored. 
+To get information of other users the app will query their corresponding pods. All of this requirements are compatible with the SOLID project as no user information is stored in a centralized way.
+
+In the web application users will be able to manage and visualize its locations. And it will also include some user management and server status monitoring options.
+
+The mobile application will basically send locations to the server and receive notifications from friends close to the location of the user.
+
+The possibility of uploading multimedia content related to locations will also be offered.
+
+- **Technical requirements**
+
+For the deployment of the system, docker containers and a cloud service like heroku will be used.
+
+It’s correct behaviour will be monitored through unit tests, acceptance tests and load tests which will be done and runned in a continuous integration server.
+
 
 === Quality Goals
 
