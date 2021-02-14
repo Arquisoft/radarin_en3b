@@ -42,22 +42,6 @@ If requirements documents exist this overview should refer to these documents.
 Keep these excerpts as short as possible. Balance readability of this document with potential redundancy w.r.t to requirements documents.
 ****
 
-The application will run basically in the server, the information will be stored in users pod as locations and timestamps. No more information than that will be stored. 
-To get information of other users the app will query their corresponding pods. All of this requirements are compatible with the SOLID project as no user information is stored in a centralized way.
-
-In the web application users will be able to manage and visualize its locations. And it will also include some user management and server status monitoring options.
-
-The mobile application will basically send locations to the server and receive notifications from friends close to the location of the user.
-
-The possibility of uploading multimedia content related to locations will also be offered.
-
-- **Technical requirements**
-
-For the deployment of the system, docker containers and a cloud service like heroku will be used.
-
-It’s correct behaviour will be monitored through unit tests, acceptance tests and load tests which will be done and runned in a continuous integration server.
-
-
 === Quality Goals
 
 [role="arc42help"]
