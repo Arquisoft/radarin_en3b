@@ -39,9 +39,10 @@ You should be able to access the application in [http://localhost:3000](http://l
 
 # Contributors
 
-<<<<<<< HEAD
 - [Jose Labra](http://github.com/labra)
 - [Juan Buenaga](https://github.com/LeJuan-cod)
 - [Álvaro Requejo](http://github.com/alvarorece)
+- [Marcos Tobías](https://github.com/MarcosTobias)
 - [Carmen Rendueles](http://github.com/carmen279)
->>>>>>> 2b102534be60608a1189ae8520058e891f105a72
+- [Juan Rodríguez](https://github.com/uo271773)
+- [Miguel Ligero](http://github.com/uo270927)
