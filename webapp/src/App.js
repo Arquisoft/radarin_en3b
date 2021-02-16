@@ -4,7 +4,7 @@ import EmailForm from "./components/EmailForm";
 import UserList from "./components/UserList";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import About from './components/About';
-
+import Welcome from './components/Welcome';
 import { Switch, Route } from 'react-router-dom';
 import MainNavbar from './components/MainNavbar';
 import { BrowserRouter } from "react-router-dom";
@@ -41,6 +41,7 @@ class App extends React.Component {
   main() {
     return (
       <div className="App-content">
+                   <Welcome name="ASW students"/>
         <EmailForm refreshUsers={this.refreshUsers.bind(this)} />
         <UserList users={this.state.users} />
         <a className="App-link"
