@@ -1,5 +1,4 @@
 import React from 'react';
-import CardDeck from 'react-bootstrap/CardDeck';
 import Container from 'react-bootstrap/Container';
 import Jumbotron from 'react-bootstrap/Jumbotron';
 import A from 'react-bootstrap/SafeAnchor';
