@@ -7,6 +7,8 @@ import About from './components/About';
 
 import { Switch, Route } from 'react-router-dom';
 import MainNavbar from './components/MainNavbar';
+import { BrowserRouter } from "react-router-dom";
+
 class App extends React.Component {
   constructor() {
     super();
@@ -19,18 +21,20 @@ class App extends React.Component {
 
   render() {
     return (
-      <div className="App">
-        <header>
-          <MainNavbar />
-        </header>
-        <Switch>
-          <Route path="/about">
-            <About />
-          </Route>
-          <Route path="/">
-            {this.main()}
-          </Route>
-        </Switch>      </div>
+      <BrowserRouter>
+        <div className="App">
+          <header>
+            <MainNavbar />
+          </header>
+          <Switch>
+            <Route path="/about">
+              <About />
+            </Route>
+            <Route path="/">
+              {this.main()}
+            </Route>
+          </Switch>
+        </div></BrowserRouter>
     );
   }
 
