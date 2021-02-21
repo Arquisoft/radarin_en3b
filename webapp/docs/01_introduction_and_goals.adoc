@@ -52,7 +52,7 @@ The mobile application will basically send locations to the server and receive n
 
 The possibility of uploading multimedia content related to locations will also be offered.
 
-- **Technical requirements**
+==== Technical requirements
 
 For the deployment of the system, docker containers and a cloud service like heroku will be used.
 
