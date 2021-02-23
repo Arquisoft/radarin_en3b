@@ -52,16 +52,45 @@ image:08-Crosscutting-Concepts-Structure-EN.png["Possible topics for crosscuttin
 
 === Domain model
 
-image:UmlDiagram.png["Example UML Diagram"]
+[plantuml,"Domain model",png]
+----
+class User {
+webId : String
+}
+class SavedLocation {
+    location : Location
+    name : String
+}
+class Comment {
+    text : String
+}
+User --> "0..*" User : friendOf
+User --> "0..*" SavedLocation : saves
+User --> "0..*" Comment : posts
+SavedLocation --> "0..*" Comment : contains
+----
+The idea is to use the *Location* js object for the content of *SavedLocation* objects because it's what we get from geolocation API and we are using React Native for the mobile app. We will only store the pod identifier of each user in order to preserve privacy.
 
+=== User Experience concepts
 
+Our idea is to minimize the technical requirements to use the app. We want to abstract as much complexity as possible from the pod use and provide user a plug-n-play experience. For this reason, we will prioritize focusing on ease of use rather than adding obscure features that could worsen UX.
 
-=== _<Concept 2>_
+=== Additional libraries
 
-_<explanation>_
+Apart from the already mentioned framework or services, our intention is to use the following libraries for the reason stated next to them:
 
-...
+* solid-auth-client: we will use it for login functionality.
 
-=== _<Concept n>_
+* ldflex-for-solid: for using data through LDflex expressions.
 
-_<explanation>_
+* solid-react: basic React components for building Solid components and applications.
+
+* solid-react-components: react components for Solid applications.
+
+* react-router-dom: in order to assign URLs to each page.
+
+*React Redux* will also be used for our data stores in order to easily update our component's state. 
+
+=== Safety and security concepts
+
+We will use HTTPS with TLS protocol to ensure the communication from the mobile app to the web server is done securely because it may contain sensible information such as the user pod's id and location which could be used to link a person's identity to a pod. SaveLocations will be stored in our server along with its webId but everything else such as friends will be stored in user's pod.
