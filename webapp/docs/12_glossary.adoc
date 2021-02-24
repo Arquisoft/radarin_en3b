@@ -28,10 +28,11 @@ Potentially more columns in case you need translations.
 | Term         | Definition
 | Bootstrap    | Bootstrap is a  CSS framework. It contains CSS- and JavaScript-based design templates for buttons, navigation, and other interface components.
 | ClickUp    | ClickUp is a work platform which allows to assign tasks, manage projects for clients, and collaborate with colleagues on documents.
+| Docker    | Docker is a set of platforms that use virtualization to deliver software in packages called containers.
 | Heroku     | Heroku is a platform that enables developers to build, run, and operate applications entirely in the cloud.
 | Json     | JSON is a file format, that uses human-readable text to store and transmit data objects.
 | MongoDB     | MongoDB is a database program. It uses JSON-like documents with optional schemas.
-| Node     | Node.js is an open-source, JavaScript runtime environment that executes JavaScript code outside a web browser.
+| Node.js     | Node.js is an open-source, JavaScript runtime environment that executes JavaScript code outside a web browser.
 | OpenStreetMap     | OpenStreetMap (OSM) is a collaborative project to create a free editable map of the world.
 | Pod     | A Pod represents a single instance of a running process in your cluster. Pods contain one or more containers, such as Docker containers.
 | React     | React is an open-source JavaScript library for building user interfaces or UI components.
