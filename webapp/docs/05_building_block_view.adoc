@@ -57,7 +57,33 @@ In the best case you will get away with examples or simple signatures.
 
 ****
 
-_**<Overview Diagram>**_
+[plantuml,"Overall System",png]
+----
+actor Client
+Component "Level 1" {
+database DB
+rectangle MobileApp
+rectangle DesktopApp
+storage Pods
+}
+Client --> MobileApp : uses
+Client --> DesktopApp : uses
+DesktopApp -> DB : obtain info
+DesktopApp -> Pods : obtain info
+MobileApp -> DB : obtain info
+MobileApp -> Pods : obtain info
+
+component "Level 2: Inside the app" as l2 {
+rectangle "Data Model" as dm
+rectangle View
+rectangle ViewController
+}
+DesktopApp --> l2
+MobileApp --> l2
+ViewController --> View : controls
+ViewController --> dm : manages
+Client --> View : interacts
+----
 
 
 [role="arc42help"]
@@ -81,53 +107,7 @@ Its headline is the name of the black box.
 ****
 
 
-==== Level 2
-
-[role="arc42help"]
-****
-Here you describe <black box 1>
-according the the following black box template:
-
-* Purpose/Responsibility
-* Interface(s), when they are not extracted as separate paragraphs. This interfaces may include qualities and performance characteristics.
-* (Optional) Quality-/Performance characteristics of the black box, e.g.availability, run time behavior, ....
-* (Optional) directory/file location
-* (Optional) Fulfilled requirements (if you need traceability to requirements).
-* (Optional) Open issues/problems/risks
-
-****
 
 
-=== Level 2
-
-[role="arc42help"]
-****
-Here you can specify the inner structure of (some) building blocks from level 1 as white boxes.
-
-You have to decide which building blocks of your system are important enough to justify such a detailed description.
-Please prefer relevance over completeness. Specify important, surprising, risky, complex or volatile building blocks.
-Leave out normal, simple, boring or standardized parts of your system
-****
-
-==== White Box _<building block 1>_
-
-[role="arc42help"]
-****
-...describes the internal structure of _building block 1_.
-****
-
-_<white box template>_
-
-==== White Box _<building block 2>_
-
-
-_<white box template>_
-
-...
-
-==== White Box _<building block m>_
-
-
-_<white box template>_
 
 
