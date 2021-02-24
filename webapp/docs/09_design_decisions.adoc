@@ -1,5 +1,34 @@
 [[section-design-decisions]]
 == Design Decisions
+[%header, cols=3]
+|===
+
+|Decision
+|Advantages
+|Disadvantages
+
+|JavaScript
+|Unified language in backend and frontend. Easy for working with Solid. Widely used and documented
+|Hard to test and debug, we are not experts on the language
+
+|MongoDB
+|NoSQL Database, perfect for the requeriments of this proyect
+|Uses high memory for data storage, document size limit is 16mb. No transaction support
+
+|JSON-LD
+|Makes working with data easier, works well with MongoDB. Easy to convert from JSON to JSON-LD, and
+compatible with Solid
+|None
+
+|Solid
+|Descentralised information that guarantees privacy for the users
+|Little documentation. The descentralisation of the information implies higher response times
+
+|Github
+|Easy version control
+|None
+
+|===
 
 
 [role="arc42help"]

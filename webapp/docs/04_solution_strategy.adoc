@@ -22,3 +22,25 @@ Motivate what you have decided and why you decided that way,
 based upon your problem statement, the quality goals and key constraints.
 Refer to details in the following sections.
 ****
+=== Technology decisions
+The technologies we have decided to use for the development of the app are:
+React: For an easier development of the user interface with JavaScript.
+Bootstrap: To improve and facilitate the development of the HTML and CSS development for the web application.
+Solid: To make sure about the privacy of the users. All their personal information will be only stored in their corresponding pod so there is not centralied information.
+OpenStreetMap: To visualize the localitations of the user in the web application. We decided to use this instead of google maps because it is open distribution so this avoids problems of API keys expiring and it seemed pretty detailed and  updated
+JSON: The localitations and its associated timestamps will be stored in the form of JSON files.
+Docker and Heroku: For the deployment of the application.
+
+=== Decisions about the top-level decomposition of the system
+We will follow a MVC (Model-view-controller) pattern for the general organitation of the code.
+The possibility of using more patterns will be studied later.
+
+=== Decisions to achieve quality goals
+To meet the usability goal, we will make an effort to develope an application as easy to use as posible, following usual organiations so users find it comfortable. We will also make sure that the application is responsive and as accesible as posible.
+For privacy we will make sure that no personal information is centrallized. All of this information will be only stored in the users pod.
+For security , we will test everything to avoid bugs that could come out as vulnerabilities. Also, as the information will not be centrallized, this will oslo prevent from data theft.
+
+=== Organizational decisions
+All of the team meeting will be done through our Microsoft Teams channel, but, for smaller things, we will communicate using a Whatsapp group.
+To organice tasks, we began by exploring the possibility of using ClickUp, but we came to see that with the Project and Issues possibilities on GitHub we had enough for the momento. But we will maintain the possibility of migrating again to ClickUp open in case we needed stronger means to organize better. 
+
