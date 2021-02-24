@@ -10,7 +10,7 @@ Describes the relevant requirements and the driving forces that software archite
 * relevant stakeholders and their expectations
 ****
 
-Radarin is a project for the course of Software Architecture of the University of Oviedo. This version will be depeloped by the members of the team EN3B which are:
+Radarin is a project for the course of Software Architecture of the University of Oviedo. This version will be depeloped by the members of the team EN3B who are:
 
 - Juan Buenaga Díaz
 - Miguel Ligero Arbesú
@@ -20,8 +20,8 @@ Radarin is a project for the course of Software Architecture of the University o
 - Marcos Tobias Muñiz
 
 Radarin is an application to allow users to find friends that are close to his/her position by receiving a notification when one of them is close enough.
-This will be done with a mobile application that will store the location of the users by using pods, following the SOLID approach to ensure that users privacy is respected.
-A web application will also be developed to allow the user to search for locations.  
+This will be done with a mobile application that will store the location of the users but following the SOLID approach to ensure that users privacy is respected.
+A web application will also be developed to allow the user to see and manage his/her for locations.  
 
 === Requirements Overview
 
@@ -43,7 +43,7 @@ If requirements documents exist this overview should refer to these documents.
 Keep these excerpts as short as possible. Balance readability of this document with potential redundancy w.r.t to requirements documents.
 ****
 
-The application will run basically in the server, the information will be stored in users pod as locations and timestamps. No more information than that will be stored. 
+The application will run basically on the server, all of the users information will be stored in users pod. Only locations and timestamps that will be stored on the server but not linked to any personal information. 
 To get information of other users the app will query their corresponding pods. All of this requirements are compatible with the SOLID project as no user information is stored in a centralized way.
 
 In the web application users will be able to manage and visualize its locations. And it will also include some user management and server status monitoring options.
@@ -106,6 +106,6 @@ Table with role names, person names, and their expectations with respect to the 
 [options="header",cols="1,2,2"]
 |===
 |Role/Name|Contact|Expectations
-| Students | Juan Buenaga Díaz, Miguel Ligero Arbesú, Carmen Rendueles Martínez, Álvaro Requejo Cembellín, Juan Rodríguez de la Fuente and Marcos Tobias Muñiz | Principal developers of the application. They will improve their coding skills and their teamwork capacity.
+| Students | Juan Buenaga Díaz, Miguel Ligero Arbesú, Carmen Rendueles Martínez, Álvaro Requejo Cembellín, Juan Rodríguez de la Fuente and Marcos Tobias Muñiz | Principal developers of the application. They will develop the whole application and as a consequence they Will improve their coding skills and their teamwork capacity.
 | Teachers | José Emilio Labra Gallo| They will supervise students work and make sure they are going in the correct direction and help them with some things if necessary
 |===
