@@ -30,28 +30,49 @@ There are many notations for describing scenarios, e.g.
 
 ****
 
-=== <Runtime Scenario 1>
+=== Solid for backend authentication
+We want to keep things simple so we are not going to create our own user/password accounts so, in order to provide a mechanism to authenticate our users in the backend (we don't want anyone to send a fake location along another user's ID), we are going to send the JWT token that we get from the Identity Provider to our RestAPI. Our api will then ask for the public key at the Identity Provider's */jwks* endpoint, store it in cache and verify the authenticated messages that the user sends from the App.
 
+=== Store current user locations
 
-* _<insert runtime diagram or textual description of the scenario>_
-* _<insert description of the notable aspects of the interactions between the
-building block instances depicted in this diagram.>_
+This is an example about how we handle authenticated requests in the backend:
 
-It is possible to use a sequence diagram:
-
-[plantuml,"Sequence diagram",png]
+[plantuml,"Current user location diagram",png]
 ----
-actor Alice
 actor Bob
-database Pod as "Bob's Pod"
-Alice -> Bob: Authentication Request
-Bob --> Alice: Authentication Response
-Alice  --> Pod: Store route
-Alice -> Bob: Another authentication Request
-Alice <-- Bob: another authentication Response
+participant PhoneApp
+participant RestAPI
+participant IDProvider
+database MongoDb as "Database"
+Bob -> PhoneApp: Press "Log-In"
+PhoneApp --> Bob: Asks user for its provider
+Bob -> IDProvider: Logs into his provider
+IDProvider --> PhoneApp: Provides Token
+Bob -> PhoneApp: Bob clicks "Store location"
+PhoneApp  -> RestAPI: Sends location with token
+RestAPI -> IDProvider: Asks for public key to verify token
+IDProvider --> RestAPI: Sends public key
+RestAPI -> MongoDb: Stores location
+MongoDb --> RestAPI: Notify success
+RestAPI --> PhoneApp: Notify success
+PhoneApp --> Bob: Shows a "done!" toast
 ----
-=== <Runtime Scenario 2>
+=== Check for users nearby
+Here we have omitted authentication steps as they are already stated in previous diagrams. The following conditions must be met before this diagram:
+ * The user is logged-in.
+ * The user has given the POD permission for us to look at their friends.
 
-=== ...
+[plantuml,"Check for other users diagram",png]
+----
+participant PhoneApp
+participant RestAPI
+database Pod as "Bob's Pod"
+database MongoDB as "Database"
+PhoneApp -> RestAPI: Check if there's a friend nearby
+RestAPI -> Pod: Asks for friend list
+Pod --> RestAPI: Sends friend list
+RestAPI -> MongoDB: Asks for friend location
+MongoDB --> RestAPI: Sends friend location
+RestAPI --> PhoneApp: Send nearby users
+----
 
-=== <Runtime Scenario n>
