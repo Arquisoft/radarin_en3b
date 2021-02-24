@@ -22,7 +22,7 @@ List of risks and/or technical debts, probably including suggested measures to m
 |Measures we are taking
 
 |Having a huge payload
-|This may be mitigated with a 
+|This may be mitigated with a lower use of the app that will actually take place
 
 |===
 
@@ -41,15 +41,18 @@ List of risks and/or technical debts, probably including suggested measures to m
 |Making the project with React
 |Being JS a language recently learned and the library used for the first time, several guides and manuals will be used
 
-|
 
 |Design debts
 |Description
 
-|
+|Uncertain know of parts of the application
+|Some parts can be consfusing and we are not quite experienced with the design of big projects, which means that we may need to adapt the design to our needs.
 
 |Test debts
 |Description
+
+|Few testing experience
+|As mentioned before, some test scenarios can be tested but being a huge project we may won't be able to fully test the application.
 
 |===
 
