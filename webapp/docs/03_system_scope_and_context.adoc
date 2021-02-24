@@ -23,6 +23,40 @@ Various options:
 
 === Business Context
 
+image:Business_Context_Diagram.png["Business context diagram"]
+[%header, cols=3]
+|===
+|Entity
+|Input
+|Output
+
+|User
+|As user, the input he will receive is the service provided by the application. The communication Will be performed by a mobile device and complemented by a desktop computer or some sort of computer.
+|The output of the user will be referred in multiple classes and he will provide most of the input to the application.
+ 
+|User POD
+|**Creates**. The user must create a personal POD in order to safely manage the application and store his data so that it is compatible with the SOLID project.
+**Request login**. The User POD will receive a request login and will check that the username and password is correct communicating with the Mobile and Desktop App.  
+**Send info**. The Mobile App will be able to send any kind of data to the personal POD and it will store sensitive and private user information. 
+|**Send info**. As the POD receives information from the Mobile App, it can send requested information to both, Desktop and Mobile App, for its functionality. 
+
+|Mobile App
+|**User location**. The app will receive the location of the user by two different ways: by periodically taking the position or manually introducing it. The position will be saved with a timestamp. 
+|**Notification**. The app will notify the user whenever there is a friend whose last location is near the user.
+
+
+|Desktop App
+|**User management**. The app will be managed by the user, who can look search for his history of positions with their timestamps, share those points with their friends and link photos, videos or text to those points where they were.
+|The output of this entity is the service it provides to the user and the changes made in the Database.
+
+|Database
+|**Requests**. The database will be managing requests from the app to return information to the user. **Storage**. Despite most of the user information being stored in the POD, some will be stored here and the information is received by the app. 
+|**Request respond**. The database is responsible for sending information to the app in order to work.
+
+|===
+
+
+
 [role="arc42help"]
 ****
 .Contents
@@ -39,9 +73,6 @@ Alternatively (or additionally) you can use a table.
 The title of the table is the name of your system, the three columns contain the name of the communication partner, the inputs, and the outputs.
 ****
 
-**<Diagram or Table>**
-
-**<optionally: Explanation of external domain interfaces>**
 
 === Technical Context
 
@@ -59,8 +90,27 @@ together with a mapping table showing the relationships between channels and inp
 
 ****
 
-**<Diagram or Table>**
+The system makes use of the SOLID architecture, which is focused on the decentralization of the web. For accomplishing this purpose, the user will be provided with a SOLID POD linked to him. In SOLID, a POD is a Personal Online Data Store, a place where the personal data is stored and hosted wherever the user desires. 
 
-**<optionally: Explanation of technical interfaces>**
+The application, both the Mobile and Desktop App, will require internet in order to work and the Mobile one will require localization permission so that he can store his locations. The user can select when the application stores his locations, the frequency of taking measurements and the documents linked in case he wants to upload something.
 
-**<Mapping Input/Output to Channels>**
+The application, both Mobile and Desktop applications, will be written in Javascript with React. React is an open-source library made to ease the process of building user interface.
+
+[%header, cols=2]
+|===
+|Technical Interface
+|Description
+
+|SOLID
+|Architecture that determines the structure of the data management of the project.
+
+|POD
+|Data management unit used to store confidential and personal information according to the SOLID architecture.
+
+|Javascript
+|Language used to program the User Interface of both Mobile and Web application.
+
+|React
+|Library to ease the programming of the application.
+
+|===

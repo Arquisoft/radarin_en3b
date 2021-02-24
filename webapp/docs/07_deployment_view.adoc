@@ -48,18 +48,70 @@ Describe (usually in a combination of diagrams, tables, and text):
 For multiple environments or alternative deployments please copy that section of arc42 for all relevant environments.
 ****
 
-_**<Overview Diagram>**_
+[plantuml, "Deployment diagram",png]
+----
+node <<device>>\nClientPC as n1{
+node <<execution\tenvironment>>\n:WebBrowser{
+rectangle :Website{
+}
+}
+}
+
+node <<device>>\n:WebServer as n2{
+node <<execution\tenvironment>>\n:GithubPages{
+}
+}
+
+rectangle :Radarin as r1{
+}
+
+node <<device>>\nPodProvider(Solid) as n3{
+node <<execution\tenvironment>>\n:PodServer{
+rectangle :PodInstance{
+}
+}
+}
+
+cloud OpenStreetMapAPI as c1{
+}
+
+n1 --> n2 : //http//
+n2  <..  r1  : //deploys//
+r1 --> n3 : //http//
+c1 <- r1 : //uses//
+----
 
 Motivation::
 
-_<explanation in text form>_
+The motivation of this deployment structure is the correct understanding of how nodes and components of the project behave and are related in runtime.
 
 Quality and/or Performance Features::
 
-_<explanation in text form>_
+The performance mainly depends on the network connection from the user and the servers on which the application runs. We cannot control those two things, but we can improve as much as possible the quality of the application by writing the cleanest possible code.
 
 Mapping of Building Blocks to Infrastructure::
-_<description of the mapping>_
+
+[%header, cols=2]
+|===
+|Element
+|Description
+
+|ClientPC
+|Device of the user, it must have a connection to the Internet
+
+|:WebServer
+|Server used by the browser. Every browser should be valid.
+
+|:PodProvider
+|Solid PODs are provided by Solid Community or Inrupt servers.
+
+|:Radarin
+|Our app hosted in GitHub pages.
+
+|OpenStreetMapAPI
+|Free maps API that will be used by Radarin. More APIs could be used in the future.
+
+|===
 
 
 === Infrastructure Level 2
@@ -71,16 +123,3 @@ Here you can include the internal structure of (some) infrastructure elements fr
 Please copy the structure from level 1 for each selected element.
 ****
 
-==== _<Infrastructure Element 1>_
-
-_<diagram + explanation>_
-
-==== _<Infrastructure Element 2>_
-
-_<diagram + explanation>_
-
-...
-
-==== _<Infrastructure Element n>_
-
-_<diagram + explanation>_

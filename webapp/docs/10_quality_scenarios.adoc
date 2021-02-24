@@ -1,6 +1,6 @@
 [[section-quality-scenarios]]
 == Quality Requirements
-
+In this section, the point 1.2 is extended, describing the quality requirements of our application.
 
 [role="arc42help"]
 ****
@@ -18,7 +18,25 @@ concrete and measurable.
 ****
 
 === Quality Tree
-
+[plantuml, "Quality tree",png]
+----
+left to right direction
+(Quality) as (Q)
+(Usability) as (U)
+(Privacy) as (Pr)
+(Security) as (S)
+(Reliability) as (R)
+(Maintainability) as (M)
+(Portability) as (P)
+(Compatibility) as (C)
+Q --> U
+Q --> Pr
+Q --> S
+Q --> R
+Q --> M
+Q --> P
+Q --> C
+----
 [role="arc42help"]
 ****
 .Content
@@ -37,6 +55,42 @@ In any case the tree should include links to the scenarios of the following sect
 ****
 
 === Quality Scenarios
+
+[%header, cols=3]
+|===
+|Quality requirement
+|Quality scenario
+|Priority
+
+|Usability
+|Users have to be able to navigate through the application in an intuitive way
+|High
+
+|Privacy
+|Private data from the users have to be protected. The application only takes essential data from the user, and these data are not centralized.
+|High
+
+|Security
+|The application have to be highly secure for the users, data should never be given to any thrid part, and application must prevent user's data leak
+|High
+
+|Reliability
+|All the errors of the application have to be handled by the application itself, there should not be system crashes.
+|Medium-High
+
+|Maintainability
+|The application should be written in a way that code can be reused and modified in a simple way, bugs can be easily found and fixed, and the program should be easy to test.
+|Medium
+
+|Portability
+|The application should be adapted to the device where it is deployed, from computers to mobile phones or tablets.
+|Low-Medium
+
+|Compatibility
+|The application should be capable of operat satisfactorily together with another system on the same computer or different computers.
+|Low-Medium
+
+|===
 
 [role="arc42help"]
 ****
