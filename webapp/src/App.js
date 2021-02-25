@@ -8,6 +8,7 @@ import Welcome from './components/Welcome';
 import { Switch, Route } from 'react-router-dom';
 import MainNavbar from './components/MainNavbar';
 import { BrowserRouter } from "react-router-dom";
+import MainFooter from './components/MainFooter';
 
 class App extends React.Component {
   constructor() {
@@ -34,7 +35,9 @@ class App extends React.Component {
               {this.main()}
             </Route>
           </Switch>
-        </div></BrowserRouter>
+          <MainFooter/>
+        </div>
+        </BrowserRouter>
     );
   }
 
