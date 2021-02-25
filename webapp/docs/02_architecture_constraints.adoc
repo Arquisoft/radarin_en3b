@@ -12,21 +12,15 @@ Ones related to fixed technical design desicions that cannot be changed.
 |Constraint
 |Explanation
 
-|JavaScript
-|JavaScript will be used both in the frontend and backend of the project, facilitating the process
-of understanding the code and allowing us to work in different parts of the application without the 
-need of distributing tasks based on programming language expertise
+|Localization
+|We have to access the localization of the user in order to inform their friends that they are near.
 
-|Windows, Linux, iOS and Android
-|The application have two parts, one web application that will be supported by every browser,
-and a mobile app supported for both Android and iOS
+|Solid
+|Solid is a specification that allows users to store their data in a decentralized way through the use of Pods. This way people is propietary of their information,
+allowing or rejecting apps to access it at any moment.
 
-|React
-|A library based on JavaScript that we will use for the frontend of the application, both in the
-web and in mobile versions, using react native in the latter
-
-|Node
-|A runtime environment for JavaScript that will help us build the backend of the application. Its oftently used with react as they are both based on JavaScript
+|Data storage
+|As we have to follow the Solid specification, we will avoid storing any data that is not essential.
 
 |Git
 |GitHub is a framework for creating a Version Control System
@@ -53,19 +47,3 @@ we won't be able to use any paid software or tools
 |The development team consists in 6 people
 
 |===
-
-[role="arc42help"]
-****
-.Contents
-Any requirement that constrains software architects in their freedom of design and implementation decisions or decision about the development process. These constraints sometimes go beyond individual systems and are valid for whole organizations and companies.
-
-.Motivation
-Architects should know exactly where they are free in their design decisions and where they must adhere to constraints.
-Constraints must always be dealt with; they may be negotiable, though.
-
-.Form
-Simple tables of constraints with explanations.
-If needed you can subdivide them into
-technical constraints, organizational and political constraints and
-conventions (e.g. programming or versioning guidelines, documentation or naming conventions)
-****
