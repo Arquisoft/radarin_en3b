@@ -35,8 +35,8 @@ class App extends React.Component {
               {this.main()}
             </Route>
           </Switch>
-          <MainFooter/>
         </div>
+        <MainFooter/>
         </BrowserRouter>
     );
   }

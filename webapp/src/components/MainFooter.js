@@ -6,7 +6,7 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 
 class MainFooter extends React.Component {
     render() {
-        return <footer id="footer">
+        return <div className="footer">
             <div className="d-flex align-items-center justify-content-center">
                 <Navbar bg="light" expand="lg">
                     <Navbar.Brand href="#home" className="mx-5">Radarin</Navbar.Brand>
@@ -24,7 +24,7 @@ class MainFooter extends React.Component {
                     </Navbar.Collapse>
                 </Navbar>
             </div>
-        </footer>
+        </div>
     }
 }
 export default MainFooter;
