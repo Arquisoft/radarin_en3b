@@ -9,6 +9,7 @@ import { Switch, Route } from 'react-router-dom';
 import MainNavbar from './components/MainNavbar';
 import { BrowserRouter } from "react-router-dom";
 import MainFooter from './components/MainFooter';
+import ResponsiveDrawer from './components/localizations';
 
 class App extends React.Component {
   constructor() {
@@ -28,6 +29,9 @@ class App extends React.Component {
             <MainNavbar />
           </header>
           <Switch>
+            <Route path="/localizations">
+              <ResponsiveDrawer />
+            </Route>
             <Route path="/about">
               <About />
             </Route>
