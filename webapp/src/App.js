@@ -9,7 +9,7 @@ import { Switch, Route } from 'react-router-dom';
 import MainNavbar from './components/MainNavbar';
 import { BrowserRouter } from "react-router-dom";
 import MainFooter from './components/MainFooter';
-import ResponsiveDrawer from './components/localizations';
+import ResponsiveDrawer from './components/Localizations';
 
 class App extends React.Component {
   constructor() {
