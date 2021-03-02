@@ -17,10 +17,10 @@ class MainNavbar extends React.Component {
                 </Nav>
                 <Nav>
                     
-                        <Nav.Link href="/profile" className="mr-5 pr-3">
+                        <Nav.Link className="mr-5 pr-3">
                             <AccountCircleIcon className="mr-1"></AccountCircleIcon>
-                            Profile
-                            </Nav.Link>
+                            <Nav.Link as={Link} to="/login" >Login</Nav.Link>
+                        </Nav.Link>
                 </Nav>
             </Navbar.Collapse>
         </Navbar>
