@@ -3,10 +3,18 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { BrowserRouter } from "react-router-dom";
+import { SessionProvider } from '@inrupt/solid-ui-react';
+
 ReactDOM.render(
   <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+    <SessionProvider sessionId="logged-user">
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+    </SessionProvider>
+
+  </React.StrictMode >,
   document.getElementById('root')
 );
 
