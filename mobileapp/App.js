@@ -1,9 +1,11 @@
 import { createStackNavigator} from '@react-navigation/stack';
 
-import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Image, ScrollView} from 'react-native';
+import * as React from 'react';
+import { StyleSheet, Text, View, TouchableOpacity, Image, ScrollView, Button} from 'react-native';
 import { Card} from 'react-native-elements'
 import { NavigationContainer } from '@react-navigation/native';
+import { SafeAreaView } from 'react-navigation';
+import {TextInput} from 'react-native';
 
 const Stack = createStackNavigator();
 
@@ -40,7 +42,7 @@ const friends = [
   },
 ];
 
-export default function App() {
+export default function App({navigation}) {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Home">
@@ -54,7 +56,7 @@ export default function App() {
             fontWeight: 'bold',
           },
           headerRight: () => (
-            <TouchableOpacity onPress={() => alert("Button pressed")}>
+            <TouchableOpacity onPress={() => navigation.navigate('Details')}>
               <Image style={styles.icon} source={require("./assets/dots.png")}/>
             </TouchableOpacity>
           ),
@@ -65,33 +67,44 @@ export default function App() {
   );
 }
 
-function DetailsScreen() {
+function DetailsScreen({navigation}) {
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>Details Screen</Text>
+      <Text>Post something: </Text>
+      <TextInput style={{ height: 40, borderColor: '#ffff', borderWidth: 1 }} defaultValue="Write here..."></TextInput>
     </View>
   );
 }
 
 
-function HomeScreen() {
+function HomeScreen({navigation}) {
   return (
-    <ScrollView>
-    <View style={{ flex: 1, justifyContent: 'flex-start', padding: 0,}}>
-      <Text style={{ fontSize:16,  padding: 30,}}>Friends close to your location:</Text>
-      {
-      friends.map((u,i) => {
-        return (
-          <Card>
-            <Card.Title>{u.name}</Card.Title>
-            <Card.Divider/>
-            <Text style={styles.name}>{u.distance}</Text>
-          </Card>
-          );
-        })
-      }
-    </View>
+    <SafeAreaView>
+      <TouchableOpacity
+        activeOpacity={0.7}
+        onPress={()=>{navigation.navigate('Details')}}
+        style={styles.touchableOpacityStile}>
+          <Image style={styles.icon} source={require("./assets/add-24px.png")}/>
+      </TouchableOpacity>
+
+      <ScrollView>
+        <View style={{ flex: 1, justifyContent: 'flex-start', padding: 0,}}>
+          <Text style={{ fontSize:16,  padding: 30,}}>Friends close to your location:</Text>
+          {
+          friends.map((u,i) => {
+            return (
+              <Card>
+                <Card.Title>{u.name}</Card.Title>
+                <Card.Divider/>
+                <Text style={styles.name}>{u.distance}</Text>
+              </Card>
+              );
+            })
+          }
+        </View>
     </ScrollView>
+    
+    </SafeAreaView>
   );
 }
 
@@ -113,5 +126,17 @@ const styles = StyleSheet.create({
     width: 30,
     height: 30,
   },
+  touchableOpacityStile: {
+    resizeMode: 'contain',
+    position: 'absolute',
+    width: 50,
+    height: 50,
+    alignItems: 'center',
+    justifyContent: 'center',
+    alignSelf: 'center',
+    bottom: 30,
+    backgroundColor:'#0074A4',
+    borderRadius: 30,
+    zIndex: 1
+  },
 });
-
