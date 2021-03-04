@@ -1,9 +1,11 @@
 import { createStackNavigator} from '@react-navigation/stack';
 
 import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Image, ScrollView} from 'react-native';
+import { View, StyleSheet, Text, TouchableOpacity, Image, ScrollView, Icon, ImageBackground} from 'react-native';
 import { Card} from 'react-native-elements'
 import { NavigationContainer } from '@react-navigation/native';
+import { Button, Menu, Divider, Provider } from 'react-native-paper';
+
 
 const Stack = createStackNavigator();
 
@@ -43,7 +45,7 @@ const friends = [
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Home">
+      <Stack.Navigator initialRouteName="Radarin">
         <Stack.Screen name="Radarin" component={HomeScreen} options={{
           title: 'Radarin',
           headerStyle: {
@@ -53,28 +55,18 @@ export default function App() {
           headerTitleStyle: {
             fontWeight: 'bold',
           },
-          headerRight: () => (
-            <TouchableOpacity onPress={() => alert("Button pressed")}>
-              <Image style={styles.icon} source={require("./assets/dots.png")}/>
-            </TouchableOpacity>
+          headerLeft: () => (
+            <MyMenu></MyMenu>
           ),
+
         }}/>
-        <Stack.Screen name="Details" component={DetailsScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
 }
 
-function DetailsScreen() {
-  return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>Details Screen</Text>
-    </View>
-  );
-}
-
-
 function HomeScreen() {
+
   return (
     <ScrollView>
     <View style={{ flex: 1, justifyContent: 'flex-start', padding: 0,}}>
@@ -95,6 +87,32 @@ function HomeScreen() {
   );
 }
 
+const MyMenu = () => {
+  const [visible, setVisible] = React.useState(false);
+
+  const openMenu = () => setVisible(true);
+
+  const closeMenu = () => setVisible(false);
+
+  return (
+    <Provider>
+      <View>
+        <Menu
+          visible={visible}
+          onDismiss={closeMenu}
+          anchor={<TouchableOpacity style={styles.dotsbutton} onPress={openMenu}>
+          <Image source={require('./assets/dots.png')} style={styles.icon} />
+        </TouchableOpacity>}>
+          <Menu.Item onPress={() => {}} title="Item 1" />
+          <Menu.Item onPress={() => {}} title="Item 2" />
+          <Divider />
+          <Menu.Item onPress={() => {}} title="Item 3" />
+        </Menu>
+      </View>
+    </Provider>
+  );
+};
+
 
 const styles = StyleSheet.create({
   container: {
@@ -107,11 +125,15 @@ const styles = StyleSheet.create({
     backgroundColor: '#0074A4',
     borderRadius: 20,
     padding: 10,
-    marginBottom: 20,
   },
   icon: {
     width: 30,
     height: 30,
+  },
+  mainMenuAnchor: {
+    width: 50,
+    height: 50,
+    backgroundColor: 'red',
   },
 });
 
