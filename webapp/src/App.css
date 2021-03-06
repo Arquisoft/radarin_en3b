@@ -45,7 +45,8 @@
   }
 }
 
-html, body {
+html, 
+body {
   margin: 0;
   padding: 0;
   height: 100%;
@@ -76,11 +77,10 @@ html, body {
   transform: translateY(-50%);
 }
 
-
-@media all and (min-width:960px) and (max-width: 1024px) {
+@media all and (min-width: 1025px) and (max-width: 1500px) {
   .mapContainer {
-    width: 20em;
-    height: 20em;
+    width: 50em;
+    height: 50em;
     position: absolute;
     top: 50%;
     -ms-transform: translateY(-50%);
@@ -88,10 +88,10 @@ html, body {
   }
 }
 
-@media all and (min-width:801px) and (max-width: 959px) {
+@media all and (min-width: 960px) and (max-width: 1024px) {
   .mapContainer {
-    width: 20em;
-    height: 20em;
+    width: 40em;
+    height: 40em;
     position: absolute;
     top: 50%;
     -ms-transform: translateY(-50%);
@@ -99,10 +99,10 @@ html, body {
   }
 }
 
-@media all and (min-width:769px) and (max-width: 800px) {
+@media all and (min-width: 801px) and (max-width: 959px) {
   .mapContainer {
-    width: 20em;
-    height: 20em;
+    width: 30em;
+    height: 30em;
     position: absolute;
     top: 50%;
     -ms-transform: translateY(-50%);
@@ -110,10 +110,10 @@ html, body {
   }
 }
 
-@media all and (min-width:569px) and (max-width: 768px) {
+@media all and (min-width: 481px) and (max-width: 800px) {
   .mapContainer {
-    width: 20em;
-    height: 20em;
+    width: 25em;
+    height: 25em;
     position: absolute;
     top: 50%;
     -ms-transform: translateY(-50%);
@@ -121,10 +121,10 @@ html, body {
   }
 }
 
-@media all and (min-width:481px) and (max-width: 568px) {
+@media all and (min-width: 321px) and (max-width: 480px) {
   .mapContainer {
-    width: 20em;
-    height: 20em;
+    width: 14em;
+    height: 14em;
     position: absolute;
     top: 50%;
     -ms-transform: translateY(-50%);
@@ -132,26 +132,13 @@ html, body {
   }
 }
 
-@media all and (min-width:321px) and (max-width: 480px) {
+@media all and (min-width: 1px) and (max-width: 320px) {
   .mapContainer {
-    width: 20em;
-    height: 20em;
+    width: 13em;
+    height: 13em;
     position: absolute;
     top: 50%;
     -ms-transform: translateY(-50%);
     transform: translateY(-50%);
   }
 }
-
-@media all and (min-width:0px) and (max-width: 320px) {
-  .mapContainer {
-    width: 10em;
-    height: 10em;
-    position: absolute;
-    top: 50%;
-    -ms-transform: translateY(-50%);
-    transform: translateY(-50%);
-  }
-}
-
-

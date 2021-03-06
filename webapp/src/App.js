@@ -1,15 +1,15 @@
-import React from 'react';
-import './App.css';
+import React from "react";
+import "./App.css";
 import EmailForm from "./components/EmailForm";
 import UserList from "./components/UserList";
-import 'bootstrap/dist/css/bootstrap.min.css';
-import About from './components/About';
-import Welcome from './components/Welcome';
-import { Switch, Route } from 'react-router-dom';
-import MainNavbar from './components/MainNavbar';
+import "bootstrap/dist/css/bootstrap.min.css";
+import About from "./components/About";
+import Welcome from "./components/Welcome";
+import { Switch, Route } from "react-router-dom";
+import MainNavbar from "./components/MainNavbar";
 import { BrowserRouter } from "react-router-dom";
-import MainFooter from './components/MainFooter';
-import ResponsiveDrawer from './components/Localizations';
+import MainFooter from "./components/MainFooter";
+import ResponsiveDrawer from "./components/Localizations";
 
 class App extends React.Component {
   constructor() {

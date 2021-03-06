@@ -1,8 +1,8 @@
-import React from 'react';
-import Nav from 'react-bootstrap/Nav';
-import Navbar from 'react-bootstrap/Navbar';
-import { Link } from 'react-router-dom';
-import NavDropdown from 'react-bootstrap/NavDropdown';
+import React from "react";
+import Nav from "react-bootstrap/Nav";
+import Navbar from "react-bootstrap/Navbar";
+import { Link } from "react-router-dom";
+import NavDropdown from "react-bootstrap/NavDropdown";
 
 class MainFooter extends React.Component {
     render() {
@@ -25,7 +25,7 @@ class MainFooter extends React.Component {
                     </Navbar>
                 </div>
             </div>
-        </footer>
+        </footer>;
     }
 }
 export default MainFooter;
