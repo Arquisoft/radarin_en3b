@@ -6,8 +6,8 @@ import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 
 class MainNavbar extends React.Component {
     render() {
-        return <Navbar bg="light" expand="lg" className="navBar">
-            <Navbar.Brand href="#home">Radarin</Navbar.Brand>
+        return <Navbar bg="white" expand="lg" className="navBar fixed-top align-items center shadow rounded">
+            <Navbar.Brand href="#home" className="mb-1">Radarin</Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="mr-auto">
@@ -23,7 +23,7 @@ class MainNavbar extends React.Component {
                             </Nav.Link>
                 </Nav>
             </Navbar.Collapse>
-        </Navbar>
+        </Navbar>;
     }
 }
 export default MainNavbar;

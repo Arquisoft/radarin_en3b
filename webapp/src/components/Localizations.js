@@ -15,6 +15,7 @@ import MailIcon from "@material-ui/icons/Mail";
 import MenuIcon from "@material-ui/icons/Menu";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import MapView from "./MapView";
+import "../css/Map.css";
 
 const drawerWidth = 240;
 
@@ -38,8 +39,10 @@ const useStyles = makeStyles((theme) => ({
   toolbar: theme.mixins.toolbar,
   drawerPaper: {
     width: drawerWidth,
-    marginTop: "4em",
-    height: "calc(100% - 12em)",
+    marginTop: "5.2em",
+    height: "calc(100% - 9.3em)",
+    position: "absolute",
+    "z-index": "9",
   },
   content: {
     flexGrow: 1,

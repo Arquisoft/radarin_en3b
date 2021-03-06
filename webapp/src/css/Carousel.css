@@ -1,0 +1,16 @@
+.slick-slide img {
+    margin: auto;
+}
+
+.slick-slide .carouselText {
+    text-align: center;
+}
+
+.contain {
+  padding: 40px;
+}
+
+.carouselButton {
+  text-align: center;
+  margin-top: 2em;
+}
