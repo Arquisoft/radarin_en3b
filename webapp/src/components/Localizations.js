@@ -22,6 +22,7 @@ const drawerWidth = 240;
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
+    background: "rgb(245, 244, 244)"
   },
   drawer: {
     [theme.breakpoints.up("sm")]: {
@@ -39,14 +40,15 @@ const useStyles = makeStyles((theme) => ({
   toolbar: theme.mixins.toolbar,
   drawerPaper: {
     width: drawerWidth,
-    marginTop: "5.2em",
-    height: "calc(100% - 9.3em)",
+    marginTop: "4.2em",
+    height: "calc(100% - 8.2em)",
     position: "absolute",
     "z-index": "9",
   },
   content: {
     flexGrow: 1,
     padding: theme.spacing(3),
+    background: "rgb(245, 244, 244)"
   },
 }));
 
@@ -84,8 +86,6 @@ function ResponsiveDrawer(props) {
     </div>
   );
 
-  const container = window !== undefined ? () => window().document.body : undefined;
-
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -102,7 +102,6 @@ function ResponsiveDrawer(props) {
         {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
         <Hidden smUp implementation="css">
           <SwipeableDrawer
-            container={container}
             variant="temporary"
             anchor={theme.direction === "rtl" ? "right" : "left"}
             open={mobileOpen}
