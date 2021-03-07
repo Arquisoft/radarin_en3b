@@ -4,8 +4,7 @@ import React from 'react';
 import { View, StyleSheet, Text, TouchableOpacity, Image, ScrollView, TextInput, Button} from 'react-native';
 import { Card} from 'react-native-elements'
 import { NavigationContainer, SafeAreaView } from '@react-navigation/native';
-import { Menu, Divider, Provider } from 'react-native-paper';
-import { green } from '@material-ui/core/colors';
+import { Menu, Divider, Provider, Switch, DataTable, Avatar } from 'react-native-paper';
 
 
 const Stack = createStackNavigator();
@@ -125,9 +124,14 @@ function PostScreen({navigation}) {
 function LoginScreen({navigation}) {
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>Login </Text>
-      <TextInput style={{ height: 40, borderColor: '#ffff', borderWidth: 1 }} defaultValue="Write here..."></TextInput>
-      <Button title='Log in'onPress={() => {navigation.navigate('Radarin')}}>Login</Button>
+      <Card containerStyle={{width: 360}}>
+            <Card.Title>Log in</Card.Title>
+            <Card.Divider/>
+            <Text>Write your provider:</Text>
+            <TextInput placeholder='https://inrupt.net' style={{ height: 40, backgroundColor: '#EBEBEB', borderColor: '#EBEBEB', borderWidth: 1, margin:20}}></TextInput>
+            <Button title='Log in'onPress={() => {navigation.navigate('Radarin')}}>Login</Button>
+      </Card>
+      
     </View>
   );
 }
@@ -143,9 +147,51 @@ function AboutScreen({navigation}) {
   }, [navigation]);
 
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>About</Text>
+    <ScrollView>
+    <View style={{alignItems: 'center', justifyContent: 'center' }}>
+      <Card>
+            <Card.Title>About Radarin</Card.Title>
+            <Card.Divider/>
+            <Text>Radarin will be a system to facilitate meetings between friends using new technologies. The application can get access to the mobile phone localization of the users who voluntarily activate it and will allow other users who are their friends to know when they are near them. Everything will be build with Solid so you can be the owner of your own data!.
+            </Text>
+            <Button title='Learn more about Solid'></Button>
+      </Card>
+      <Card containerStyle={{width: 360}}>
+            <Card.Title>Meet the devs!</Card.Title>
+            <Card.Divider/>
+            <DataTable>
+              <DataTable.Row>
+                <DataTable.Cell><Avatar.Image size={40} source={require('./assets/labra.jpg')} /></DataTable.Cell>
+                <DataTable.Cell style={{flex: 3}}>Jose Emilio Labra</DataTable.Cell>
+              </DataTable.Row>
+              <DataTable.Row>
+                <DataTable.Cell><Avatar.Image size={40} source={require('./assets/miguel.jpg')} /></DataTable.Cell>
+                <DataTable.Cell style={{flex: 3}}>Álvaro Requejo</DataTable.Cell>
+              </DataTable.Row>
+              <DataTable.Row>
+                <DataTable.Cell><Avatar.Image size={40} source={require('./assets/miguel.jpg')} /></DataTable.Cell>
+                <DataTable.Cell style={{flex: 3}}>Marcos Tobías</DataTable.Cell>
+              </DataTable.Row>
+              <DataTable.Row>
+                <DataTable.Cell><Avatar.Image size={40} source={require('./assets/miguel.jpg')} /></DataTable.Cell>
+                <DataTable.Cell style={{flex: 3}}>Juan Buenaga</DataTable.Cell>
+              </DataTable.Row>
+              <DataTable.Row>
+                <DataTable.Cell><Avatar.Image size={40} source={require('./assets/carmen.jpg')} /></DataTable.Cell>
+                <DataTable.Cell style={{flex: 3}}>Carmen Rendueles</DataTable.Cell>
+              </DataTable.Row>
+              <DataTable.Row>
+                <DataTable.Cell><Avatar.Image size={40} source={require('./assets/miguel.jpg')} /></DataTable.Cell>
+                <DataTable.Cell style={{flex: 3}}>Miguel Ligero</DataTable.Cell>
+              </DataTable.Row>
+              <DataTable.Row>
+                <DataTable.Cell><Avatar.Image size={40} source={require('./assets/miguel.jpg')} /></DataTable.Cell>
+                <DataTable.Cell style={{flex: 3}}>Juan Rodriguez</DataTable.Cell>
+              </DataTable.Row>
+            </DataTable>
+      </Card>
     </View>
+    </ScrollView>
   );
 }
 
@@ -161,7 +207,8 @@ function ProfileScreen({navigation}) {
 
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>Profile</Text>
+      <Text>Get location:</Text>
+      <MySwitch></MySwitch>
     </View>
   );
 }
@@ -196,6 +243,14 @@ function HomeScreen({navigation}) {
     </ScrollView>
   );
 }
+
+const MySwitch = () => {
+  const [isSwitchOn, setIsSwitchOn] = React.useState(false);
+
+  const onToggleSwitch = () => setIsSwitchOn(!isSwitchOn);
+
+  return <Switch value={isSwitchOn} onValueChange={onToggleSwitch} />;
+};
 
 function MyMenu ({navigation}){
 
