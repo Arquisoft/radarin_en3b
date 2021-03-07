@@ -6,11 +6,8 @@ import "../css/Carousel.css";
 import ArrowBackIos from "@material-ui/icons/ArrowBackIos";
 import ArrowForwardIos from "@material-ui/icons/ArrowForwardIos";
 
-
-
-
 function SamplePrevArrow(props) {
-    const { className, style, onClick } = props;
+    const { onClick } = props;
     return (
         <ArrowBackIos
             style={{
@@ -36,7 +33,7 @@ function SamplePrevArrow(props) {
 }
 
 function SampleNextArrow(props) {
-    const { className, style, onClick } = props;
+    const { onClick } = props;
     return (
         <ArrowForwardIos
             style={{
@@ -85,17 +82,17 @@ class ReactSlickDemo extends React.Component {
                             <p>Radarín te permite bla bla bla bla bla bla bla bla bla</p>
                         </div>
                         <div>
-                            <img src="http://placekitten.com/g/400/200" />
+                            <img src="http://placekitten.com/g/400/200" alt="test"/>
                         </div>
                     </div>
                     <div>
-                        <img src="http://placekitten.com/g/400/200" />
+                        <img src="http://placekitten.com/g/400/200" alt="test"/>
                     </div>
                     <div>
-                        <img src="http://placekitten.com/g/400/200" />
+                        <img src="http://placekitten.com/g/400/200" alt="test"/>
                     </div>
                     <div>
-                        <img src="http://placekitten.com/g/400/200" />
+                        <img src="http://placekitten.com/g/400/200" alt="test"/>
                     </div>
                 </Slider>
                 <div className="carouselButton">

@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Divider from "@material-ui/core/Divider";
 import Drawer from "@material-ui/core/Drawer";
-import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
 import Hidden from "@material-ui/core/Hidden";
 import IconButton from "@material-ui/core/IconButton";
 import InboxIcon from "@material-ui/icons/MoveToInbox";
@@ -14,6 +13,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 import MailIcon from "@material-ui/icons/Mail";
 import MenuIcon from "@material-ui/icons/Menu";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
+import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
 import MapView from "./MapView";
 import "../css/Map.css";
 
@@ -53,7 +53,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function ResponsiveDrawer(props) {
-  const { window } = props;
   const classes = useStyles();
   const theme = useTheme();
   const [mobileOpen, setMobileOpen] = React.useState(false);

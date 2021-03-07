@@ -12,7 +12,6 @@ import MainFooter from "./components/MainFooter";
 import ResponsiveDrawer from "./components/Localizations";
 import MainCarousel from "./components/MainCarousel";
 import AppInfo from "./components/AppInfo";
-import MainGrid from "./components/MainGrid";
 
 class App extends React.Component {
   constructor() {
