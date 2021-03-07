@@ -3,8 +3,9 @@
 // expect(element).toHaveTextContent(/react/i)
 // learn more: https://github.com/testing-library/jest-dom
 import '@testing-library/jest-dom';
+import {jest} from "@jest/globals";
 
-window.matchMedia = jest.fn().mockImplementation(query => {
+window.matchMedia = jest.fn().mockImplementation((query) => {
     return {
       matches: false,
       media: query,
@@ -14,5 +15,5 @@ window.matchMedia = jest.fn().mockImplementation(query => {
       addEventListener: jest.fn(),
       removeEventListener: jest.fn(),
       dispatchEvent: jest.fn()
-    }
+    };
   });
