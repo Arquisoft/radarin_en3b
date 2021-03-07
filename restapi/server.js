@@ -2,6 +2,7 @@ const express = require("express")
 const promBundle = require("express-prom-bundle");
 const cors = require('cors');
 const mongoose = require("mongoose")
+const ResourceServer = require('@solid/oidc-rs')
 const api = require("./api") 
 
 function connect(){
@@ -9,11 +10,12 @@ function connect(){
     mongo_uri = process.env.MONGO_URI || "mongodb://localhost:27017"
     mongoose.connect(mongo_uri, { useNewUrlParser: true,useUnifiedTopology: true }).then(() => {
         const app = express()
+        const rs = new ResourceServer();
 
         //Monitoring middleware
         const metricsMiddleware = promBundle({includeMethod: true});
         app.use(metricsMiddleware);
-
+        app.use(rs.authenticate());
         app.use(cors());
         app.options('*', cors());
         app.use(express.json())
