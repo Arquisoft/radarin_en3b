@@ -1,13 +1,18 @@
-import React from 'react';
-import './App.css';
+import React from "react";
+import "./App.css";
 import EmailForm from "./components/EmailForm";
 import UserList from "./components/UserList";
-import 'bootstrap/dist/css/bootstrap.min.css';
-import About from './components/About';
-import Welcome from './components/Welcome';
-import { Switch, Route } from 'react-router-dom';
-import MainNavbar from './components/MainNavbar';
+import "bootstrap/dist/css/bootstrap.min.css";
+import About from "./components/About";
+import Welcome from "./components/Welcome";
+import { Switch, Route } from "react-router-dom";
+import MainNavbar from "./components/MainNavbar";
 import { BrowserRouter } from "react-router-dom";
+import MainFooter from "./components/MainFooter";
+import ResponsiveDrawer from "./components/Localizations";
+import MainCarousel from "./components/MainCarousel";
+import AppInfo from "./components/AppInfo";
+import MainGrid from "./components/MainGrid";
 
 class App extends React.Component {
   constructor() {
@@ -26,28 +31,42 @@ class App extends React.Component {
           <header>
             <MainNavbar />
           </header>
+          <br /><br /><br /><br /><br /><br />
           <Switch>
+            <Route path="/localizations">
+              <ResponsiveDrawer />
+            </Route>
             <Route path="/about">
               <About />
             </Route>
             <Route path="/">
-              {this.main()}
+              {this.main2()}
             </Route>
           </Switch>
-        </div></BrowserRouter>
+        </div>
+        <MainFooter />
+      </BrowserRouter>
     );
   }
 
   main() {
     return (
       <div className="App-content">
-                   <Welcome name="ASW students"/>
+        <Welcome name="ASW students" />
         <EmailForm refreshUsers={this.refreshUsers.bind(this)} />
         <UserList users={this.state.users} />
         <a className="App-link"
           href="https://github.com/pglez82/radarin_0"
           target="_blank"
           rel="noopener noreferrer">Source code</a>
+      </div>
+    );
+  }
+
+  main2() {
+    return (<div>
+      <MainCarousel />
+      <AppInfo />
       </div>
     );
   }
