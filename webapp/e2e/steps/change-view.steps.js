@@ -1,5 +1,5 @@
 const {defineFeature, loadFeature}=require('jest-cucumber');
-const feature = loadFeature('./features/register-form.feature');
+const feature = loadFeature('./features/change-view.feature');
 
 defineFeature(feature, test => {
   
@@ -7,7 +7,7 @@ defineFeature(feature, test => {
     await global.page.goto('http://localhost:3000')
   })
 
-  test('The user is not registered in the site', ({given,when,then}) => {
+  /*test('The user is not registered in the site', ({given,when,then}) => {
     
     let email;
     let username;
@@ -43,10 +43,10 @@ defineFeature(feature, test => {
     then('An error message should be shown in the screen', async () => {
     });
     
-  });
+  });*/
 
-  /*test("Changing views", ({when, then}) => {
-      when("I press the localizations button in the nav", async () => {
+  test("The user is in the main page", ({when, then}) => {
+      when("I click on the localizations button", async () => {
           await expect(page).toMatch("Home");
           await expect(page).toClick("a", {text: "Localizations"});
       });
@@ -54,5 +54,5 @@ defineFeature(feature, test => {
       then("We are redirected to the localizations view", async () => {
           await expect(page).toMatch("Home");
       });
-  });*/
+  });
 });
