@@ -1,11 +1,11 @@
-const {defineFeature, loadFeature}=require('jest-cucumber');
-const feature = loadFeature('./features/change-view.feature');
+const {defineFeature, loadFeature}=require("jest-cucumber");
+const feature = loadFeature("./features/change-view.feature");
 
 defineFeature(feature, test => {
   
   beforeEach(async () => {
-    await global.page.goto('http://localhost:3000')
-  })
+    await global.page.goto("http://localhost:3000");
+  });
 
   /*test('The user is not registered in the site', ({given,when,then}) => {
     
@@ -46,7 +46,7 @@ defineFeature(feature, test => {
   });*/
 
   test("The user is in the main page", ({given, when, then}) => {
-      given('A new user', () => {
+      given("A new user", () => {
 
       });
 
