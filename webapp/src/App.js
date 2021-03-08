@@ -12,6 +12,7 @@ import MainFooter from "./components/MainFooter";
 import ResponsiveDrawer from "./components/Localizations";
 import MainCarousel from "./components/MainCarousel";
 import AppInfo from "./components/AppInfo";
+import LoginPage from "./components/LoginPage";
 
 class App extends React.Component {
   constructor() {
@@ -37,6 +38,9 @@ class App extends React.Component {
             </Route>
             <Route path="/about">
               <About />
+            </Route>
+            <Route path="/login">
+              <LoginPage></LoginPage>
             </Route>
             <Route path="/">
               {this.main2()}
@@ -70,5 +74,21 @@ class App extends React.Component {
     );
   }
 }
+
+// function Main() {
+//   const [users, setUsers] = React.useState([]);
+
+//   return (
+//     <div className="App-content">
+//       <Welcome name="ASW students" />
+//       <EmailForm refreshUsers={setUsers()} />
+//       <UserList users={users} />
+//       <a className="App-link"
+//         href="https://github.com/pglez82/radarin_0"
+//         target="_blank"
+//         rel="noopener noreferrer">Source code</a>
+//     </div>
+//   );
+// }
 
 export default App;
