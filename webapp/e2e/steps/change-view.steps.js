@@ -45,7 +45,11 @@ defineFeature(feature, test => {
     
   });*/
 
-  test("The user is in the main page", ({when, then}) => {
+  test("The user is in the main page", ({given, when, then}) => {
+      given('A new user', () => {
+
+      });
+
       when("I click on the localizations button", async () => {
           await expect(page).toMatch("Home");
           await expect(page).toClick("a", {text: "Localizations"});
