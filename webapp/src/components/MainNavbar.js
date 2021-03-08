@@ -1,7 +1,7 @@
 import React from "react";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
-import NavbarSession from "./NavbarSession.js"
+import NavbarSession from "./NavbarSession.js";
 import { Link } from "react-router-dom";
 
 function MainNavbar() {
