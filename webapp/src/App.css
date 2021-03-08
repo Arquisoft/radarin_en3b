@@ -44,3 +44,25 @@
     transform: rotate(360deg);
   }
 }
+
+html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+#root {
+  min-height: 100%;
+  position: relative;
+  background: rgb(245, 244, 244);
+}
+
+.App {
+  padding-bottom: 5em;
+}

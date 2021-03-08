@@ -20,36 +20,17 @@
 compatible with Solid
 |None
 
-|Solid
-|Descentralised information that guarantees privacy for the users
-|Little documentation. The descentralisation of the information implies higher response times
+|Node
+|With this runtime environment for JS we will be able to design an scalable web application, oriented to asynchronous events
+|We are new to the tool, so it will take some time to get used to it
 
-|Github
-|Easy version control
-|None
+|Windows, Linux, and Android
+|The application have two parts, one web application that will be supported by every browser,
+and a native mobile app for Android
+|We will not suport iOS devices, and for using the localization part of the app the user must carry a smartphone
+
+|React
+|A library based on JavaScript that we will use for the frontend of the application, both in the
+web and in mobile versions, using react native in the latter
 
 |===
-
-
-[role="arc42help"]
-****
-.Contents
-Important, expensive, large scale or risky architecture decisions including rationals.
-With "decisions" we mean selecting one alternative based on given criteria.
-
-Please use your judgement to decide whether an architectural decision should be documented
-here in this central section or whether you better document it locally
-(e.g. within the white box template of one building block).
-
-Avoid redundancy. Refer to section 4, where you already captured the most important decisions of your architecture.
-
-.Motivation
-Stakeholders of your system should be able to comprehend and retrace your decisions.
-
-.Form
-Various options:
-
-* List or table, ordered by importance and consequences or:
-* more detailed in form of separate sections per decision
-* ADR (architecture decision record) for every important decision
-****
