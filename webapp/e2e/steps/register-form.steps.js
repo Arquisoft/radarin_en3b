@@ -7,7 +7,7 @@ defineFeature(feature, test => {
     await global.page.goto('http://localhost:3000')
   })
 
-  test('The user is not registered in the site', ({given,when,then}) => {
+  /*test('The user is not registered in the site', ({given,when,then}) => {
     
     let email;
     let username;
@@ -43,5 +43,16 @@ defineFeature(feature, test => {
     then('An error message should be shown in the screen', async () => {
     });
     
+  });*/
+
+  test('Changing views', ({when, then}) => {
+      when('I press the localizations button in the nav', async () => {
+          await expect(page).toMatch('Home');
+          await expect(page).toClick('a', {text: 'Localizations'});
+      });
+
+      then('We are redirected to the localizations view', async () => {
+          await expect(page).toMatch('Home');
+      });
   });
 });
