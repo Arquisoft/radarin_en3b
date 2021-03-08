@@ -1,7 +1,7 @@
 const {defineFeature, loadFeature}=require("jest-cucumber");
 const feature = loadFeature("./features/change-view.feature");
 
-defineFeature(feature, test => {
+defineFeature((feature, test) => {
   
   beforeEach(async () => {
     /*global page*/
