@@ -1,9 +1,9 @@
 import React from 'react';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import { useSession, useThing, CombinedDataProvider, Text } from '@inrupt/solid-ui-react';
+import { useSession, CombinedDataProvider, Text } from '@inrupt/solid-ui-react';
 import { Link } from 'react-router-dom';
 import Nav from 'react-bootstrap/Nav';
-import { FOAF, VCARD } from "@inrupt/lit-generated-vocab-common";
+import { FOAF } from "@inrupt/lit-generated-vocab-common";
 
 function NavbarSession() {
     const { session } = useSession();
