@@ -1,7 +1,7 @@
 
-import React from 'react';
-import { Map, MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
-import 'react-leaflet/'
+import React from "react";
+import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import "react-leaflet/";
 
 class MapView extends React.Component {
     render() {
@@ -19,7 +19,7 @@ class MapView extends React.Component {
               </Popup>
                 </Marker>
             </MapContainer>
-        </div>
+        </div>;
     }
 }
 
