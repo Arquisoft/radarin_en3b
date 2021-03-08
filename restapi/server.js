@@ -1,9 +1,9 @@
-const express = require("express")
+const express = require("express");
 const promBundle = require("express-prom-bundle");
 const cors = require('cors');
-const mongoose = require("mongoose")
-const ResourceServer = require('@solid/oidc-rs')
-const api = require("./api") 
+const mongoose = require("mongoose");
+const ResourceServer = require("@solid/oidc-rs");
+const api = require("./api") ;
 
 function connect(){
     //The MONGO_URI variable is the connection string to MongoDB Atlas (for production). This env variable is created in heroku.

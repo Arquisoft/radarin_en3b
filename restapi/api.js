@@ -8,7 +8,7 @@ router.get("/users/list", async (req, res) => {
 	res.send(users)
 })
 
-router.get("/test", async (req, res) => res.send('It lives!'));
+router.get("/test", async (req, res) => res.send("It lives!"));
 
 //register a new user
 router.post("/users/add", async (req, res) => {

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import { LoginButton, LogoutButton } from "@inrupt/solid-ui-react";
 function LoginPage() {
 
@@ -9,17 +9,8 @@ function LoginPage() {
 
     <React.Fragment>
       <input type="url" value={idp} onChange={(e) => setIdp(e.target.value)} />
-      <LoginButton
-
-        oidcIssuer={idp}
-
-        redirectUrl={window.location.href}
-
-        onError={console.log}
-
-      />
-      <LogoutButton onError={console.log} />
-      {/* <Dashboard /> */}
+      <LoginButton oidcIssuer={idp} redirectUrl={window.location.href}/>
+      <LogoutButton/>
     </React.Fragment>
 
   );
