@@ -128,7 +128,7 @@ function ResponsiveDrawer(props) {
         </Hidden>
       </nav>
       <main className={classes.content}>
-            <MapView />
+          <MapView />
       </main>
     </div>
   );

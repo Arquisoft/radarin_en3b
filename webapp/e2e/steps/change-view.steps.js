@@ -15,12 +15,12 @@ defineFeature(feature, (test) => {
       });
 
       when("I click on the localizations button", async () => {
-          await expect(page).toMatch("Home");
-          await expect(page).toClick("a", {text: "Localizations"});
+          await expect(page).toMatch("Mejora");
+          await expect(page).toClick({type:'xpath', value:"\\a"}, {text: "Localizations"});
       });
 
       then("We are redirected to the localizations view", async () => {
-          await expect(page).toMatch("Home");
+          await expect(page.title()).resolves.toMatch("React App");
       });
   });
 });
