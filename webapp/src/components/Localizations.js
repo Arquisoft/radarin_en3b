@@ -1,29 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
 import CssBaseline from "@material-ui/core/CssBaseline";
-// import Divider from "@material-ui/core/Divider";
 import Drawer from "@material-ui/core/Drawer";
 import Hidden from "@material-ui/core/Hidden";
 import IconButton from "@material-ui/core/IconButton";
-import InboxIcon from "@material-ui/icons/MoveToInbox";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
-import {
-    List,
-    ListItem,
-    ListItemIcon,
-    ListItemText,
-    Divider,
-    Typography
-} from '@material-ui/core'
-import LocationOnIcon from '@material-ui/icons/LocationOn';
 import MapView from './MapView';
 import MenuIcon from "@material-ui/icons/Menu";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
-import MapView from "./MapView";
 import "../css/Map.css";
 import LocationList from "./LocationsList";
 
@@ -63,6 +47,13 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function ResponsiveDrawer(props) {
+  const[coordinates, setCoordinates] = React.useState([40, 20]);
+
+  const handleCallback = (childData) => {
+    setCoordinates(childData);
+    console.log("Localizations receives: " + childData);
+  };
+
   const classes = useStyles();
   const theme = useTheme();
   const [mobileOpen, setMobileOpen] = React.useState(false);
@@ -75,87 +66,7 @@ function ResponsiveDrawer(props) {
     <div>
       <div className={classes.toolbar} />
 
-      <div>
-                <List component='nav'>
-                    <ListItem button onClick={this.showLocation}>
-                        <ListItemIcon>
-                            <LocationOnIcon />
-                        </ListItemIcon>
-                        <ListItemText primary='Nombre amigo #1'
-                            secondary={
-                                <React.Fragment>
-                                    <Typography
-                                        component="span"
-                                        variant="body2"
-                                        color="textPrimary"
-                                    >
-                                        Gijón —
-                                        </Typography>
-                                    {"43.3589,-5.8461"}
-                                </React.Fragment>
-                            } />
-                    </ListItem>
-
-                    <ListItem button>
-                        <ListItemIcon>
-                            <LocationOnIcon />
-                        </ListItemIcon>
-                        <ListItemText primary='Nombre amigo #2'
-                            secondary={
-                                <React.Fragment>
-                                    <Typography
-                                        component="span"
-                                        variant="body2"
-                                        color="textPrimary"
-                                    >
-                                        Oviedo —
-                                        </Typography>
-                                    {"43.5424,-5.6631"}
-                                </React.Fragment>
-                            } />
-                    </ListItem>
-
-                    <ListItem button>
-                        <ListItemIcon>
-                            <LocationOnIcon />
-                        </ListItemIcon>
-                        <ListItemText primary='Nombre amigo #3'
-                            secondary={
-                                <React.Fragment>
-                                    <Typography
-                                        component="span"
-                                        variant="body2"
-                                        color="textPrimary"
-                                    >
-                                        Cangas del Narcea —
-                                        </Typography>
-                                    {"43.1757, -6.5492"}
-                                </React.Fragment>
-                            } />
-                    </ListItem>
-
-                    <Divider />
-
-                </List>
-            </div>
-      {/*<Divider />
-      <List>
-        {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
-        ))}
-      </List>
-      <Divider />
-      <List>
-        {["All mail", "Trash", "Spam"].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
-        ))}
-        </List>*/}
+      <LocationList parentCallback = {handleCallback}/>
     </div>
   );
 
@@ -202,7 +113,7 @@ function ResponsiveDrawer(props) {
         </Hidden>
       </nav>
       <main className={classes.content}>
-          <MapView />
+        <MapView coordinates = {coordinates}/>
       </main>
     </div>
   );

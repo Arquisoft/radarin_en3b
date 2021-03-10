@@ -8,27 +8,19 @@ import {
     Typography
 } from '@material-ui/core'
 import LocationOnIcon from '@material-ui/icons/LocationOn';
-import MapView from './MapView';
-
-var Mapa = new MapView();
 
 class LocationList extends React.Component {
 
-    constructor(props) {
-        super(props)
-
-        this.state = {
-            coordinates: [51.505, -0.09]
-        }
-
-        this.showLocation = this.showLocation.bind(this);
+    onLocationChange = (event) => {
+        this.props.parentCallback([4, 5]);
+        event.preventDefault();
     }
 
-    render = () => {
+    render() {
         return (
             <div>
                 <List component='nav'>
-                    <ListItem button onClick={this.showLocation}>
+                    <ListItem button onClick={this.onLocationChange}>
                         <ListItemIcon>
                             <LocationOnIcon />
                         </ListItemIcon>
@@ -94,7 +86,7 @@ class LocationList extends React.Component {
 
     showLocation(param) {
         this.setState({
-            coordinates:param.split(',')
+            coordinates: param.split(',')
         });
     }
 }
