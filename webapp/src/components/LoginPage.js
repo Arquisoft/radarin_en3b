@@ -49,7 +49,7 @@ function LoginPage() {
   const history = useHistory();
   const handleSubmit = () => {
     history.push("/home");
-  }
+  };
 
   const classes = useStyles();
   const [idp, setIdp] = useState("https://inrupt.net");
