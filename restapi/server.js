@@ -15,6 +15,7 @@ function connect(){
         //Monitoring middleware
         const metricsMiddleware = promBundle({includeMethod: true});
         app.use(metricsMiddleware);
+        //TODO: Check with DPoP tokens (create a middleware)
         app.use(rs.authenticate());
         app.use(cors());
         app.options('*', cors());

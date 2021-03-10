@@ -1,31 +1,34 @@
-const express = require("express")
-const User = require("./models/users")
-const router = express.Router()
+const express = require("express");
+const TrackedLocation = require("./models/TrackedLocation");
+const i = require("@solid/identity-token-verifier");
+const tokenVerifier = i.createSolidTokenVerifier();
+const router = express.Router();
 
-// Get all users
-router.get("/users/list", async (req, res) => {
-    const users = await User.find({}).sort('-_id') //Inverse order
-	res.send(users)
-})
+router.post("/locations", async (req, res) => {
+    const trackedLocation = new TrackedLocation({
+        webId: req.claims.webid,
+        coords: req.body.coords,
+        timestamp: req.body.timestamp
+    });
+    trackedLocation.save();
+    res.send(trackedLocation);
+});
 
-router.get("/test", async (req, res) => res.send("It lives!"));
+router.get("/locations", async (req, res) => {
+    if (req.query.webId == null)
+        return res.sendStatus(400);
+    if (req.query.webId !== req.claims.webid)
+        return res.sendStatus(403);
 
-//register a new user
-router.post("/users/add", async (req, res) => {
-    let name = req.body.name;
-    let email = req.body.email;
-    //Check if the device is already in the db
-    let user = await User.findOne({ email: email })
-    if (user)
-        res.send({error:"Error: This user is already registered"})
-    else{
-        user = new User({
-            name: name,
-            email: email,
-        })
-        await user.save()
-        res.send(user)
+    const webId = req.claims.webid;
+
+    if (req.query.last === 'true') {
+        const lastLocation = await TrackedLocation.findOne({ webId }).sort({ timestamp: -1 });
+        return res.send(lastLocation);
     }
-})
 
-module.exports = router
+    const userLocations = await TrackedLocation.find({ webId }).sort({ timestamp: -1 });
+    res.send(userLocations);
+});
+
+module.exports = router;
