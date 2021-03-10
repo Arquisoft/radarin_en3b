@@ -1,7 +1,5 @@
 const express = require("express");
 const TrackedLocation = require("./models/TrackedLocation");
-const i = require("@solid/identity-token-verifier");
-const tokenVerifier = i.createSolidTokenVerifier();
 const router = express.Router();
 
 router.post("/locations", async (req, res) => {
