@@ -1,5 +1,6 @@
 const express = require("express");
 const TrackedLocation = require("./models/TrackedLocation");
+/*eslint new-cap: ["error", { "capIsNewExceptionPattern": "^express\.." }]*/
 const router = express.Router();
 
 router.post("/locations", async (req, res) => {
@@ -13,14 +14,16 @@ router.post("/locations", async (req, res) => {
 });
 
 router.get("/locations", async (req, res) => {
-    if (req.query.webId == null)
+    if (req.query.webId == null) {
         return res.sendStatus(400);
-    if (req.query.webId !== req.claims.webid)
+    }
+    if (req.query.webId !== req.claims.webid) {
         return res.sendStatus(403);
+    }
 
     const webId = req.claims.webid;
 
-    if (req.query.last === 'true') {
+    if (req.query.last === "true") {
         const lastLocation = await TrackedLocation.findOne({ webId }).sort({ timestamp: -1 });
         return res.send(lastLocation);
     }

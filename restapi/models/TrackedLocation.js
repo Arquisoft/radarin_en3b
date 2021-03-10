@@ -1,3 +1,4 @@
+/*eslint new-cap: ["error", { "capIsNewExceptionPattern": "^mongoose\.." }]*/
 const mongoose = require("mongoose");
 
 const geolocationSchema = mongoose.Schema({
