@@ -38,7 +38,7 @@ describe('locations ', () => {
      * Tests that a user can be created through the productService without throwing any errors.
      */
     it('can be created correctly', async () => {
-        const response = await request(app).post('/api/users/add')
+        const response = await request(app).post('/locations')
             .send({
                 coords: {
                     accuracy: 52,
