@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { LoginButton, LogoutButton } from "@inrupt/solid-ui-react";
+import { LoginButton } from "@inrupt/solid-ui-react";
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
@@ -10,6 +10,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import "../css/DisableHighlighted.css";
 import { Link } from "@material-ui/core";
+import { useHistory } from "react-router";
 
 
 const useStyles = makeStyles({
@@ -45,40 +46,47 @@ const useStyles = makeStyles({
 });
 
 function LoginPage() {
+  const history = useHistory();
+  const handleSubmit = () => {
+    history.push("/home");
+  }
+
   const classes = useStyles();
   const [idp, setIdp] = useState("https://inrupt.net");
 
 
   return (
-    <Card className={classes.root}>
-      <CardActionArea disableRipple className={classes.removeStyles}>
-        <CardContent>
-          <Typography gutterBottom variant="h3" component="h2" align="center">
-            Radarin
+    <form noValidate onSubmit={handleSubmit}>
+      <Card className={classes.root}>
+        <CardActionArea disableRipple className={classes.removeStyles}>
+          <CardContent>
+            <Typography gutterBottom variant="h3" component="h2" align="center">
+              Radarin
           </Typography>
-          <Typography variant="h5" component="p" align="center">
-            Sign In
+            <Typography variant="h5" component="p" align="center">
+              Sign In
           </Typography>
-          <TextField
-            label="URL"
-            helperText="Introduce your Provider URL"
-            variant="outlined"
-            fullWidth
-            placeholder={idp}
-            className={classes.input}
-            onChange={(e) => setIdp(e.target.value)}
-          />
-        </CardContent>
-      </CardActionArea>
-      <CardActions className={classes.stopFlex}>
-        <Typography variant="body2" component="p" className="text-center">
-          Don't have one? You can get it here: <Link className="ml-1" href="https://inrupt.com/" target="_blank"><strong>Inrupt</strong></Link>
-        </Typography>
-        <LoginButton oidcIssuer={idp} redirectUrl={window.location.href}>
-          <Button color="primary" variant="contained" className={classes.signIn}>Sign In</Button>
-        </LoginButton>
-      </CardActions>
-    </Card>
+            <TextField
+              label="URL"
+              helperText="Introduce your Provider URL"
+              variant="outlined"
+              fullWidth
+              placeholder={idp}
+              className={classes.input}
+              onChange={(e) => setIdp(e.target.value)}
+            />
+          </CardContent>
+        </CardActionArea>
+        <CardActions className={classes.stopFlex}>
+          <Typography variant="body2" component="p" className="text-center">
+            Don't have one? You can get it here: <Link className="ml-1" href="https://inrupt.com/" target="_blank"><strong>Inrupt</strong></Link>
+          </Typography>
+          <LoginButton oidcIssuer={idp} type="submit">
+            <Button color="primary" variant="contained" className={classes.signIn} onClick={handleSubmit}>Sign In</Button>
+          </LoginButton>
+        </CardActions>
+      </Card>
+    </form>
 
 
     /*<React.Fragment>
