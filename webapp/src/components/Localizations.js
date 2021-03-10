@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import Divider from "@material-ui/core/Divider";
+// import Divider from "@material-ui/core/Divider";
 import Drawer from "@material-ui/core/Drawer";
 import Hidden from "@material-ui/core/Hidden";
 import IconButton from "@material-ui/core/IconButton";
@@ -10,12 +10,22 @@ import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
-import MailIcon from "@material-ui/icons/Mail";
+import {
+    List,
+    ListItem,
+    ListItemIcon,
+    ListItemText,
+    Divider,
+    Typography
+} from '@material-ui/core'
+import LocationOnIcon from '@material-ui/icons/LocationOn';
+import MapView from './MapView';
 import MenuIcon from "@material-ui/icons/Menu";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
 import MapView from "./MapView";
 import "../css/Map.css";
+import LocationList from "./LocationsList";
 
 const drawerWidth = 240;
 
@@ -37,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   // necessary for content to be below app bar
-  toolbar: theme.mixins.toolbar,
+  // toolbar: theme.mixins.toolbar,
   drawerPaper: {
     width: drawerWidth,
     marginTop: "4.2em",
@@ -64,7 +74,71 @@ function ResponsiveDrawer(props) {
   const drawer = (
     <div>
       <div className={classes.toolbar} />
-      <Divider />
+
+      <div>
+                <List component='nav'>
+                    <ListItem button onClick={this.showLocation}>
+                        <ListItemIcon>
+                            <LocationOnIcon />
+                        </ListItemIcon>
+                        <ListItemText primary='Nombre amigo #1'
+                            secondary={
+                                <React.Fragment>
+                                    <Typography
+                                        component="span"
+                                        variant="body2"
+                                        color="textPrimary"
+                                    >
+                                        Gijón —
+                                        </Typography>
+                                    {"43.3589,-5.8461"}
+                                </React.Fragment>
+                            } />
+                    </ListItem>
+
+                    <ListItem button>
+                        <ListItemIcon>
+                            <LocationOnIcon />
+                        </ListItemIcon>
+                        <ListItemText primary='Nombre amigo #2'
+                            secondary={
+                                <React.Fragment>
+                                    <Typography
+                                        component="span"
+                                        variant="body2"
+                                        color="textPrimary"
+                                    >
+                                        Oviedo —
+                                        </Typography>
+                                    {"43.5424,-5.6631"}
+                                </React.Fragment>
+                            } />
+                    </ListItem>
+
+                    <ListItem button>
+                        <ListItemIcon>
+                            <LocationOnIcon />
+                        </ListItemIcon>
+                        <ListItemText primary='Nombre amigo #3'
+                            secondary={
+                                <React.Fragment>
+                                    <Typography
+                                        component="span"
+                                        variant="body2"
+                                        color="textPrimary"
+                                    >
+                                        Cangas del Narcea —
+                                        </Typography>
+                                    {"43.1757, -6.5492"}
+                                </React.Fragment>
+                            } />
+                    </ListItem>
+
+                    <Divider />
+
+                </List>
+            </div>
+      {/*<Divider />
       <List>
         {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
           <ListItem button key={text}>
@@ -81,7 +155,7 @@ function ResponsiveDrawer(props) {
             <ListItemText primary={text} />
           </ListItem>
         ))}
-      </List>
+        </List>*/}
     </div>
   );
 
