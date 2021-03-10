@@ -29,5 +29,10 @@
   },
   "directories": {
     "test": "tests"
+  },
+  "config": {
+    "mongodbMemoryServer": {
+      "debug": "1"
+    }
   }
 }

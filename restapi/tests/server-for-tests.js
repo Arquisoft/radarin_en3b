@@ -27,8 +27,8 @@ module.exports.startserver = async () => {
     app.use(cors());
     app.options('*', cors());
     app.use(express.json());
-    app.use("/api", api);
     app.use(auth);
+    app.use("/api", api);
 
     server = await app.listen(5000);
     console.log("Server has started!");

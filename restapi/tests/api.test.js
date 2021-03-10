@@ -37,22 +37,28 @@ describe('locations ', () => {
     /**
      * Tests that a user can be created through the productService without throwing any errors.
      */
+    const webId = "https://radarin.inrupt.net/profile/card#me";
+    const timestamp = 1509152059444;
+    const coords = {
+        accuracy: 52,
+        altitude: null,
+        altitudeAccuracy: null,
+        heading: null,
+        latitude: 27.380583,
+        longitude: 33.631839,
+        speed: null
+    };
     it('can be created correctly', async () => {
         const response = await request(app).post('/api/locations')
-            .send({
-                coords: {
-                    accuracy: 52,
-                    altitude: null,
-                    altitudeAccuracy: null,
-                    heading: null,
-                    latitude: 27.380583,
-                    longitude: 33.631839,
-                    speed: null
-                },
-                timestamp: 1509152059444
-            })
+            .send({ coords, timestamp })
             .set('Accept', 'application/json');
         expect(response.statusCode).toBe(200);
-        expect(response.body.webid).toBe("https://radarin.inrupt.net/profile/card#me");
+        expect(response.body.webId).toBe(webId);
+        expect(response.body.coords.latitude).toBe(coords.latitude);
+        expect(response.body.timestamp).toBe(timestamp);
+    });
+    it('can be listed', async () => {
+        const response = await request(app).get(`/api/locations?webId=${encodeURIComponent(webId)}`);
+        expect(response.statusCode).toBe(200);
     });
 });
