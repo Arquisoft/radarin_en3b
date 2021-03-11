@@ -1,0 +1,36 @@
+[[section-design-decisions]]
+== Design Decisions
+[%header, cols=3]
+|===
+
+|Decision
+|Advantages
+|Disadvantages
+
+|JavaScript
+|Unified language in backend and frontend. Easy for working with Solid. Widely used and documented
+|Hard to test and debug, we are not experts on the language
+
+|MongoDB
+|NoSQL Database, perfect for the requeriments of this proyect
+|Uses high memory for data storage, document size limit is 16mb. No transaction support
+
+|JSON-LD
+|Makes working with data easier, works well with MongoDB. Easy to convert from JSON to JSON-LD, and
+compatible with Solid
+|None
+
+|Node
+|With this runtime environment for JS we will be able to design an scalable web application, oriented to asynchronous events
+|We are new to the tool, so it will take some time to get used to it
+
+|Windows, Linux, and Android
+|The application have two parts, one web application that will be supported by every browser,
+and a native mobile app for Android
+|We will not suport iOS devices, and for using the localization part of the app the user must carry a smartphone
+
+|React
+|A library based on JavaScript that we will use for the frontend of the application, both in the
+web and in mobile versions, using react native in the latter
+
+|===

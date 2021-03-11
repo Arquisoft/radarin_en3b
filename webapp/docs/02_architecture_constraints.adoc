@@ -1,0 +1,49 @@
+[[section-architecture-constraints]]
+== Architecture Constraints
+
+We will divide them in two main parts: technical constraints and business constraints.
+
+=== Technical Constraints
+
+Ones related to fixed technical design desicions that cannot be changed.
+
+[%header, cols=2]
+|===
+|Constraint
+|Explanation
+
+|Localization
+|We have to access the localization of the user in order to inform their friends that they are near.
+
+|Solid
+|Solid is a specification that allows users to store their data in a decentralized way through the use of Pods. This way people is propietary of their information,
+allowing or rejecting apps to access it at any moment.
+
+|Data storage
+|As we have to follow the Solid specification, we will avoid storing any data that is not essential.
+
+|Git
+|GitHub is a framework for creating a Version Control System
+
+|===
+
+=== Business Constraints
+
+Ones related on unchangeable business decisions that restrict the software architecture design.
+
+[%header, cols=2]
+|===
+|Constraint
+|Explanation
+
+|Schedule
+|We have to finish the application by the end of the semester
+
+|Bugdet
+|As we are students and this proyect is part of the subjet, we have no budget, which implies that
+we won't be able to use any paid software or tools
+
+|Team composition
+|The development team consists in 6 people
+
+|===

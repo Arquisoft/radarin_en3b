@@ -1,0 +1,40 @@
+[[section-glossary]]
+== Glossary
+
+
+
+[role="arc42help"]
+****
+.Contents
+The most important domain and technical terms that your stakeholders use when discussing the system.
+
+You can also see the glossary as source for translations if you work in multi-language teams.
+
+.Motivation
+You should clearly define your terms, so that all stakeholders
+
+* have an identical understanding of these terms
+* do not use synonyms and homonyms
+
+.Form
+A table with columns <Term> and <Definition>.
+
+Potentially more columns in case you need translations.
+
+****
+
+[options="header"]
+|===
+| Term         | Definition
+| Bootstrap    | Bootstrap is a  CSS framework. It contains CSS- and JavaScript-based design templates for buttons, navigation, and other interface components.
+| ClickUp    | ClickUp is a work platform which allows to assign tasks, manage projects for clients, and collaborate with colleagues on documents.
+| Docker    | Docker is a set of platforms that use virtualization to deliver software in packages called containers.
+| Heroku     | Heroku is a platform that enables developers to build, run, and operate applications entirely in the cloud.
+| Json     | JSON is a file format, that uses human-readable text to store and transmit data objects.
+| MongoDB     | MongoDB is a database program. It uses JSON-like documents with optional schemas.
+| Node.js     | Node.js is an open-source, JavaScript runtime environment that executes JavaScript code outside a web browser.
+| OpenStreetMap     | OpenStreetMap (OSM) is a collaborative project to create a free editable map of the world.
+| Pod     | A Pod represents a single instance of a running process in your cluster. Pods contain one or more containers, such as Docker containers.
+| React     | React is an open-source JavaScript library for building user interfaces or UI components.
+| Solid     | SOLID is a mnemonic acronym for five design principles intended to make software designs more understandable, flexible, and maintainable.
+|===
