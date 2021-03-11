@@ -81,7 +81,7 @@ class LocationList extends React.Component {
 
                 </List>
             </div>
-        )
+        );
     }
 
 }
