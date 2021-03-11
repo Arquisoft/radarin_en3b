@@ -10,12 +10,12 @@ class MapView extends React.Component {
 
         this.state = {
             coords: this.props.coordinates
-        }
+        };
 
     }
 
     static getDerivedStateFromProps(props, state) {
-        console.log("MapView receives. " + props.coordinates);
+        //console.log("MapView receives. " + props.coordinates);
         return {
             coords: props.coordinates
         };

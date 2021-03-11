@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react";
 import {
     List,
     ListItem,
@@ -6,13 +6,13 @@ import {
     ListItemText,
     Divider,
     Typography
-} from '@material-ui/core'
-import LocationOnIcon from '@material-ui/icons/LocationOn';
+} from "@material-ui/core";
+import LocationOnIcon from "@material-ui/icons/LocationOn";
 
 class LocationList extends React.Component {
 
     handleClick = (event, coordinates) => {
-        this.props.parentCallback(coordinates.split(','));
+        this.props.parentCallback(coordinates.split(","));
         event.preventDefault();
     }
 
@@ -20,7 +20,7 @@ class LocationList extends React.Component {
         return (
             <div>
                 <List component='nav'>
-                    <ListItem button type="checkbox" value={'43.3589,-5.8461'} defaultChecked={false} onClick={(e) => this.handleClick(e,'43.3589,-5.8461')}>
+                    <ListItem button type="checkbox" value={"43.3589,-5.8461"} defaultChecked={false} onClick={(e) => this.handleClick(e,"43.3589,-5.8461")}>
                         <ListItemIcon>
                             <LocationOnIcon />
                         </ListItemIcon>
@@ -39,7 +39,7 @@ class LocationList extends React.Component {
                             } />
                     </ListItem>
 
-                    <ListItem button type="checkbox" value={'43.5424,-5.6631'} defaultChecked={false} onClick={(e) => this.handleClick(e,'43.5424,-5.6631')}>
+                    <ListItem button type="checkbox" value={"43.5424,-5.6631"} defaultChecked={false} onClick={(e) => this.handleClick(e,"43.5424,-5.6631")}>
                         <ListItemIcon>
                             <LocationOnIcon />
                         </ListItemIcon>
@@ -58,7 +58,7 @@ class LocationList extends React.Component {
                             } />
                     </ListItem>
 
-                    <ListItem button type="checkbox" value={'43.1757, -6.5492'} defaultChecked={false} onClick={(e) => this.handleClick(e,'43.1757, -6.5492')}>
+                    <ListItem button type="checkbox" value={"43.1757, -6.5492"} defaultChecked={false} onClick={(e) => this.handleClick(e,"43.1757, -6.5492")}>
                         <ListItemIcon>
                             <LocationOnIcon />
                         </ListItemIcon>
@@ -84,11 +84,6 @@ class LocationList extends React.Component {
         )
     }
 
-    showLocation(param) {
-        this.setState({
-            coordinates: param.split(',')
-        });
-    }
 }
 
-export default LocationList
+export default LocationList;

@@ -4,7 +4,7 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import Drawer from "@material-ui/core/Drawer";
 import Hidden from "@material-ui/core/Hidden";
 import IconButton from "@material-ui/core/IconButton";
-import MapView from './MapView';
+import MapView from "./MapView";
 import MenuIcon from "@material-ui/icons/Menu";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
@@ -51,7 +51,7 @@ function ResponsiveDrawer(props) {
 
   const handleCallback = (childData) => {
     setCoordinates(childData);
-    console.log("Localizations receives: " + childData);
+    //console.log("Localizations receives: " + childData);
   };
 
   const classes = useStyles();
