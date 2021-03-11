@@ -23,7 +23,12 @@ class MapView extends React.Component {
 
     render() {
         return <div className="divMap d-flex justify-content-center">
-            <MapContainer className="mapContainer" center={this.state.coords} zoom={13} scrollWheelZoom={false} dragging={true}>
+            <MapContainer
+                className="mapContainer"
+                center={this.state.coords}
+                zoom={8}
+                scrollWheelZoom={false}
+                dragging={true}>
                 <TileLayer
                     attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

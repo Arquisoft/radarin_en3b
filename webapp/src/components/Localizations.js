@@ -47,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function ResponsiveDrawer(props) {
-  const[coordinates, setCoordinates] = React.useState([40, 20]);
+  const[coordinates, setCoordinates] = React.useState([43.3589, -5.8461]);
 
   const handleCallback = (childData) => {
     setCoordinates(childData);
