@@ -1,8 +1,11 @@
 import React from 'react';
 import { View, Text, ScrollView, Image} from 'react-native';
+import {DataTable, Avatar } from 'react-native-paper';
 import { Card} from 'react-native-elements'
 import styles from './MyStyles'
 import MyMenu from './MyMenu'
+import { GraphQlLdProvider, Query, useQuery } from 'solid-react-graphql-ld';
+import { LoginButton, Value, List } from '@solid/react';
 
 const friends = [
   {
@@ -36,6 +39,9 @@ const friends = [
     distance: '2 km'
   },
 ];
+
+const username = "[https://radarin.inrupt.net/profile/#me].name";
+const userfriends = "[https://radarin.inrupt.net/profile/#me].friends.lenght";
 
 {/*Esto debería ir en el return delante de Navigation container pero.. cosas raras con comentarios
     <SafeAreaView>
@@ -81,7 +87,22 @@ export default function HomeScreen({navigation}) {
           );
         })
       }
-    </View>
-    </ScrollView>
+
+<DataTable>
+          <DataTable.Row>
+          <DataTable.Cell>Full name</DataTable.Cell>
+          <DataTable.Cell><Value src={username}/></DataTable.Cell>
+          </DataTable.Row>
+          <DataTable.Row>
+          <DataTable.Cell>Friends</DataTable.Cell>
+          <DataTable.Cell><Value src={userfriends}/></DataTable.Cell>
+          </DataTable.Row>
+            
+          </DataTable>
+
+    </View>    
+  </ScrollView>
   );
 }
+
+
