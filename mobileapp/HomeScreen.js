@@ -1,11 +1,9 @@
 import React from 'react';
-import { View, Text, ScrollView, Image} from 'react-native';
-import {DataTable, Avatar } from 'react-native-paper';
-import { Card} from 'react-native-elements'
+import { useState, useEffect } from 'react';
+import { View, Text, ScrollView, Image, FlatList } from 'react-native';
+import { Card } from 'react-native-elements'
 import styles from './MyStyles'
 import MyMenu from './MyMenu'
-import { GraphQlLdProvider, Query, useQuery } from 'solid-react-graphql-ld';
-import { LoginButton, Value, List } from '@solid/react';
 
 const friends = [
   {
@@ -43,6 +41,29 @@ const friends = [
 const username = "[https://radarin.inrupt.net/profile/#me].name";
 const userfriends = "[https://radarin.inrupt.net/profile/#me].friends.lenght";
 
+const $rdf = require("rdflib");
+const store = $rdf.graph();
+const me = store.sym('https://radarin.inrupt.net/profile/card#me');
+const profile = me.doc();
+const VCARD = new $rdf.Namespace("http://www.w3.org/2006/vcard/ns#");
+const FOAF = $rdf.Namespace('http://xmlns.com/foaf/0.1/');
+const fetcher = new $rdf.Fetcher(store);
+fetcher.load(profile).then(response => {
+  let name = store.any(me, VCARD("fn"));
+  console.log("Loaded " + name);
+}, err => {
+  console.log("Load failed " + err);
+}).then(() => {
+  let names = store.each(me, FOAF("knows"));
+  parseNames(names);
+});
+
+function parseNames(names) {
+  names.forEach(name => {
+    console.log(name + "\n\n");
+  });
+}
+
 {/*Esto debería ir en el return delante de Navigation container pero.. cosas raras con comentarios
     <SafeAreaView>
       <TouchableOpacity
@@ -51,57 +72,44 @@ const userfriends = "[https://radarin.inrupt.net/profile/#me].friends.lenght";
         style={styles.touchableOpacityStile}>
           <Image style={styles.icon} source={require("./assets/add-24px.png")}/>
     </TouchableOpacity>*/}
-    
-export default function HomeScreen({navigation}) {
+
+export default function HomeScreen({ navigation }) {
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: (() => (
-            <MyMenu navigation={navigation}></MyMenu>
-          )
+        <MyMenu navigation={navigation}></MyMenu>
+      )
       ),
       headerLeft: (() => (
         <View style={styles.iconWrapper}>
-        <Image
-        style={styles.icon}
-        source={require('./assets/icon.png')}
-      />
-      </View>
+          <Image
+            style={styles.icon}
+            source={require('./assets/icon.png')}
+          />
+        </View>
       )
-  ),
+      ),
     });
   }, [navigation]);
 
   return (
     <ScrollView>
-    <View style={styles.mainScreenContainer}>
-      <Text style={styles.normalText}>Friends close to your location:</Text>
-      {
-      friends.map((u) => {
-        return (
-          <Card containerStyle={styles.card}>
-            <Card.Title>{u.name}</Card.Title>
-            <Card.Divider/>
-            <Text style={styles.name}>{u.distance}</Text>
-          </Card>
-          );
-        })
-      }
-
-<DataTable>
-          <DataTable.Row>
-          <DataTable.Cell>Full name</DataTable.Cell>
-          <DataTable.Cell><Value src={username}/></DataTable.Cell>
-          </DataTable.Row>
-          <DataTable.Row>
-          <DataTable.Cell>Friends</DataTable.Cell>
-          <DataTable.Cell><Value src={userfriends}/></DataTable.Cell>
-          </DataTable.Row>
-            
-          </DataTable>
-
-    </View>    
-  </ScrollView>
+      <View style={styles.mainScreenContainer}>
+        <Text style={styles.normalText}>Friends close to your location:</Text>
+        {
+          friends.map((u) => {
+            return (
+              <Card containerStyle={styles.card}>
+                <Card.Title>{u.name}</Card.Title>
+                <Card.Divider />
+                <Text style={styles.name}>{u.distance}</Text>
+              </Card>
+            );
+          })
+        }
+      </View>
+    </ScrollView>
   );
 }
 
