@@ -38,9 +38,6 @@ const friends = [
   },
 ];
 
-const username = "[https://radarin.inrupt.net/profile/#me].name";
-const userfriends = "[https://radarin.inrupt.net/profile/#me].friends.lenght";
-
 const $rdf = require("rdflib");
 const store = $rdf.graph();
 const me = store.sym('https://radarin.inrupt.net/profile/card#me');
