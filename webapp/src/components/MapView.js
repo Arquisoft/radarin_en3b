@@ -8,6 +8,10 @@ class MapView extends React.Component {
     constructor(props) {
         super(props);
 
+        this.mapRef = React.createRef();
+
+        //this.getDerivedStateFromProps = this.getDerivedStateFromProps.bind(this);
+
         this.state = {
             coords: this.props.coordinates
         };
@@ -16,6 +20,7 @@ class MapView extends React.Component {
 
     static getDerivedStateFromProps(props, state) {
         //console.log("MapView receives. " + props.coordinates);
+        this.mapInstance.flyTo(props.coordinates);
         return {
             coords: props.coordinates
         };
@@ -24,6 +29,7 @@ class MapView extends React.Component {
     render() {
         return <div className="divMap d-flex justify-content-center">
             <MapContainer
+                whenCreated={mapInstance => { this.mapRef.current = mapInstance }}
                 className="mapContainer"
                 center={this.state.coords}
                 zoom={8}
