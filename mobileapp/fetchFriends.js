@@ -1,6 +1,9 @@
 const $rdf = require("rdflib");
 const store = $rdf.graph();
+
+//For testing purposes, must be changed later
 const userId = 'https://radarin.inrupt.net/profile/card#me';
+
 const me = store.sym(userId);
 const profile = me.doc();
 const VCARD = new $rdf.Namespace("http://www.w3.org/2006/vcard/ns#");
@@ -9,41 +12,32 @@ const fetcher = new $rdf.Fetcher(store);
 
 var parsedNames = [];
 
+//Automatically loads the friends of our user
 fetcher.load(profile).then(response => {
   let userName = store.any(me, VCARD("fn"));
   console.log("Loaded " + userName);
 }, err => {
   console.log("Load failed " + err);
 }).then(() => {
-  let names = store.each(me, FOAF("knows"));
-  parseNames(names);
+  searchFriends();
 });
 
-function parseNames(names) {
+//Searchs for people that our user knows, adds them to the friend list only if they are indeed friends
+function searchFriends() {
+  let names = store.each(me, FOAF("knows"));
   names.forEach(name => {
-    let person = store.sym(name);
-    let profile = person.doc();
-    fetcher.load(profile).then(response => {
-      let namestr = store.any(person, VCARD("fn"));
-      
-      fetcher.load(profile).then(() => {
-          let namesFriends = store.each(person, FOAF("knows"));
-      
-          namesFriends.forEach(n => {
-            if (n.value.split("/",3)[2] == userId.split("/",3)[2]){
-              if (namestr != null){
-                parsedNames.push(namestr.value);
-              } else 
-                parsedNames.push(name.value);
-            }
-          });
-        });
-
-    }, err => {
-      console.log("Load failed " + err);
+    fetcher.load(store.sym(name).doc()).then(() => {
+      if (isFriendship(name))
+        parsedNames.push(store.any(name, VCARD("fn")).value);
     });
   });
-  locked = false;
+}
+
+//Checks if the friendship is bidirectional for leaving out stalkers
+function isFriendship(name) {
+  let namesFriends = store.each(name, FOAF("knows"));
+  namesFriends.filter(fof => userId.includes(fof.value));
+  return namesFriends.length > 0;
 }
 
 export default function fetchFriends() {
