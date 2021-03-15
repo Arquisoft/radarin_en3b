@@ -7,6 +7,10 @@ class MapView extends React.Component {
     constructor(props) {
         super(props);
 
+        this.mapRef = React.createRef();
+
+        //this.getDerivedStateFromProps = this.getDerivedStateFromProps.bind(this);
+
         this.state = {
             coords: this.props.coordinates,
             map: null
