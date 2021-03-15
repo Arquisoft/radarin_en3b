@@ -1,4 +1,3 @@
-
 import React from "react";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "react-leaflet/";
@@ -9,21 +8,31 @@ class MapView extends React.Component {
         super(props);
 
         this.state = {
-            coords: this.props.coordinates
+            coords: this.props.coordinates,
+            map: null
         };
-
     }
 
     static getDerivedStateFromProps(props, state) {
-        //console.log("MapView receives. " + props.coordinates);
         return {
             coords: props.coordinates
         };
     }
 
+    componentDidUpdate() {
+        this.handleOnFlyTo();
+    }
+
+    handleOnFlyTo() {
+        console.log("this happens");
+        const { map } = this.state;
+        if (map) map.flyTo(this.state.coords);
+    }
+
     render() {
         return <div className="divMap d-flex justify-content-center">
             <MapContainer
+                whenCreated={map => this.setState({ map })}
                 className="mapContainer"
                 center={this.state.coords}
                 zoom={8}
