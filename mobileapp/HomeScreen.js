@@ -3,7 +3,7 @@ import { View, Text, ScrollView, Image } from 'react-native';
 import { Card } from 'react-native-elements'
 import styles from './MyStyles'
 import MyMenu from './MyMenu'
-import fetchFriends from './fetchFriends'
+import fetchFriends from './FetchFriends'
 
 
 {/*Esto debería ir en el return delante de Navigation container pero.. cosas raras con comentarios
