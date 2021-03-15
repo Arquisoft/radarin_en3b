@@ -15,17 +15,17 @@ updates:
     schedule:
       interval: "daily" 
       
-- package-ecosystem: "npm"
+  - package-ecosystem: "npm"
     directory: "/mobileapp"
     schedule:
       interval: "daily"
       
-- package-ecosystem: "docker"
+  - package-ecosystem: "docker"
     directory: "/webapp"
     schedule:
       interval: "daily"
       
-- package-ecosystem: "docker"
+  - package-ecosystem: "docker"
     directory: "/restapi"
     schedule:
       interval: "daily"
