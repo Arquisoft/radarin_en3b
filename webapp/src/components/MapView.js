@@ -18,7 +18,7 @@ class MapView extends React.Component {
 
     }
 
-    static getDerivedStateFromProps(props, state) {
+    getDerivedStateFromProps(props, state) {
         //console.log("MapView receives. " + props.coordinates);
         this.mapInstance.flyTo(props.coordinates);
         return {
