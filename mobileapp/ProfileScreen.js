@@ -78,7 +78,9 @@ export default function ProfileScreen({navigation}) {
                 <DataTable.Cell><MySwitch onToggleSwitch={() =>{
                   if (this.MySwitch.isSwitchOn) {
                     Location.stopLocationUpdatesAsync();
+                    alert('This is on');
                   } else {
+                    alert('This is off');
                     Location.startLocationUpdatesAsync();
                   }
                     }}></MySwitch></DataTable.Cell>
