@@ -27,16 +27,18 @@ class MapView extends React.Component {
 
     handleOnFlyTo() {
         const { map } = this.state;
-        if (map) map.flyTo(this.state.coords, 15, {
-                                        animate: true,
-                                        duration: 1
-                                        });
+        if (map) {
+            map.flyTo(this.state.coords, 15, {
+                animate: true,
+                duration: 1
+            });
+        }
     }
 
     render() {
         return <div className="divMap d-flex justify-content-center">
             <MapContainer
-                whenCreated={map => this.setState({ map })}
+                whenCreated={(map) => this.setState({ map })}
                 className="mapContainer"
                 center={this.state.coords}
                 zoom={15}
