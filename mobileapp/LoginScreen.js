@@ -63,7 +63,6 @@ export default function LoginScreen({ navigation }) {
             <Button color="#3f51b5" title="Scan" onPress={changeShowScanner}>Scan</Button>
           </View>
         </Card>
-
       </View>
     );
   }
