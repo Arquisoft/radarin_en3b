@@ -20,7 +20,7 @@ export default function QRPage() {
     const [showQR, setShowQR] = useState(false);
 
 
-    const [pair, setPair] = useState(() => {
+    const [pair] = useState(() => {
         const pair = keypair({ bits: 1024 });
         return pair;
     });
@@ -43,16 +43,16 @@ export default function QRPage() {
     }
 
 
-    if(showQR) {
+    if (showQR) {
         return (<div className="centerMe"><QRCode
-        level="Q"
-        size={512}
-        value={JSON.stringify({
-            webId,
-            privateKey
-        })}
-    /></div>);
+            level="Q"
+            size={512}
+            value={JSON.stringify({
+                webId,
+                privateKey
+            })}
+        /></div>);
     }
-    
+
     return (<div className="centerMe"><Button color="primary" variant="contained" onClick={logKey}>Press me</Button></div>);
 }
