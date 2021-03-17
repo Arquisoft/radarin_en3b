@@ -5,7 +5,6 @@ import styles from './MyStyles'
 import MyMenu from './MyMenu'
 import fetchFriends from './FetchFriends'
 
-
 {/*Esto debería ir en el return delante de Navigation container pero.. cosas raras con comentarios
     <SafeAreaView>
       <TouchableOpacity
@@ -44,7 +43,7 @@ export default function HomeScreen({ navigation }) {
         {
           parsedNames.map((u) => {
             return (
-              <Card containerStyle={styles.card}>
+              <Card containerStyle={styles.card} key={u}>
                 <Card.Title>{u}</Card.Title>
                 <Card.Divider />
                 <Text style={styles.name}>1 km</Text>
