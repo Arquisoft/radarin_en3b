@@ -1,52 +1,58 @@
 import keypair from 'keypair';
-import forge from 'node-forge';
 import QRCode from 'react-qr-code';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useSession } from "@inrupt/solid-ui-react";
 import {
     getSolidDataset,
     getThing,
     setStringNoLocale,
-    addStringNoLocale,
     setThing,
     saveSolidDatasetAt,
 } from "@inrupt/solid-client";
 import { fetch } from "@inrupt/solid-client-authn-browser";
-import { FOAF, VCARD } from "@inrupt/vocab-common-rdf";
+import { VCARD } from "@inrupt/vocab-common-rdf";
+import { Button } from "@material-ui/core";
+import "../css/QRPage.css";
 
 export default function QRPage() {
     const { session } = useSession();
     const { webId } = session.info;
+    const [showQR, setShowQR] = useState(false);
 
 
     const [pair, setPair] = useState(() => {
         const pair = keypair({ bits: 1024 });
-        console.log("done1");
         return pair;
     });
-
-
-
-
 
     const privateKey = pair.private;
     const publicKey = pair.public;
 
-    getSolidDataset(webId.split("#")[0], { fetch: fetch }).then((response) => {
-        const profile = getThing(response, webId);
-        let updatedProfile = setStringNoLocale(profile, VCARD.key, publicKey);
-        console.log(publicKey);
-        const myChangedDataset = setThing(response, updatedProfile);
-        const savedDataset = saveSolidDatasetAt(webId.split("#")[0], myChangedDataset, { fetch: fetch });
-    });
 
 
-    return <QRCode className="ml-5"
+    function logKey() {
+        getSolidDataset(webId.split("#")[0], { fetch: fetch }).then((response) => {
+            const profile = getThing(response, webId);
+            let updatedProfile = setStringNoLocale(profile, VCARD.key, publicKey);
+            console.log(publicKey);
+            const myChangedDataset = setThing(response, updatedProfile);
+            saveSolidDatasetAt(webId.split("#")[0], myChangedDataset, { fetch: fetch }).then(() => {
+                setShowQR(true);
+            });
+        });
+    }
+
+
+    if(showQR) {
+        return (<div className="centerMe"><QRCode
         level="Q"
-        style={{ width: 256 }}
+        size={512}
         value={JSON.stringify({
             webId,
             privateKey
         })}
-    />;
+    /></div>);
+    }
+    
+    return (<div className="centerMe"><Button color="primary" variant="contained" onClick={logKey}>Press me</Button></div>);
 }
