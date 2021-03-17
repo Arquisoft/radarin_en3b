@@ -76,8 +76,8 @@ function LoginPage() {
           <Typography variant="body2" component="p" className="text-center">
             Don't have one? You can get it here: <Link className="ml-1" href="https://inrupt.com/" target="_blank"><strong>Inrupt</strong></Link>
           </Typography>
-          <LoginButton oidcIssuer={idp} type="submit">
-            <Button as={Link} to="/" color="primary" variant="contained" className={classes.signIn}>Sign In</Button>
+          <LoginButton oidcIssuer={idp} redirectUrl={window.location.origin}>
+            <Button color="primary" variant="contained" className={classes.signIn}>Sign In</Button>
           </LoginButton>
         </CardActions>
       </Card>
