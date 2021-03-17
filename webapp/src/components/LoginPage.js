@@ -46,17 +46,12 @@ const useStyles = makeStyles({
 });
 
 function LoginPage() {
-  const history = useHistory();
-  const handleSubmit = () => {
-    history.push("/home");
-  };
 
   const classes = useStyles();
   const [idp, setIdp] = useState("https://inrupt.net");
 
 
   return (
-    <form noValidate onSubmit={handleSubmit}>
       <Card className={classes.root}>
         <CardActionArea disableRipple className={classes.removeStyles}>
           <CardContent>
@@ -82,11 +77,10 @@ function LoginPage() {
             Don't have one? You can get it here: <Link className="ml-1" href="https://inrupt.com/" target="_blank"><strong>Inrupt</strong></Link>
           </Typography>
           <LoginButton oidcIssuer={idp} type="submit">
-            <Button color="primary" variant="contained" className={classes.signIn} onClick={handleSubmit}>Sign In</Button>
+            <Button as={Link} to="/" color="primary" variant="contained" className={classes.signIn}>Sign In</Button>
           </LoginButton>
         </CardActions>
       </Card>
-    </form>
 
 
     /*<React.Fragment>

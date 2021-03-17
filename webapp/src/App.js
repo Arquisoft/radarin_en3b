@@ -13,6 +13,7 @@ import ResponsiveDrawer from "./components/Localizations";
 import MainCarousel from "./components/MainCarousel";
 import AppInfo from "./components/AppInfo";
 import LoginPage from "./components/LoginPage";
+import QRPage from "./components/QRPage";
 
 class App extends React.Component {
   constructor() {
@@ -41,6 +42,9 @@ class App extends React.Component {
             </Route>
             <Route path="/login">
               <LoginPage></LoginPage>
+            </Route>
+            <Route path="/qr">
+              <QRPage></QRPage>
             </Route>
             <Route path="/">
               {this.main2()}

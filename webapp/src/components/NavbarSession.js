@@ -21,7 +21,7 @@ function NavbarSession() {
         </Nav>;
     }
     return <Nav>
-    <Nav.Link>
+    <Nav.Link as={Link} to="/qr">
         <AccountCircleIcon className="mr-1"></AccountCircleIcon>
         <CombinedDataProvider datasetUrl={webId} thingUrl={webId}>
         <Text property={FOAF.name.iri.value} autosave/>
