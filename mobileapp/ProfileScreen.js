@@ -7,6 +7,7 @@ import {HeaderBackButton} from '@react-navigation/stack';
 import * as Location from 'expo-location';
 import styles from './MyStyles'
 import MyMenu from './MyMenu'
+import { sendLocation } from './sendLocation';
 
 export default function ProfileScreen({navigation}) {
   React.useLayoutEffect(() => {
@@ -47,10 +48,11 @@ export default function ProfileScreen({navigation}) {
   }
   , []);
 
-  let text = 'Waiting...';
+  let text = 'Waiting for having a valid position...';
   if (errorMsg) {
     text = errorMsg;
   } else if (location) {
+    
     text = JSON.stringify(location, null, '\t');
   }
 
@@ -85,6 +87,9 @@ export default function ProfileScreen({navigation}) {
                 <DataTable.Cell>
                 <Button title='Get my position'onPress={() =>{
                         Location.requestPermissionsAsync();
+                        if (location.coords !== null) {
+                          sendLocation(location.coords, location.timestamp);
+                        }
                         alert(text); 
                       }  
                         }>Get My Position
