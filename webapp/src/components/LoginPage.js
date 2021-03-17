@@ -46,17 +46,12 @@ const useStyles = makeStyles({
 });
 
 function LoginPage() {
-  const history = useHistory();
-  const handleSubmit = () => {
-    history.push("/home");
-  };
 
   const classes = useStyles();
   const [idp, setIdp] = useState("https://inrupt.net");
 
 
   return (
-    <form noValidate onSubmit={handleSubmit}>
       <Card className={classes.root}>
         <CardActionArea disableRipple className={classes.removeStyles}>
           <CardContent>
@@ -81,12 +76,11 @@ function LoginPage() {
           <Typography variant="body2" component="p" className="text-center">
             Don't have one? You can get it here: <Link className="ml-1" href="https://inrupt.com/" target="_blank"><strong>Inrupt</strong></Link>
           </Typography>
-          <LoginButton oidcIssuer={idp} type="submit">
-            <Button color="primary" variant="contained" className={classes.signIn} onClick={handleSubmit}>Sign In</Button>
+          <LoginButton oidcIssuer={idp} redirectUrl={window.location.origin}>
+            <Button color="primary" variant="contained" className={classes.signIn}>Sign In</Button>
           </LoginButton>
         </CardActions>
       </Card>
-    </form>
 
 
     /*<React.Fragment>
