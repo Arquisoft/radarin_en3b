@@ -97,5 +97,5 @@ export default StyleSheet.create({
     alignSelf: 'center',
     padding:10,
     paddingBottom:30,
-  }
+  },
 });
