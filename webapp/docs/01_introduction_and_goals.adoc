@@ -34,7 +34,7 @@ It’s correct behaviour will be monitored through unit tests, acceptance tests 
 
 === Quality Goals
 
- [options="header",cols="1,2,2"]
+[options="header",cols="1,2,2"]
 |===
 |Priority|Quality|Motivation
 | 1 | Usability | The application should have a good aesthetic and be easy to use for all kinds of users.
