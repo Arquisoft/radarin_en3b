@@ -1,28 +1,14 @@
-import keypair from 'keypair';
-import QRCode from 'react-qr-code';
+import { getSolidDataset, getThing, getUrlAll, getSourceUrl, createThing, addStringNoLocale, setThing, saveSolidDatasetAt } from "@inrupt/solid-client";
 import { useSession } from "@inrupt/solid-ui-react";
-import "../css/QRPage.css";
-import { getSolidDataset, getThing, getUrlAll, getSourceUrl, setStringNoLocale, setThing, saveSolidDatasetAt } from "@inrupt/solid-client";
 import React, { useEffect, useState } from "react";
 import getOrCreatePublicFilePod from "../utils/GetOrCreatePublicFilePod";
 import getOrCreatePrivateFilePod from "../utils/getOrCreatePrivateFilePod";
 import { Button } from "@material-ui/core";
 
-export default function QRPage() {
-    const { session } = useSession();
-    const { webId } = session.info;
-    const [showQR, setShowQR] = useState(false);
-    const [pKeyFile, setPKeyFile] = useState();
-    const [prKeyFile, setPrKeyFile] = useState();
-
-
-    const [pair] = useState(() => {
-        const pair = keypair({ bits: 1024 });
-        return pair;
-    });
-
-    const privateKey = pair.private;
-    const publicKey = pair.public;
+export default function AddKeyFiles({pKey}, {prKey}) {
+  const { session } = useSession();
+  const [pKeyFile, setPKeyFile] = useState();
+  const [prKeyFile, setPrKeyFile] = useState();
 
   useEffect(() => {
     if (!session) return;
@@ -49,11 +35,7 @@ export default function QRPage() {
 
   const addPublicKey = async () => {
     const pKeyUrl = getSourceUrl(pKeyFile);
-    const publicDataset = await getSolidDataset(pKeyUrl.split("publicKey")[0], { fetch: session.fetch });
-    const existing = getThing(publicDataset, pKeyUrl);
-    console.log(existing);
-
-    const pkField = setStringNoLocale(existing, "https://www.w3.org/ns/auth/cert#RSAPublicKey", publicKey);
+    const pkField = addStringNoLocale(createThing(), "https://www.w3.org/ns/auth/cert#RSAPublicKey", pKey);
 
     const updatedPKeyFile = setThing(pKeyFile, pkField);
     const updatedDataset = await saveSolidDatasetAt(pKeyUrl, updatedPKeyFile, { fetch: session.fetch });
@@ -62,12 +44,10 @@ export default function QRPage() {
   };
 
   const addPrivateKey = async () => {
+      console.log(prKey);
     const prKeyUrl = getSourceUrl(prKeyFile);
-    const publicDataset = await getSolidDataset(prKeyUrl.split("privateKey")[0], { fetch: session.fetch });
-    const existing = getThing(publicDataset, prKeyUrl);
-    console.log(existing);
+    const prKField = addStringNoLocale(createThing(), "https://www.w3.org/ns/auth/cert#PrivateKey", prKey);
 
-    const prKField = setStringNoLocale(existing, "https://www.w3.org/ns/auth/cert#PrivateKey", privateKey);
     const updatedPrKeyFile = setThing(prKeyFile, prKField);
     const updatedDataset = await saveSolidDatasetAt(prKeyUrl, updatedPrKeyFile, { fetch: session.fetch });
 
@@ -79,20 +59,7 @@ export default function QRPage() {
       event.preventDefault();
       addPublicKey();
       addPrivateKey();
-      setShowQR(true);
   };
-
-
-  if (showQR) {
-    return (<div className="centerMe"><QRCode
-        level="Q"
-        size={512}
-        value={JSON.stringify({
-            webId,
-            privateKey
-        })}
-    /></div>);
-}
 
   return <div className="centerMe"><Button color="primary" variant="contained" onClick={handleOnClick}>Show QR</Button></div>;
 }
