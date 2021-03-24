@@ -18,5 +18,13 @@ yarn-error.log*
 restapi/node_modules
 restapi/data
 
-.eslintcache
+mobileapp/node_modules
+mobileapp/.vscode
+mobileapp/.expo
+mobileapp/.expo-shared
+
 node_modules
+.vscode
+
+
+.eslintcache

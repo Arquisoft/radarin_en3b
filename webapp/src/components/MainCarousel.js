@@ -5,6 +5,8 @@ import Slider from "react-slick";
 import "../css/Carousel.css";
 import ArrowBackIos from "@material-ui/icons/ArrowBackIos";
 import ArrowForwardIos from "@material-ui/icons/ArrowForwardIos";
+import Button from "@material-ui/core/Button";
+import { Link } from "react-router-dom";
 
 function SamplePrevArrow(props) {
     const { onClick } = props;
@@ -56,7 +58,7 @@ function SampleNextArrow(props) {
     );
 }
 
-class ReactSlickDemo extends React.Component {
+class MainCarousel extends React.Component {
     render() {
         var settings = {
             dots: true,
@@ -76,8 +78,8 @@ class ReactSlickDemo extends React.Component {
                 <Slider {...settings}>
                     <div>
                         <div className="carouselText">
-                            <h2>Mejora tu productividad con Radarin</h2>
-                            <p>Radarín te permite bla bla bla bla bla bla bla bla bla</p>
+                            <h2>Improve your productivity with Radarin</h2>
+                            <p>Radarin allows you to bla bla bla bla bla bla bla bla bla</p>
                         </div>
                         <div>
                             <img src="http://placekitten.com/g/400/200" alt="test"/>
@@ -94,11 +96,11 @@ class ReactSlickDemo extends React.Component {
                     </div>
                 </Slider>
                 <div className="carouselButton">
-                    <button type="button" className="carouselButton btn btn-primary">Crea una cuenta</button>
+                    <Button component={ Link } to="/login" color="primary" variant="contained" className="carouselButton">Create an account</Button>
                 </div>
             </div>
         );
     }
 }
 
-export default ReactSlickDemo;
+export default MainCarousel;
