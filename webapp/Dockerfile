@@ -1,4 +1,4 @@
-FROM node:12.14.1
+FROM node:15.12.0
 COPY . /app
 WORKDIR /app
 #Install the dependencies
