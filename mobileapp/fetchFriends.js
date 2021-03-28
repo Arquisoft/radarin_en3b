@@ -27,7 +27,7 @@ export async function setWebId(navigation, webId){
     console.log("Loaded " + userName);
   }, err => {
     console.log("Load failed " + err);
-  }).then(async () => {await searchKnows()}).then(() => {navigation.navigate('Radarin');});
+  }).then(async () => {await searchKnows()});
 
   //Checks if the friendship is bidirectional for leaving out stalkers
 function isFriendship(name) {

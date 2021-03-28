@@ -6,13 +6,13 @@ import styles from './MyStyles';
 import { BarCodeScanner } from "expo-barcode-scanner";
 import * as SecureStore from "expo-secure-store";
 import AsyncStorage from '@react-native-community/async-storage';
-import {setWebId} from './FetchFriends'
 
 export default function LoginScreen({ navigation }) {
 
     AsyncStorage.getItem('userId').then(function (webId){
       if (webId != null && webId != ""){
-        setWebId(navigation,webId);
+        alert(webId);
+        navigation.navigate('Loading', {id: webId});
       }
     });
     
@@ -50,7 +50,7 @@ export default function LoginScreen({ navigation }) {
     webId = webId.replace('"','');
     webId = webId.replace('"','');
     AsyncStorage.setItem("userId",webId);
-    setWebId(navigation,webId);
+    navigation.navigate('Loading', {id: webId});
   };
 
   function changeShowScanner() {
