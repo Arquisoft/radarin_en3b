@@ -9,6 +9,7 @@ import AboutScreen from './AboutScreen'
 import ProfileScreen from './ProfileScreen'
 import PostScreen from './PostScreen'
 import LoginScreen from './LoginScreen'
+import LoadingScreen from './LoadingScreen'
 
 const Stack = createStackNavigator();
 
@@ -42,6 +43,8 @@ export default function App() {
           headerStyle: styles.header,
           headerTintColor: '#fff'
         }}/>
+        <Stack.Screen options={{headerShown: false}} name="Loading" component={LoadingScreen}/>
+
       </Stack.Navigator>
     </NavigationContainer>
     </Provider>

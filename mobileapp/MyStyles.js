@@ -98,4 +98,21 @@ export default StyleSheet.create({
     padding:10,
     paddingBottom:30,
   },
+  loadingScreen:{
+    flex: 1,
+    alignItems: 'center',
+    paddingTop:180,
+    backgroundColor: '#3f51b5'
+  },
+  loadingImage:{
+    width: 120,
+    height: 120,
+    
+  },
+  loadingText:{
+    paddingTop:180,
+    fontSize:20,
+    fontWeight:'bold',
+    color: '#fff'
+  }
 });

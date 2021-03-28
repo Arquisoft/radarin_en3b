@@ -5,12 +5,21 @@ import { Card } from 'react-native-elements';
 import styles from './MyStyles';
 import { BarCodeScanner } from "expo-barcode-scanner";
 import * as SecureStore from "expo-secure-store";
+import AsyncStorage from '@react-native-community/async-storage';
 
 export default function LoginScreen({ navigation }) {
+
+    AsyncStorage.getItem('userId').then(function (webId){
+      if (webId != null && webId != ""){
+        alert(webId);
+        navigation.navigate('Loading', {id: webId});
+      }
+    });
+    
+  
   const [hasCameraPermission, setHasCameraPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
   const [showScanner, setShowScanner] = useState(false);
-
   
   async function save(key, value) {
     await SecureStore.setItemAsync(key, value);
@@ -32,12 +41,16 @@ export default function LoginScreen({ navigation }) {
         setHasCameraPermission(status == 'granted');
       })();
   }, [navigation]);
-
+  
   const handleQrScanned = ({ type, data }) => {
     setScanned(true);
-    alert(data);
     save("op234iyu5v6oy234iuv6", data);
-    navigation.navigate('Radarin');
+    var webIdArray = data.split(',')[0].split(':');
+    var webId = webIdArray[1] + ':' + webIdArray[2];
+    webId = webId.replace('"','');
+    webId = webId.replace('"','');
+    AsyncStorage.setItem("userId",webId);
+    navigation.navigate('Loading', {id: webId});
   };
 
   function changeShowScanner() {
