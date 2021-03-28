@@ -52,7 +52,6 @@ export default function ProfileScreen({navigation}) {
   if (errorMsg) {
     text = errorMsg;
   } else if (location) {
-    
     text = JSON.stringify(location, null, '\t');
   }
 

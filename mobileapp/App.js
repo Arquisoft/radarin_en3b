@@ -43,6 +43,7 @@ export default function App() {
           headerStyle: styles.header,
           headerTintColor: '#fff'
         }}/>
+    
         <Stack.Screen options={{headerShown: false}} name="Loading" component={LoadingScreen}/>
 
       </Stack.Navigator>

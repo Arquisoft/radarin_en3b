@@ -14,6 +14,7 @@ import {fetchFriends} from './FetchFriends'
           <Image style={styles.icon} source={require("./assets/add-24px.png")}/>
     </TouchableOpacity>*/}
 
+
 export default function HomeScreen({navigation}) {
 
   React.useLayoutEffect(() => {
@@ -56,9 +57,5 @@ export default function HomeScreen({navigation}) {
               </View>
       </View>
     </ScrollView>
-
   );
 }
-
-
-

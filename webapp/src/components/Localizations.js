@@ -65,7 +65,7 @@ function ResponsiveDrawer(props) {
   const drawer = (
     <div>
       <div className={classes.toolbar} />
-
+      
       <LocationList parentCallback = {handleCallback}/>
     </div>
   );

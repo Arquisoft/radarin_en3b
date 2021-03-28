@@ -1,7 +1,6 @@
 const $rdf = require("rdflib");
 const store = $rdf.graph();
 
-//For testing purposes, must be changed later
 var userId;
 
 var me;
