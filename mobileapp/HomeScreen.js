@@ -1,10 +1,9 @@
-import React from 'react';
+import React,{ useState, useEffect } from 'react';
 import { View, Text, ScrollView, Image } from 'react-native';
 import { Card } from 'react-native-elements'
 import styles from './MyStyles'
 import MyMenu from './MyMenu'
-import fetchFriends from './FetchFriends'
-
+import {fetchFriends} from './FetchFriends'
 
 {/*Esto debería ir en el return delante de Navigation container pero.. cosas raras con comentarios
     <SafeAreaView>
@@ -15,7 +14,8 @@ import fetchFriends from './FetchFriends'
           <Image style={styles.icon} source={require("./assets/add-24px.png")}/>
     </TouchableOpacity>*/}
 
-export default function HomeScreen({ navigation }) {
+
+export default function HomeScreen({navigation}) {
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
@@ -35,26 +35,27 @@ export default function HomeScreen({ navigation }) {
     });
   }, [navigation]);
 
-  var parsedNames = fetchFriends();
+  var loadedFriends = fetchFriends();
 
   return (
     <ScrollView>
       <View style={styles.mainScreenContainer}>
         <Text style={styles.normalText}>Friends close to your location:</Text>
-        {
-          parsedNames.map((u) => {
-            return (
-              <Card containerStyle={styles.card}>
-                <Card.Title>{u}</Card.Title>
-                <Card.Divider />
-                <Text style={styles.name}>1 km</Text>
-              </Card>
-            );
-          })
-        }
+        <View>
+
+                {
+                    loadedFriends.map((u) => {
+                      return (
+                        <Card containerStyle={styles.card} key={u}>
+                          <Card.Title>{u}</Card.Title>
+                          <Card.Divider />
+                          <Text style={styles.name}>1 km</Text>
+                        </Card>
+                      );
+                    })
+                  }
+              </View>
       </View>
     </ScrollView>
   );
 }
-
-
