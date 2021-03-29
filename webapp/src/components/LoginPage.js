@@ -79,16 +79,6 @@ function LoginPage() {
           </LoginButton>
         </CardActions>
       </Card>
-
-
-    /*<React.Fragment>
-      <input type="url" value={idp} onChange={(e) => setIdp(e.target.value)} />
-      <LoginButton oidcIssuer={idp} redirectUrl={window.location.href}>
-        <Button color="primary">Log In</Button>
-      </LoginButton>
-      <LogoutButton/>
-    </React.Fragment>*/
-
   );
 
 }
