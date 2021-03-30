@@ -1,80 +1,70 @@
-import React from "react";
+import React, { useState } from "react";
 import {
     List,
     ListItem,
     ListItemIcon,
     ListItemText,
     Divider,
-    Typography
+    Typography,
+    TextField
 } from "@material-ui/core";
 import LocationOnIcon from "@material-ui/icons/LocationOn";
-import SearchIcon from "@material-ui/icons/Search";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchLocations, moveTo, selectAllLocations } from "../redux/slices/locationsSlice";
+import { useEffect } from "react";
+import "../css/LocationsList.css";
 
-const locationsList = [
-    { id: 1, coordinates: "43.3638658051, -5.84934495326", name: "Oviedo", details: "Location #1" },
-    { id: 2, coordinates: "43.5410052978, -5.66364853752", name: "Gijón", details: "Location #2" },
-    { id: 3, coordinates: "43.1778862222, -6.54988981222", name: "Cangas del Narcea", details: "Location #3" },
-    { id: 4, coordinates: "43.3505845338, -5.13198645530", name: "Cangas de Onís (la mala)", details: "Location #4" },
-    { id: 5, coordinates: "43.4476991976, -4.885938986531", name: "Gulpiyuri", details: "Location #5" },
-    { id: 6, coordinates: "40.0381046896, -6.08667514877", name: "Plasencia", details: "Location #6" },
-];
 
-class LocationList extends React.Component {
+export default function LocationList() {
+    const dispatch = useDispatch();
+    const locationStatus = useSelector(state => state.locations.status);
+    const error = useSelector(state => state.locations.error);
 
-    state = {
-        search: '',
-        locations: []
+    const locations = useSelector(selectAllLocations);
+
+    const [filterText, setFilterText] = useState("");
+
+    useEffect(() => {
+        if (locationStatus === "idle") {
+            dispatch(fetchLocations());
+
+        }
+    }, [locationStatus, dispatch]);
+
+    const onChange = e => {
+        setFilterText(e.target.value);
     }
 
-    handleClick = (event, coordinates) => {
-        this.props.parentCallback(coordinates.split(","));
-        event.preventDefault();
-    }
+    let content;
 
-    onChange = async e => {
-        e.persist();
-        await this.setState({ search: e.target.value });
-        this.filterElements();
-    }
-
-    filterElements = () => {
-        var search = locationsList.filter(item => {
-            if (item.name.toLowerCase().includes(this.state.search.toLowerCase())) {
-                return item;
-            }
-            return null;
-        });
-        this.setState({ locations: search });
-    }
-
-    componentDidMount() {
-        this.setState({ locations: locationsList });
-    }
-
-    render() {
-        return (
-            <div>
-                <List component='nav'>
-                    <ListItem>
-                        <div className="table-responsible">
-                            <input
-                                type="text"
-                                placeholder="Search"
-                                className="textField"
-                                name="busqueda"
-                                value={this.state.search}
-                                onChange={this.onChange}
-                            />
-                            <button
-                                type="button"
-                                className="btnBuscar">
-                                <SearchIcon></SearchIcon>
-                            </button>
-                        </div>
-                    </ListItem>
-                    {
-                        this.state.locations.map(item =>
-                            <ListItem button type="checkbox" value={item.coordinates} defaultChecked={false} onClick={(e) => this.handleClick(e, item.coordinates)}>
+    if (locationStatus === "loading") {
+        content = (<div className="spinner-border mt-5 center2" role="status">
+            <span className="sr-only">Loading...</span>
+        </div>);
+    } else if (locationStatus === "succeeded") {
+        content = (
+            <List component='nav'>
+                <ListItem>
+                    <div className="table-responsible mt-3 mb-3 ml-2">
+                        <TextField
+                            type="text"
+                            placeholder="Search"
+                            className="textField"
+                            name="busqueda"
+                            onChange={onChange}
+                        />
+                    </div>
+                </ListItem>
+                {
+                    locations.filter(item => item.name.toLowerCase().includes(filterText.toLowerCase()))
+                        .map(item =>
+                            <ListItem
+                                button type="checkbox"
+                                value={item.coordinates}
+                                key={item.id}
+                                defaultChecked={false}
+                                onClick={() => { dispatch(moveTo([0, 0])); dispatch(moveTo(item.coordinates)) }}
+                            >
                                 <ListItemIcon>
                                     <LocationOnIcon />
                                 </ListItemIcon>
@@ -93,16 +83,17 @@ class LocationList extends React.Component {
                                     } />
                             </ListItem>
                         )
-                    }
-
-
-                    <Divider />
-
-                </List>
-            </div>
+                }
+                <Divider />
+            </List>
         );
+    } else if (locationStatus === "failed") {
+        content = <div className="center2">{error}</div>
     }
 
+    return (
+        <div>
+            {content}
+        </div>
+    );
 }
-
-export default LocationList;

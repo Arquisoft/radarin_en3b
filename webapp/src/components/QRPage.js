@@ -36,7 +36,7 @@ export default function QRPage() {
         "http://www.w3.org/ns/pim/space#storage"
       );
       const pod = podsUrls[0];
-      const containerUri = `${pod}RadarinPKey/`;
+      const containerUri = `${pod}public/RadarinPKey/`;
       const dataset = await getOrCreatePublicFilePod(containerUri, session.fetch);
       setPKeyFile(dataset);
 
@@ -79,6 +79,7 @@ export default function QRPage() {
       event.preventDefault();
       addPublicKey();
       addPrivateKey();
+      //We should wait until prKeyUrl and pKeyUrl are not null
       setShowQR(true);
   };
 
