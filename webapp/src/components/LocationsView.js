@@ -51,32 +51,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-<<<<<<< HEAD:webapp/src/components/locations/LocationsPage.js
-const locations = [{
-  coords: {
-    latitude: 143.3589,
-    longitude: -5.8461
-  }
-}, {
-  coords: {
-    latitude: 23.5424,
-    longitude: -5.6631
-  }
-},
-{
-  coords: {
-    latitude: 123.1757,
-    longitude: -6.5492
-  }
-}];
-
-function ResponsiveDrawer(props) {
-  const [coordinates, setCoordinates] = React.useState([43.3589, -5.8461]);
-  const [locations, setLocations] = React.useState([]);
-
-=======
 export default function LocationsView(props) {
->>>>>>> master:webapp/src/components/LocationsView.js
   const classes = useStyles();
   const theme = useTheme();
   const [mobileOpen, setMobileOpen] = React.useState(false);
@@ -120,16 +95,11 @@ export default function LocationsView(props) {
   const drawer = (
     <div>
       <div className={classes.toolbar} />
-<<<<<<< HEAD:webapp/src/components/locations/LocationsPage.js
 
       <List component='nav'>
         {locations.map((location, i) => <Location coords={location.coords} key={i} setMapCoordinates={setCoordinates}></Location>)}
         <Divider />
       </List>
-=======
-      
-      <LocationList/>
->>>>>>> master:webapp/src/components/LocationsView.js
     </div>
   );
 
@@ -177,11 +147,7 @@ export default function LocationsView(props) {
         </Hidden>
       </nav>
       <main className={classes.content}>
-<<<<<<< HEAD:webapp/src/components/locations/LocationsPage.js
-        <MapView coordinates={coordinates} />
-=======
         <MapView/>
->>>>>>> master:webapp/src/components/LocationsView.js
       </main>
     </div>
   );

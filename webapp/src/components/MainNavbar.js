@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 
 function MainNavbar() {
     return <Navbar bg="white" expand="lg" className="navBar fixed-top align-items center shadow rounded">
-        <Navbar.Brand href="#home" className="mb-1">Radarin</Navbar.Brand>
+        <Navbar.Brand as={Link} to="/" className="mb-1">Radarin</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="mr-auto">

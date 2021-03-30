@@ -1,18 +1,38 @@
+import jwt from 'jsonwebtoken';
+class API {
+    constructor() {
+        this.apiEndPoint = process.env.REACT_APP_API_URI || 'http://localhost:5000/api';
+        this._webId = "";
+        this.token = "";
+    }
 
-//REACT_APP_API_URI is an enviroment variable defined in the file .env.development or .env.production
-export async function addUser(username,email){
-    const apiEndPoint= process.env.REACT_APP_API_URI || 'http://localhost:5000/api'
-    let response = await fetch(apiEndPoint+'/users/add', {
-        method: 'POST',
-        headers: {'Content-Type':'application/json'},
-        body: JSON.stringify({'name':username, 'email':email})
-      })
-    return await response.json()
-}
+    setIdentity(webId, privateKey) {
+        this._webId = webId;
+        this._refreshToken(privateKey);
+    }
 
-export async function getUsers(){
-    const apiEndPoint= process.env.REACT_APP_API_URI || 'http://localhost:5000/api'
-    console.log(apiEndPoint)
-    let response = await fetch(apiEndPoint+'/users/list')
-    return await response.json()
+    buildHeaders() {
+        const headers = new Headers();
+        headers.append('Authorization', "Bearer " + this.token);
+        headers.append('Content-Type', 'application/json');
+        return headers;
+    }
+
+    _refreshToken(privateKey) {
+        const payload = {
+            sub: "test",
+            webid: this._webId
+        };
+        this.token = jwt.sign(payload, privateKey, { algorithm: 'RS256', noTimestamp: true });
+    }
+
+    async getLocations() {
+        const encodedWebId = encodeURIComponent(this._webId);
+        const response = await fetch(`${this.apiEndPoint}/locations?webId=${encodedWebId}`,
+            { method: 'GET', headers: this.buildHeaders() });
+        return await response.json();
+    }
 }
+const Api = new API();
+// Object.freeze(Api);
+export default Api;

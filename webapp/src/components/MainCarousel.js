@@ -58,49 +58,45 @@ function SampleNextArrow(props) {
     );
 }
 
-class MainCarousel extends React.Component {
-    render() {
-        var settings = {
-            dots: true,
-            lazyLoad: true,
-            fade: true,
-            infinite: true,
-            autoplay: false,
-            pauseOnHover: true,
-            slidesToShow: 1,
-            slidesToScroll: 1,
-            adaptiveHeight: true,
-            prevArrow: <SamplePrevArrow />,
-            nextArrow: <SampleNextArrow />
-        };
-        return (
-            <div className="contain">
-                <Slider {...settings}>
-                    <div>
-                        <div className="carouselText">
-                            <h2>Improve your productivity with Radarin</h2>
-                            <p>Radarin allows you to bla bla bla bla bla bla bla bla bla</p>
-                        </div>
-                        <div>
-                            <img src="http://placekitten.com/g/400/200" alt="test"/>
-                        </div>
+export default function MainCarousel() {
+    const settings = {
+        dots: true,
+        lazyLoad: true,
+        fade: true,
+        infinite: true,
+        autoplay: false,
+        pauseOnHover: true,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        adaptiveHeight: true,
+        prevArrow: <SamplePrevArrow />,
+        nextArrow: <SampleNextArrow />
+    };
+    return (
+        <div className="contain">
+            <Slider {...settings}>
+                <div>
+                    <div className="carouselText">
+                        <h2>Improve your productivity with Radarin</h2>
+                        <p>Radarin allows you to bla bla bla bla bla bla bla bla bla</p>
                     </div>
                     <div>
-                        <img src="http://placekitten.com/g/400/200" alt="test"/>
+                        <img src="http://placekitten.com/g/400/200" alt="test" />
                     </div>
-                    <div>
-                        <img src="http://placekitten.com/g/400/200" alt="test"/>
-                    </div>
-                    <div>
-                        <img src="http://placekitten.com/g/400/200" alt="test"/>
-                    </div>
-                </Slider>
-                <div className="carouselButton">
-                    <Button component={ Link } to="/login" color="primary" variant="contained" className="carouselButton">Create an account</Button>
                 </div>
+                <div>
+                    <img src="http://placekitten.com/g/400/200" alt="test" />
+                </div>
+                <div>
+                    <img src="http://placekitten.com/g/400/200" alt="test" />
+                </div>
+                <div>
+                    <img src="http://placekitten.com/g/400/200" alt="test" />
+                </div>
+            </Slider>
+            <div className="carouselButton">
+                <Button component={Link} to="/login" color="primary" variant="contained" className="carouselButton">Create an account</Button>
             </div>
-        );
-    }
+        </div>
+    );
 }
-
-export default MainCarousel;
