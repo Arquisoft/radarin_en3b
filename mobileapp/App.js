@@ -1,11 +1,10 @@
-import { createStackNavigator } from '@react-navigation/stack';
-
+import { createStackNavigator } from "@react-navigation/stack";
 import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { Provider } from 'react-native-paper';
+import { NavigationContainer } from "@react-navigation/native";
+import { Provider } from "react-native-paper";
 import { Provider as ProviderRedux } from "react-redux";
-import styles from './MyStyles'
-import HomeScreen from './HomeScreen'
+import styles from "./MyStyles";
+import HomeScreen from "./HomeScreen";
 import AboutScreen from "./AboutScreen";
 import ProfileScreen from "./ProfileScreen";
 import PostScreen from "./PostScreen";

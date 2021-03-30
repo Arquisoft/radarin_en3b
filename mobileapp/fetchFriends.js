@@ -11,14 +11,14 @@ export async function getFriends(webId) {
   const profile = me.doc();
 
   //Automatically loads the friends of our user
-  await fetcher.load(profile).then(async () => { await searchKnows(webId) });
+  await fetcher.load(profile).then(async () => { await searchKnows(webId); });
 
   return parsedNames;
 }
 
 function isFriendship(name, webId) {
   let namesFriends = store.each(name, FOAF("knows"));
-  namesFriends.filter(fof => webId.includes(fof.value));
+  namesFriends.filter((fof) => webId.includes(fof.value));
   return namesFriends.length > 0;
 }
 

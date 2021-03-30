@@ -1,4 +1,3 @@
-
 import React, {useCallback}  from "react";
 import { View, Text, ScrollView, Linking, Button} from "react-native";
 import { Card} from "react-native-elements";
