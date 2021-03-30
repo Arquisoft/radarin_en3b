@@ -11,7 +11,7 @@ function MainNavbar() {
         <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="mr-auto">
                 <Nav.Link as={Link} to="/" >Home</Nav.Link>
-                <Nav.Link as={Link} to="/localizations" >Localizations</Nav.Link>
+                <Nav.Link as={Link} to="/locations" >Locations</Nav.Link>
                 <Nav.Link as={Link} to="/about" >About</Nav.Link>
             </Nav>
         <NavbarSession></NavbarSession>    

@@ -9,7 +9,7 @@ import { Switch, Route } from "react-router-dom";
 import MainNavbar from "./components/MainNavbar";
 import { BrowserRouter } from "react-router-dom";
 import MainFooter from "./components/MainFooter";
-import ResponsiveDrawer from "./components/Localizations";
+import ResponsiveDrawer from "./components/locations/LocationsPage";
 import MainCarousel from "./components/MainCarousel";
 import AppInfo from "./components/AppInfo";
 import LoginPage from "./components/LoginPage";
@@ -34,7 +34,7 @@ class App extends React.Component {
           </header>
           <br /><br /><br /><br /><br /><br />
           <Switch>
-            <Route path="/localizations">
+            <Route path="/locations">
               <ResponsiveDrawer />
             </Route>
             <Route path="/about">

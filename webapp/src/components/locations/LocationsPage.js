@@ -1,15 +1,20 @@
-import React from "react";
+import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Drawer from "@material-ui/core/Drawer";
 import Hidden from "@material-ui/core/Hidden";
 import IconButton from "@material-ui/core/IconButton";
-import MapView from "./MapView";
+import MapView from "../MapView";
 import MenuIcon from "@material-ui/icons/Menu";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
-import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
-import "../css/Map.css";
-import LocationList from "./LocationsList";
+import { List, Divider } from "@material-ui/core";
+import "../../css/Map.css";
+import Location from "./Location";
+import Api from '../../api/API';
+import { useSession } from "@inrupt/solid-ui-react";
+import getOrCreatePrivateFilePod from "../../utils/getOrCreatePrivateFilePod";
+import { getSolidDataset, getThing, getUrlAll, getSourceUrl, getStringNoLocale } from "@inrupt/solid-client";
+
 
 const drawerWidth = 240;
 
@@ -46,27 +51,76 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function ResponsiveDrawer(props) {
-  const[coordinates, setCoordinates] = React.useState([43.3589, -5.8461]);
+const locations = [{
+  coords: {
+    latitude: 143.3589,
+    longitude: -5.8461
+  }
+}, {
+  coords: {
+    latitude: 23.5424,
+    longitude: -5.6631
+  }
+},
+{
+  coords: {
+    latitude: 123.1757,
+    longitude: -6.5492
+  }
+}];
 
-  const handleCallback = (childData) => {
-    setCoordinates(childData);
-    //console.log("Localizations receives: " + childData);
-  };
+function ResponsiveDrawer(props) {
+  const [coordinates, setCoordinates] = React.useState([43.3589, -5.8461]);
+  const [locations, setLocations] = React.useState([]);
 
   const classes = useStyles();
   const theme = useTheme();
   const [mobileOpen, setMobileOpen] = React.useState(false);
+  const { session } = useSession();
+  const { webId } = session.info;
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
 
+  useEffect(
+    () => {
+      async function fetchData() {
+        const profileDataset = await getSolidDataset(session.info.webId, {
+          fetch: session.fetch,
+        });
+        const profileThing = getThing(profileDataset, session.info.webId);
+        const podsUrls = getUrlAll(
+          profileThing,
+          "http://www.w3.org/ns/pim/space#storage"
+        );
+        const pod = podsUrls[0];
+        const privateContainerUri = `${pod}private/RadarinPrKey/`;
+        const prKeyFile = await getOrCreatePrivateFilePod(privateContainerUri, session.fetch);
+        const prKeyUrl = getSourceUrl(prKeyFile);
+        const publicDataset = await getSolidDataset(prKeyUrl, { fetch: session.fetch });
+        const existing = getThing(publicDataset, prKeyUrl);
+        console.log(existing);
+    
+        //const prKField = setStringNoLocale(existing, "https://www.w3.org/ns/auth/cert#PrivateKey", privateKey);
+    
+        const aux = getStringNoLocale(existing, "https://www.w3.org/ns/auth/cert#PrivateKey");
+        console.log(aux);
+        Api.setIdentity(webId, aux);
+        const l = await Api.getLocations();
+        setLocations(l);
+      }
+      fetchData();
+    });
+
   const drawer = (
     <div>
       <div className={classes.toolbar} />
 
-      <LocationList parentCallback = {handleCallback}/>
+      <List component='nav'>
+        {locations.map((location, i) => <Location coords={location.coords} key={i} setMapCoordinates={setCoordinates}></Location>)}
+        <Divider />
+      </List>
     </div>
   );
 
@@ -85,7 +139,7 @@ function ResponsiveDrawer(props) {
       <nav className={classes.drawer} aria-label="mailbox folders">
         {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
         <Hidden smUp implementation="css">
-          <SwipeableDrawer
+          <Drawer
             variant="temporary"
             anchor={theme.direction === "rtl" ? "right" : "left"}
             open={mobileOpen}
@@ -98,7 +152,7 @@ function ResponsiveDrawer(props) {
             }}
           >
             {drawer}
-          </SwipeableDrawer>
+          </Drawer>
         </Hidden>
         <Hidden xsDown implementation="css">
           <Drawer
@@ -113,7 +167,7 @@ function ResponsiveDrawer(props) {
         </Hidden>
       </nav>
       <main className={classes.content}>
-        <MapView coordinates = {coordinates}/>
+        <MapView coordinates={coordinates} />
       </main>
     </div>
   );
