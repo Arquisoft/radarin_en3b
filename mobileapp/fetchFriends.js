@@ -1,63 +1,42 @@
 const $rdf = require("rdflib");
 const store = $rdf.graph();
-
-var userId;
-
-var me;
-var profile;
-var VCARD;
-var FOAF;
-var fetcher;
+const VCARD = new $rdf.Namespace("http://www.w3.org/2006/vcard/ns#");
+const FOAF = $rdf.Namespace("http://xmlns.com/foaf/0.1/");
+const fetcher = new $rdf.Fetcher(store);
 
 var parsedNames = [];
 
-export async function setWebId(navigation, webId) {
-  webId = webId.replace('"', '');
-  webId = webId.replace('"', '');
-  userId = webId;
-  me = store.sym(userId);
-  profile = me.doc();
-  VCARD = new $rdf.Namespace("http://www.w3.org/2006/vcard/ns#");
-  FOAF = $rdf.Namespace('http://xmlns.com/foaf/0.1/');
-  fetcher = new $rdf.Fetcher(store);
+export async function getFriends(webId) {
+  const me = store.sym(webId);
+  const profile = me.doc();
+
   //Automatically loads the friends of our user
-  await fetcher.load(profile).then(response => {
-    let userName = store.any(me, VCARD("fn"));
-    console.log("Loaded " + userName);
-  }, err => {
-    console.log("Load failed " + err);
-  }).then(async () => { await searchKnows() });
+  await fetcher.load(profile).then(async () => { await searchKnows(webId) });
 
-  //Checks if the friendship is bidirectional for leaving out stalkers
-  function isFriendship(name) {
-    let namesFriends = store.each(name, FOAF("knows"));
-    namesFriends.filter(fof => userId.includes(fof.value));
-    return namesFriends.length > 0;
-  }
-
-  //Searchs for people that our user knows, adds them to the friend list only if they are indeed friends
-  async function searchKnows() {
-
-    let names = store.each(me, FOAF("knows"));
-    for (const name of names) {
-      await fetcher.load(store.sym(name).doc()).then(() => {
-        if (isFriendship(name)) {
-          var user = store.any(name, VCARD("fn"));
-          if (user == null) {
-            if (!parsedNames.includes(name.value))
-              parsedNames.push(name.value);
-          } else {
-            if (!parsedNames.includes(user.value))
-              parsedNames.push(user.value);
-          }
-        }
-      });
-    }
-  }
-}
-
-export function fetchFriends() {
   return parsedNames;
 }
 
+function isFriendship(name, webId) {
+  let namesFriends = store.each(name, FOAF("knows"));
+  namesFriends.filter(fof => webId.includes(fof.value));
+  return namesFriends.length > 0;
+}
 
+//Searchs for people that our user knows, adds them to the friend list only if they are indeed friends
+async function searchKnows(webId) {
+  let names = store.each(store.sym(webId), FOAF("knows"));
+  for (const name of names) {
+    await fetcher.load(store.sym(name).doc()).then(() => {
+      if (isFriendship(name, webId)) {
+        var user = store.any(name, VCARD("fn"));
+        if (user == null) {
+          if (!parsedNames.includes(name.value))
+            parsedNames.push(name.value);
+        } else {
+          if (!parsedNames.includes(user.value))
+            parsedNames.push(user.value);
+        }
+      }
+    });
+  }
+}

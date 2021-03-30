@@ -4,13 +4,13 @@ const [errorMsg, setErrorMsg] = useState(null);
 useEffect(() => {
   (async () => {
     let {status} = await Location.requestPermissionsAsync();
-    if (status !== 'granted') {
-      setErrorMsg('Permission to access location was denied');
+    if (status !== "granted") {
+      setErrorMsg("Permission to access location was denied");
       return;
     }
 
     if (!Location.hasStartedLocationUpdatesAsync()) {
-      setErrorMsg('Please, turn on your location');
+      setErrorMsg("Please, turn on your location");
       return;
     } else {
       setErrorMsg(false);
@@ -23,7 +23,7 @@ useEffect(() => {
 }
 , []);
 
-let text = 'Waiting for having a valid position...';
+let text = "Waiting for having a valid position...";
 if (errorMsg) {
   text = errorMsg;
 } else if (location) {

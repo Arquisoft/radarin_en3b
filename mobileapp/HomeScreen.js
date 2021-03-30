@@ -1,9 +1,9 @@
-import React,{ useState, useEffect } from 'react';
-import { View, Text, ScrollView, Image } from 'react-native';
-import { Card } from 'react-native-elements'
-import styles from './MyStyles'
-import MyMenu from './MyMenu'
-import {fetchFriends} from './FetchFriends'
+import React from "react";
+import { View, Text, ScrollView, Image } from "react-native";
+import { Card } from "react-native-elements";
+import styles from "./MyStyles";
+import MyMenu from "./MyMenu";
+import { useSelector } from "react-redux";
 
 {/*Esto debería ir en el return delante de Navigation container pero.. cosas raras con comentarios
     <SafeAreaView>
@@ -17,6 +17,8 @@ import {fetchFriends} from './FetchFriends'
 
 export default function HomeScreen({navigation}) {
 
+  const loadedFriends = useSelector(state => state.user.onlineFriends);
+
   React.useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: (() => (
@@ -27,15 +29,13 @@ export default function HomeScreen({navigation}) {
         <View style={styles.iconWrapper}>
           <Image
             style={styles.icon}
-            source={require('./assets/icon.png')}
+            source={require("./assets/icon.png")}
           />
         </View>
       )
       ),
     });
   }, [navigation]);
-
-  var loadedFriends = fetchFriends();
 
   return (
     <ScrollView>

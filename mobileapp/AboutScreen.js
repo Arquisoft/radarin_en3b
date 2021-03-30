@@ -1,11 +1,11 @@
 
-import React, {useCallback}  from 'react';
-import { View, Text, ScrollView, Linking, Button} from 'react-native';
-import { Card} from 'react-native-elements'
-import {DataTable, Avatar } from 'react-native-paper';
-import {HeaderBackButton} from '@react-navigation/stack';
-import styles from './MyStyles'
-import MyMenu from './MyMenu'
+import React, {useCallback}  from "react";
+import { View, Text, ScrollView, Linking, Button} from "react-native";
+import { Card} from "react-native-elements";
+import {DataTable, Avatar } from "react-native-paper";
+import {HeaderBackButton} from "@react-navigation/stack";
+import styles from "./MyStyles";
+import MyMenu from "./MyMenu";
 
 const supportedURL = "https://solidproject.org/";;
 
@@ -34,7 +34,7 @@ export default function AboutScreen({navigation}) {
           )
       ),
       headerLeft: (() => (
-        <HeaderBackButton tintColor={'#FFF'} onPress={()=>{navigation.navigate('Radarin');}}></HeaderBackButton>
+        <HeaderBackButton tintColor={"#FFF"} onPress={()=>{navigation.navigate("Radarin");}}></HeaderBackButton>
       )
   )
     });
@@ -57,31 +57,31 @@ export default function AboutScreen({navigation}) {
             <Card.Divider/>
             <DataTable>
               <DataTable.Row>
-                <DataTable.Cell><Avatar.Image size={40} source={require('./assets/labra.jpg')} /></DataTable.Cell>
+                <DataTable.Cell><Avatar.Image size={40} source={require("./assets/labra.jpg")} /></DataTable.Cell>
                 <DataTable.Cell style={{flex: 3}}>Jose Emilio Labra</DataTable.Cell>
               </DataTable.Row>
               <DataTable.Row>
-                <DataTable.Cell><Avatar.Image size={40} source={require('./assets/alvaro.jpg')} /></DataTable.Cell>
+                <DataTable.Cell><Avatar.Image size={40} source={require("./assets/alvaro.jpg")} /></DataTable.Cell>
                 <DataTable.Cell style={{flex: 3}}>Álvaro Requejo</DataTable.Cell>
               </DataTable.Row>
               <DataTable.Row>
-                <DataTable.Cell><Avatar.Image size={40} source={require('./assets/marcos.jpg')} /></DataTable.Cell>
+                <DataTable.Cell><Avatar.Image size={40} source={require("./assets/marcos.jpg")} /></DataTable.Cell>
                 <DataTable.Cell style={{flex: 3}}>Marcos Tobías</DataTable.Cell>
               </DataTable.Row>
               <DataTable.Row>
-                <DataTable.Cell><Avatar.Image size={40} source={require('./assets/juanb.png')} /></DataTable.Cell>
+                <DataTable.Cell><Avatar.Image size={40} source={require("./assets/juanb.png")} /></DataTable.Cell>
                 <DataTable.Cell style={{flex: 3}}>Juan Buenaga</DataTable.Cell>
               </DataTable.Row>
               <DataTable.Row>
-                <DataTable.Cell><Avatar.Image size={40} source={require('./assets/carmen.jpg')} /></DataTable.Cell>
+                <DataTable.Cell><Avatar.Image size={40} source={require("./assets/carmen.jpg")} /></DataTable.Cell>
                 <DataTable.Cell style={{flex: 3}}>Carmen Rendueles</DataTable.Cell>
               </DataTable.Row>
               <DataTable.Row>
-                <DataTable.Cell><Avatar.Image size={40} source={require('./assets/miguel.jpg')} /></DataTable.Cell>
+                <DataTable.Cell><Avatar.Image size={40} source={require("./assets/miguel.jpg")} /></DataTable.Cell>
                 <DataTable.Cell style={{flex: 3}}>Miguel Ligero</DataTable.Cell>
               </DataTable.Row>
               <DataTable.Row>
-                <DataTable.Cell><Avatar.Image size={40} source={require('./assets/juanr.jpg')} /></DataTable.Cell>
+                <DataTable.Cell><Avatar.Image size={40} source={require("./assets/juanr.jpg")} /></DataTable.Cell>
                 <DataTable.Cell style={{flex: 3}}>Juan Rodriguez</DataTable.Cell>
               </DataTable.Row>
             </DataTable>
