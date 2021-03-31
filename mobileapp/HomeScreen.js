@@ -4,6 +4,7 @@ import { Card } from "react-native-elements";
 import styles from "./MyStyles";
 import MyMenu from "./MyMenu";
 import { useSelector } from "react-redux";
+import {fetchFriendsDistance} from "./FetchFriends";
 
 {/*Esto debería ir en el return delante de Navigation container pero.. cosas raras con comentarios
     <SafeAreaView>
@@ -37,7 +38,6 @@ export default function HomeScreen({navigation}) {
     });
   }, [navigation]);
 
-  var loadedFriends = fetchFriends();
   var friendsDistance = fetchFriendsDistance();
 
   return (
@@ -51,7 +51,7 @@ export default function HomeScreen({navigation}) {
                 <Card containerStyle={styles.card} key={u}>
                   <Card.Title>{u}</Card.Title>
                   <Card.Divider />
-                  <Text style={styles.name}>{friendsDistance[u]}</Text>
+                  <Text style={styles.name}>{String(friendsDistance[u])} m</Text>
                 </Card>
               );
             })

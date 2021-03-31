@@ -33,24 +33,27 @@ export function fetchFriends() {
 }
 
 export function fetchFriendsDistance() {
+  console.log(friendsWithDistance);
   return friendsWithDistance;
 }
 
 async function searchKnows(webId) {
   let names = store.each(store.sym(webId), FOAF("knows"));
   for (const name of names) {
-    await fetcher.load(store.sym(name).doc()).then(() => {
+    await fetcher.load(store.sym(name).doc()).then(async () => {
       if (isFriendship(name, webId)) {
         var user = store.any(name, VCARD("fn"));
         if (user == null) {
           if (!parsedNames.includes(name.value)){
             parsedNames.push(name.value);
-            friendsWithDistance[name.value] = getDistance(user.value);
+            let distance = await getDistance(name);
+            friendsWithDistance[name.value] = distance;
           }
         } else {
           if (!parsedNames.includes(user.value)){
             parsedNames.push(user.value);
-            friendsWithDistance[user.value] = getDistance(user.value);
+            let distance = await getDistance(name.value);
+            friendsWithDistance[user.value] = distance;
           }
         }
       }

@@ -1,7 +1,7 @@
 import * as SecureStore from "expo-secure-store";
 import forge from 'node-forge';
 import {getLocation} from "./ProfileScreen";
-import * as Location from 'expo-location';
+import { getPreciseDistance } from "geolib";
 
 //For testing purposes, must be changed later
 
@@ -38,16 +38,19 @@ async function getFriendLocation(friend){
     let webId = friend.value;
     //var webId = 'https://carmen279.inrupt.net/profile/card#me';
     let url = apiEndPoint + '/locations?webId='+ encodeURIComponent(webId);
-    console.log(url);
-    await fetch(url, {
-        method: 'GET',
-        headers: { 'Content-Type': 'application/json', 'Authorization': "Bearer " + auth }
-    }).then((resp) => console.log(resp.json())).then(function(data) {
-        location = data.results;
-    })
-    .catch(function(error) {
-    console.log("Error loading location"+error);
-    });
+    //console.log(url);
+    //await fetch(url, {
+    //    method: 'GET',
+    //    headers: { 'Content-Type': 'application/json', 'Authorization': "Bearer " + auth }
+    //}).then((resp) => console.log(resp.json())).then(function(data) {
+    //    location = data.results;
+    //})
+    //.catch(function(error) {
+    //console.log("Error loading location"+error);
+    //});
+
+    //Temporal until get works
+   location = { id: 1, coordinates: [43.3638658051, -5.84934495326], name: "Oviedo", details: "Location #1" }
 
     return location;
 }
@@ -61,8 +64,8 @@ export async function getDistance(friend){
 
 function calculateDistance(friendLoc, myLoc){
     let pdis = getPreciseDistance(
-        { latitude: friendLoc.latitude, longitude: friendLoc.longitude },
-        { latitude: myLoc.latitude, longitude: myLoc.longitude }
+        { latitude: friendLoc.coordinates[0], longitude: friendLoc.coordinates[1] },
+        { latitude: myLoc.coordinates[0], longitude: myLoc.coordinates[1] }
       );
 
     return pdis;
