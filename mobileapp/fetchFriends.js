@@ -1,3 +1,6 @@
+import { Menu } from "react-native-paper";
+import { getDistance } from "./FriendsLocation";
+
 const $rdf = require("rdflib");
 const store = $rdf.graph();
 
@@ -11,6 +14,8 @@ var FOAF;
 var fetcher;
 
 var parsedNames = [];
+var friendsIds = [];
+var friendsWithDistance = {};
 
 export async function setWebId(navigation, webId){
   webId = webId.replace('"','');
@@ -41,16 +46,22 @@ async function searchKnows(){
   
 let names = store.each(me, FOAF("knows"));
     for (const name of names) {
+      friendsIds.push(name);
       await fetcher.load(store.sym(name).doc()).then(() => {
         if (isFriendship(name)){
           var user = store.any(name, VCARD("fn"));
           if (user == null){
-            if (!parsedNames.includes(name.value))
+            if (!parsedNames.includes(name.value)){
               parsedNames.push(name.value);
+              friendsWithDistance[name.value] = getDistance(user.value);
+            }
           }else{
-            if (!parsedNames.includes(user.value))
+            if (!parsedNames.includes(user.value)){
               parsedNames.push(user.value);
+              friendsWithDistance[user.value] = getDistance(user.value);
+            }
           }
+
         }
       });
     }
@@ -59,6 +70,10 @@ let names = store.each(me, FOAF("knows"));
 
 export function fetchFriends() {
   return parsedNames;
+}
+
+export function fetchFriendsDistance() {
+  return friendsWithDistance;
 }
 
 

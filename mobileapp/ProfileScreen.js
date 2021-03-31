@@ -9,6 +9,11 @@ import styles from './MyStyles'
 import MyMenu from './MyMenu'
 import { sendLocation } from './sendLocation';
 
+let savedLocation;
+
+export function getLocation(){
+  return savedLocation;
+}
 export default function ProfileScreen({navigation}) {
   React.useLayoutEffect(() => {
     navigation.setOptions({
@@ -90,6 +95,7 @@ export default function ProfileScreen({navigation}) {
                 <Button title='Get my position'onPress={() =>{
                         Location.requestPermissionsAsync();
                         if (location.coords !== null) {
+                          savedLocation = location;
                           sendLocation(location.coords, location.timestamp);
                         }
                         alert(text); 

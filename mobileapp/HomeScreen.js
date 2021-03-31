@@ -35,25 +35,25 @@ export default function HomeScreen({navigation}) {
   }, [navigation]);
 
   var loadedFriends = fetchFriends();
+  var friendsDistance = fetchFriendsDistance();
 
   return (
     <ScrollView>
       <View style={styles.mainScreenContainer}>
         <Text style={styles.normalText}>Friends close to your location:</Text>
         <View>
-
-                {
-                    loadedFriends.map((u) => {
-                      return (
-                        <Card containerStyle={styles.card} key={u}>
-                          <Card.Title>{u}</Card.Title>
-                          <Card.Divider />
-                          <Text style={styles.name}>1 km</Text>
-                        </Card>
-                      );
-                    })
-                  }
-              </View>
+          {
+            loadedFriends.map((u) => {
+              return (
+                <Card containerStyle={styles.card} key={u}>
+                  <Card.Title>{u}</Card.Title>
+                  <Card.Divider />
+                  <Text style={styles.name}>{friendsDistance[u]}</Text>
+                </Card>
+              );
+            })
+          }
+        </View>
       </View>
     </ScrollView>
 

@@ -11,7 +11,6 @@ export default function LoginScreen({ navigation }) {
 
     AsyncStorage.getItem('userId').then(function (webId){
       if (webId != null && webId != ""){
-        alert(webId);
         navigation.navigate('Loading', {id: webId});
       }
     });
