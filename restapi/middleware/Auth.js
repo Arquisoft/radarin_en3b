@@ -10,12 +10,20 @@ const auth = async function (req, res, next) {
         return res.sendStatus(401);
 
     const store = $rdf.graph();
-    const me = store.sym(req.claims.webid);
-    const profile = me.doc();
-    const VCARD = new $rdf.Namespace("http://www.w3.org/2006/vcard/ns#");
-    const fetcher = new $rdf.Fetcher(store);
-    await fetcher.load(profile);
-    const key = store.any(me, VCARD("key")).value;
+
+    const prFileUrl = req.claims.webid.split("profile")[0] + "public/RadarinPKey/publicKey.ttl";
+
+    const prKeyFile = store.sym(prFileUrl);
+
+    const AUTH = new $rdf.Namespace("https://www.w3.org/ns/auth/cert#");
+
+    fetcher = new $rdf.Fetcher(store);
+    await fetcher.load(prKeyFile);
+
+    const key = store.any(prKeyFile, AUTH("RSAPublicKey"));
+
+    //alert(key);
+
     try {
         jwt.verify(token, key);
     }

@@ -5,12 +5,17 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
 import { SessionProvider } from "@inrupt/solid-ui-react";
+import store from "./redux/store";
+import { Provider } from "react-redux";
+
 
 ReactDOM.render(
   <React.StrictMode>
     <SessionProvider sessionId="logged-user">
     <BrowserRouter>
-      <App />
+      <Provider store={store}>
+        <App />
+      </Provider>
     </BrowserRouter>
     </SessionProvider>
 

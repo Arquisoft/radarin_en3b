@@ -1,17 +1,17 @@
-import React, { useState } from 'react';
-import {  Image } from 'react-native';
-import { View, Text, Button, Linking, StyleSheet } from 'react-native';
-import { Card } from 'react-native-elements';
-import styles from './MyStyles';
+import React, { useState } from "react";
+import {  Image } from "react-native";
+import { View, Text, Button, Linking, StyleSheet } from "react-native";
+import { Card } from "react-native-elements";
+import styles from "./MyStyles";
 import { BarCodeScanner } from "expo-barcode-scanner";
 import * as SecureStore from "expo-secure-store";
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from "@react-native-community/async-storage";
 
 export default function LoginScreen({ navigation }) {
 
-    AsyncStorage.getItem('userId').then(function (webId){
+    AsyncStorage.getItem("userId").then(function (webId){
       if (webId != null && webId != ""){
-        navigation.navigate('Loading', {id: webId});
+        navigation.navigate("Loading", {id: webId});
       }
     });
     
@@ -30,14 +30,14 @@ export default function LoginScreen({ navigation }) {
         <View style={styles.iconWrapper}>
           <Image
             style={styles.icon}
-            source={require('./assets/icon.png')}
+            source={require("./assets/icon.png")}
           />
         </View>
       )),
     }),
       (async () => {
         const { status } = await BarCodeScanner.requestPermissionsAsync();
-        setHasCameraPermission(status == 'granted');
+        setHasCameraPermission(status == "granted");
       })();
   }, [navigation]);
   
@@ -49,7 +49,7 @@ export default function LoginScreen({ navigation }) {
     webId = webId.replace('"','');
     webId = webId.replace('"','');
     AsyncStorage.setItem("userId",webId);
-    navigation.navigate('Loading', {id: webId});
+    navigation.navigate("Loading", {id: webId});
   };
 
   function changeShowScanner() {
@@ -70,7 +70,7 @@ export default function LoginScreen({ navigation }) {
           <Card.Title style={styles.signinCardTitle}>Sign in</Card.Title>
           <Card.Divider />
           <Text style={styles.normalText}>Click the button and scan the QR:</Text>
-          <Text style={styles.smallText}>Don't have the QR? You can get it here: <Text style={{ color: '#3f51b5' }} onPress={() => { Linking.openURL("https://inrupt.com/"); }}> Inrupt </Text> </Text>
+          <Text style={styles.smallText}>Don't have the QR? You can get it here: <Text style={{ color: "#3f51b5" }} onPress={() => { Linking.openURL("https://inrupt.com/"); }}> Inrupt </Text> </Text>
           <View style={styles.cardButton}>
             <Button color="#3f51b5" title="Scan" onPress={changeShowScanner}>Scan</Button>
           </View>
