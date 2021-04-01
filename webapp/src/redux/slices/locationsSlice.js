@@ -1,6 +1,11 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import fetchDBLocations from "../../components/locations/FetchDBLocations";
 
-export const fetchLocations = createAsyncThunk("locations/fetchLocations", async () => {
+export const fetchLocations = createAsyncThunk("locations/fetchLocations", async (session) => {
+    const apiLocations = await fetchDBLocations(session);
+    console.log(apiLocations);
+
+
     const locationsList = [
         { id: 1, coordinates: [43.3638658051, -5.84934495326], name: "Oviedo", details: "Location #1" },
         { id: 2, coordinates: [43.5410052978, -5.66364853752], name: "Gijón", details: "Location #2" },
