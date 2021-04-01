@@ -43,22 +43,15 @@ async function getFriendsLocation(friends){
         url += (encodeURIComponent(f.value) +',');
     }
     console.log(url);
-    fetch(url, {
+    await fetch(url, {
         method: 'GET',
         headers: { 'Content-Type': 'application/json', 'Authorization': "Bearer " + auth }
     }).then((resp) => resp.json()).then(function(data) {
-        console.log(data);
-        locations = data.results;
+        locations = data;
     })
     .catch(function(error) {
         console.log("Error loading locations :"+error);
         });
-
-
-    //Temporal until get works
-    locations = {}
-    for (let friend of friends)
-        locations[friend] = { id: 1, coordinates: [43.3638658051, -5.84934495326], name: "Oviedo", details: "Location #1" }
 
     return locations;
 }
@@ -66,19 +59,21 @@ async function getFriendsLocation(friends){
 export async function getDistances(friends){
     let locations = await getFriendsLocation(friends);
     let myLocation = getLocation();
+    let distances = {};
 
     for (let key in locations){
         let location = locations[key];
-        locations[key] = calculateDistance(location, myLocation);
+        distances[key] = calculateDistance(location, myLocation);
     }
-    return locations;
+
+    return distances;
 }
 
 function calculateDistance(friendLoc, myLoc){
+    console.log(friendLoc);
     let pdis = getPreciseDistance(
-        { latitude: friendLoc.coordinates[0], longitude: friendLoc.coordinates[1] },
+        { latitude: friendLoc.coords.latitude, longitude: friendLoc.coords.longitude },
         { latitude: myLoc.coordinates[0], longitude: myLoc.coordinates[1] }
       );
-
     return pdis;
 } 

@@ -8,12 +8,11 @@ router.get("/locations", webIdQueryChecker);
 
 router.post("/locations", async (req, res) => {
     const trackedLocation = new TrackedLocation({
-        webId: req.claims.webid,
+        webId: req.body.webId,
         coords: req.body.coords,
         timestamp: req.body.timestamp
     });
     trackedLocation.save();
-    console.log(trackedLocation);
     res.send(trackedLocation);
 });
 
@@ -49,11 +48,13 @@ router.get("/friendslocations", async (req, res) => {
     const friendIds = req.query.friendIds;
 
     let locations = {};
-    for (let webId of friendIds){
-        locations[webId] = await TrackedLocation.findOne({ webId }).sort({ timestamp: -1 });
+    let parsedIds = friendIds.split(',');
+    for (let friendId of parsedIds){
+        let location = await TrackedLocation.findOne({ webId : friendId }).sort({ timestamp: -1 });
+        if (location != null)
+            locations[friendId] = location;
     }
 
-    console.log(locations);
     res.send(locations);
 });
 

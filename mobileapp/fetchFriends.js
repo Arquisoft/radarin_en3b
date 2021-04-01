@@ -27,12 +27,12 @@ async function getNames(){
     var user = store.any(name, VCARD("fn"));
 
     if (user == null) {
-      if (!(name.value in friendsFinal)){
-        friendsFinal[name.value] = friendsWithDistance[name];
+      if (!(name.value in friendsFinal) && (name.value in friendsWithDistance)){
+        friendsFinal[name.value] = friendsWithDistance[name.value];
       }
     } else {
-      if (!(user.value in friendsFinal)){
-        friendsFinal[user.value] = friendsWithDistance[name];
+      if (!(user.value in friendsFinal) && (name.value in friendsWithDistance)){
+        friendsFinal[user.value] = friendsWithDistance[name.value];
       }
     }
   }

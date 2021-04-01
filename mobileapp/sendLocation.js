@@ -3,7 +3,7 @@ import forge from "node-forge";
 
 //For testing purposes, must be changed later
 
-const apiEndPoint = "http://192.168.1.36:5000";
+const apiEndPoint = 'http://192.168.1.36:5000/api'
 
 async function buildJwt() {
     const p = await SecureStore.getItemAsync("op234iyu5v6oy234iuv6");
@@ -17,12 +17,12 @@ async function buildJwt() {
     };
     const payload = {
         sub: "test",
-        webid: userId
+        webid: userId,
     };
     const header64 = forge.util.encode64(JSON.stringify(header)).replace(/\+/g, '-').replace(/\//g, '_').replace(/\=+$/, '');
     const payload64 = forge.util.encode64(JSON.stringify(payload)).replace(/\+/g, '-').replace(/\//g, '_').replace(/\=+$/, '');
     const preHash = header64 + '.' + payload64;
-    md.update(preHash, "utf8");
+    md.update(preHash, 'utf8');
     const signature = key.sign(md);
     const strSignature = forge.util.encode64(signature).replace(/\+/g, '-').replace(/\//g, '_').replace(/\=+$/, '');
     return header64 + '.' + payload64 + '.' + strSignature;
@@ -42,6 +42,11 @@ export async function sendLocation(coords, timestamp) {
             "coords": coords,
             "timestamp": timestamp
         })
-    });
+    }).then((resp) => resp.json()).then(function(data) {
+        console.log(data);
+    })
+    .catch(function(error) {
+        console.log("Error loading locations :"+error);
+        });
     console.log("Position sent");
 }
