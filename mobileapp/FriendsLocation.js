@@ -3,13 +3,11 @@ import forge from 'node-forge';
 import {getLocation} from "./ProfileScreen";
 import { getPreciseDistance } from "geolib";
 
-//For testing purposes, must be changed later
-
-const apiEndPoint = 'http://192.168.50.55:5000';
+//Ip of my computer's wifi adapter
+const apiEndPoint = 'http://192.168.1.36:5000/api';
 let distances = {};
 
 async function buildJwt() {
-    
     const p = await SecureStore.getItemAsync("op234iyu5v6oy234iuv6");
     const parsed = JSON.parse(p);
     const userId = parsed.webId;
@@ -21,7 +19,7 @@ async function buildJwt() {
     };
     const payload = {
         sub: "test",
-        webid: userId
+        webid: userId,
     };
     const header64 = forge.util.encode64(JSON.stringify(header)).replace(/\+/g, '-').replace(/\//g, '_').replace(/\=+$/, '');
     const payload64 = forge.util.encode64(JSON.stringify(payload)).replace(/\+/g, '-').replace(/\//g, '_').replace(/\=+$/, '');
@@ -32,34 +30,48 @@ async function buildJwt() {
     return header64 + '.' + payload64 + '.' + strSignature;
 }
 
-async function getFriendLocation(friend){
-    let location;
+async function getFriendsLocation(friends){
+    let locations = {};
     const auth = await buildJwt();
-    let webId = friend.value;
-    //var webId = 'https://carmen279.inrupt.net/profile/card#me';
-    let url = apiEndPoint + '/locations?webId='+ encodeURIComponent(webId);
-    //console.log(url);
-    //await fetch(url, {
-    //    method: 'GET',
-    //    headers: { 'Content-Type': 'application/json', 'Authorization': "Bearer " + auth }
-    //}).then((resp) => console.log(resp.json())).then(function(data) {
-    //    location = data.results;
-    //})
-    //.catch(function(error) {
-    //console.log("Error loading location"+error);
-    //});
+
+    const p = await SecureStore.getItemAsync("op234iyu5v6oy234iuv6");
+    const parsed = JSON.parse(p);
+    const userId = parsed.webId;
+    
+    let url = apiEndPoint + '/friendslocations?webId='+ encodeURIComponent(userId)+'&friendIds=';
+    for (let f of friends){
+        url += (encodeURIComponent(f.value) +',');
+    }
+    console.log(url);
+    fetch(url, {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json', 'Authorization': "Bearer " + auth }
+    }).then((resp) => resp.json()).then(function(data) {
+        console.log(data);
+        locations = data.results;
+    })
+    .catch(function(error) {
+        console.log("Error loading locations :"+error);
+        });
+
 
     //Temporal until get works
-   location = { id: 1, coordinates: [43.3638658051, -5.84934495326], name: "Oviedo", details: "Location #1" }
+    locations = {}
+    for (let friend of friends)
+        locations[friend] = { id: 1, coordinates: [43.3638658051, -5.84934495326], name: "Oviedo", details: "Location #1" }
 
-    return location;
+    return locations;
 }
 
-export async function getDistance(friend){
-    let location = await getFriendLocation(friend);
+export async function getDistances(friends){
+    let locations = await getFriendsLocation(friends);
     let myLocation = getLocation();
 
-    return calculateDistance(location, myLocation);
+    for (let key in locations){
+        let location = locations[key];
+        locations[key] = calculateDistance(location, myLocation);
+    }
+    return locations;
 }
 
 function calculateDistance(friendLoc, myLoc){

@@ -3,7 +3,7 @@ import forge from "node-forge";
 
 //For testing purposes, must be changed later
 
-const apiEndPoint = "http://192.168.50.55:5000";
+const apiEndPoint = "http://192.168.1.36:5000";
 
 async function buildJwt() {
     const p = await SecureStore.getItemAsync("op234iyu5v6oy234iuv6");
@@ -34,7 +34,7 @@ export async function sendLocation(coords, timestamp) {
     const p = await SecureStore.getItemAsync("op234iyu5v6oy234iuv6");
     const parsed = JSON.parse(p);
     const userId = parsed.webId;
-    await fetch(apiEndPoint + "/locations/add", {
+    await fetch(apiEndPoint + "/locations", {
         method: 'POST',
         headers: { "Content-Type": "application/json", "Authorization": "Bearer " + auth },
         body: JSON.stringify({

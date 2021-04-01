@@ -41,9 +41,9 @@ export default function LoginScreen({ navigation }) {
       })();
   }, [navigation]);
   
-  const handleQrScanned = ({ type, data }) => {
+  const handleQrScanned = async ({ type, data }) => {
     setScanned(true);
-    save("op234iyu5v6oy234iuv6", data);
+    await save("op234iyu5v6oy234iuv6", data);
     var webIdArray = data.split(',')[0].split(':');
     var webId = webIdArray[1] + ':' + webIdArray[2];
     webId = webId.replace('"','');
