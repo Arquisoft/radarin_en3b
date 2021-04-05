@@ -1,7 +1,7 @@
-import jwt from 'jsonwebtoken';
+import jwt from "jsonwebtoken";
 class API {
     constructor() {
-        this.apiEndPoint = process.env.REACT_APP_API_URI || 'http://localhost:5000/api';
+        this.apiEndPoint = process.env.REACT_APP_API_URI || "http://localhost:5000/api";
         this._webId = "";
         this.token = "";
     }
@@ -13,8 +13,8 @@ class API {
 
     buildHeaders() {
         const headers = new Headers();
-        headers.append('Authorization', "Bearer " + this.token);
-        headers.append('Content-Type', 'application/json');
+        headers.append("Authorization", "Bearer " + this.token);
+        headers.append("Content-Type", "application/json");
         return headers;
     }
 
@@ -23,13 +23,13 @@ class API {
             sub: "test",
             webid: this._webId
         };
-        this.token = jwt.sign(payload, privateKey, { algorithm: 'RS256', noTimestamp: true });
+        this.token = jwt.sign(payload, privateKey, { algorithm: "RS256", noTimestamp: true });
     }
 
     async getLocations() {
         const encodedWebId = encodeURIComponent(this._webId);
         const response = await fetch(`${this.apiEndPoint}/locations?webId=${encodedWebId}`,
-            { method: 'GET', headers: this.buildHeaders() });
+            { method: "GET", headers: this.buildHeaders() });
         return await response.json();
     }
 }
