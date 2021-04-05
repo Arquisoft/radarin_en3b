@@ -5,7 +5,7 @@ export const fetchLocations = createAsyncThunk("locations/fetchLocations", async
     let apiLocations = await fetchDBLocations(session);
 
     let counter = 7;
-    apiLocations = apiLocations.map((loc) => new {id: counter++, coordinates: [loc.latitude, loc.longitude], name: "", details: ""});
+    apiLocations = apiLocations.map((loc) => ({ id: counter++, coordinates: [loc.latitude, loc.longitude], name: "", details: "" }));
 
     console.log(apiLocations);
 
