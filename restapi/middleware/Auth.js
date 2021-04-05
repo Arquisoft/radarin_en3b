@@ -25,7 +25,7 @@ const auth = async function (req, res, next) {
     //alert(key);
 
     try {
-        jwt.verify(token, key);
+        jwt.verify(token, key.value);
     }
     catch (e) {
         console.log(e);

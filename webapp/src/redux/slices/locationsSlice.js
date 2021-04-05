@@ -1,6 +1,15 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import fetchDBLocations from "../../components/locations/FetchDBLocations";
 
-export const fetchLocations = createAsyncThunk("locations/fetchLocations", async () => {
+export const fetchLocations = createAsyncThunk("locations/fetchLocations", async (session) => {
+    let apiLocations = await fetchDBLocations(session);
+
+    let counter = 7;
+    apiLocations = apiLocations.map((loc) => new {id: counter++, coordinates: [loc.latitude, loc.longitude], name: "", details: ""});
+
+    console.log(apiLocations);
+
+
     const locationsList = [
         { id: 1, coordinates: [43.3638658051, -5.84934495326], name: "Oviedo", details: "Location #1" },
         { id: 2, coordinates: [43.5410052978, -5.66364853752], name: "Gijón", details: "Location #2" },
@@ -10,7 +19,7 @@ export const fetchLocations = createAsyncThunk("locations/fetchLocations", async
         { id: 6, coordinates: [40.0381046896, -6.08667514877], name: "Plasencia", details: "Location #6" },
     ];
     
-    return locationsList;
+    return locationsList.concat(apiLocations);
 }); 
 
 const initialState = {

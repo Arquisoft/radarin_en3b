@@ -7,7 +7,7 @@ import {
 
 export default async function getOrCreatePrivateFilePod(containerUri, fetch) {
     const prKeyFileUrl = `${containerUri}privateKey.ttl`;
-
+console.log(prKeyFileUrl);
     try {
         const prKeyFile = await getSolidDataset(prKeyFileUrl, {fetch});
         return prKeyFile;
