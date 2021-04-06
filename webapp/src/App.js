@@ -1,17 +1,13 @@
 import React from "react";
 import "./App.css";
-import EmailForm from "./components/EmailForm";
-import UserList from "./components/UserList";
 import "bootstrap/dist/css/bootstrap.min.css";
 import About from "./components/About";
-import Welcome from "./components/Welcome";
 import { Switch, Route } from "react-router-dom";
 import MainNavbar from "./components/MainNavbar";
 import { BrowserRouter } from "react-router-dom";
 import MainFooter from "./components/MainFooter";
-import ResponsiveDrawer from "./components/Localizations";
-import MainCarousel from "./components/MainCarousel";
-import AppInfo from "./components/AppInfo";
+import LocationsView from "./components/LocationsView";
+import MainView from "./components/MainView";
 import LoginPage from "./components/LoginPage";
 import QRPage from "./components/QRPage";
 
@@ -34,8 +30,8 @@ class App extends React.Component {
           </header>
           <br /><br /><br /><br /><br /><br />
           <Switch>
-            <Route path="/localizations">
-              <ResponsiveDrawer />
+            <Route path="/locations">
+              <LocationsView />
             </Route>
             <Route path="/about">
               <About />
@@ -47,34 +43,12 @@ class App extends React.Component {
               <QRPage></QRPage>
             </Route>
             <Route path="/">
-              {this.main2()}
+              <MainView/>
             </Route>
           </Switch>
         </div>
         <MainFooter />
       </BrowserRouter>
-    );
-  }
-
-  main() {
-    return (
-      <div className="App-content">
-        <Welcome name="ASW students" />
-        <EmailForm refreshUsers={this.refreshUsers.bind(this)} />
-        <UserList users={this.state.users} />
-        <a className="App-link"
-          href="https://github.com/pglez82/radarin_0"
-          target="_blank"
-          rel="noopener noreferrer">Source code</a>
-      </div>
-    );
-  }
-
-  main2() {
-    return (<div>
-      <MainCarousel />
-      <AppInfo />
-      </div>
     );
   }
 }

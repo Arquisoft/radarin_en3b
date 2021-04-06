@@ -1,9 +1,11 @@
 import * as SecureStore from "expo-secure-store";
-import forge from "node-forge";
+import forge from 'node-forge';
+import {getLocation} from "./ProfileScreen";
+import { getPreciseDistance } from "geolib";
 
-//For testing purposes, must be changed later
-
-const apiEndPoint = 'http://192.168.1.36:5000/api'
+//Ip of my computer's wifi adapter
+const apiEndPoint = 'http://192.168.1.36:5000/api';
+let distances = {};
 
 async function buildJwt() {
     const p = await SecureStore.getItemAsync("op234iyu5v6oy234iuv6");
@@ -28,30 +30,50 @@ async function buildJwt() {
     return header64 + '.' + payload64 + '.' + strSignature;
 }
 
-//This function will send the location after an async timeout, so the application does not stop and sends the ubication 
-export async function sendLocationAsync(userId, coords, timestamp, isSwitchOn) {
-    setTimeout(sendLocation(coords, timestamp), 150000);
-}
-
-//In the future this will be changed and the userID will be passed
-export async function sendLocation(coords, timestamp) {
+async function getFriendsLocation(friends){
+    let locations = {};
     const auth = await buildJwt();
+
     const p = await SecureStore.getItemAsync("op234iyu5v6oy234iuv6");
     const parsed = JSON.parse(p);
     const userId = parsed.webId;
-    await fetch(apiEndPoint + "/locations", {
-        method: 'POST',
-        headers: { "Content-Type": "application/json", "Authorization": "Bearer " + auth },
-        body: JSON.stringify({
-            "webId": userId,
-            "coords": coords,
-            "timestamp": timestamp
-        })
+    
+    let url = apiEndPoint + '/friendslocations?webId='+ encodeURIComponent(userId)+'&friendIds=';
+    for (let f of friends){
+        url += (encodeURIComponent(f.value) +',');
+    }
+    console.log(url);
+    await fetch(url, {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json', 'Authorization': "Bearer " + auth }
     }).then((resp) => resp.json()).then(function(data) {
-        console.log(data);
+        locations = data;
     })
     .catch(function(error) {
         console.log("Error loading locations :"+error);
         });
-    console.log("Position sent");
+
+    return locations;
 }
+
+export async function getDistances(friends){
+    let locations = await getFriendsLocation(friends);
+    let myLocation = getLocation();
+    let distances = {};
+
+    for (let key in locations){
+        let location = locations[key];
+        distances[key] = calculateDistance(location, myLocation);
+    }
+
+    return distances;
+}
+
+function calculateDistance(friendLoc, myLoc){
+    console.log(friendLoc);
+    let pdis = getPreciseDistance(
+        { latitude: friendLoc.coords.latitude, longitude: friendLoc.coords.longitude },
+        { latitude: myLoc.coordinates[0], longitude: myLoc.coordinates[1] }
+      );
+    return pdis;
+} 

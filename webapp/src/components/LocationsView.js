@@ -46,14 +46,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function ResponsiveDrawer(props) {
-  const[coordinates, setCoordinates] = React.useState([43.3589, -5.8461]);
-
-  const handleCallback = (childData) => {
-    setCoordinates(childData);
-    //console.log("Localizations receives: " + childData);
-  };
-
+export default function LocationsView(props) {
   const classes = useStyles();
   const theme = useTheme();
   const [mobileOpen, setMobileOpen] = React.useState(false);
@@ -65,8 +58,8 @@ function ResponsiveDrawer(props) {
   const drawer = (
     <div>
       <div className={classes.toolbar} />
-
-      <LocationList parentCallback = {handleCallback}/>
+      
+      <LocationList/>
     </div>
   );
 
@@ -90,6 +83,7 @@ function ResponsiveDrawer(props) {
             anchor={theme.direction === "rtl" ? "right" : "left"}
             open={mobileOpen}
             onClose={handleDrawerToggle}
+            onOpen={handleDrawerToggle}
             classes={{
               paper: classes.drawerPaper,
             }}
@@ -113,18 +107,16 @@ function ResponsiveDrawer(props) {
         </Hidden>
       </nav>
       <main className={classes.content}>
-        <MapView coordinates = {coordinates}/>
+        <MapView/>
       </main>
     </div>
   );
 }
 
-ResponsiveDrawer.propTypes = {
+LocationsView.propTypes = {
   /**
    * Injected by the documentation to work in an iframe.
    * You won't need it on your project.
    */
   window: PropTypes.func,
 };
-
-export default ResponsiveDrawer;

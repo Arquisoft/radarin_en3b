@@ -1,89 +1,99 @@
-import React from "react";
+import React, { useState } from "react";
 import {
     List,
     ListItem,
     ListItemIcon,
     ListItemText,
     Divider,
-    Typography
+    Typography,
+    TextField
 } from "@material-ui/core";
 import LocationOnIcon from "@material-ui/icons/LocationOn";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchLocations, moveTo, selectAllLocations } from "../redux/slices/locationsSlice";
+import { useEffect } from "react";
+import "../css/LocationsList.css";
 
-class LocationList extends React.Component {
 
-    handleClick = (event, coordinates) => {
-        this.props.parentCallback(coordinates.split(","));
-        event.preventDefault();
+export default function LocationList() {
+    const dispatch = useDispatch();
+    const locationStatus = useSelector(state => state.locations.status);
+    const error = useSelector(state => state.locations.error);
+
+    const locations = useSelector(selectAllLocations);
+
+    const [filterText, setFilterText] = useState("");
+
+    useEffect(() => {
+        if (locationStatus === "idle") {
+            dispatch(fetchLocations());
+
+        }
+    }, [locationStatus, dispatch]);
+
+    const onChange = e => {
+        setFilterText(e.target.value);
     }
 
-    render() {
-        return (
-            <div>
-                <List component='nav'>
-                    <ListItem button type="checkbox" value={"43.3589,-5.8461"} defaultChecked={false} onClick={(e) => this.handleClick(e,"43.3589,-5.8461")}>
-                        <ListItemIcon>
-                            <LocationOnIcon />
-                        </ListItemIcon>
-                        <ListItemText primary='43.3589,-5.8461'
-                            secondary={
-                                <React.Fragment>
-                                    <Typography
-                                        component="span"
-                                        variant="body2"
-                                        color="textPrimary"
-                                    >
-                                        Oviedo — 
+    let content;
+
+    if (locationStatus === "loading") {
+        content = (<div className="spinner-border mt-5 center2" role="status">
+            <span className="sr-only">Loading...</span>
+        </div>);
+    } else if (locationStatus === "succeeded") {
+        content = (
+            <List component='nav'>
+                <ListItem>
+                    <div className="table-responsible mt-3 mb-3 ml-2">
+                        <TextField
+                            type="text"
+                            placeholder="Search"
+                            className="textField"
+                            name="busqueda"
+                            onChange={onChange}
+                        />
+                    </div>
+                </ListItem>
+                {
+                    locations.filter(item => item.name.toLowerCase().includes(filterText.toLowerCase()))
+                        .map(item =>
+                            <ListItem
+                                button type="checkbox"
+                                value={item.coordinates}
+                                key={item.id}
+                                defaultChecked={false}
+                                onClick={() => { dispatch(moveTo([0, 0])); dispatch(moveTo(item.coordinates)) }}
+                            >
+                                <ListItemIcon>
+                                    <LocationOnIcon />
+                                </ListItemIcon>
+                                <ListItemText primary={item.coordinates}
+                                    secondary={
+                                        <React.Fragment>
+                                            <Typography
+                                                component="span"
+                                                variant="body2"
+                                                color="textPrimary"
+                                            >
+                                                {item.name} -
                                         </Typography>
-                                    {"Localización #1"}
-                                </React.Fragment>
-                            } />
-                    </ListItem>
-
-                    <ListItem button type="checkbox" value={"43.5424,-5.6631"} defaultChecked={false} onClick={(e) => this.handleClick(e,"43.5424,-5.6631")}>
-                        <ListItemIcon>
-                            <LocationOnIcon />
-                        </ListItemIcon>
-                        <ListItemText primary='43.5424,-5.6631'
-                            secondary={
-                                <React.Fragment>
-                                    <Typography
-                                        component="span"
-                                        variant="body2"
-                                        color="textPrimary"
-                                    >
-                                        Gijón —
-                                        </Typography>
-                                    {"Localización #2"}
-                                </React.Fragment>
-                            } />
-                    </ListItem>
-
-                    <ListItem button type="checkbox" value={"43.1757, -6.5492"} defaultChecked={false} onClick={(e) => this.handleClick(e,"43.1757, -6.5492")}>
-                        <ListItemIcon>
-                            <LocationOnIcon />
-                        </ListItemIcon>
-                        <ListItemText primary='43.1757, -6.5492'
-                            secondary={
-                                <React.Fragment>
-                                    <Typography
-                                        component="span"
-                                        variant="body2"
-                                        color="textPrimary"
-                                    >
-                                        Cangas del Narcea —
-                                        </Typography>
-                                    {"Localización #3"}
-                                </React.Fragment>
-                            } />
-                    </ListItem>
-
-                    <Divider />
-
-                </List>
-            </div>
+                                            {item.details}
+                                        </React.Fragment>
+                                    } />
+                            </ListItem>
+                        )
+                }
+                <Divider />
+            </List>
         );
+    } else if (locationStatus === "failed") {
+        content = <div className="center2">{error}</div>
     }
 
+    return (
+        <div>
+            {content}
+        </div>
+    );
 }
-
-export default LocationList;
