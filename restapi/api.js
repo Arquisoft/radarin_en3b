@@ -4,19 +4,7 @@ const TrackedLocation = require("./models/TrackedLocation");
 const router = express.Router();
 const webIdQueryChecker = require("./WebIdQueryChecker");
 
-router.get("/locations", webIdQueryChecker);
-
-router.post("/locations", async (req, res) => {
-    const trackedLocation = new TrackedLocation({
-        webId: req.claims.webid,
-        coords: req.body.coords,
-        timestamp: req.body.timestamp
-    });
-    trackedLocation.save();
-    res.send(trackedLocation);
-});
-
-router.get("/locations", async (req, res) => {
+router.get("/locations", webIdQueryChecker, async (req, res) => {
     if (req.query.webId == null) {
         return res.sendStatus(400);
     }
@@ -33,6 +21,16 @@ router.get("/locations", async (req, res) => {
 
     const userLocations = await TrackedLocation.find({ webId }).sort({ timestamp: -1 });
     res.send(userLocations);
+});
+
+router.post("/locations", async (req, res) => {
+    const trackedLocation = new TrackedLocation({
+        webId: req.claims.webid,
+        coords: req.body.coords,
+        timestamp: req.body.timestamp
+    });
+    trackedLocation.save();
+    res.send(trackedLocation);
 });
 
 module.exports = router;
