@@ -8,9 +8,9 @@ import {HeaderBackButton} from "@react-navigation/stack";
 import * as Location from "expo-location";
 import styles from "./MyStyles";
 import MyMenu from "./MyMenu";
-import { sendLocation } from "./SendLocation";
+//import { sendLocation } from "./SendLocation";
 import { useSelector } from "react-redux";
-import {getLocation} from "./getAsyncLocations";
+import {getLocation} from "./GetAsyncLocations";
 
 export default function ProfileScreen({navigation}) {
   const webId = useSelector(state => state.user.webId);
@@ -121,7 +121,7 @@ const MySwitch = () => {
     setIsSwitchOn(!isSwitchOn);
     var sendingLocations = setInterval(getLocation, 300000);
     if (isSwitchOn) {
-      sendLocation.getCurrentPositionAsync(isSwitchOn);
+ //     sendLocation.getCurrentPositionAsync(isSwitchOn);
     } else {
       clearInterval(sendingLocations);
     }
