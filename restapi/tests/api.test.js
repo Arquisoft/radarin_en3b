@@ -50,7 +50,7 @@ describe('locations ', () => {
     };
     it('can be created correctly', async () => {
         const response = await request(app).post('/api/locations')
-            .send({ coords, timestamp })
+            .send({ webId, coords, timestamp })
             .set('Accept', 'application/json');
         expect(response.statusCode).toBe(200);
         expect(response.body.webId).toBe(webId);
