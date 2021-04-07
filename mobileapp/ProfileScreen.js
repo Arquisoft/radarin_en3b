@@ -10,6 +10,14 @@ import MyMenu from "./MyMenu";
 import { sendLocation } from "./SendLocation";
 import { useSelector } from "react-redux";
 
+let savedLocation;
+
+export function getLocation(){
+  //Temporal until get works
+  savedLocation = { id: 2, coordinates: [43.5410052978, -5.66364853752], name: "Gijón", details: "Location #2" };
+
+  return savedLocation;
+}
 export default function ProfileScreen({navigation}) {
   const webId = useSelector(state => state.user.webId);
   const fn = useSelector(state => state.user.fn);
@@ -93,6 +101,7 @@ export default function ProfileScreen({navigation}) {
                 <Button title="Get my position" onPress={() =>{
                         Location.requestPermissionsAsync();
                         if (location.coords !== null) {
+                          savedLocation = location;
                           sendLocation(location.coords, location.timestamp);
                         }
                         alert(text); 

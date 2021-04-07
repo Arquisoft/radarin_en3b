@@ -8,7 +8,7 @@ router.get("/locations", webIdQueryChecker);
 
 router.post("/locations", async (req, res) => {
     const trackedLocation = new TrackedLocation({
-        webId: req.claims.webid,
+        webId: req.body.webId,
         coords: req.body.coords,
         timestamp: req.body.timestamp
     });
@@ -33,6 +33,29 @@ router.get("/locations", async (req, res) => {
 
     const userLocations = await TrackedLocation.find({ webId }).sort({ timestamp: -1 });
     res.send(userLocations);
+});
+
+router.get("/friendslocations", webIdQueryChecker);
+
+router.get("/friendslocations", async (req, res) => {
+    if (req.query.webId == null) {
+        return res.sendStatus(400);
+    }
+    if (req.query.webId !== req.claims.webid) {
+        return res.sendStatus(403);
+    }
+
+    const friendIds = req.query.friendIds;
+
+    let locations = {};
+    let parsedIds = friendIds.split(',');
+    for (let friendId of parsedIds){
+        let location = await TrackedLocation.findOne({ webId : friendId }).sort({ timestamp: -1 });
+        if (location != null)
+            locations[friendId] = location;
+    }
+
+    res.send(locations);
 });
 
 module.exports = router;

@@ -42,19 +42,18 @@ export default function HomeScreen({navigation}) {
       <View style={styles.mainScreenContainer}>
         <Text style={styles.normalText}>Friends close to your location:</Text>
         <View>
-
-                {
-                    loadedFriends.map((u) => {
-                      return (
-                        <Card containerStyle={styles.card} key={u}>
-                          <Card.Title>{u}</Card.Title>
-                          <Card.Divider />
-                          <Text style={styles.name}>1 km</Text>
-                        </Card>
-                      );
-                    })
-                  }
-              </View>
+          {
+            Object.entries(loadedFriends).map(([u, d]) => {
+              return (
+                <Card containerStyle={styles.card} key={u}>
+                  <Card.Title>{u}</Card.Title>
+                  <Card.Divider />
+                  <Text style={styles.name}>{d} m</Text>
+                </Card>
+              );
+            })
+          }
+        </View>
       </View>
     </ScrollView>
   );
