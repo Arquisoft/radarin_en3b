@@ -2,20 +2,19 @@ import React, { useState } from "react";
 import {
     List,
     ListItem,
-    ListItemIcon,
-    ListItemText,
     Divider,
-    Typography,
     TextField
 } from "@material-ui/core";
-import LocationOnIcon from "@material-ui/icons/LocationOn";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchLocations, moveTo, selectAllLocations } from "../redux/slices/locationsSlice";
+import { fetchLocations, selectAllLocations } from "../redux/slices/locationsSlice";
 import { useEffect } from "react";
 import "../css/LocationsList.css";
+import Location from "./locations/Location";
+import { useSession } from "@inrupt/solid-ui-react";
 
 
 export default function LocationList() {
+    const { session } = useSession();
     const dispatch = useDispatch();
     const locationStatus = useSelector(state => state.locations.status);
     const error = useSelector(state => state.locations.error);
@@ -26,10 +25,10 @@ export default function LocationList() {
 
     useEffect(() => {
         if (locationStatus === "idle") {
-            dispatch(fetchLocations());
+            dispatch(fetchLocations(session));
 
         }
-    }, [locationStatus, dispatch]);
+    }, [locationStatus, dispatch, session]);
 
     const onChange = e => {
         setFilterText(e.target.value);
@@ -58,30 +57,12 @@ export default function LocationList() {
                 {
                     locations.filter(item => item.name.toLowerCase().includes(filterText.toLowerCase()))
                         .map(item =>
-                            <ListItem
-                                button type="checkbox"
-                                value={item.coordinates}
+                            <Location
                                 key={item.id}
-                                defaultChecked={false}
-                                onClick={() => { dispatch(moveTo([0, 0])); dispatch(moveTo(item.coordinates)) }}
-                            >
-                                <ListItemIcon>
-                                    <LocationOnIcon />
-                                </ListItemIcon>
-                                <ListItemText primary={item.coordinates}
-                                    secondary={
-                                        <React.Fragment>
-                                            <Typography
-                                                component="span"
-                                                variant="body2"
-                                                color="textPrimary"
-                                            >
-                                                {item.name} -
-                                        </Typography>
-                                            {item.details}
-                                        </React.Fragment>
-                                    } />
-                            </ListItem>
+                                name={item.name}
+                                details={item.details}
+                                coords={item.coordinates}
+                            />
                         )
                 }
                 <Divider />
