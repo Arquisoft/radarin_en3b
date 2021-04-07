@@ -3,7 +3,7 @@ const promBundle = require("express-prom-bundle");
 const cors = require('cors');
 const mongoose = require("mongoose");
 const api = require("./api") ;
-const auth = require("./middleware/Auth");
+const auth = require("./Auth");
 
 function connect(){
     //The MONGO_URI variable is the connection string to MongoDB Atlas (for production). This env variable is created in heroku.
