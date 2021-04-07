@@ -2,7 +2,19 @@ const express = require("express");
 const TrackedLocation = require("./models/TrackedLocation");
 /*eslint new-cap: ["error", { "capIsNewExceptionPattern": "^express\.." }]*/
 const router = express.Router();
-// const webIdQueryChecker = require("./WebIdQueryChecker");
+const webIdQueryChecker = require('./middleware/WebIdQueryChecker');
+
+router.get("/locations", webIdQueryChecker);
+
+router.post("/locations", async (req, res) => {
+    const trackedLocation = new TrackedLocation({
+        webId: req.claims.webid,
+        coords: req.body.coords,
+        timestamp: req.body.timestamp
+    });
+    trackedLocation.save();
+    res.send(trackedLocation);
+});
 
 router.get("/locations", async (req, res) => {
     if (req.query.webId == null) {
@@ -21,16 +33,6 @@ router.get("/locations", async (req, res) => {
 
     const userLocations = await TrackedLocation.find({ webId }).sort({ timestamp: -1 });
     res.send(userLocations);
-});
-
-router.post("/locations", async (req, res) => {
-    const trackedLocation = new TrackedLocation({
-        webId: req.claims.webid,
-        coords: req.body.coords,
-        timestamp: req.body.timestamp
-    });
-    trackedLocation.save();
-    res.send(trackedLocation);
 });
 
 module.exports = router;

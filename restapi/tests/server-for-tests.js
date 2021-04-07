@@ -8,7 +8,7 @@ const express = require("express")
 const cors = require('cors');
 const mongoose = require("mongoose")
 const api = require("../api") 
-const auth = require("../MockAuthMiddleware")
+const auth = require("../middleware/MockAuthMiddleware")
 
 
 module.exports.startdb = async () => {
