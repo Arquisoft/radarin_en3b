@@ -4,7 +4,7 @@ const TrackedLocation = require("./models/TrackedLocation");
 const router = express.Router();
 // const webIdQueryChecker = require("./WebIdQueryChecker");
 
-router.get("/locations", webIdQueryChecker, async (req, res) => {
+router.get("/locations", async (req, res) => {
     if (req.query.webId == null) {
         return res.sendStatus(400);
     }
