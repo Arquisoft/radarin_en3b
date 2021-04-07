@@ -3,8 +3,8 @@ import forge from 'node-forge';
 import {getLocation} from "./ProfileScreen";
 import { getPreciseDistance } from "geolib";
 
-//Ip of my computer's wifi adapter
-const apiEndPoint = 'http://192.168.1.36:5000/api';
+const apiEndPoint = 'https://radarinen3brestapi.herokuapp.com/api'
+
 let distances = {};
 
 async function buildJwt() {

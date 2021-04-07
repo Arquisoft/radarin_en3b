@@ -7,9 +7,10 @@ import IconButton from "@material-ui/core/IconButton";
 import MapView from "./MapView";
 import MenuIcon from "@material-ui/icons/Menu";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
-import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
+import { List, Divider } from "@material-ui/core";
 import "../css/Map.css";
 import LocationList from "./LocationsList";
+
 
 const drawerWidth = 240;
 
@@ -58,8 +59,11 @@ export default function LocationsView(props) {
   const drawer = (
     <div>
       <div className={classes.toolbar} />
-      
-      <LocationList/>
+
+      <List component='nav'>
+        <LocationList/>
+        <Divider />
+      </List>
     </div>
   );
 
@@ -78,7 +82,7 @@ export default function LocationsView(props) {
       <nav className={classes.drawer} aria-label="mailbox folders">
         {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
         <Hidden smUp implementation="css">
-          <SwipeableDrawer
+          <Drawer
             variant="temporary"
             anchor={theme.direction === "rtl" ? "right" : "left"}
             open={mobileOpen}
@@ -92,7 +96,7 @@ export default function LocationsView(props) {
             }}
           >
             {drawer}
-          </SwipeableDrawer>
+          </Drawer>
         </Hidden>
         <Hidden xsDown implementation="css">
           <Drawer

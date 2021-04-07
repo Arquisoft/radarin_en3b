@@ -8,7 +8,7 @@ router.get("/locations", webIdQueryChecker);
 
 router.post("/locations", async (req, res) => {
     const trackedLocation = new TrackedLocation({
-        webId: req.body.webId,
+        webId: req.claims.webid,
         coords: req.body.coords,
         timestamp: req.body.timestamp
     });

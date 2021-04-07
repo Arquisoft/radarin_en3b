@@ -3,7 +3,7 @@ import forge from "node-forge";
 
 //For testing purposes, must be changed later
 
-const apiEndPoint = 'http://192.168.1.36:5000/api'
+const apiEndPoint = 'https://radarinen3brestapi.herokuapp.com/api'
 
 async function buildJwt() {
     const p = await SecureStore.getItemAsync("op234iyu5v6oy234iuv6");
