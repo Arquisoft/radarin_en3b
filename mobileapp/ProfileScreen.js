@@ -10,18 +10,12 @@ import styles from "./MyStyles";
 import MyMenu from "./MyMenu";
 import { sendLocation } from "./SendLocation";
 import { useSelector } from "react-redux";
+import {getLocation} from "./getAsyncLocations";
 
-let savedLocation;
-
-export function getLocation(){
-  //Temporal until get works
-  savedLocation = { id: 2, coordinates: [43.5410052978, -5.66364853752], name: "Gijón", details: "Location #2" };
-
-  return savedLocation;
-}
 export default function ProfileScreen({navigation}) {
   const webId = useSelector(state => state.user.webId);
   const fn = useSelector(state => state.user.fn);
+  const interval = 
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
@@ -100,13 +94,14 @@ export default function ProfileScreen({navigation}) {
             <DataTable.Row>
                 <DataTable.Cell>
                 <Button title="Get my position" onPress={() =>{
-                        Location.requestPermissionsAsync();
+                        /*Location.requestPermissionsAsync();
                         if (location.coords !== null) {
                           savedLocation = location;
                           sendLocation(location.coords, location.timestamp);
                         }
-                        alert(text); 
-                      }  
+                        alert(text); */ 
+                        getLocation();
+                      } 
                         }>Get My Position
                 </Button>
                 </DataTable.Cell>
@@ -124,10 +119,11 @@ const MySwitch = () => {
 
   const onToggleSwitch = () => {
     setIsSwitchOn(!isSwitchOn);
+    var sendingLocations = setInterval(getLocation, 300000);
     if (isSwitchOn) {
       sendLocation.getCurrentPositionAsync(isSwitchOn);
     } else {
-      
+      clearInterval(sendingLocations);
     }
   }
 
