@@ -3,8 +3,6 @@ import * as Location from 'expo-location';
 import {sendLocation} from './SendLocation';
 
 
-
-
 async function useGetLocation() {
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
@@ -44,7 +42,6 @@ async function useGetLocation() {
 }
 
 export async function getLocation() {
-  
   let location = await useGetLocation();
 
   let permission = await Location.requestPermissionsAsync();
