@@ -25,10 +25,10 @@ export async function getFriendsWithDistance(webId) {
   const profile = me.doc();
 
   //Automatically loads the friends of our user
-  await fetcher.load(profile).then(async () => {await searchKnows(webId); })
-  .then(async () => {friendsWithDistance = await getDistances(friends);})
-  .then(async () => { friendsFinal = await getNames();});
-
+  await fetcher.load(profile);
+  await searchKnows(webId);
+  friendsWithDistance = await getDistances(friends);
+  friendsFinal = await getNames();
   return friendsFinal;
 }
 
