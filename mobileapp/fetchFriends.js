@@ -15,7 +15,7 @@ export async function getFriends(webId) {
   const profile = me.doc();
 
   //Automatically loads the friends of our user
-  await fetcher.load(profile).then(async () => {await searchKnows(webId); });
+  await fetcher.load(profile).then(async () => { await searchKnows(webId); });
 
   return friends;
 }
@@ -28,17 +28,17 @@ export async function getFriendsWithDistance(webId) {
   await fetcher.load(profile);
   await searchKnows(webId);
   friendsWithDistance = await getDistances(friends);
-  friendsFinal = await getNames();
+  friendsFinal = getNames();
   return friendsFinal;
 }
 
-async function getNames() {
-  return new Map(friends.filter(friend => friendsWithDistance.has(friend.value))
-    .map(name => store.any(name, VCARD("fn"))
-      .flatMap(user =>
-        user == null && !friendsFinal.has(name.value) ? [[name.value, friendsWithDistance[name.value]]] :
-        user != null && !friendsFinal.has(user.value) ? [[user.value, friendsWithDistance[name.value]]] : [])));
-}
+const getNames = () => friends.filter(friend => friendsWithDistance.has(friend.value))
+  .map(name => ({ name, fn: store.any(name, VCARD("fn")) }))
+  .filter(x => friendsFinal == null || !((x.fn?.value ?? x.name.value) in friendsFinal))
+  .reduce((map, x) => ({
+    ...map,
+    [x.fn?.value ?? x.name.value]: friendsWithDistance.get(x.name.value)
+  }), {});
 
 
 function isFriendship(name, webId) {

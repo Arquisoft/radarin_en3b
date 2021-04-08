@@ -56,7 +56,7 @@ async function getFriendsLocation(friends) {
 export async function getDistances(friends) {
     const locations = await getFriendsLocation(friends);
     const myLocation = getLocation();
-    return new Map(locations.map(key => [key, calculateDistance(locations[key], myLocation)]));
+    return new Map(Object.keys(locations).map(key => [key, calculateDistance(locations[key], myLocation)]));
 }
 
 function calculateDistance(friendLoc, myLoc){
