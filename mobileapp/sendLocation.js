@@ -42,8 +42,6 @@ export async function sendLocation(coords, timestamp) {
             "coords": coords,
             "timestamp": timestamp
         })
-    }).then((resp) => resp.json()).then(function(data) {
-        console.log(data);
     })
     .catch(function(error) {
         console.log("Error loading locations :"+error);
