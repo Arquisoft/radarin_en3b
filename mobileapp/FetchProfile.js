@@ -5,7 +5,7 @@ const fetcher = new $rdf.Fetcher(store);
 
 
 export async function setProfile(webId) {
-    const me = store.sym("https://radarin.inrupt.net/profile/card#me");
+    const me = store.sym(webId);
     const profile = me.doc();
 
     let result;

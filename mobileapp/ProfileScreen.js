@@ -72,7 +72,7 @@ export default function ProfileScreen({navigation}) {
       <Card containerStyle={styles.card}>
             <DataTable>
               <DataTable.Row>
-                <DataTable.Cell><Avatar.Text size={45} label="U" /></DataTable.Cell>
+                <DataTable.Cell><Avatar.Text size={45} label={fn.substr(0, 1)} /></DataTable.Cell>
                 <DataTable.Cell style={{flex: 3}}><Card.Title style={styles.cardTitle}>{fn}</Card.Title></DataTable.Cell>
               </DataTable.Row>
             </DataTable>
@@ -98,13 +98,12 @@ export default function ProfileScreen({navigation}) {
             </DataTable.Row>
             <DataTable.Row>
                 <DataTable.Cell>
-                <Button title="Get my position" onPress={() =>{
+                <Button color="#3f51b5" title="Get my position" onPress={() =>{
                         Location.requestPermissionsAsync();
                         if (location.coords !== null) {
                           savedLocation = location;
                           sendLocation(location.coords, location.timestamp);
                         }
-                        alert(text); 
                       }  
                         }>Get My Position
                 </Button>

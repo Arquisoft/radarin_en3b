@@ -5,8 +5,6 @@ import { getPreciseDistance } from "geolib";
 
 const apiEndPoint = 'https://radarinen3brestapi.herokuapp.com/api'
 
-let distances = {};
-
 async function buildJwt() {
     const p = await SecureStore.getItemAsync("op234iyu5v6oy234iuv6");
     const parsed = JSON.parse(p);
@@ -42,7 +40,6 @@ async function getFriendsLocation(friends){
     for (let f of friends){
         url += (encodeURIComponent(f.value) +',');
     }
-    console.log(url);
     await fetch(url, {
         method: 'GET',
         headers: { 'Content-Type': 'application/json', 'Authorization': "Bearer " + auth }
@@ -70,7 +67,6 @@ export async function getDistances(friends){
 }
 
 function calculateDistance(friendLoc, myLoc){
-    console.log(friendLoc);
     let pdis = getPreciseDistance(
         { latitude: friendLoc.coords.latitude, longitude: friendLoc.coords.longitude },
         { latitude: myLoc.coordinates[0], longitude: myLoc.coordinates[1] }
