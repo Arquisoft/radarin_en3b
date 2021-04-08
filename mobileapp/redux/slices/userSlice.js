@@ -1,9 +1,13 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { setProfile } from "../../FetchProfile";
-import { getFriends } from "../../FetchFriends";
+import { getFriends, getFriendsWithDistance } from "../../FetchFriends";
 
 export const fetchFriends = createAsyncThunk("user/fetchFriends", async (webId) => {
     return await getFriends(webId);
+});
+
+export const fetchFriendsWithDistance = createAsyncThunk("user/fetchFriendsWithDistance", async (webId) => {
+    return await getFriendsWithDistance(webId);
 });
 
 export const fetchProfile = createAsyncThunk("user/fetchProfile", async(webId) => {
@@ -14,10 +18,12 @@ const initialState = {
     webId: "",
     fn: "",
     friendsStatus: "idle",
+    closeFriendsStatus: "idle",
     profileStatus: "idle",
     friendsError: null,
     profileError: null,
-    onlineFriends: []
+    onlineFriends: [],
+    onlineCloseFriends: []
 };
 
 export const userSlice = createSlice({
@@ -34,6 +40,17 @@ export const userSlice = createSlice({
         [fetchFriends.rejected]: (state, action) => {
             state.friendsStatus = "failed"
             state.friendsError = action.error.message
+        },
+        [fetchFriendsWithDistance.pending]: (state, action) => {
+            state.closeFriendsStatus = "loading"
+        },
+        [fetchFriendsWithDistance.fulfilled]: (state, action) => {
+            state.closeFriendsStatus = "succeeded"
+            state.onlineCloseFriends = action.payload
+        },
+        [fetchFriendsWithDistance.rejected]: (state, action) => {
+            state.closeFriendsStatus = "failed"
+            state.closeFriendsError = action.error.message
         },
         [fetchProfile.pending]: (state, action) => {
             state.profileStatus = "loading"

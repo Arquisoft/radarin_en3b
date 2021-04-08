@@ -2,23 +2,23 @@ import React, { useEffect } from "react";
 import { View, Image, Text } from "react-native";
 import styles from "./MyStyles";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchProfile, fetchFriends } from "./redux/slices/userSlice";
+import { fetchProfile, fetchFriendsWithDistance } from "./redux/slices/userSlice";
 
 export default function LoadingScreen({ route, navigation }) {
   const { id } = route.params;
   const webId = JSON.stringify(id).replace(/['"]+/g, '');
   const dispatch = useDispatch();
   const profileStatus = useSelector(state => state.user.profileStatus);
-  const friendsStatus = useSelector(state => state.user.friendsStatus);
+  const closeFriendsStatus = useSelector(state => state.user.closeFriendsStatus);
 
   useEffect(() => {
     if (profileStatus === "idle") {
       dispatch(fetchProfile(webId));
 
-    } else if (friendsStatus === "idle") {
-      dispatch(fetchFriends(webId));
+    } else if (closeFriendsStatus === "idle") {
+      dispatch(fetchFriendsWithDistance(webId));
       
-    } else if (friendsStatus === "succeeded") {
+    } else if (closeFriendsStatus === "succeeded") {
       navigation.navigate("Radarin");
     }
   });

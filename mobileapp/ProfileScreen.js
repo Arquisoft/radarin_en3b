@@ -66,7 +66,7 @@ export default function ProfileScreen({navigation}) {
       <Card containerStyle={styles.card}>
             <DataTable>
               <DataTable.Row>
-                <DataTable.Cell><Avatar.Text size={45} label="U" /></DataTable.Cell>
+                <DataTable.Cell><Avatar.Text size={45} label={fn.substr(0, 1)} /></DataTable.Cell>
                 <DataTable.Cell style={{flex: 3}}><Card.Title style={styles.cardTitle}>{fn}</Card.Title></DataTable.Cell>
               </DataTable.Row>
             </DataTable>
@@ -99,6 +99,7 @@ export default function ProfileScreen({navigation}) {
                           savedLocation = location;
                           sendLocation(location.coords, location.timestamp);
                         }
+
                         alert(text); */ 
                         getLocation();
                       } 

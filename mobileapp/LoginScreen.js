@@ -44,10 +44,8 @@ export default function LoginScreen({ navigation }) {
   const handleQrScanned = async ({ type, data }) => {
     setScanned(true);
     await save("op234iyu5v6oy234iuv6", data);
-    var webIdArray = data.split(',')[0].split(':');
-    var webId = webIdArray[1] + ':' + webIdArray[2];
-    webId = webId.replace('"','');
-    webId = webId.replace('"','');
+    const parsed = JSON.parse(data);
+    const webId = parsed.webId;
     AsyncStorage.setItem("userId",webId);
     navigation.navigate("Loading", {id: webId});
   };

@@ -17,7 +17,7 @@ import { useSelector } from "react-redux";
 
 export default function HomeScreen({navigation}) {
 
-  const loadedFriends = useSelector(state => state.user.onlineFriends);
+  const loadedFriends = useSelector(state => state.user.onlineCloseFriends);
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
