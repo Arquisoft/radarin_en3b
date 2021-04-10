@@ -21,13 +21,10 @@ export async function getFriends(webId) {
 }
 
 export async function getFriendsWithDistance(webId) {
-  const me = store.sym(webId);
-  const profile = me.doc();
-
-  //Automatically loads the friends of our user
-  await fetcher.load(profile).then(async () => {await searchKnows(webId); })
-  .then(async () => {friendsWithDistance = await getDistances(friends);})
-  .then(async () => { await getNames();});
+  friendsWithDistance = await getDistances(friends);
+  friends = Object.keys(friendsWithDistance);
+  console.log(friends);
+  await getNames();
 
   return friendsFinal;
 }

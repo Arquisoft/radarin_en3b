@@ -21,6 +21,7 @@ const initialState = {
     closeFriendsStatus: "idle",
     profileStatus: "idle",
     friendsError: null,
+    closeFriendsError: null,
     profileError: null,
     onlineFriends: [],
     onlineCloseFriends: []
