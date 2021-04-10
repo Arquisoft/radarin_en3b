@@ -23,7 +23,6 @@ export default function App() {
   const history = createBrowserHistory();
 
   onSessionRestore((url) => {
-    console.log(url);
       history.push(url.split("http://localhost:3000/")[1]);
   });
 

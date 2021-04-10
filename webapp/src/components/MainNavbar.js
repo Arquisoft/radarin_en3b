@@ -10,8 +10,6 @@ function MainNavbar() {
     const { session } = useSession();
     const dispatch = useDispatch();
 
-    console.log(loggued);
-
     useEffect(() => {
         if(session.info.isLoggedIn)
             dispatch(setLogguedStatus(true));

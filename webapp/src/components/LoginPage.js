@@ -55,7 +55,6 @@ function LoginPage() {
 
   function callback() {
     dispatch(setLogguedStatus(true));
-    console.log("entra");
   }
 
 
