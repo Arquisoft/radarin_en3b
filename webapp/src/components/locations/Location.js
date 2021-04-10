@@ -10,7 +10,7 @@ import LocationOnIcon from "@material-ui/icons/LocationOn";
 import { useDispatch } from "react-redux";
 import { moveTo } from "../../redux/slices/locationsSlice";
 
-export default function Location({ key, name, details, coords }) {
+export default function Location({ childKey, name, details, coords }) {
     const dispatch = useDispatch();
 
     function onClick() {
@@ -24,7 +24,7 @@ export default function Location({ key, name, details, coords }) {
             button
             type="checkbox"
             value={coords}
-            key={key}
+            key={childKey}
             defaultChecked={false}
             onClick={onClick}
         >

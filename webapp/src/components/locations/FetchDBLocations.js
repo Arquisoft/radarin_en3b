@@ -19,12 +19,10 @@ export default async function fetchDBLocations(session) {
     const prKeyUrl = getSourceUrl(prKeyFile);
     const publicDataset = await getSolidDataset(prKeyUrl, { fetch: session.fetch });
     const existing = getThing(publicDataset, prKeyUrl);
-    console.log(existing);
 
     //const prKField = setStringNoLocale(existing, "https://www.w3.org/ns/auth/cert#PrivateKey", privateKey);
 
     const aux = getStringNoLocale(existing, "https://www.w3.org/ns/auth/cert#PrivateKey");
-    console.log(aux);
     Api.setIdentity(webId, aux);
     const l = await Api.getLocations();
 
