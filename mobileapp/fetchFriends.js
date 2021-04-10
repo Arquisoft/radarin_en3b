@@ -7,15 +7,15 @@ const FOAF = $rdf.Namespace("http://xmlns.com/foaf/0.1/");
 const fetcher = new $rdf.Fetcher(store);
 
 let friends = [];
-let friendsWithDistance = {};
-let friendsFinal = {};
+let friendsWithDistance;
+let friendsFinal;
 
 export async function getFriends(webId) {
   const me = store.sym(webId);
   const profile = me.doc();
 
   //Automatically loads the friends of our user
-  await fetcher.load(profile).then(async () => {await searchKnows(webId); });
+  await fetcher.load(profile).then(async () => { await searchKnows(webId); });
 
   return friends;
 }
@@ -24,26 +24,18 @@ export async function getFriendsWithDistance(webId) {
   friendsWithDistance = await getDistances(friends);
   friends = Object.keys(friendsWithDistance);
   console.log(friends);
-  await getNames();
+  friendsFinal =  getNames();
 
   return friendsFinal;
 }
 
-async function getNames(){
-  for (let name of friends){
-    var user = store.any(name, VCARD("fn"));
-
-    if (user == null) {
-      if (!(name.value in friendsFinal) && (name.value in friendsWithDistance)){
-        friendsFinal[name.value] = friendsWithDistance[name.value];
-      }
-    } else {
-      if (!(user.value in friendsFinal) && (name.value in friendsWithDistance)){
-        friendsFinal[user.value] = friendsWithDistance[name.value];
-      }
-    }
-  }
-}
+const getNames = () => friends.filter(friend => friendsWithDistance.has(friend.value))
+  .map(name => ({ name, fn: store.any(name, VCARD("fn")) }))
+  .filter(x => friendsFinal == null || !((x.fn?.value ?? x.name.value) in friendsFinal))
+  .reduce((map, x) => ({
+    ...map,
+    [x.fn?.value ?? x.name.value]: friendsWithDistance.get(x.name.value)
+  }), {});
 
 
 function isFriendship(name, webId) {

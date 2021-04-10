@@ -1,9 +1,9 @@
 import * as SecureStore from "expo-secure-store";
 import forge from 'node-forge';
-import {getLocation} from "./ProfileScreen";
+import { getLocation } from "./ProfileScreen";
 import { getPreciseDistance } from "geolib";
 
-const apiEndPoint = 'https://radarinen3brestapi.herokuapp.com/api'
+const apiEndPoint = 'https://radarinen3brestapi.herokuapp.com/api';
 
 async function buildJwt() {
     const p = await SecureStore.getItemAsync("op234iyu5v6oy234iuv6");
@@ -28,48 +28,41 @@ async function buildJwt() {
     return header64 + '.' + payload64 + '.' + strSignature;
 }
 
-async function getFriendsLocation(friends){
+async function getFriendsLocation(friends) {
     let locations = {};
     const auth = await buildJwt();
 
     const p = await SecureStore.getItemAsync("op234iyu5v6oy234iuv6");
     const parsed = JSON.parse(p);
     const userId = parsed.webId;
-    
-    let url = apiEndPoint + '/friendslocations?webId='+ encodeURIComponent(userId)+'&friendIds=';
-    for (let f of friends){
-        url += (encodeURIComponent(f.value) +',');
+
+    let url = apiEndPoint + '/friendslocations?webId=' + encodeURIComponent(userId) + '&friendIds=';
+    for (let f of friends) {
+        url += (encodeURIComponent(f.value) + ',');
     }
     await fetch(url, {
         method: 'GET',
         headers: { 'Content-Type': 'application/json', 'Authorization': "Bearer " + auth }
-    }).then((resp) => resp.json()).then(function(data) {
+    }).then((resp) => resp.json()).then(function (data) {
         locations = data;
     })
-    .catch(function(error) {
-        console.log("Error loading locations :"+error);
+        .catch(function (error) {
+            console.log("Error loading locations :" + error);
         });
 
     return locations;
 }
 
-export async function getDistances(friends){
-    let locations = await getFriendsLocation(friends);
-    let myLocation = getLocation();
-    let distances = {};
-
-    for (let key in locations){
-        let location = locations[key];
-        distances[key] = calculateDistance(location, myLocation);
-    }
-
-    return distances;
+export async function getDistances(friends) {
+    const locations = await getFriendsLocation(friends);
+    const myLocation = getLocation();
+    return new Map(Object.keys(locations).map(key => [key, calculateDistance(locations[key], myLocation)]));
 }
 
 function calculateDistance(friendLoc, myLoc){
     let pdis = getPreciseDistance(
         { latitude: friendLoc.coords.latitude, longitude: friendLoc.coords.longitude },
         { latitude: myLoc.coordinates[0], longitude: myLoc.coordinates[1] }
-      );
+    );
     return pdis;
-} 
+}

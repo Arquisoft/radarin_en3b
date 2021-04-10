@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { setProfile } from "../../FetchProfile";
-import { getFriends, getFriendsWithDistance } from "../../FetchFriends";
+import { getFriends, getFriendsWithDistance } from "../../fetchFriends";
 
 export const fetchFriends = createAsyncThunk("user/fetchFriends", async (webId) => {
     return await getFriends(webId);
