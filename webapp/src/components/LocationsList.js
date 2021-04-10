@@ -59,6 +59,7 @@ export default function LocationList() {
                         .map(item =>
                             <Location
                                 key={item.id}
+                                childKey={item.id}
                                 name={item.name}
                                 details={item.details}
                                 coords={item.coordinates}

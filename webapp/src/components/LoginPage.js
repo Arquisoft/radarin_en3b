@@ -10,6 +10,10 @@ import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import "../css/DisableHighlighted.css";
 import { Link } from "@material-ui/core";
+import "../css/LoginPage.css";
+import { useDispatch } from "react-redux";
+import { setLogguedStatus } from "../redux/slices/userSlice";
+
 
 const useStyles = makeStyles({
   root: {
@@ -47,39 +51,44 @@ function LoginPage() {
 
   const classes = useStyles();
   const [idp, setIdp] = useState("https://inrupt.net");
+  const dispatch = useDispatch();
+
+  function callback() {
+    dispatch(setLogguedStatus(true));
+    console.log("entra");
+  }
 
 
   return (
-      <Card className={classes.root}>
-        <CardActionArea disableRipple className={classes.removeStyles}>
-          <CardContent>
-            <Typography gutterBottom variant="h3" component="h2" align="center">
-              Radarin
+    <Card className={classes.root}>
+      <CardActionArea disableRipple className={classes.removeStyles}>
+        <CardContent>
+          <Typography gutterBottom variant="h3" component="h2" align="center">
+            Radarin
           </Typography>
-            <Typography variant="h5" component="p" align="center">
-              Sign In
+          <Typography variant="h5" component="p" align="center">
+            Sign In
           </Typography>
-            <TextField
-              label="URL"
-              helperText="Introduce your Provider URL"
-              variant="outlined"
-              fullWidth
-              placeholder={idp}
-              className={classes.input}
-              onChange={(e) => setIdp(e.target.value)}
-            />
-          </CardContent>
-        </CardActionArea>
-        <CardActions className={classes.stopFlex}>
-          <Typography variant="body2" component="p" className="text-center">
-            Don't have one? You can get it here: <Link className="ml-1" href="https://inrupt.com/" target="_blank"><strong>Inrupt</strong></Link>
-          </Typography>
-          <LoginButton oidcIssuer={idp} redirectUrl={window.location.origin}>
-            <Button color="primary" variant="contained" className={classes.signIn}>Sign In</Button>
-          </LoginButton>
-        </CardActions>
-      </Card>
+          <TextField
+            label="URL"
+            helperText="Introduce your Provider URL"
+            variant="outlined"
+            fullWidth
+            placeholder={idp}
+            className={classes.input}
+            onChange={(e) => setIdp(e.target.value)}
+          />
+        </CardContent>
+      </CardActionArea>
+      <CardActions className={classes.stopFlex}>
+        <Typography variant="body2" component="p" className="text-center">
+          Don't have one? You can get it here: <Link className="ml-1" href="https://inrupt.com/" target="_blank"><strong>Inrupt</strong></Link>
+        </Typography>
+        <LoginButton oidcIssuer={idp} redirectUrl={window.location.origin}>
+          <Button color="primary" variant="contained" className={classes.signIn} onClick={callback}>Sign In</Button>
+        </LoginButton>
+      </CardActions>
+    </Card>
   );
-
 }
 export default LoginPage;
