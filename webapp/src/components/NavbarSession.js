@@ -9,9 +9,9 @@ import { LogoutButton } from "@inrupt/solid-ui-react";
 import Navbar from "react-bootstrap/Navbar";
 import { useDispatch } from "react-redux";
 import { setLogguedStatus } from "../redux/slices/userSlice";
-import { useHistory } from "react-router-dom";
-import NavDropdown from "react-bootstrap/esm/NavDropdown";
+import { NavDropdown } from "react-bootstrap";
 import CodeIcon from "@material-ui/icons/Code";
+import { useHistory } from "react-router-dom";
 
 
 function NavbarSession() {
