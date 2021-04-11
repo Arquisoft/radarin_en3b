@@ -60,6 +60,10 @@ export async function getDistances(friends) {
     const locations = await getFriendsLocation(friends);
     const myLocation = getLocation(); 
 
+    if (myLocation == null){
+        return "No location";
+    }
+
     let parsedLocations = {};
     for (let l of Object.entries(locations))
         if (Date.now() - l[1].timestamp < MAX_TIME)

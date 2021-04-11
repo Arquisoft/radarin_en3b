@@ -10,11 +10,11 @@ import MyMenu from "./MyMenu";
 import { sendLocation } from "./SendLocation";
 import { useSelector } from "react-redux";
 
-let savedLocation;
+let savedLocation = null;
 
 export function getLocation(){
   //Temporal until get works
-  savedLocation = { id: 2, coordinates: [43.5410052978, -5.66364853752], name: "Gijón", details: "Location #2" };
+  //savedLocation = { id: 2, coordinates: [43.5410052978, -5.66364853752], name: "Gijón", details: "Location #2" };
 
   return savedLocation;
 }

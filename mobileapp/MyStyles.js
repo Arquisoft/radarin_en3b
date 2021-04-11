@@ -71,6 +71,13 @@ export default StyleSheet.create({
     borderRadius:5,
     padding:10,
   },
+  nofriendscard: {
+    width: 360,
+    justifyContent: 'center',
+    borderRadius:5,
+    padding:10,
+    backgroundColor:'#DCE6F9',
+  },
   friends: {
     fontSize:16, 
     padding: 30
