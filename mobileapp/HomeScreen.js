@@ -1,9 +1,10 @@
 import React from "react";
-import { View, Text, ScrollView, Image, Button} from "react-native";
+import { View, Text, ScrollView, Image, Button, BackHandler} from "react-native";
 import { Card } from "react-native-elements";
 import styles from "./MyStyles";
 import MyMenu from "./MyMenu";
 import { useSelector } from "react-redux";
+import { useFocusEffect } from '@react-navigation/native';
 
 {/*Esto debería ir en el return delante de Navigation container pero.. cosas raras con comentarios
     <SafeAreaView>
@@ -36,6 +37,19 @@ export default function HomeScreen({navigation}) {
       ),
     });
   }, [navigation]);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      const onBackPress = () => {
+        return true;
+      };
+
+      BackHandler.addEventListener('hardwareBackPress', onBackPress);
+
+      return () =>
+        BackHandler.removeEventListener('hardwareBackPress', onBackPress);
+    }, [])
+  );
 
   if(loadedFriends == "No location"){
     return (
