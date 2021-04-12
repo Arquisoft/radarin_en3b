@@ -8,16 +8,12 @@ export async function setProfile(webId) {
     const me = store.sym(webId);
     const profile = me.doc();
 
-    let result;
-
-    await fetcher.load(profile).then(() => {
+    try {
+        await fetcher.load(profile);
         const userName = store.any(me, VCARD("fn"));
+        return { webId: webId, fn: userName.value };
+    } catch (e) {
+        alert("Load failed: " + e);
 
-        result = { webId: webId, fn: userName.value };
-
-    }, err => {
-        alert("Load failed " + err);
-    });
-
-    return result;
+    }
 }

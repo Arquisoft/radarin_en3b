@@ -15,12 +15,8 @@ export async function getFriends(webId) {
   const profile = me.doc();
 
   //Automatically loads the friends of our user
-  await fetcher.load(profile).then(async () => { await searchKnows(webId); });
-
-  let locations = await getFriendsLocation(friends);
-
-  friends = friends.filter(friend => Array.from(Object.keys(locations)).includes(friend.value));
-
+  await fetcher.load(profile);
+  friends = await searchKnows(webId);
   return friends;
 }
 
@@ -39,22 +35,12 @@ const getNames = () => friends.filter(friend => friendsWithDistance.has(friend.v
   }), {})
   ;
 
-
-function isFriendship(name, webId) {
-  let namesFriends = store.each(name, FOAF("knows"));
-  namesFriends.filter((fof) => webId.includes(fof.value));
-  return namesFriends.length > 0;
-}
+const isFriendship = (name, webId) => store.each(name, FOAF("knows")).some(fof => webId.includes(fof.value));
 
 //Searchs for people that our user knows, adds them to the friend list only if they are indeed friends
 
 async function searchKnows(webId) {
   let names = store.each(store.sym(webId), FOAF("knows"));
-  for (const name of names) {
-    await fetcher.load(store.sym(name).doc()).then(async () => {
-      if (isFriendship(name, webId)) {
-        friends.push(name);
-      }
-    });
-  }
+  await Promise.all(names.map(name => fetcher.load(store.sym(name).doc())));
+  return names.filter(name => isFriendship(name, webId));
 }
