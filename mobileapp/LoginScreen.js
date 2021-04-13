@@ -66,11 +66,11 @@ export default function LoginScreen({ navigation }) {
       <View style={styles.container}>
         <Card containerStyle={styles.card}>
           <Card.Title style={styles.signinCardTitle}>Sign in</Card.Title>
-          <Card.Divider />
+          <Card.Divider style={styles.divider}/>
           <Text style={styles.normalText}>Click the button and scan the QR:</Text>
-          <Text style={styles.smallText}>Don't have the QR? You can get it here: <Text style={{ color: "#3f51b5" }} onPress={() => { Linking.openURL("https://inrupt.com/"); }}> Inrupt </Text> </Text>
+          <Text style={styles.smallText}>Don't have the QR? You can get it here: <Text style={{ color: "#126BBD" }} onPress={() => { Linking.openURL("https://inrupt.com/"); }}> Inrupt </Text> </Text>
           <View style={styles.cardButton}>
-            <Button color="#3f51b5" title="Scan" onPress={changeShowScanner}>Scan</Button>
+            <Button color="#094072" title="Scan" onPress={changeShowScanner}>Scan</Button>
           </View>
         </Card>
       </View>

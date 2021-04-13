@@ -5,10 +5,7 @@ export const fetchLocations = createAsyncThunk("locations/fetchLocations", async
     let apiLocations = await fetchDBLocations(session);
 
     let counter = 7;
-    apiLocations = apiLocations.map((loc) => ({ id: counter++, coordinates: [loc.latitude, loc.longitude], name: "", details: "" }));
-
-    console.log(apiLocations);
-
+    apiLocations = apiLocations.map((loc) => ({ id: counter++, coordinates: [loc.coords.latitude, loc.coords.longitude], name: "", details: "" }));
 
     const locationsList = [
         { id: 1, coordinates: [43.3638658051, -5.84934495326], name: "Oviedo", details: "Location #1" },
@@ -19,11 +16,13 @@ export const fetchLocations = createAsyncThunk("locations/fetchLocations", async
         { id: 6, coordinates: [40.0381046896, -6.08667514877], name: "Plasencia", details: "Location #6" },
     ];
     
+    
+
     return locationsList.concat(apiLocations);
 }); 
 
 const initialState = {
-    coordinates: [43.3589,-5.8461],
+    coordinates: [0, 0],
     status: "idle",
     error: null,
     locations: [],
@@ -44,6 +43,7 @@ export const locationsSlice = createSlice({
         [fetchLocations.fulfilled]: (state, action) => {
             state.status = "succeeded"
             state.locations = state.locations.concat(action.payload)
+            state.coordinates = state.locations[0].coordinates;
         },
         [fetchLocations.rejected]: (state, action) => {
             state.status = "failed"

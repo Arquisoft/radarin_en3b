@@ -1,72 +1,65 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import About from "./components/About";
 import { Switch, Route } from "react-router-dom";
 import MainNavbar from "./components/MainNavbar";
-import { BrowserRouter } from "react-router-dom";
+import { Router } from "react-router-dom";
 import MainFooter from "./components/MainFooter";
 import LocationsView from "./components/LocationsView";
 import MainView from "./components/MainView";
 import LoginPage from "./components/LoginPage";
 import QRPage from "./components/QRPage";
+import {
+  handleIncomingRedirect,
+  onSessionRestore
+} from "@inrupt/solid-client-authn-browser";
+import { useDispatch } from "react-redux";
+import { setLogguedStatus } from "./redux/slices/userSlice";
+import { createBrowserHistory }  from "history";
 
-class App extends React.Component {
-  constructor() {
-    super();
-    this.state = { users: [] };
-  }
+export default function App() {
+  const dispatch = useDispatch();
+  const history = createBrowserHistory();
 
-  refreshUsers(users) {
-    this.setState({ users: users });
-  }
+  onSessionRestore((url) => {
+      history.push(url.split("http://localhost:3000/")[1]);
+  });
 
-  render() {
-    return (
-      <BrowserRouter>
-        <div className="App">
-          <header>
-            <MainNavbar />
-          </header>
-          <br /><br /><br /><br /><br /><br />
-          <Switch>
-            <Route path="/locations">
-              <LocationsView />
-            </Route>
-            <Route path="/about">
-              <About />
-            </Route>
-            <Route path="/login">
-              <LoginPage></LoginPage>
-            </Route>
-            <Route path="/qr">
-              <QRPage></QRPage>
-            </Route>
-            <Route path="/">
-              <MainView/>
-            </Route>
-          </Switch>
-        </div>
-        <MainFooter />
-      </BrowserRouter>
-    );
-  }
+  useEffect(() => {
+      handleIncomingRedirect({
+        restorePreviousSession: true
+      }).then(() => {
+          dispatch(setLogguedStatus(true));
+      });
+  }, [dispatch]);
+
+  return (
+    <Router history={history}>
+      <div className="App">
+        <header>
+          <MainNavbar />
+        </header>
+        <br /><br /><br /><br /><br /><br />
+        <Switch>
+          <Route path="/locations">
+            <LocationsView />
+          </Route>
+          <Route path="/about">
+            <About />
+          </Route>
+          <Route path="/login">
+            <LoginPage></LoginPage>
+          </Route>
+          <Route path="/qr">
+            <QRPage></QRPage>
+          </Route>
+          <Route path="/">
+            <MainView />
+          </Route>
+        </Switch>
+      </div>
+      <MainFooter />
+    </Router>
+  );
 }
-
-// function Main() {
-//   const [users, setUsers] = React.useState([]);
-
-//   return (
-//     <div className="App-content">
-//       <Welcome name="ASW students" />
-//       <EmailForm refreshUsers={setUsers()} />
-//       <UserList users={users} />
-//       <a className="App-link"
-//         href="https://github.com/pglez82/radarin_0"
-//         target="_blank"
-//         rel="noopener noreferrer">Source code</a>
-//     </div>
-//   );
-// }
-
-export default App;
