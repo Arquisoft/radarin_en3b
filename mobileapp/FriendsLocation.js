@@ -1,5 +1,5 @@
 import * as SecureStore from "expo-secure-store";
-import { getLocation } from "./ProfileScreen";
+import { getLocation } from "./GetAsyncLocations";
 import { getPreciseDistance } from "geolib";
 import BuildToken from "./utils/BuildToken"
 
@@ -7,7 +7,7 @@ const apiEndPoint = 'https://radarinen3brestapi.herokuapp.com/api';
 const MAX_DISTANCE = 2000000; //Testing value, should be something like 2000m
 const MAX_TIME = 30000000000; //Testing value, should be something like 3600.000ms
 
-async function getFriendsLocation(friends) {
+export async function getFriendsLocation(friends) {
     let locations = {};
     const auth = await BuildToken();
 
@@ -35,7 +35,7 @@ async function getFriendsLocation(friends) {
 
 export async function getDistances(friends) {
     const locations = await getFriendsLocation(friends);
-    const myLocation = getLocation();
+    const myLocation = null; // here will go getLocation
 
     if (myLocation == null){
         return "No location";
