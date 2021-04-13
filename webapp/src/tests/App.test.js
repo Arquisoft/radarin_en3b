@@ -9,7 +9,7 @@ import { BrowserRouter } from 'react-router-dom';
 import About from '../components/About';
 
 test('user arrives to the home page', async () => {
-  const { getByText } = render(<Provider store={store}><App/></Provider>);
+  const { getByText } = render(<Provider store={store}><App /></Provider>);
 
   const mainHeader = getByText("Improve your productivity with Radarin");
 
@@ -17,7 +17,7 @@ test('user arrives to the home page', async () => {
 });
 
 test("user can go to sign in page", async () => {
-  const { getAllByRole, getByText } = render(<Provider store={store}><App/></Provider>);
+  const { getAllByRole, getByText } = render(<Provider store={store}><App /></Provider>);
 
   const about = getAllByRole("link", { name: "About" })[0];
 
@@ -28,12 +28,4 @@ test("user can go to sign in page", async () => {
   const aboutText = getByText("About Radarin");
 
   expect(aboutText).toBeInTheDocument();
-});
-
-test("main page loads correctly", async() => {
-  const { getByText } = render(<BrowserRouter><Provider store={store}><About/></Provider></BrowserRouter>);
-
-  const mainHeader = getByText("About Radarin");
-
-  expect(mainHeader).toBeInTheDocument();
 });
