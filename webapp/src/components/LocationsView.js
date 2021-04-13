@@ -87,7 +87,6 @@ export default function LocationsView(props) {
             anchor={theme.direction === "rtl" ? "right" : "left"}
             open={mobileOpen}
             onClose={handleDrawerToggle}
-            onOpen={handleDrawerToggle}
             classes={{
               paper: classes.drawerPaper,
             }}
