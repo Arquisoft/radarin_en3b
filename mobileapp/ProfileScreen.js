@@ -10,9 +10,14 @@ import styles from "./MyStyles";
 import MyMenu from "./MyMenu";
 //import { sendLocation } from "./SendLocation";
 import { useSelector } from "react-redux";
-import {getLocation} from "./GetAsyncLocations";
+import {getLocation, getLocationAsync} from "./GetAsyncLocation";
+import AsyncStorage from "@react-native-community/async-storage";
 
 let savedLocation = null;
+
+let sendingLocations;
+
+const fiveMin = 300000;
 
 export default function ProfileScreen({navigation}) {
   const webId = useSelector(state => state.user.webId);
@@ -82,15 +87,7 @@ export default function ProfileScreen({navigation}) {
             <DataTable>
             <DataTable.Row>
                 <DataTable.Cell style={{flex: 3}}><Text style={styles.name}>Get location automatically:</Text></DataTable.Cell>
-                <DataTable.Cell><MySwitch onToggleSwitch={() =>{
-                  if (this.MySwitch.isSwitchOn) {
-                    Location.stopLocationUpdatesAsync("LocationTask");
-                    alert("This is on");
-                  } else {
-                    alert("This is off");
-                    Location.startLocationUpdatesAsync("LocationTask");
-                  }
-                    }}></MySwitch></DataTable.Cell>
+                <DataTable.Cell><MySwitch></MySwitch></DataTable.Cell>
             </DataTable.Row>
             <DataTable.Row>
                 <DataTable.Cell>
@@ -118,17 +115,19 @@ export default function ProfileScreen({navigation}) {
 
 
 const MySwitch = () => {
-  const [isSwitchOn, setIsSwitchOn] = React.useState(false);
+  //AsyncStorage.getItem("backgroundLocation")
+  const [isSwitchOff, setIsSwitchOn] = React.useState(false);
 
   const onToggleSwitch = () => {
-    setIsSwitchOn(!isSwitchOn);
-    var sendingLocations = setInterval(getLocation, 300000);
-    if (isSwitchOn) {
- //     sendLocation.getCurrentPositionAsync(isSwitchOn);
+    setIsSwitchOn(!isSwitchOff);
+    if (isSwitchOff) {
+        getLocationAsync(false);
+        console.log("switch off");
     } else {
-      clearInterval(sendingLocations);
+        getLocationAsync(true);
+        console.log("switch on");
     }
   }
 
-  return <Switch color="#094072" value={isSwitchOn} onValueChange={onToggleSwitch} />;
+  return <Switch color="#094072" value={isSwitchOff} onValueChange={onToggleSwitch} />;
 };
