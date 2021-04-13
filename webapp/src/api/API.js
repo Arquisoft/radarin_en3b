@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 class API {
     constructor() {
-        this.apiEndPoint = process.env.REACT_APP_API_URI || "http://localhost:5000/api";
+        this.apiEndPoint = process.env.REACT_APP_API_URI || "https://radarinen3brestapi.herokuapp.com/api";
         this._webId = "";
         this.token = "";
     }
