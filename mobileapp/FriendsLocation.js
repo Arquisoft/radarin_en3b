@@ -36,7 +36,7 @@ async function getFriendsLocation(friends) {
 
 export async function getDistances(friends) {
     const locations = await getFriendsLocation(friends);
-    const myLocation = getLocation(); 
+    const myLocation = getLocation();
 
     if (myLocation == null){
         return "No location";

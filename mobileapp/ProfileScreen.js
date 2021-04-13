@@ -14,12 +14,6 @@ import {getLocation} from "./GetAsyncLocations";
 
 let savedLocation = null;
 
-export function getLocation(){
-  //Temporal until get works
-  //savedLocation = { id: 2, coordinates: [43.5410052978, -5.66364853752], name: "Gijón", details: "Location #2" };
-
-  return savedLocation;
-}
 export default function ProfileScreen({navigation}) {
   const webId = useSelector(state => state.user.webId);
   const fn = useSelector(state => state.user.fn);

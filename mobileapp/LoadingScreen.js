@@ -21,8 +21,9 @@ export default function LoadingScreen({ route, navigation }) {
 
     } else if (closeFriendsStatus === "idle" && friendsStatus === "succeeded") {
       dispatch(fetchFriendsWithDistance());
-      
+
     } else if (closeFriendsStatus === "succeeded") {
+      console.log("succeeded closeFriendsStatus")
       navigation.navigate("Radarin");
     }
   });
