@@ -22,9 +22,13 @@ export async function getFriends(webId) {
 
 export async function getFriendsWithDistance() {
   friendsWithDistance = await getDistances(friends);
-  if (friendsWithDistance == "No location")
+  console.log(friendsWithDistance);
+  if (friendsWithDistance == "No location"){
+    console.log(friendsWithDistance);
     return friendsWithDistance;
+}
   friendsFinal = getNames();
+
   return friendsFinal;
 }
 

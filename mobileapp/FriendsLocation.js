@@ -1,5 +1,4 @@
 import * as SecureStore from "expo-secure-store";
-import forge from 'node-forge';
 import { getLocation } from "./ProfileScreen";
 import { getPreciseDistance } from "geolib";
 import BuildToken from "./utils/BuildToken"
