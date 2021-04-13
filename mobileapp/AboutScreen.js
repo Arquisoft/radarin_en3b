@@ -22,7 +22,7 @@ const OpenURLButton = ({ url, children }) => {
     }
   }, [url]);
 
-  return <Button color="#3f51b5" title={children} onPress={handlePress} />;
+  return <Button color="#094072" title={children} onPress={handlePress} />;
 };
 
 export default function AboutScreen({navigation}) {
@@ -44,8 +44,8 @@ export default function AboutScreen({navigation}) {
     <View style={styles.container}>
       <Card containerStyle={styles.card}>
             <Card.Title style={styles.cardTitle}>About Radarin</Card.Title>
-            <Card.Divider/>
-            <Text>Radarin will be a system to facilitate meetings between friends using new technologies. The application can get access to the mobile phone localization of the users who voluntarily activate it and will allow other users who are their friends to know when they are near them. Everything will be build with Solid so you can be the owner of your own data!.
+            <Card.Divider style={styles.divider}/>
+            <Text style={styles.name}>Radarin will be a system to facilitate meetings between friends using new technologies. The application can get access to the mobile phone localization of the users who voluntarily activate it and will allow other users who are their friends to know when they are near them. Everything will be build with Solid so you can be the owner of your own data!.
             </Text>
             <View style={styles.cardButton}>
             <OpenURLButton url={supportedURL}>Learn more about Solid</OpenURLButton>
@@ -53,35 +53,35 @@ export default function AboutScreen({navigation}) {
       </Card>
       <Card containerStyle={styles.card}>
             <Card.Title style={styles.cardTitle}>Meet the devs!</Card.Title>
-            <Card.Divider/>
+            <Card.Divider style={styles.divider}/>
             <DataTable>
               <DataTable.Row>
-                <DataTable.Cell><Avatar.Image size={40} source={require("./assets/labra.jpg")} /></DataTable.Cell>
-                <DataTable.Cell style={{flex: 3}}>Jose Emilio Labra</DataTable.Cell>
-              </DataTable.Row>
-              <DataTable.Row>
                 <DataTable.Cell><Avatar.Image size={40} source={require("./assets/alvaro.jpg")} /></DataTable.Cell>
-                <DataTable.Cell style={{flex: 3}}>Álvaro Requejo</DataTable.Cell>
+                <DataTable.Cell style={{flex: 3}}><Text style={styles.name}>Álvaro Requejo</Text></DataTable.Cell>
               </DataTable.Row>
               <DataTable.Row>
                 <DataTable.Cell><Avatar.Image size={40} source={require("./assets/marcos.jpg")} /></DataTable.Cell>
-                <DataTable.Cell style={{flex: 3}}>Marcos Tobías</DataTable.Cell>
-              </DataTable.Row>
-              <DataTable.Row>
-                <DataTable.Cell><Avatar.Image size={40} source={require("./assets/juanb.png")} /></DataTable.Cell>
-                <DataTable.Cell style={{flex: 3}}>Juan Buenaga</DataTable.Cell>
+                <DataTable.Cell style={{flex: 3}}><Text style={styles.name}>Marcos Tobías</Text></DataTable.Cell>
               </DataTable.Row>
               <DataTable.Row>
                 <DataTable.Cell><Avatar.Image size={40} source={require("./assets/carmen.jpg")} /></DataTable.Cell>
-                <DataTable.Cell style={{flex: 3}}>Carmen Rendueles</DataTable.Cell>
+                <DataTable.Cell style={{flex: 3}}><Text style={styles.name}>Carmen Rendueles</Text></DataTable.Cell>
               </DataTable.Row>
               <DataTable.Row>
                 <DataTable.Cell><Avatar.Image size={40} source={require("./assets/miguel.jpg")} /></DataTable.Cell>
-                <DataTable.Cell style={{flex: 3}}>Miguel Ligero</DataTable.Cell>
+                <DataTable.Cell style={{flex: 3}}><Text style={styles.name}>Miguel Ligero</Text></DataTable.Cell>
               </DataTable.Row>
               <DataTable.Row>
                 <DataTable.Cell><Avatar.Image size={40} source={require("./assets/juanr.jpg")} /></DataTable.Cell>
-                <DataTable.Cell style={{flex: 3}}>Juan Rodriguez</DataTable.Cell>
+                <DataTable.Cell style={{flex: 3}}><Text style={styles.name}>Juan Rodriguez</Text></DataTable.Cell>
+              </DataTable.Row>
+              <DataTable.Row>
+                <DataTable.Cell><Avatar.Image size={40} source={require("./assets/labra.jpg")} /></DataTable.Cell>
+                <DataTable.Cell style={{flex: 3}}><Text style={styles.name}>Jose Emilio Labra</Text></DataTable.Cell>
+              </DataTable.Row>
+              <DataTable.Row>
+                <DataTable.Cell><Avatar.Image size={40} source={require("./assets/pablo.jpg")} /></DataTable.Cell>
+                <DataTable.Cell style={{flex: 3}}><Text style={styles.name}>Pablo González</Text></DataTable.Cell>
               </DataTable.Row>
             </DataTable>
       </Card>

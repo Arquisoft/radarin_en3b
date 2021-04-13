@@ -10,11 +10,11 @@ import MyMenu from "./MyMenu";
 import { sendLocation } from "./SendLocation";
 import { useSelector } from "react-redux";
 
-let savedLocation;
+let savedLocation = null;
 
 export function getLocation(){
   //Temporal until get works
-  savedLocation = { id: 2, coordinates: [43.5410052978, -5.66364853752], name: "Gijón", details: "Location #2" };
+  //savedLocation = { id: 2, coordinates: [43.5410052978, -5.66364853752], name: "Gijón", details: "Location #2" };
 
   return savedLocation;
 }
@@ -72,20 +72,20 @@ export default function ProfileScreen({navigation}) {
       <Card containerStyle={styles.card}>
             <DataTable>
               <DataTable.Row>
-                <DataTable.Cell><Avatar.Text size={45} label={fn.substr(0, 1)} /></DataTable.Cell>
+                <DataTable.Cell><Avatar.Text size={45} label={fn.substr(0, 1)} backgroundColor="#126BBD"/></DataTable.Cell>
                 <DataTable.Cell style={{flex: 3}}><Card.Title style={styles.cardTitle}>{fn}</Card.Title></DataTable.Cell>
               </DataTable.Row>
             </DataTable>
 
             <Text style={styles.username}>{webId}</Text>
             
-            <Card.Divider/>
+            <Card.Divider style={styles.divider}/>
 
-            <Card.Title>Settings</Card.Title>
+            <Card.Title style={styles.cardTitle}>Settings</Card.Title>
 
             <DataTable>
             <DataTable.Row>
-                <DataTable.Cell style={{flex: 3}}>Get location automatically:</DataTable.Cell>
+                <DataTable.Cell style={{flex: 3}}><Text style={styles.name}>Get location automatically:</Text></DataTable.Cell>
                 <DataTable.Cell><MySwitch onToggleSwitch={() =>{
                   if (this.MySwitch.isSwitchOn) {
                     Location.stopLocationUpdatesAsync("LocationTask");
@@ -98,7 +98,7 @@ export default function ProfileScreen({navigation}) {
             </DataTable.Row>
             <DataTable.Row>
                 <DataTable.Cell>
-                <Button color="#3f51b5" title="Get my position" onPress={() =>{
+                <Button color="#094072" title="Get my position" onPress={() =>{
                         Location.requestPermissionsAsync();
                         if (location.coords !== null) {
                           savedLocation = location;
@@ -121,5 +121,5 @@ const MySwitch = () => {
 
   const onToggleSwitch = () => setIsSwitchOn(!isSwitchOn);
 
-  return <Switch color="#3f51b5" value={isSwitchOn} onValueChange={onToggleSwitch} />;
+  return <Switch color="#094072" value={isSwitchOn} onValueChange={onToggleSwitch} />;
 };

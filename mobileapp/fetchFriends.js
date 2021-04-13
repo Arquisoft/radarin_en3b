@@ -22,8 +22,14 @@ export async function getFriends(webId) {
 
 export async function getFriendsWithDistance() {
   friendsWithDistance = await getDistances(friends);
+  if (friendsWithDistance == "No location")
+    return friendsWithDistance;
   friendsFinal = getNames();
   return friendsFinal;
+}
+
+export function getFriendsNames(){
+  return friends.map((f) => {let fn = store.any(f, VCARD("fn")); return fn?.value ?? f.name.value;});
 }
 
 const getNames = () => friends.filter(friend => friendsWithDistance.has(friend.value))
