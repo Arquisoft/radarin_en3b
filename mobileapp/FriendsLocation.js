@@ -1,6 +1,6 @@
 import * as SecureStore from "expo-secure-store";
 import forge from 'node-forge';
-import { getLocation } from "./ProfileScreen";
+import { getLocation } from "./GetAsyncLocations";
 import { getPreciseDistance } from "geolib";
 import BuildToken from "./utils/BuildToken"
 
@@ -36,7 +36,7 @@ async function getFriendsLocation(friends) {
 
 export async function getDistances(friends) {
     const locations = await getFriendsLocation(friends);
-    const myLocation = getLocation();
+    const myLocation = null; // here will go getLocation
 
     if (myLocation == null){
         return "No location";
