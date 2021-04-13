@@ -11,11 +11,11 @@ export default StyleSheet.create({
     padding: 0
   },
   header: {
-    backgroundColor: '#3f51b5',
+    backgroundColor: '#094072',
   },
   dotsbutton: {
     alignSelf:'flex-end',
-    backgroundColor: '#3f51b5',
+    backgroundColor: '#094072',
     borderRadius: 20,
     padding: 10,
   },
@@ -25,11 +25,6 @@ export default StyleSheet.create({
   },
   iconWrapper: {
     padding:12
-  },
-  mainMenuAnchor: {
-    width: 50,
-    height: 50,
-    backgroundColor: 'red',
   },
   touchableOpacityStile: {
     resizeMode: 'contain',
@@ -50,7 +45,7 @@ export default StyleSheet.create({
   },
   menuitem: {
     flex: 1,
-    width: 200,
+    width: 200
   },
   menuwrapper: {
     position: 'absolute',
@@ -70,46 +65,56 @@ export default StyleSheet.create({
     justifyContent: 'center',
     borderRadius:5,
     padding:10,
+    borderColor: '#0A4A84',
   },
   nofriendscard: {
     width: 360,
     justifyContent: 'center',
     borderRadius:5,
     padding:10,
-    backgroundColor:'#DCE6F9',
+    backgroundColor:'#D5E7F2',
   },
   friends: {
-    fontSize:16, 
+    fontSize:16,
+    color:'#0A4A84', 
     padding: 30
   },
   cardButton: {
     padding: 20,
   },
   signinCardTitle: {
-    fontSize:25
+    fontSize:25,
+    color:'#094072',
   },
   cardTitle: {
-    fontSize:18
+    fontSize:18,
+    color:'#094072', 
   },
   normalText: {
-    fontSize:16,
-    padding: 10,
-    paddingLeft: 20
+    fontSize: 16,
+    margin: 10,
+    marginLeft: 20,
+    padding: 2,
+    color: '#032C45',
   },
   smallText: {
     fontSize:12,
-    alignSelf:'center'
+    alignSelf:'center',
+    color: '#032C45',
   },
   username:{
     alignSelf: 'center',
     padding:10,
     paddingBottom:30,
+    color: '#032C45',
+  },
+  name: {
+    color: '#032C45',
   },
   loadingScreen:{
     flex: 1,
     alignItems: 'center',
-    paddingTop:180,
-    backgroundColor: '#3f51b5'
+    paddingTop:180
   },
   loadingImage:{
     width: 120,
@@ -121,5 +126,23 @@ export default StyleSheet.create({
     fontSize:20,
     fontWeight:'bold',
     color: '#fff'
-  }
+  },
+  background:{
+    flex: 1,
+    resizeMode: "cover",
+  },
+  disconnectedcard:{
+    width: 360,
+    justifyContent: 'center',
+    borderRadius:5,
+    padding:10,
+    marginRight:50,
+    backgroundColor:'#EAEAEA',
+  },
+  disconnectedtext:{
+    color:'#818181'
+  },
+  divider:{
+    backgroundColor:'#126BBD'
+  },
 });

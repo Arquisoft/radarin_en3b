@@ -4,8 +4,8 @@ import { getLocation } from "./ProfileScreen";
 import { getPreciseDistance } from "geolib";
 
 const apiEndPoint = 'https://radarinen3brestapi.herokuapp.com/api';
-const MAX_DISTANCE = 200000; //Testing value, should be something like 2000m
-const MAX_TIME = 300000000; //Testing value, should be something like 3600.000ms
+const MAX_DISTANCE = 2000000; //Testing value, should be something like 2000m
+const MAX_TIME = 30000000000; //Testing value, should be something like 3600.000ms
 
 async function buildJwt() {
     const p = await SecureStore.getItemAsync("op234iyu5v6oy234iuv6");
