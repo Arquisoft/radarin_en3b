@@ -40,7 +40,7 @@ export default function App() {
         <header>
           <MainNavbar />
         </header>
-        <br /><br /><br /><br /><br /><br />
+        <br /><br /><br /><br />
         <Switch>
           <Route path="/locations">
             <LocationsView />

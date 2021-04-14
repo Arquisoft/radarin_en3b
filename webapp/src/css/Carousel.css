@@ -4,6 +4,7 @@
 
 .slick-slide .carouselText {
   text-align: center;
+  justify-content: center;
 }
 
 .contain {
@@ -17,4 +18,12 @@
 
 a:hover {
   color: #fff;
+}
+
+h2 {
+  font-size: 3rem;
+}
+
+p {
+  font-size: 1.6rem;
 }
