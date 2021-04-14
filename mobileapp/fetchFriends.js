@@ -1,4 +1,4 @@
-import { getDistances } from "./FriendsLocation";
+import { getDistances, getFriendsLocation } from "./FriendsLocation";
 
 const $rdf = require("rdflib");
 const store = $rdf.graph();
@@ -17,16 +17,14 @@ export async function getFriends(webId) {
   //Automatically loads the friends of our user
   await fetcher.load(profile).then(async () => { await searchKnows(webId); });
 
+  let locations = await getFriendsLocation(friends);
+
+  friends = friends.filter(friend => Array.from(Object.keys(locations)).includes(friend.value));
+
   return friends;
 }
 
-export async function getFriendsWithDistance(webId) {
-  const me = store.sym(webId);
-  const profile = me.doc();
-
-  //Automatically loads the friends of our user
-  await fetcher.load(profile);
-  await searchKnows(webId);
+export async function getFriendsWithDistance() {
   friendsWithDistance = await getDistances(friends);
   friendsFinal = getNames();
   return friendsFinal;
@@ -38,7 +36,8 @@ const getNames = () => friends.filter(friend => friendsWithDistance.has(friend.v
   .reduce((map, x) => ({
     ...map,
     [x.fn?.value ?? x.name.value]: friendsWithDistance.get(x.name.value)
-  }), {});
+  }), {})
+  ;
 
 
 function isFriendship(name, webId) {

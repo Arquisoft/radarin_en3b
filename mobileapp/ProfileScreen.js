@@ -7,7 +7,7 @@ import {HeaderBackButton} from "@react-navigation/stack";
 import * as Location from "expo-location";
 import styles from "./MyStyles";
 import MyMenu from "./MyMenu";
-import { sendLocation } from "./sendLocation";
+import { sendLocation } from "./SendLocation";
 import { useSelector } from "react-redux";
 
 let savedLocation;
