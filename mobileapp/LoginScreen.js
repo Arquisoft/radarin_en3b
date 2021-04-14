@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {  Image } from "react-native";
 import { View, Text, Button, Linking, StyleSheet } from "react-native";
 import { Card } from "react-native-elements";
@@ -7,13 +7,24 @@ import { BarCodeScanner } from "expo-barcode-scanner";
 import * as SecureStore from "expo-secure-store";
 import AsyncStorage from "@react-native-community/async-storage";
 
-export default function LoginScreen({ navigation }) {
+export default function LoginScreen({ navigation, route }) {
 
-    AsyncStorage.getItem("userId").then(function (webId){
-      if (webId != null && webId != ""){
-        navigation.navigate("Loading", {id: webId});
+  const { qrUpdatedFlag } = route.params;
+
+    /*AsyncStorage.getItem("userId").then(function (webId){
+      if (webId != null && webId != "" && !qrUpdatedFlag){
+        console.log("no me veas por favor");
+        navigation.navigate("Loading", {id: webId });
       }
-    });
+    });*/
+
+    useEffect(() => {
+      AsyncStorage.getItem("userId").then(function (webId){
+        if (webId != null && webId != "" && !qrUpdatedFlag){
+          navigation.navigate("Loading", {id: webId });
+        }
+      });
+    },[]);
     
   
   const [hasCameraPermission, setHasCameraPermission] = useState(null);
@@ -47,7 +58,7 @@ export default function LoginScreen({ navigation }) {
     const parsed = JSON.parse(data);
     const webId = parsed.webId;
     AsyncStorage.setItem("userId",webId);
-    navigation.navigate("Loading", {id: webId});
+    navigation.navigate("Loading", {id: webId });
   };
 
   function changeShowScanner() {
