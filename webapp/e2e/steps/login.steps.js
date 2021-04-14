@@ -22,7 +22,7 @@ defineFeature(feature, (test) => {
         });
 
         then("We are redirected to the login view", async () => {
-            doAsync();
+            await expect(page).toMatch("able");
         });
         when("I click sign in", async () => {
             await expect(page).toClick("button", { id: "SignInButton" });
@@ -35,9 +35,3 @@ defineFeature(feature, (test) => {
         });
     });
 });
-
-function doAsync() {
-    setTimeout(() => {
-        expect(page).toMatch("Don't have one?");
-    }, 7000)
-}
