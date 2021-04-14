@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {  Image } from "react-native";
 import { View, Text, Button, Linking, StyleSheet } from "react-native";
 import { Card } from "react-native-elements";
@@ -11,13 +11,20 @@ export default function LoginScreen({ navigation, route }) {
 
   const { qrUpdatedFlag } = route.params;
 
-  console.log(qrUpdatedFlag);
-
-    AsyncStorage.getItem("userId").then(function (webId){
+    /*AsyncStorage.getItem("userId").then(function (webId){
       if (webId != null && webId != "" && !qrUpdatedFlag){
-        navigation.navigate("Loading", {id: webId});
+        console.log("no me veas por favor");
+        navigation.navigate("Loading", {id: webId });
       }
-    });
+    });*/
+
+    useEffect(() => {
+      AsyncStorage.getItem("userId").then(function (webId){
+        if (webId != null && webId != "" && !qrUpdatedFlag){
+          navigation.navigate("Loading", {id: webId });
+        }
+      });
+    },[]);
     
   
   const [hasCameraPermission, setHasCameraPermission] = useState(null);
@@ -51,7 +58,7 @@ export default function LoginScreen({ navigation, route }) {
     const parsed = JSON.parse(data);
     const webId = parsed.webId;
     AsyncStorage.setItem("userId",webId);
-    navigation.navigate("Loading", {id: webId});
+    navigation.navigate("Loading", {id: webId });
   };
 
   function changeShowScanner() {
