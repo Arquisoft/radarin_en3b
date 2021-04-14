@@ -23,7 +23,7 @@ export default function LoadingScreen({ route, navigation }) {
     } else if (closeFriendsStatus === "succeeded") {
       navigation.navigate("Radarin");
     } else if(friendsStatus === "failed"){
-      navigation.navigate("Login",  true );
+      navigation.navigate("Login",  { qrUpdatedFlag: true });
     }
   });
 
