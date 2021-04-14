@@ -30,7 +30,6 @@ defineFeature(feature, (test) => {
 
         then("It logs in, and we are redirected to the main view", async () => {
             await expect(page).toMatch("able");
-            await expect(page).toMatch("a", { id: "LocationsLink" });
         });
     });
 });
