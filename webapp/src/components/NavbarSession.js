@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import { useSession, CombinedDataProvider, Text } from "@inrupt/solid-ui-react";
 import { Link } from "react-router-dom";
@@ -15,6 +15,10 @@ import { useHistory } from "react-router-dom";
 
 
 function NavbarSession() {
+    const [isOpen, setIsOpen] = useState(false);
+
+    const toggle = () => setIsOpen(!isOpen);
+
     const { session } = useSession();
     const { webId } = session.info;
     const dispatch = useDispatch();
@@ -39,8 +43,8 @@ function NavbarSession() {
     return (
         <Navbar bg="white" expand="lg" className="navBar fixed-top align-items center shadow rounded">
             <Navbar.Brand as={Link} to="/" className="mb-1">Radarin</Navbar.Brand>
-            <Navbar.Toggle aria-controls="basic-navbar-nav" />
-            <Navbar.Collapse id="basic-navbar-nav">
+            <Navbar.Toggle aria-controls="basic-navbar-nav" onClick={toggle}/>
+            <Navbar.Collapse id="basic-navbar-nav" isOpen={isOpen}>
                 <Nav className="mr-auto">
                     <Nav.Link as={Link} to="/" >Home</Nav.Link>
                     <Nav.Link as={Link} to="/locations" id="LocationsLink">Locations</Nav.Link>
