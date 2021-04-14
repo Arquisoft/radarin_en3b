@@ -7,10 +7,11 @@ import { BarCodeScanner } from "expo-barcode-scanner";
 import * as SecureStore from "expo-secure-store";
 import AsyncStorage from "@react-native-community/async-storage";
 
-export default function LoginScreen({ navigation }) {
+export default function LoginScreen({ route, navigation }) {
+    const { qrUpdatedFlag } = route.params;
 
     AsyncStorage.getItem("userId").then(function (webId){
-      if (webId != null && webId != ""){
+      if (webId != null && webId != "" && !qrUpdatedFlag){
         navigation.navigate("Loading", {id: webId});
       }
     });

@@ -11,6 +11,7 @@ import PostScreen from "./PostScreen";
 import LoginScreen from "./LoginScreen";
 import LoadingScreen from "./LoadingScreen";
 import store from "./redux/store";
+import { TabRouter } from "react-navigation";
 
 const Stack = createStackNavigator();
 
@@ -30,7 +31,7 @@ export default function App() {
               headerStyle: styles.header,
               headerTintColor: "#fff"
             }} />
-            <Stack.Screen name="Login" component={LoginScreen} options={{
+            <Stack.Screen name="Login" component={LoginScreen} initialParam={{qrUpdatedFlag: false}} options={{
               title: "Radarin",
               headerStyle: styles.header,
               headerTintColor: "#fff"

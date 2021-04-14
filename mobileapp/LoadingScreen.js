@@ -22,6 +22,8 @@ export default function LoadingScreen({ route, navigation }) {
       dispatch(fetchFriendsWithDistance());
     } else if (closeFriendsStatus === "succeeded") {
       navigation.navigate("Radarin");
+    } else if(friendsStatus === "failed"){
+      navigation.navigate("Login", { qrUpdatedFlag: true });
     }
   });
 
