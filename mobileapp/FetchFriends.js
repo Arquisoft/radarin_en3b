@@ -27,18 +27,16 @@ export async function getFriends(webId) {
 export async function getFriendsWithDistance() {
   friendsWithDistance = await getDistances(friends);
   console.log(friendsWithDistance);
-  if (friendsWithDistance == "No location"){
+  if (friendsWithDistance == "No location") {
     console.log(friendsWithDistance);
     return friendsWithDistance;
-}
+  }
   friendsFinal = getNames();
 
   return friendsFinal;
 }
 
-export function getFriendsNames(){
-  return friends.map((f) => {console.log(f); let fn = store.any(f, VCARD("fn")); return fn?.value ?? f.value;});
-}
+export const getFriendsNames = () => friends.map(f => store.any(f, VCARD("fn"))?.value ?? f.value);
 
 const getNames = () => friends.filter(friend => friendsWithDistance.has(friend.value))
   .map(name => ({ name, fn: store.any(name, VCARD("fn")) }))
