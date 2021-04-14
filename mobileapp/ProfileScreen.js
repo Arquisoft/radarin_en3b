@@ -13,16 +13,10 @@ import { useSelector } from "react-redux";
 import {getLocation, getLocationAsync} from "./GetAsyncLocation";
 import AsyncStorage from "@react-native-community/async-storage";
 
-let savedLocation = null;
-
-let sendingLocations;
-
-const fiveMin = 300000;
 
 export default function ProfileScreen({navigation}) {
   const webId = useSelector(state => state.user.webId);
   const fn = useSelector(state => state.user.fn);
-  const interval = 
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
@@ -100,7 +94,7 @@ export default function ProfileScreen({navigation}) {
                         }
 
                         alert(text); */ 
-                        getLocation();
+                        alert(getLocation());
                       } 
                         }>Get My Position
                 </Button>
@@ -115,18 +109,25 @@ export default function ProfileScreen({navigation}) {
 
 
 const MySwitch = () => {
-  //AsyncStorage.getItem("backgroundLocation")
-  const [isSwitchOff, setIsSwitchOn] = React.useState(false);
+  let initialState;
+  AsyncStorage.getItem("backgroundLocations").then((backgroundLocation) => {
+    if (backgroundLocation === "active") 
+      setIsSwitchOn(true);
+    
+    else  
+      setIsSwitchOn(false);
+    getLocationAsync();
+  });
+  const [isSwitchOff, setIsSwitchOn] = React.useState(initialState);
 
   const onToggleSwitch = () => {
     setIsSwitchOn(!isSwitchOff);
-    if (isSwitchOff) {
-        getLocationAsync(false);
-        console.log("switch off");
-    } else {
-        getLocationAsync(true);
-        console.log("switch on");
-    }
+    if (isSwitchOff) 
+        AsyncStorage.setItem("backgroundLocations", "inactive");
+    else 
+        AsyncStorage.setItem("backgroundLocations", "active");
+    
+    getLocationAsync();
   }
 
   return <Switch color="#094072" value={isSwitchOff} onValueChange={onToggleSwitch} />;

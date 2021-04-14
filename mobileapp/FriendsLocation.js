@@ -36,7 +36,7 @@ async function getFriendsLocation(friends) {
 
 export async function getDistances(friends) {
     const locations = await getFriendsLocation(friends);
-    const myLocation = null; // here will go getLocation
+    const myLocation = await getLocation(); // here will go getLocation
 
     if (myLocation == null){
         return "No location";
@@ -53,7 +53,7 @@ export async function getDistances(friends) {
 function calculateDistance(friendLoc, myLoc){
     let pdis = getPreciseDistance(
         { latitude: friendLoc.coords.latitude, longitude: friendLoc.coords.longitude },
-        { latitude: myLoc.coordinates[0], longitude: myLoc.coordinates[1] }
+        { latitude: myLoc.coords.latitude, longitude: myLoc.coords.longitude }
     );
     return pdis;
 }
