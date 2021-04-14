@@ -32,6 +32,6 @@ and a native mobile app for Android
 |React
 |A library based on JavaScript that we will use for the frontend of the application, both in the
 web and in mobile versions, using react native in the latter
-|We are not familiarised with the library itself so it can generate some problems when producing
+|We are not familiarised with the library itself so it can generate some problems when developing
 
 |===
