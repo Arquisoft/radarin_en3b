@@ -7,6 +7,7 @@ import MyMenu from "./MyMenu";
 import { useSelector } from "react-redux";
 import { useFocusEffect } from '@react-navigation/native';
 import { getFriendsNames } from './FetchFriends';
+import { getLocationAsync } from "./GetAsyncLocation";
 
 {/*Esto debería ir en el return delante de Navigation container pero.. cosas raras con comentarios
     <SafeAreaView>
@@ -22,6 +23,7 @@ export default function HomeScreen({navigation}) {
 
   const loadedFriends = useSelector(state => state.user.onlineCloseFriends);
   const friends = getFriendsNames();
+  getLocationAsync();
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
