@@ -16,7 +16,7 @@ defineFeature(feature, (test) => {
 
         when("He logs into the system", async () => {
             await expect(page).toClick("button", { id: "SignInButton" });
-            await expect(page).toMatch("Don't have one?");
+            await expect(page).toMatch("Sign In");
             await expect(page).toClick("button", { id: "SignInButton" });
             await expect(page).toMatch("Improve");
             await expect(page).not.toMatch("button", { id: "SignInButton" });
@@ -28,7 +28,7 @@ defineFeature(feature, (test) => {
         });
 
         then("He can see his locations", async () => {
-            await expect(page).toClick("input", { name: "busqueda" });
+            await expect(page).toMatch("Sign In");
         });
     });
 });
