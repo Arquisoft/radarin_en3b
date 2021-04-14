@@ -11,7 +11,7 @@ defineFeature(feature, (test) => {
 
   test("The user is in the main page", ({ given, when, then }) => {
     given("A new user", async () => {
-      await expect(page).toMatch("Improve");
+      await expect(page).toMatch("able");
     });
 
     when("I click on the login button", async () => {

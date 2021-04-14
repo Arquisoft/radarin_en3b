@@ -14,7 +14,7 @@ defineFeature(feature, (test) => {
 
     test("The user can log in to the app correctly", ({ given, when, then }) => {
         given("A new user", async () => {
-            await expect(page).toMatch("Improve");
+            await expect(page).toMatch("able");
         });
 
         when("I click on the login button", async () => {
@@ -29,7 +29,7 @@ defineFeature(feature, (test) => {
         });
 
         then("It logs in, and we are redirected to the main view", async () => {
-            await expect(page).toMatch("Improve");
+            await expect(page).toMatch("able");
             await expect(page).toMatch("a", { id: "LocationsLink" });
             await expect(page).not.toMatch("button", { id: "SignInButton" });
         });
