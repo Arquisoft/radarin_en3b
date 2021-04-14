@@ -11,7 +11,7 @@ import About from '../components/About';
 test('user arrives to the home page', async () => {
   const { getByText } = render(<Provider store={store}><App /></Provider>);
 
-  const mainHeader = getByText("Improve your productivity with Radarin");
+  const mainHeader = getByText("The ease and simplicity of Radarin, wherever you are.");
 
   expect(mainHeader).toBeInTheDocument();
 });
