@@ -43,7 +43,7 @@ export const locationsSlice = createSlice({
         [fetchLocations.fulfilled]: (state, action) => {
             state.status = "succeeded"
             state.locations = state.locations.concat(action.payload)
-            state.coordinates = state.locations[0].coordinates;
+            state.coordinates = state.locations[0].coordinates
         },
         [fetchLocations.rejected]: (state, action) => {
             state.status = "failed"

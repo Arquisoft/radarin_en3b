@@ -6,6 +6,11 @@ import TokenBuilder from "./utils/BuildToken";
 
 const apiEndPoint = 'https://radarinen3brestapi.herokuapp.com/api';
 
+//This function will send the location after an async timeout, so the application does not stop and sends the ubication 
+export async function sendLocationAsync(userId, coords, timestamp, isSwitchOn) {
+    setTimeout(sendLocation(coords, timestamp), 150000);
+}
+
 //In the future this will be changed and the userID will be passed
 export async function sendLocation(coords, timestamp) {
     const auth = await TokenBuilder();
