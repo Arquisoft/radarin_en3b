@@ -6,7 +6,7 @@ defineFeature(feature, (test) => {
   beforeEach(async () => {
     /*global page*/
     /*eslint no-undef: "error"*/
-    await global.page.goto("http://localhost:3000/");
+    await global.page.goto("http://localhost:3000");
   });
 
   test("The user is in the main page", ({ given, when, then }) => {
