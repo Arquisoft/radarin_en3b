@@ -22,7 +22,6 @@ export const fetchLocations = createAsyncThunk("locations/fetchLocations", async
 }); 
 
 export const refreshLocations = createAsyncThunk("locations/refreshLocations", async (session) => {
-    console.log("refreshed");
     let apiLocations = await fetchDBLocations(session);
 
     let counter = 7;

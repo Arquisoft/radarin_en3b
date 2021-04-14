@@ -16,7 +16,7 @@ export default function NavbarAnonym() {
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="mr-auto">
-                    {NavbarItems.map((item, index) => {
+                    {NavbarItems.filter((element) => !element.key.includes("locations")).map((item, index) => {
                         return (
                             <NavLink key={item.key} className={item.cName} as={Link} to={item.url}>
                                 {item.title}
