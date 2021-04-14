@@ -5,33 +5,18 @@ import {
     TextField
 } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchLocations, refreshLocations, selectAllLocations, setSearchText } from "../redux/slices/locationsSlice";
-import { useEffect } from "react";
+import { selectAllLocations, setSearchText } from "../redux/slices/locationsSlice";
 import "../css/LocationsList.css";
 import Location from "./locations/Location";
-import { useSession } from "@inrupt/solid-ui-react";
 
 
 export default function LocationList() {
-    const { session } = useSession();
-    const dispatch = useDispatch();
     const locationStatus = useSelector(state => state.locations.status);
-    const refreshStatus = useSelector(state => state.locations.refreshStatus);
     const error = useSelector(state => state.locations.error);
-    const filterText = useSelector(state => state.locations.searchText);
+    const dispatch = useDispatch();
 
     const locations = useSelector(selectAllLocations);
-
-
-    useEffect(() => {
-        if(locationStatus === "idle")
-        dispatch(fetchLocations(session));
-        else if(locationStatus === "succeeded" && refreshStatus === "idle") {
-            setTimeout(() => {
-                dispatch(refreshLocations(session));
-            }, 30000);
-        }
-    }, [locationStatus, refreshStatus, dispatch, session]);
+    const filterText = useSelector(state => state.locations.searchText);
 
     const onChange = e => {
         dispatch(setSearchText(e.target.value));
@@ -54,6 +39,7 @@ export default function LocationList() {
                             className="textField"
                             name="busqueda"
                             onChange={onChange}
+                            value={filterText}
                         />
                     </div>
                 </ListItem>

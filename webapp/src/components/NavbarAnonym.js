@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Nav from "react-bootstrap/Nav";
 import Button from "@material-ui/core/Button";
@@ -8,6 +8,10 @@ import NavLink from "react-bootstrap/NavLink";
 import Logo from "../img/radarin_logo.png";
 
 export default function NavbarAnonym() {
+    const [isOpen, setIsOpen] = useState(false);
+
+    const toggle = () => setIsOpen(!isOpen);
+
     return (
         <Navbar bg="white" expand="lg" className="navBar fixed-top align-items center shadow rounded">
             <Navbar.Brand as={Link} to="/" className="mb-1">
