@@ -10,27 +10,26 @@ import styles from "./MyStyles";
 import MyMenu from "./MyMenu";
 //import { sendLocation } from "./SendLocation";
 import { useSelector } from "react-redux";
-import { getLocation } from "./GetAsyncLocations";
+import {getLocation, getLocationAsync} from "./GetAsyncLocation";
+import AsyncStorage from "@react-native-community/async-storage";
 
-let savedLocation = null;
 
 export default function ProfileScreen({ navigation }) {
   const webId = useSelector(state => state.user.webId);
   const fn = useSelector(state => state.user.fn);
-  const interval =
 
-    React.useLayoutEffect(() => {
-      navigation.setOptions({
-        headerRight: (() => (
-          <MyMenu navigation={navigation}></MyMenu>
-        )
-        ),
-        headerLeft: (() => (
-          <HeaderBackButton tintColor={"#FFF"} onPress={() => { navigation.navigate("Radarin"); }}></HeaderBackButton>
-        )
-        )
-      });
-    }, [navigation]);
+  React.useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: (() => (
+            <MyMenu navigation={navigation}></MyMenu>
+          )
+      ),
+      headerLeft: (() => (
+        <HeaderBackButton tintColor={"#FFF"} onPress={() => {navigation.navigate("Radarin");}}></HeaderBackButton>
+      )
+      )
+    });
+  }, [navigation]);
 
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
@@ -66,46 +65,30 @@ export default function ProfileScreen({ navigation }) {
   return (
     <View style={styles.container}>
       <Card containerStyle={styles.card}>
-        <DataTable>
-          <DataTable.Row>
-            <DataTable.Cell><Avatar.Text size={45} label={fn.substr(0, 1)} backgroundColor="#126BBD" /></DataTable.Cell>
-            <DataTable.Cell style={{ flex: 3 }}><Card.Title style={styles.cardTitle}>{fn}</Card.Title></DataTable.Cell>
-          </DataTable.Row>
-        </DataTable>
+            <DataTable>
+              <DataTable.Row>
+                <DataTable.Cell><Avatar.Text size={45} label={fn.substr(0, 1)} backgroundColor="#126BBD"/></DataTable.Cell>
+                <DataTable.Cell style={{flex: 3}}><Card.Title style={styles.cardTitle}>{fn}</Card.Title></DataTable.Cell>
+              </DataTable.Row>
+            </DataTable>
 
-        <Text style={styles.username}>{webId}</Text>
+            <Text style={styles.username}>{webId}</Text>
+            
+            <Card.Divider style={styles.divider}/>
 
-        <Card.Divider style={styles.divider} />
+            <Card.Title style={styles.cardTitle}>Settings</Card.Title>
 
-        <Card.Title style={styles.cardTitle}>Settings</Card.Title>
-
-        <DataTable>
-          <DataTable.Row>
-            <DataTable.Cell style={{ flex: 3 }}><Text style={styles.name}>Get location automatically:</Text></DataTable.Cell>
-            <DataTable.Cell><MySwitch onToggleSwitch={() => {
-              if (this.MySwitch.isSwitchOn) {
-                Location.stopLocationUpdatesAsync("LocationTask");
-                alert("This is on");
-              } else {
-                alert("This is off");
-                Location.startLocationUpdatesAsync("LocationTask");
-              }
-            }}></MySwitch></DataTable.Cell>
-          </DataTable.Row>
-          <DataTable.Row>
-            <DataTable.Cell>
-              <Button color="#094072" title="Get my position" onPress={() => {
-                /*Location.requestPermissionsAsync();
-
-                if (location.coords !== null) {
-                  savedLocation = location;
-                  sendLocation(location.coords, location.timestamp);
-                }
-
-                alert(text); */
-                getLocation();
-              }
-              }>Get My Position
+            <DataTable>
+            <DataTable.Row>
+                <DataTable.Cell style={{flex: 3}}><Text style={styles.name}>Get location automatically:</Text></DataTable.Cell>
+                <DataTable.Cell><MySwitch></MySwitch></DataTable.Cell>
+            </DataTable.Row>
+            <DataTable.Row>
+                <DataTable.Cell>
+                <Button color="#094072" title="Get my position" onPress={() =>{
+                        alert(getLocation());
+                      } 
+                        }>Get My Position
                 </Button>
             </DataTable.Cell>
           </DataTable.Row>
@@ -118,17 +101,27 @@ export default function ProfileScreen({ navigation }) {
 
 
 const MySwitch = () => {
-  const [isSwitchOn, setIsSwitchOn] = React.useState(false);
+  let initialState;
+  AsyncStorage.getItem("backgroundLocations").then((backgroundLocation) => {
+    if (backgroundLocation === "active") 
+      setIsSwitchOn(true);
+    
+    else  
+      setIsSwitchOn(false);
+    getLocationAsync();
+  });
+  const [isSwitchOff, setIsSwitchOn] = React.useState(initialState);
 
   const onToggleSwitch = () => {
-    setIsSwitchOn(!isSwitchOn);
-    var sendingLocations = setInterval(getLocation, 300000);
-    if (isSwitchOn) {
-      //     sendLocation.getCurrentPositionAsync(isSwitchOn);
-    } else {
-      clearInterval(sendingLocations);
-    }
-  };
+    setIsSwitchOn(!isSwitchOff);
+    if (isSwitchOff) 
+        AsyncStorage.setItem("backgroundLocations", "inactive");
+    else 
+        AsyncStorage.setItem("backgroundLocations", "active");
+    
+    getLocationAsync();
+  }
 
-  return <Switch color="#094072" value={isSwitchOn} onValueChange={onToggleSwitch} />;
+
+  return <Switch color="#094072" value={isSwitchOff} onValueChange={onToggleSwitch} />;
 };
