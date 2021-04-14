@@ -17,20 +17,26 @@ export async function getFriends(webId) {
   //Automatically loads the friends of our user
   await fetcher.load(profile);
   friends = await searchKnows(webId);
+
+  let locations = await getFriendsLocation(friends);
+  friends = friends.filter(friend => Array.from(Object.keys(locations)).includes(friend.value));
+
   return friends;
 }
 
 export async function getFriendsWithDistance() {
   friendsWithDistance = await getDistances(friends);
-  if (friendsWithDistance == "No location")
+  console.log(friendsWithDistance);
+  if (friendsWithDistance == "No location") {
+    console.log(friendsWithDistance);
     return friendsWithDistance;
+  }
   friendsFinal = getNames();
+
   return friendsFinal;
 }
 
-export function getFriendsNames(){
-  return friends.map((f) => {let fn = store.any(f, VCARD("fn")); return fn?.value ?? f.name.value;});
-}
+export const getFriendsNames = () => friends.map(f => store.any(f, VCARD("fn"))?.value ?? f.value);
 
 const getNames = () => friends.filter(friend => friendsWithDistance.has(friend.value))
   .map(name => ({ name, fn: store.any(name, VCARD("fn")) }))

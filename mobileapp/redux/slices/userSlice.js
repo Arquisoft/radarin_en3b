@@ -7,7 +7,8 @@ export const fetchFriends = createAsyncThunk("user/fetchFriends", async (webId) 
 });
 
 export const fetchFriendsWithDistance = createAsyncThunk("user/fetchFriendsWithDistance", async () => {
-    return await getFriendsWithDistance();
+    let friends = await getFriendsWithDistance();
+    return friends;
 });
 
 export const fetchProfile = createAsyncThunk("user/fetchProfile", async(webId) => {

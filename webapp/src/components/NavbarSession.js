@@ -9,9 +9,9 @@ import { LogoutButton } from "@inrupt/solid-ui-react";
 import Navbar from "react-bootstrap/Navbar";
 import { useDispatch } from "react-redux";
 import { setLogguedStatus } from "../redux/slices/userSlice";
-import { useHistory } from "react-router-dom";
 import { NavDropdown } from "react-bootstrap";
 import CodeIcon from "@material-ui/icons/Code";
+import { useHistory } from "react-router-dom";
 
 
 function NavbarSession() {
@@ -43,7 +43,7 @@ function NavbarSession() {
             <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="mr-auto">
                     <Nav.Link as={Link} to="/" >Home</Nav.Link>
-                    <Nav.Link as={Link} to="/locations" >Locations</Nav.Link>
+                    <Nav.Link as={Link} to="/locations" id="LocationsLink">Locations</Nav.Link>
                     <Nav.Link as={Link} to="/about" >About</Nav.Link>
                 </Nav>
                 <Nav>

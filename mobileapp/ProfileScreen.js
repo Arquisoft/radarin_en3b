@@ -1,10 +1,10 @@
 
-import React, {useState, useEffect} from "react";
-import { View, Text, Button} from "react-native";
-import { Card} from "react-native-elements";
-import {Switch } from "react-native-paper";
+import React, { useState, useEffect } from "react";
+import { View, Text, Button } from "react-native";
+import { Card } from "react-native-elements";
+import { Switch } from "react-native-paper";
 import { DataTable, Avatar } from "react-native-paper";
-import {HeaderBackButton} from "@react-navigation/stack";
+import { HeaderBackButton } from "@react-navigation/stack";
 import * as Location from "expo-location";
 import styles from "./MyStyles";
 import MyMenu from "./MyMenu";
@@ -14,7 +14,7 @@ import {getLocation, getLocationAsync} from "./GetAsyncLocation";
 import AsyncStorage from "@react-native-community/async-storage";
 
 
-export default function ProfileScreen({navigation}) {
+export default function ProfileScreen({ navigation }) {
   const webId = useSelector(state => state.user.webId);
   const fn = useSelector(state => state.user.fn);
 
@@ -36,7 +36,7 @@ export default function ProfileScreen({navigation}) {
 
   useEffect(() => {
     (async () => {
-      let {status} = await Location.requestPermissionsAsync();
+      let { status } = await Location.requestPermissionsAsync();
       if (status !== "granted") {
         setErrorMsg("Permission to access location was denied");
         return;
@@ -54,7 +54,7 @@ export default function ProfileScreen({navigation}) {
     })();
 
   }
-  , []);
+    , []);
 
   let text = "Waiting for having a valid position...";
   if (errorMsg) {
@@ -86,22 +86,14 @@ export default function ProfileScreen({navigation}) {
             <DataTable.Row>
                 <DataTable.Cell>
                 <Button color="#094072" title="Get my position" onPress={() =>{
-                        /*Location.requestPermissionsAsync();
-
-                        if (location.coords !== null) {
-                          savedLocation = location;
-                          sendLocation(location.coords, location.timestamp);
-                        }
-
-                        alert(text); */ 
                         alert(getLocation());
                       } 
                         }>Get My Position
                 </Button>
-                </DataTable.Cell>
-            </DataTable.Row>
-            </DataTable>
-            
+            </DataTable.Cell>
+          </DataTable.Row>
+        </DataTable>
+
       </Card>
     </View>
   );
@@ -129,6 +121,7 @@ const MySwitch = () => {
     
     getLocationAsync();
   }
+
 
   return <Switch color="#094072" value={isSwitchOff} onValueChange={onToggleSwitch} />;
 };
