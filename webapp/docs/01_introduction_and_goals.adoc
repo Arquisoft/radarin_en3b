@@ -3,7 +3,6 @@
 
 Radarin is a project for the course of Software Architecture of the University of Oviedo. This version will be depeloped by the members of the team EN3B who are:
 
-- Juan Buenaga Díaz
 - Miguel Ligero Arbesú
 - Carmen Rendueles Martínez
 - Álvaro Requejo Cembellín
@@ -47,7 +46,7 @@ It’s correct behaviour will be monitored through unit tests, acceptance tests 
 [options="header",cols="1,2,2"]
 |===
 |Role/Name|Contact|Expectations
-| Students | Juan Buenaga Díaz, Miguel Ligero Arbesú, Carmen Rendueles Martínez, Álvaro Requejo Cembellín, Juan Rodríguez de la Fuente and Marcos Tobias Muñiz | Principal developers of the application. They will develop the whole application and as a consequence they Will improve their coding skills and their teamwork capacity.
+| Students | Miguel Ligero Arbesú, Carmen Rendueles Martínez, Álvaro Requejo Cembellín, Juan Rodríguez de la Fuente and Marcos Tobias Muñiz | Principal developers of the application. They will develop the whole application and as a consequence they Will improve their coding skills and their teamwork capacity.
 | Teachers | José Emilio Labra Gallo| They will supervise students work and make sure they are going in the correct direction and help them with some things if necessary.
 | Users || Users will be the ones using the application so they must find it usable and practical.
 |Other students|| Other students may help the team developers in concrete moments by giving advise, or trying the app or helping in any other way.

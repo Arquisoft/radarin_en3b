@@ -2,7 +2,7 @@
 == Runtime View
 
 === Solid for backend authentication
-We want to keep things simple so we are not going to create our own user/password accounts so, in order to provide a mechanism to authenticate our users in the backend (we don't want anyone to send a fake location along another user's ID), we are going to send the JWT token that we get from the Identity Provider to our RestAPI. Our api will then ask for the public key at the Identity Provider's */jwks* endpoint, store it in cache and verify the authenticated messages that the user sends from the App.
+We want to keep things simple so we are not going to create our own user/password accounts. Therefore, in order to provide a mechanism to authenticate our users in the backend (we don't want anyone to send a fake location along another user's ID), we are going to send the JWT token that we get from the Identity Provider to our RestAPI. Our api will then ask for the public key at the Identity Provider's */jwks* endpoint, store it in cache and verify the authenticated messages that the user sends from the App.
 
 === Store current user locations
 
@@ -30,6 +30,7 @@ PhoneApp --> Bob: Shows a "done!" toast
 ----
 === Check for users nearby
 Here we have omitted authentication steps as they are already stated in previous diagrams. The following conditions must be met before this diagram:
+
  * The user is logged-in.
  * The user has given the POD permission for us to look at their friends.
 
