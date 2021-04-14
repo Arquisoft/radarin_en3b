@@ -16,7 +16,7 @@ export default function NavbarAnonym() {
                 </Nav>
                 <Nav>
                     <Nav.Link as={Link} to="/login" className="mr-3">
-                        <Button color="primary" variant="contained">Sign In</Button>
+                        <Button color="primary" variant="contained" id="SignInButton">Sign In</Button>
                     </Nav.Link>
                 </Nav>
             </Navbar.Collapse>

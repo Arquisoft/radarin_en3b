@@ -84,7 +84,7 @@ function LoginPage() {
           Don't have one? You can get it here: <Link className="ml-1" href="https://inrupt.com/" target="_blank"><strong>Inrupt</strong></Link>
         </Typography>
         <LoginButton oidcIssuer={idp} redirectUrl={window.location.origin}>
-          <Button color="primary" variant="contained" className={classes.signIn} onClick={callback}>Sign In</Button>
+          <Button id="SignInButton" color="primary" variant="contained" className={classes.signIn} onClick={callback}>Sign In</Button>
         </LoginButton>
       </CardActions>
     </Card>
