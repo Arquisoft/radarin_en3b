@@ -27,10 +27,11 @@ compatible with Solid
 |Windows, Linux, and Android
 |The application have two parts, one web application that will be supported by every browser,
 and a native mobile app for Android
-|We will not suport iOS devices, and for using the localization part of the app the user must carry a smartphone
+|We will not suport iOS devices, but it could be extended to be used in this operating system as react allows to develop for both operating systems
 
 |React
 |A library based on JavaScript that we will use for the frontend of the application, both in the
 web and in mobile versions, using react native in the latter
+|We are not familiarised with the library itself so it can generate some problems when producing
 
 |===
