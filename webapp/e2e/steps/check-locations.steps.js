@@ -19,7 +19,6 @@ defineFeature(feature, (test) => {
             await expect(page).toMatch("Sign In");
             await expect(page).toClick("button", { id: "SignInButton" });
             await expect(page).toMatch("able");
-            await expect(page).toMatch("able");
         });
 
         and("He goes to the locations view", async () => {
