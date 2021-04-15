@@ -3,6 +3,21 @@ import { View, Image, Text, ImageBackground } from "react-native";
 import styles from "./MyStyles";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProfile, fetchFriends, fetchFriendsWithDistance } from "./redux/slices/userSlice";
+import * as BackgroundFetch from 'expo-background-fetch';
+import * as TaskManager from 'expo-task-manager';
+import * as Location from 'expo-location';
+
+const TASK_NAME = "friendsLocation";
+
+      TaskManager.defineTask(TASK_NAME, () => {
+        try {
+          const receivedNewData = fetchFriendsWithDistance();
+          console.log("My task ", receivedNewData);
+          return receivedNewData;
+        } catch (err) {
+          return;
+        }
+      });
 
 export default function LoadingScreen({ route, navigation }) {
   const { id } = route.params;
@@ -18,8 +33,16 @@ export default function LoadingScreen({ route, navigation }) {
 
     } else if (friendsStatus === "idle") {
       dispatch(fetchFriends(webId));
-    } else if (closeFriendsStatus === "idle" && friendsStatus === "succeeded") {
+    } else if (closeFriendsStatus === "idle" && friendsStatus === "succeeded") {  
       dispatch(fetchFriendsWithDistance());
+      
+      try {
+        BackgroundFetch.registerTaskAsync(TASK_NAME).then(()=>console.log("Task registered"))
+        
+      } catch (err) {
+        console.log("Task Register failed:", err)
+      }
+      
     } else if (closeFriendsStatus === "succeeded") {
       navigation.navigate("Radarin");
     }
