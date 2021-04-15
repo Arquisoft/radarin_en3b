@@ -5,7 +5,7 @@ import { getPreciseDistance } from "geolib";
 import BuildToken from "./utils/BuildToken";
 
 const apiEndPoint = 'https://radarinen3brestapi.herokuapp.com/api';
-const MAX_DISTANCE = 2000000; //Testing value, should be something like 2000m
+const MAX_DISTANCE = 2000; //Testing value, should be something like 2000m
 const MAX_TIME = 30000000000; //Testing value, should be something like 3600.000ms
 
 export async function getFriendsLocation(friends) {

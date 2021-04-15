@@ -90,7 +90,4 @@ export const locationsSlice = createSlice({
 
 export const { moveTo, setSearchText } = locationsSlice.actions;
 
-export const selectAllLocations = state => 
-    state.locations.locations;
-
 export default locationsSlice.reducer;
