@@ -9,14 +9,14 @@
 ----
 actor Client
 Component "Level 1" {
-database DB
 rectangle MobileApp
 rectangle DesktopApp
 storage Pods
+database DB
 }
 Client --> MobileApp : uses
 Client --> DesktopApp : uses
-DesktopApp -> DB : obtain info
+DB <- DesktopApp : obtain info
 DesktopApp -> Pods : obtain info
 MobileApp -> DB : obtain info
 MobileApp -> Pods : obtain info

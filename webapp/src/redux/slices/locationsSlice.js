@@ -22,7 +22,6 @@ export const fetchLocations = createAsyncThunk("locations/fetchLocations", async
 }); 
 
 export const refreshLocations = createAsyncThunk("locations/refreshLocations", async (session) => {
-    console.log("refreshed");
     let apiLocations = await fetchDBLocations(session);
 
     let counter = 7;
@@ -90,8 +89,5 @@ export const locationsSlice = createSlice({
 });
 
 export const { moveTo, setSearchText } = locationsSlice.actions;
-
-export const selectAllLocations = state => 
-    state.locations.locations;
 
 export default locationsSlice.reducer;

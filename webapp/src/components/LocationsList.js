@@ -5,7 +5,7 @@ import {
     TextField
 } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchLocations, refreshLocations, selectAllLocations, setSearchText } from "../redux/slices/locationsSlice";
+import { fetchLocations, refreshLocations, setSearchText } from "../redux/slices/locationsSlice";
 import { useEffect } from "react";
 import "../css/LocationsList.css";
 import Location from "./locations/Location";
@@ -20,7 +20,7 @@ export default function LocationList() {
     const error = useSelector(state => state.locations.error);
     const filterText = useSelector(state => state.locations.searchText);
 
-    const locations = useSelector(selectAllLocations);
+    const locations = useSelector(state => state.locations.locations);
 
 
     useEffect(() => {
@@ -28,6 +28,7 @@ export default function LocationList() {
         dispatch(fetchLocations(session));
         else if(locationStatus === "succeeded" && refreshStatus === "idle") {
             setTimeout(() => {
+                console.log("refreshed");
                 dispatch(refreshLocations(session));
             }, 30000);
         }

@@ -55,7 +55,7 @@ test("user can go to main page", async () => {
 
     fireEvent.click(link);
 
-    const mainHeader = getByText("Improve your productivity with Radarin");
+    const mainHeader = getByText("The ease and simplicity of Radarin, wherever you are.");
 
     expect(mainHeader).toBeInTheDocument();
 });

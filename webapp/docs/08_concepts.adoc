@@ -40,6 +40,8 @@ Apart from the already mentioned framework or services, our intention is to use 
 
 * react-router-dom: in order to assign URLs to each page.
 
+* expo: expo provides a huge variety of functionality and many sub-libraries like expo-location that provides resources to obtain the location of the user in the mobile app.
+
 * bar-code-scanner: to scan the qr code with the camera of the mobile.
 
 * securestore: to encrypt and secure the webid and the private key read from the qr code on the mobile.
