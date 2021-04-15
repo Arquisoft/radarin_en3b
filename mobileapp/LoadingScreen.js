@@ -5,19 +5,19 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchProfile, fetchFriends, fetchFriendsWithDistance, backToIdle, doOnce } from "./redux/slices/userSlice";
 import * as BackgroundFetch from 'expo-background-fetch';
 import * as TaskManager from 'expo-task-manager';
-import * as Location from 'expo-location';
 
 const TASK_NAME = "friendsLocation";
+  TaskManager.defineTask(TASK_NAME, executeTask);
 
-      TaskManager.defineTask(TASK_NAME, () => {
-        try {
-          const receivedNewData = fetchFriendsWithDistance();
-          console.log("My task ", receivedNewData);
-          return receivedNewData;
-        } catch (err) {
-          return;
-        }
-      });
+  function executeTask(){
+    try {
+      const receivedNewData = "fetchFriendsWithDistance()";
+      console.log("My task ", receivedNewData);
+      return receivedNewData;
+    } catch (err) {
+      return;
+    }
+  }
 
 export default function LoadingScreen({ route, navigation }) {
   const { id } = route.params;
@@ -37,14 +37,12 @@ export default function LoadingScreen({ route, navigation }) {
       dispatch(fetchFriends(webId));
     } else if (closeFriendsStatus === "idle" && friendsStatus === "succeeded") {  
       dispatch(fetchFriendsWithDistance());
-      
       try {
-        BackgroundFetch.registerTaskAsync(TASK_NAME).then(()=>console.log("Task registered"))
+        BackgroundFetch.registerTaskAsync(TASK_NAME).then(async ()=>{console.log("Task registered"); await BackgroundFetch.setMinimumIntervalAsync(TASK_NAME);});
         
       } catch (err) {
         console.log("Task Register failed:", err)
-      }
-      
+      }  
     } else if (closeFriendsStatus === "succeeded") {
       navigation.navigate("Radarin");
     } else if(friendsStatus === "failed"){
