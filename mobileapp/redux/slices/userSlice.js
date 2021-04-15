@@ -21,6 +21,7 @@ const initialState = {
     friendsStatus: "idle",
     closeFriendsStatus: "idle",
     profileStatus: "idle",
+    doOnce: false,
     friendsError: null,
     closeFriendsError: null,
     profileError: null,
@@ -31,6 +32,14 @@ const initialState = {
 export const userSlice = createSlice({
     name: "user",
     initialState,
+    reducers: {
+        backToIdle: (state, action) => {
+            state.friendsStatus = "idle"
+        },
+        doOnce: (state, action) => {
+            state.doOnce = true
+        },
+    },
     extraReducers: {
         [fetchFriends.pending]: (state, action) => {
             state.friendsStatus = "loading"
@@ -70,3 +79,5 @@ export const userSlice = createSlice({
 });
 
 export default userSlice.reducer;
+
+export const { backToIdle, doOnce } = userSlice.actions;

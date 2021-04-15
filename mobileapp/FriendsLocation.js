@@ -26,6 +26,7 @@ export async function getFriendsLocation(friends) {
         locations = await response.json();
     } catch (error) {
         console.log("Error loading locations :" + error);
+        throw error;
 
     }
     return locations;

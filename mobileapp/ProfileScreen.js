@@ -86,14 +86,6 @@ export default function ProfileScreen({ navigation }) {
             <DataTable.Row>
                 <DataTable.Cell>
                 <Button color="#094072" title="Get my position" onPress={() =>{
-                        /*Location.requestPermissionsAsync();
-
-                        if (location.coords !== null) {
-                          savedLocation = location;
-                          sendLocation(location.coords, location.timestamp);
-                        }
-
-                        alert(text); */ 
                         alert(getLocation());
                       } 
                         }>Get My Position

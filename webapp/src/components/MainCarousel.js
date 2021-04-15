@@ -7,6 +7,9 @@ import ArrowBackIos from "@material-ui/icons/ArrowBackIos";
 import ArrowForwardIos from "@material-ui/icons/ArrowForwardIos";
 import Button from "@material-ui/core/Button";
 import { Link } from "react-router-dom";
+import Carousel1 from "../img/carousel_1.png";
+import Carousel2 from "../img/carousel_2.png";
+import Carousel3 from "../img/carousel_3.png";
 
 function SamplePrevArrow(props) {
     const { onClick } = props;
@@ -77,21 +80,33 @@ export default function MainCarousel() {
             <Slider {...settings}>
                 <div>
                     <div className="carouselText">
-                        <h2>Improve your productivity with Radarin</h2>
-                        <p>Radarin allows you to bla bla bla bla bla bla bla bla bla</p>
+                        <h2>Radarin</h2>
+                        <p>Radarin allows you to store your locations and share them with your friends.
+                            You will be able to know where they are in a blink.</p>
                     </div>
                     <div>
-                        <img src="http://placekitten.com/g/400/200" alt="test" />
+                        <img src={Carousel1} alt="test" />
                     </div>
                 </div>
                 <div>
-                    <img src="http://placekitten.com/g/400/200" alt="test" />
+                    <div className="carouselText">
+                        <h2>Radarin</h2>
+                        <p>You can use Radarin not only on your computer with the Web App, but with any other device. On Android devices,
+                            you can also use the native App. I would not hesitate to use it! </p>
+                    </div>
+                    <div>
+                        <img src={Carousel2} alt="test" />
+                    </div>
                 </div>
                 <div>
-                    <img src="http://placekitten.com/g/400/200" alt="test" />
-                </div>
-                <div>
-                    <img src="http://placekitten.com/g/400/200" alt="test" />
+                <div className="carouselText">
+                        <h2>Radarin</h2>
+                        <p>Your Radarin friends are got from Solid Pods, so your data will always be protected with the most
+                            modern improvements on security. </p>
+                    </div>
+                    <div>
+                        <img src={Carousel3} alt="test" />
+                    </div>
                 </div>
             </Slider>
             <div className="carouselButton">

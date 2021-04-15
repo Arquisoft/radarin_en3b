@@ -57,7 +57,7 @@ export default function About() {
                 <AboutCard src={Miguel} name="Miguel Ligero" subtitle="UO270927"></AboutCard>
             </Col>
             <Col>
-                <AboutCard src={Juan} name="Juan Rodríguez"></AboutCard>
+                <AboutCard src={Juan} name="Juan Rodríguez" subtitle="UO271773"></AboutCard>
             </Col>
         </Row>
     </Container>;

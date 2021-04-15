@@ -10,6 +10,7 @@ import { makeStyles, useTheme } from "@material-ui/core/styles";
 import { List, Divider } from "@material-ui/core";
 import "../css/Map.css";
 import LocationList from "./LocationsList";
+import LocationListMock from "./LocationsListMock";
 
 
 const drawerWidth = 240;
@@ -40,6 +41,9 @@ const useStyles = makeStyles((theme) => ({
     position: "absolute",
     "z-index": "9",
   },
+  drawerPaperInner: {
+    width: drawerWidth,
+  },
   content: {
     flexGrow: 1,
     padding: theme.spacing(3),
@@ -55,17 +59,6 @@ export default function LocationsView(props) {
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
-
-  const drawer = (
-    <div>
-      <div className={classes.toolbar} />
-
-      <List component='nav'>
-        <LocationList/>
-        <Divider />
-      </List>
-    </div>
-  );
 
   return (
     <div className={classes.root}>
@@ -88,13 +81,19 @@ export default function LocationsView(props) {
             open={mobileOpen}
             onClose={handleDrawerToggle}
             classes={{
-              paper: classes.drawerPaper,
+              paper: classes.drawerPaperInner,
             }}
             ModalProps={{
               keepMounted: true, // Better open performance on mobile.
             }}
           >
-            {drawer}
+            <div>
+              <div className={classes.toolbar} />
+              <List component='nav'>
+                <LocationListMock />
+                <Divider />
+              </List>
+            </div>
           </Drawer>
         </Hidden>
         <Hidden xsDown implementation="css">
@@ -105,12 +104,18 @@ export default function LocationsView(props) {
             variant="permanent"
             open
           >
-            {drawer}
+            <div>
+              <div className={classes.toolbar} />
+              <List component='nav'>
+                <LocationList />
+                <Divider />
+              </List>
+            </div>
           </Drawer>
         </Hidden>
       </nav>
       <main className={classes.content}>
-        <MapView/>
+        <MapView />
       </main>
     </div>
   );

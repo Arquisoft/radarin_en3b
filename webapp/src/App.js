@@ -23,7 +23,7 @@ export default function App() {
   const history = createBrowserHistory();
 
   onSessionRestore((url) => {
-      history.push(url.split(window.location.origin)[1]);
+      history.push("/");
   });
 
   useEffect(() => {
@@ -40,7 +40,7 @@ export default function App() {
         <header>
           <MainNavbar />
         </header>
-        <br /><br /><br /><br /><br /><br />
+        <br /><br /><br /><br />
         <Switch>
           <Route path="/locations">
             <LocationsView />

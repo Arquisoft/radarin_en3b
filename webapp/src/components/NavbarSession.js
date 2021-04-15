@@ -11,6 +11,10 @@ import { useDispatch } from "react-redux";
 import { setLogguedStatus } from "../redux/slices/userSlice";
 import { NavDropdown } from "react-bootstrap";
 import CodeIcon from "@material-ui/icons/Code";
+import { NavbarItems } from "./NavbarItems";
+import NavLink from "react-bootstrap/NavLink";
+import "../css/MainNavbar.css";
+import Logo from "../img/radarin_logo.png";
 import { useHistory } from "react-router-dom";
 
 
@@ -38,13 +42,19 @@ function NavbarSession() {
 
     return (
         <Navbar bg="white" expand="lg" className="navBar fixed-top align-items center shadow rounded">
-            <Navbar.Brand as={Link} to="/" className="mb-1">Radarin</Navbar.Brand>
+            <Navbar.Brand as={Link} to="/" className="mb-1">
+                <img src={Logo} alt="Radarin Logo"></img>
+            </Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="mr-auto">
-                    <Nav.Link as={Link} to="/" >Home</Nav.Link>
-                    <Nav.Link as={Link} to="/locations" id="LocationsLink">Locations</Nav.Link>
-                    <Nav.Link as={Link} to="/about" >About</Nav.Link>
+                    {NavbarItems.map((item, index) => {
+                        return (
+                            <NavLink key={item.key} className={item.cName} as={Link} to={item.url}>
+                                {item.title}
+                            </NavLink>
+                        )
+                    })}
                 </Nav>
                 <Nav>
                     <NavDropdown title={dropdownTitle} className="nav-item mr-3">
