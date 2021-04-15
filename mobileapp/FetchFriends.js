@@ -20,7 +20,7 @@ export async function getFriendsWithDistance(friends) {
 
 export const getFriendsNames = (friends) => friends.map(f => f.fn ?? f.webId);
 
-const getNames = (friendsWithDistance) => friendsWithDistance.keys
+const getNames = (friendsWithDistance) => Array.from(friendsWithDistance.keys())
   .map(name => ({ name, fn: rdfStore.getNameIfPossible(name) }))
   .reduce((map, x) => ({
     ...map,

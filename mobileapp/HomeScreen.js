@@ -20,9 +20,10 @@ import { getLocationAsync } from "./GetAsyncLocation";
 
 
 export default function HomeScreen({ navigation }) {
-
+  
+  const onlineFriends = useSelector(state => state.user.onlineFriends);
   const loadedFriends = useSelector(state => state.user.onlineCloseFriends);
-  const friendsNames = getFriendsNames(useSelector(state => state.user.onlineFriends));
+  const friendsNames = getFriendsNames(onlineFriends);
   getLocationAsync();
 
   React.useLayoutEffect(() => {

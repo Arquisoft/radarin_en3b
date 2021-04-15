@@ -2,11 +2,17 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { setProfile } from "../../FetchProfile";
 import { getFriends, getFriendsWithDistance } from "../../FetchFriends";
 
-export const fetchFriends = createAsyncThunk("user/fetchFriends", async (webId) =>
-    await getFriends(webId).map(friend => friend.webId));
+export const fetchFriends = createAsyncThunk("user/fetchFriends", webId =>
+    getFriends(webId).then(friends => friends.map(friend => friend.webId)));
 
-export const fetchFriendsWithDistance = createAsyncThunk("user/fetchFriendsWithDistance", async ({ getState }) =>
-    await getFriendsWithDistance(getState().onlineFriends));
+export const fetchFriendsWithDistance = createAsyncThunk("user/fetchFriendsWithDistance", 
+async (undefined, { getState }) => {
+    const { friendsStatus } = getState().user;
+    if (friendsStatus === "loading")
+        return;
+    const friends = getState().user.onlineFriends;
+    return await getFriendsWithDistance(friends);
+});
 
 export const fetchProfile = createAsyncThunk("user/fetchProfile", async (webId) =>
     await setProfile(webId));
