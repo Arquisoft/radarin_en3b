@@ -1,5 +1,4 @@
 import * as SecureStore from "expo-secure-store";
-import forge from 'node-forge';
 import { getLocation } from "./GetAsyncLocation";
 import { getPreciseDistance } from "geolib";
 import BuildToken from "./utils/BuildToken";
@@ -16,7 +15,7 @@ export async function getFriendsLocation(friends) {
     const parsed = JSON.parse(p);
     const userId = parsed.webId;
 
-    const url = friends.reduce((url, f) => url += (encodeURIComponent(f.value) + ','),
+    const url = friends.reduce((url, f) => url += (encodeURIComponent(f.webId) + ','),
         apiEndPoint + '/friendslocations?webId=' + encodeURIComponent(userId) + '&friendIds=');
 
     try {
@@ -25,6 +24,7 @@ export async function getFriendsLocation(friends) {
             headers: { 'Content-Type': 'application/json', 'Authorization': "Bearer " + auth }
         });
         locations = await response.json();
+        console.log(JSON.stringify(locations));
     } catch (error) {
         console.log("Error loading locations :" + error);
         throw error;
@@ -37,7 +37,7 @@ export async function getDistances(friends) {
     const locations = await getFriendsLocation(friends);
     const myLocation = await getLocation(); // here will go getLocation
 
-    if (myLocation == null){
+    if (myLocation == null) {
         return "No location";
     }
 
@@ -46,7 +46,8 @@ export async function getDistances(friends) {
         if (Date.now() - l[1].timestamp < MAX_TIME)
             parsedLocations[l[0]] = l[1];
 
-    return new Map(Object.keys(parsedLocations).map(key => [key, calculateDistance(parsedLocations[key], myLocation)]).filter(([k, v]) => v <= MAX_DISTANCE));
+    return new Map(Object.keys(parsedLocations).map(key => [key, calculateDistance(parsedLocations[key], myLocation)])
+        .filter(([k, v]) => v <= MAX_DISTANCE));
 }
 
 function calculateDistance(friendLoc, myLoc) {
