@@ -29,7 +29,7 @@ export default StyleSheet.create({
   iconWrapper: {
     padding:12
   },
-  touchableOpacityStile: {
+  pressable: {
     resizeMode: 'contain',
     position: 'absolute',
     width: 50,
@@ -38,7 +38,6 @@ export default StyleSheet.create({
     justifyContent: 'center',
     alignSelf: 'center',
     bottom: 20,
-    backgroundColor:'#094072',
     borderRadius: 30,
     zIndex: 1
   },

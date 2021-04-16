@@ -79,6 +79,7 @@ export default function HomeScreen({navigation}) {
               
             </DataTable>
         </Card>
+        <MyPressable></MyPressable >
       </View>
     );
   }
@@ -123,13 +124,7 @@ export default function HomeScreen({navigation}) {
         </Card>
         </View>
       </ScrollView>
-      <Pressable 
-          activeOpacity={0.7}
-          onPress={()=>{
-          }}
-          style={styles.touchableOpacityStile}>
-          <Image style={styles.icon} source={require("./assets/add-24px.png")}/>
-        </Pressable >
+      <MyPressable></MyPressable >
       </View>
     );
   } else {
@@ -156,14 +151,25 @@ export default function HomeScreen({navigation}) {
               
             </DataTable>
         </Card>
-        <TouchableOpacity 
-          activeOpacity={0.7}
-          onPress={()=>{
-          }}
-          style={styles.touchableOpacityStile}>
-          <Image style={styles.icon} source={require("./assets/add-24px.png")}/>
-        </TouchableOpacity >
+        <MyPressable></MyPressable >
       </View>
     );
   }
 }
+
+
+const MyPressable = () => {
+  
+  const myStyle = ({ pressed }) => [
+    {
+      backgroundColor: pressed
+        ? 'rgb(210, 230, 255)'
+        : '#094072'
+    },
+    styles.pressable
+  ];
+
+  return <Pressable activeOpacity={0.7} style={myStyle} >
+  <Image style={styles.icon} source={require("./assets/add-24px.png")}/>
+</Pressable >
+};
