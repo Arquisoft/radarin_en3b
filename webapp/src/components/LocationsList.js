@@ -28,7 +28,6 @@ export default function LocationList() {
         dispatch(fetchLocations(session));
         else if(locationStatus === "succeeded" && refreshStatus === "idle") {
             setTimeout(() => {
-                console.log("refreshed");
                 dispatch(refreshLocations(session));
             }, 30000);
         }
