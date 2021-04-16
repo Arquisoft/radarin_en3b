@@ -10,6 +10,9 @@ export default StyleSheet.create({
     justifyContent: 'flex-start',
     padding: 0
   },
+  homeScreenContainer: {
+    flex: 1
+  },
   header: {
     backgroundColor: '#094072',
   },
@@ -34,8 +37,8 @@ export default StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     alignSelf: 'center',
-    bottom: 30,
-    backgroundColor:'#0074A4',
+    bottom: 20,
+    backgroundColor:'#094072',
     borderRadius: 30,
     zIndex: 1
   },

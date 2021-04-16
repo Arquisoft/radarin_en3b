@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, ScrollView, Image, Button, BackHandler} from "react-native";
+import { View, Text, ScrollView, Image, Button, BackHandler, Pressable} from "react-native";
 import { Card } from "react-native-elements";
 import {DataTable} from "react-native-paper";
 import styles from "./MyStyles";
@@ -8,15 +8,6 @@ import { useSelector } from "react-redux";
 import { useFocusEffect } from '@react-navigation/native';
 import { getFriendsNames } from './FetchFriends';
 import { getLocationAsync } from "./GetAsyncLocation";
-
-{/*Esto debería ir en el return delante de Navigation container pero.. cosas raras con comentarios
-    <SafeAreaView>
-      <TouchableOpacity
-        activeOpacity={0.7}
-        onPress={()=>{navigation.navigate('Post')}}
-        style={styles.touchableOpacityStile}>
-          <Image style={styles.icon} source={require("./assets/add-24px.png")}/>
-    </TouchableOpacity>*/}
 
 
 export default function HomeScreen({navigation}) {
@@ -94,6 +85,7 @@ export default function HomeScreen({navigation}) {
 
   if (Object.entries(loadedFriends).length > 0){
     return (
+      <View style={styles.homeScreenContainer}>
       <ScrollView>
         <View style={styles.mainScreenContainer}>
           <Card containerStyle={styles.card}>
@@ -131,6 +123,14 @@ export default function HomeScreen({navigation}) {
         </Card>
         </View>
       </ScrollView>
+      <Pressable 
+          activeOpacity={0.7}
+          onPress={()=>{
+          }}
+          style={styles.touchableOpacityStile}>
+          <Image style={styles.icon} source={require("./assets/add-24px.png")}/>
+        </Pressable >
+      </View>
     );
   } else {
     return (
@@ -156,6 +156,13 @@ export default function HomeScreen({navigation}) {
               
             </DataTable>
         </Card>
+        <TouchableOpacity 
+          activeOpacity={0.7}
+          onPress={()=>{
+          }}
+          style={styles.touchableOpacityStile}>
+          <Image style={styles.icon} source={require("./assets/add-24px.png")}/>
+        </TouchableOpacity >
       </View>
     );
   }
