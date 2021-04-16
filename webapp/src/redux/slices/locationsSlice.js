@@ -25,7 +25,7 @@ export const refreshLocations = createAsyncThunk("locations/refreshLocations", a
     let apiLocations = await fetchDBLocations(session);
 
     let counter = 7;
-    apiLocations = apiLocations.map((loc) => ({ id: counter++, coordinates: [loc.coords.latitude, loc.coords.longitude], name: "", details: "" }));
+    apiLocations = apiLocations.map((loc) => ({ id: counter, coordinates: [loc.coords.latitude, loc.coords.longitude], name: "", details: "Location #" + counter++ }));
 
     const locationsList = [
         { id: 1, coordinates: [43.3638658051, -5.84934495326], name: "Oviedo", details: "Location #1" },
@@ -79,7 +79,7 @@ export const locationsSlice = createSlice({
         },
         [refreshLocations.fulfilled]: (state, action) => {
             state.refreshStatus = "idle"
-            state = { ...state, locations: action.payload }
+            state.locations = action.payload
         },
         [refreshLocations.rejected]: (state, action) => {
             state.refreshStatus = "failed"
