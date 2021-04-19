@@ -20,9 +20,10 @@ import { getLocationAsync } from "./GetAsyncLocation";
 
 
 export default function HomeScreen({ navigation }) {
-
+  
+  const onlineFriends = useSelector(state => state.user.onlineFriends);
   const loadedFriends = useSelector(state => state.user.onlineCloseFriends);
-  const friends = getFriendsNames();
+  const friendsNames = getFriendsNames(onlineFriends);
   getLocationAsync();
 
   React.useLayoutEffect(() => {
@@ -119,7 +120,7 @@ export default function HomeScreen({ navigation }) {
             <Card.Divider style={styles.divider} />
             <DataTable>
               {
-                friends.filter(f => !(f in loadedFriends)).map((u) => {
+                friendsNames.filter(f => !(f in loadedFriends)).map((u) => {
                   return (
                     <DataTable.Row key={u}>
                       <DataTable.Cell><Text style={styles.name}>{u}</Text></DataTable.Cell>
@@ -146,7 +147,7 @@ export default function HomeScreen({ navigation }) {
           <Card.Divider style={styles.divider} />
           <DataTable>
             {
-              friends.map((u) => {
+              friendsNames.map((u) => {
                 return (
                   <DataTable.Row key={u}>
                     <DataTable.Cell><Text style={styles.name}>{u}</Text></DataTable.Cell>

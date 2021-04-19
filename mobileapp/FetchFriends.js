@@ -1,58 +1,29 @@
 import { getDistances, getFriendsLocation } from "./FriendsLocation";
-
-const $rdf = require("rdflib");
-const store = $rdf.graph();
-const VCARD = new $rdf.Namespace("http://www.w3.org/2006/vcard/ns#");
-const FOAF = $rdf.Namespace("http://xmlns.com/foaf/0.1/");
-const fetcher = new $rdf.Fetcher(store);
-
-let friends = [];
-let friendsWithDistance;
-let friendsFinal;
+import rdfStore from "./utils/RDFStore";
 
 export async function getFriends(webId) {
-  const me = store.sym(webId);
-  const profile = me.doc();
+  const friends = await rdfStore.getFriends(webId);
 
-  //Automatically loads the friends of our user
-  await fetcher.load(profile);
-  friends = await searchKnows(webId);
+  //TODO: do it only once
+  const locations = await getFriendsLocation(friends);
 
-  let locations = await getFriendsLocation(friends);
-  friends = friends.filter(friend => Array.from(Object.keys(locations)).includes(friend.value));
-
-  return friends;
+  return friends.filter(friend => Array.from(Object.keys(locations)).includes(friend.webId));
 }
 
-export async function getFriendsWithDistance() {
-  friendsWithDistance = await getDistances(friends);
-  console.log(friendsWithDistance);
+export async function getFriendsWithDistance(friends) {
+  const friendsWithDistance = await getDistances(friends);
   if (friendsWithDistance == "No location") {
-    console.log(friendsWithDistance);
     return friendsWithDistance;
   }
-  friendsFinal = getNames();
-
-  return friendsFinal;
+  return getNames(friendsWithDistance);
 }
 
-export const getFriendsNames = () => friends.map(f => store.any(f, VCARD("fn"))?.value ?? f.value.split("https://")[1].split(".")[0]);
+export const getFriendsNames = (friends) => friends.map(f => f.fn ?? f.webId);
 
-const getNames = () => friends.filter(friend => friendsWithDistance.has(friend.value))
-  .map(name => ({ name, fn: store.any(name, VCARD("fn")) }))
-  .filter(x => friendsFinal == null || !((x.fn?.value ?? x.name.value) in friendsFinal))
+const getNames = (friendsWithDistance) => Array.from(friendsWithDistance.keys())
+  .map(name => ({ name, fn: rdfStore.getNameIfPossible(name) }))
   .reduce((map, x) => ({
     ...map,
     [x.fn?.value ?? x.name.value]: { value: friendsWithDistance.get(x.name.value).value, mapsUrl: friendsWithDistance.get(x.name.value).mapsUrl }
   }), {})
   ;
-
-const isFriendship = (name, webId) => store.each(name, FOAF("knows")).some(fof => webId.includes(fof.value));
-
-//Searchs for people that our user knows, adds them to the friend list only if they are indeed friends
-
-async function searchKnows(webId) {
-  let names = store.each(store.sym(webId), FOAF("knows"));
-  await Promise.all(names.map(name => fetcher.load(store.sym(name).doc())));
-  return names.filter(name => isFriendship(name, webId));
-}
