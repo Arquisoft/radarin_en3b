@@ -63,7 +63,7 @@ export default function HomeScreen({ navigation }) {
         <Card containerStyle={styles.nofriendscard}>
           <Card.Title style={styles.cardTitle}>You haven't send any location yet</Card.Title>
           <Card.Divider style={styles.divider} />
-          <Text style={styles.name}>Please, go to your profile and activate the atomatic location sending or send it manually at least once</Text>
+          <Text style={styles.name}>Please, go to your profile and activate the automatic location sending or send it manually at least once</Text>
 
           <View style={styles.cardButton}>
             <Button color="#094072" title="Go to profile" onPress={() => {

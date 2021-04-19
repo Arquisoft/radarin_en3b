@@ -41,12 +41,10 @@ export async function getDistances(friends) {
         return "No location";
     }
 
-    let parsedLocations = {};
-    for (let l of Object.entries(locations))
-        if (Date.now() - l[1].timestamp < MAX_TIME)
-            parsedLocations[l[0]] = l[1];
+    const date = Date.now();
+    const parsedLocations = Object.entries(locations).filter(location => date < location[1].timestamp < MAX_TIME);
 
-    return new Map(Object.keys(parsedLocations).map(key => [key, calculateDistance(parsedLocations[key], myLocation)])
+    return new Map(parsedLocations.map(location => [location[0], calculateDistance(location[1], myLocation)])
         .filter(([k, v]) => v <= MAX_DISTANCE));
 }
 

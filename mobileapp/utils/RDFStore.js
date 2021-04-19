@@ -1,11 +1,4 @@
-import {graph, Namespace, Fetcher} from "rdflib";
-
-class User {
-    constructor(webId, fn) {
-        this.webId = webId;
-        this.fn = fn;
-    }
-}
+import { graph, Namespace, Fetcher } from "rdflib";
 
 class RDFStore {
     constructor() {
@@ -19,7 +12,7 @@ class RDFStore {
         const me = this._store.sym(webId);
         const profile = me.doc();
         await this._fetcher.load(profile);
-        return new User(webId, this.getNameIfPossible(webId));
+        return { webId, fn: this.getNameIfPossible(webId) };
     }
 
     async getFriends(webId) {
@@ -29,7 +22,7 @@ class RDFStore {
         const namesDocs = Array.from(names.map(name => name.doc()));
         await this._fetcher.load(namesDocs);
         return this._store.each(null, this.FOAF("knows"), me)
-            .map(webId => new User(webId.value, this.getNameIfPossible(webId)));
+            .map(webId => ({ webId: webId.value, fn: this.getNameIfPossible(webId) }));
     }
 
     getNameIfPossible(webId) {

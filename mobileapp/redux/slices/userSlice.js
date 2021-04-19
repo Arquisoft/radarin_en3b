@@ -3,7 +3,7 @@ import { setProfile } from "../../FetchProfile";
 import { getFriends, getFriendsWithDistance } from "../../FetchFriends";
 
 export const fetchFriends = createAsyncThunk("user/fetchFriends", webId =>
-    getFriends(webId).then(friends => friends.map(friend => friend.webId)));
+    getFriends(webId));
 
 export const fetchFriendsWithDistance = createAsyncThunk("user/fetchFriendsWithDistance", 
 async (undefined, { getState }) => {
