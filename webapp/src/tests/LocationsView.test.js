@@ -8,7 +8,7 @@ import "@testing-library/jest-dom/extend-expect";
 
 jest.mock("../components/locations/FetchDBLocations");
 
-test("testing location fetching", async () => {
+test("testing location fetching (mocked)", async () => {
 
     const sessionNew = "https://radarin.inrupt.net/profile/card#me";
 

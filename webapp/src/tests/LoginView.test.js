@@ -10,7 +10,7 @@ import LoginPage from '../components/LoginPage';
 test("user can change provider text and click sign in", async () => {
     const correctProvider = "https://inrupt.net";
 
-    const { getAllByRole, getByPlaceholderText, queryByText, queryByRole } = render(<BrowserRouter><Provider store={store}><LoginPage/></Provider></BrowserRouter>);
+    const { getAllByRole, getByPlaceholderText } = render(<BrowserRouter><Provider store={store}><LoginPage/></Provider></BrowserRouter>);
 
     const providerTextField = getByPlaceholderText(correctProvider);
 
