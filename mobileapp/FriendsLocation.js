@@ -33,6 +33,20 @@ export async function getFriendsLocation(friends) {
     return locations;
 }
 
+function calculateDistance(friendLoc, myLoc) {
+    let pdis = getPreciseDistance(
+        { latitude: friendLoc.coords.latitude, longitude: friendLoc.coords.longitude },
+        { latitude: myLoc.coords.latitude, longitude: myLoc.coords.longitude }
+    );
+    return pdis;
+}
+
+function getMapsUrl(coordinates) {
+    const lat = coordinates.coords.latitude;
+    const long = coordinates.coords.longitude;
+    return "https://www.google.com/maps/dir/?api=1&destination=".concat(lat).concat(",").concat(long).concat("&travelmode=walking");
+}
+
 export async function getDistances(friends) {
     const locations = await getFriendsLocation(friends);
     const myLocation = await getLocation(); // here will go getLocation
@@ -46,18 +60,4 @@ export async function getDistances(friends) {
 
     return new Map(parsedLocations.map(location => [location[0], 
         { value: calculateDistance(location[1], myLocation), mapsUrl: getMapsUrl(location[1]) }]).filter(([k, v]) => v.value <= MAX_DISTANCE));
-}
-
-function getMapsUrl(coordinates) {
-    const lat = coordinates.coords.latitude;
-    const long = coordinates.coords.longitude;
-    return "https://www.google.com/maps/dir/?api=1&destination=".concat(lat).concat(",").concat(long).concat("&travelmode=walking");
-}
-
-function calculateDistance(friendLoc, myLoc) {
-    let pdis = getPreciseDistance(
-        { latitude: friendLoc.coords.latitude, longitude: friendLoc.coords.longitude },
-        { latitude: myLoc.coords.latitude, longitude: myLoc.coords.longitude }
-    );
-    return pdis;
 }
