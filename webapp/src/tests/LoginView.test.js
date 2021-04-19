@@ -10,7 +10,7 @@ import LoginPage from '../components/LoginPage';
 test("user can change provider text and click sign in", async () => {
     const correctProvider = "https://inrupt.net";
 
-    const { getAllByRole, getByPlaceholderText } = render(<BrowserRouter><Provider store={store}><LoginPage/></Provider></BrowserRouter>);
+    const { getAllByRole, getByPlaceholderText, queryByText, queryByRole } = render(<BrowserRouter><Provider store={store}><LoginPage/></Provider></BrowserRouter>);
 
     const providerTextField = getByPlaceholderText(correctProvider);
 
@@ -21,6 +21,4 @@ test("user can change provider text and click sign in", async () => {
     const signInButton = getAllByRole("button", { name: "Sign In" }).find(element => element.className.includes("MuiButton"));
 
     expect(signInButton).toBeInTheDocument();
-
-    fireEvent.click(signInButton);
 });
