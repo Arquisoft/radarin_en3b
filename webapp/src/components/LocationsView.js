@@ -53,8 +53,10 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function LocationsView(props) {
-  let { session } = useSession();
-  session = [props.sess ?? session];
+  const { session } = useSession();
+  if(typeof props.sess !== "undefined")
+    session.info.webId = props.sess;
+    
   const classes = useStyles();
   const theme = useTheme();
   const [mobileOpen, setMobileOpen] = React.useState(false);
