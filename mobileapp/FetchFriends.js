@@ -36,14 +36,14 @@ export async function getFriendsWithDistance() {
   return friendsFinal;
 }
 
-export const getFriendsNames = () => friends.map(f => store.any(f, VCARD("fn"))?.value ?? f.value);
+export const getFriendsNames = () => friends.map(f => store.any(f, VCARD("fn"))?.value ?? f.value.split("https://")[1].split(".")[0]);
 
 const getNames = () => friends.filter(friend => friendsWithDistance.has(friend.value))
   .map(name => ({ name, fn: store.any(name, VCARD("fn")) }))
   .filter(x => friendsFinal == null || !((x.fn?.value ?? x.name.value) in friendsFinal))
   .reduce((map, x) => ({
     ...map,
-    [x.fn?.value ?? x.name.value]: friendsWithDistance.get(x.name.value)
+    [x.fn?.value ?? x.name.value]: { value: friendsWithDistance.get(x.name.value).value, mapsUrl: friendsWithDistance.get(x.name.value).mapsUrl }
   }), {})
   ;
 
