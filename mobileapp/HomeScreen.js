@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, ScrollView, Image, Button, BackHandler } from "react-native";
+import { View, Text, ScrollView, Image, Button, BackHandler, Linking } from "react-native";
 import { Card } from "react-native-elements";
 import { DataTable } from "react-native-paper";
 import styles from "./MyStyles";
@@ -63,22 +63,23 @@ export default function HomeScreen({ navigation }) {
         <Card containerStyle={styles.nofriendscard}>
           <Card.Title style={styles.cardTitle}>You haven't send any location yet</Card.Title>
           <Card.Divider style={styles.divider} />
-          <Text style={styles.name}>Please, go to your profile and activate the automatic location sending or send it manually at least once</Text>
+          <Text style={styles.name}>Please, go to your profile and activate automatic location sending</Text>
 
           <View style={styles.cardButton}>
             <Button color="#094072" title="Go to profile" onPress={() => {
               navigation.navigate("Profile");
             }
-            }>Go to profile
+            }>
+              Go to profile
             </Button>
           </View>
         </Card>
         <Card containerStyle={styles.card}>
-          <Card.Title style={styles.cardTitle}>Disconnected or far from you</Card.Title>
+          <Card.Title style={styles.cardTitle}>Friends</Card.Title>
           <Card.Divider style={styles.divider} />
           <DataTable>
             {
-              friendsNames.map((u) => {
+              friends.map((u) => {
                 return (
                   <DataTable.Row key={u}>
                     <DataTable.Cell><Text style={styles.name}>{u}</Text></DataTable.Cell>
@@ -104,9 +105,9 @@ export default function HomeScreen({ navigation }) {
               {
                 Object.entries(loadedFriends).map(([u, d]) => {
                   return (
-                    <DataTable.Row key={u}>
+                    <DataTable.Row key={u} onPress={() => Linking.openURL(d.mapsUrl)}>
                       <DataTable.Cell style={{ flex: 2 }}><Text style={styles.name}>{u}</Text></DataTable.Cell>
-                      <DataTable.Cell><Text style={styles.name}>{d} m</Text></DataTable.Cell>
+                      <DataTable.Cell><Text style={styles.name}>{d.value} m</Text></DataTable.Cell>
                     </DataTable.Row>
                   );
                 })

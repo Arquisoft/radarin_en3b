@@ -44,8 +44,14 @@ export async function getDistances(friends) {
     const date = Date.now();
     const parsedLocations = Object.entries(locations).filter(location => date < location[1].timestamp < MAX_TIME);
 
-    return new Map(parsedLocations.map(location => [location[0], calculateDistance(location[1], myLocation)])
-        .filter(([k, v]) => v <= MAX_DISTANCE));
+    return new Map(parsedLocations.map(location => [location[0], 
+        { value: calculateDistance(location[1], myLocation), mapsUrl: getMapsUrl(location[1]) }]).filter(([k, v]) => v.value <= MAX_DISTANCE));
+}
+
+function getMapsUrl(coordinates) {
+    const lat = coordinates.coords.latitude;
+    const long = coordinates.coords.longitude;
+    return "https://www.google.com/maps/dir/?api=1&destination=".concat(lat).concat(",").concat(long).concat("&travelmode=walking");
 }
 
 function calculateDistance(friendLoc, myLoc) {

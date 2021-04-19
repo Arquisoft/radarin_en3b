@@ -24,5 +24,6 @@ const getNames = (friendsWithDistance) => Array.from(friendsWithDistance.keys())
   .map(name => ({ name, fn: rdfStore.getNameIfPossible(name) }))
   .reduce((map, x) => ({
     ...map,
-    [x.fn?.value ?? x.name.value]: friendsWithDistance.get(x.name.value)
-  }), {});
+    [x.fn?.value ?? x.name.value]: { value: friendsWithDistance.get(x.name.value).value, mapsUrl: friendsWithDistance.get(x.name.value).mapsUrl }
+  }), {})
+  ;
