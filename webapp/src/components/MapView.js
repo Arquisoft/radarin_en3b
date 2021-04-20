@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import { MapContainer, TileLayer, Marker, Popup, Polyline } from "react-leaflet";
 import "react-leaflet/";
 import { useSelector } from "react-redux";
 
 export default function MapView() {
     const coordinates = useSelector(state => state.locations.coordinates);
+    const polyline = useSelector(state => state.locations.polyline);
     const [map, setMap] = useState(null);
-    
+
     useEffect(() => {
         if (map) {
             map.flyTo(coordinates, 15, {
@@ -16,23 +17,48 @@ export default function MapView() {
         }
     });
 
-    return <div className="divMap d-flex justify-content-center">
-        <MapContainer
-            whenCreated={(map) => setMap(map)}
-            className="mapContainer"
-            center={coordinates}
-            zoom={15}
-            scrollWheelZoom={true}
-            dragging={true}>
-            <TileLayer
-                attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-            />
-            <Marker position={coordinates}>
-                <Popup>
-                    A pretty CSS3 popup. <br /> Easily customizable.
-          </Popup>
-            </Marker>
-        </MapContainer>
-    </div>;
+    if (polyline === []) {
+        return <div className="divMap d-flex justify-content-center">
+            <MapContainer
+                whenCreated={(map) => setMap(map)}
+                className="mapContainer"
+                center={coordinates}
+                zoom={15}
+                scrollWheelZoom={true}
+                dragging={true}>
+                <TileLayer
+                    attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                />
+                <Marker position={coordinates}>
+                    <Popup>
+                        A pretty CSS3 popup. <br /> Easily customizable.
+                </Popup>
+                </Marker>
+            </MapContainer>
+        </div>;
+    } else {
+        return <div className="divMap d-flex justify-content-center">
+            <MapContainer
+                whenCreated={(map) => setMap(map)}
+                className="mapContainer"
+                center={coordinates}
+                zoom={9}
+                scrollWheelZoom={true}
+                dragging={true}>
+                <TileLayer
+                    attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                />
+                <Polyline
+                    positions={polyline}
+                    color='red'
+                    weight={3}
+                    opacity={0.7}
+                    smoothFactor={1}
+                />
+            </MapContainer>
+        </div>;
+    }
+
 }

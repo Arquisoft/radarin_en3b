@@ -8,8 +8,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchLocations, refreshLocations, setSearchText } from "../redux/slices/locationsSlice";
 import { useEffect } from "react";
 import "../css/LocationsList.css";
-import Location from "./locations/Location";
 import { useSession } from "@inrupt/solid-ui-react";
+import Polyline from "./locations/Polyline";
 
 
 export default function LocationList() {
@@ -24,9 +24,9 @@ export default function LocationList() {
 
 
     useEffect(() => {
-        if(locationStatus === "idle")
-        dispatch(fetchLocations(session));
-        else if(locationStatus === "succeeded" && refreshStatus === "idle") {
+        if(locationStatus === "idle"){
+            dispatch(fetchLocations(session));
+        } else if(locationStatus === "succeeded" && refreshStatus === "idle") {
             setTimeout(() => {
                 dispatch(refreshLocations(session));
             }, 30000);
@@ -54,18 +54,19 @@ export default function LocationList() {
                             className="textField"
                             name="busqueda"
                             onChange={onChange}
+                            value={filterText}
                         />
                     </div>
                 </ListItem>
                 {
                     locations.filter(item => item.name.toLowerCase().includes(filterText.toLowerCase()))
                         .map(item =>
-                            <Location
+                            <Polyline
                                 key={item.id}
                                 childKey={item.id}
                                 name={item.name}
                                 details={item.details}
-                                coords={item.coordinates}
+                                coords={item.coords}
                             />
                         )
                 }
