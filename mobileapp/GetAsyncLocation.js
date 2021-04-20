@@ -50,7 +50,6 @@ export async function getLocation() {
     let location = await Location.getCurrentPositionAsync();
     //sendLocation(location.coords, location.timestamp);
     //alert("location has been sent");
-    alert(JSON.stringify(location, null, "\t"));
     return location;
 }
 

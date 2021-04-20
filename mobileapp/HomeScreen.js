@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, ScrollView, Image, Button, BackHandler, Pressable} from "react-native";
-import { Card } from "react-native-elements";
+import { Card, Overlay } from "react-native-elements";
 import {DataTable} from "react-native-paper";
 import styles from "./MyStyles";
 import MyMenu from "./MyMenu";
@@ -79,7 +79,7 @@ export default function HomeScreen({navigation}) {
               
             </DataTable>
         </Card>
-        <MyPressable></MyPressable >
+        <MyOverlay></MyOverlay>
       </View>
     );
   }
@@ -124,7 +124,7 @@ export default function HomeScreen({navigation}) {
         </Card>
         </View>
       </ScrollView>
-      <MyPressable></MyPressable >
+      <MyOverlay></MyOverlay>
       </View>
     );
   } else {
@@ -151,14 +151,30 @@ export default function HomeScreen({navigation}) {
               
             </DataTable>
         </Card>
-        <MyPressable></MyPressable >
+        <MyOverlay></MyOverlay>
       </View>
     );
   }
 }
 
+const MyOverlay = () => {
+  const [visible, setVisible] = useState(false);
 
-const MyPressable = () => {
+  const toggleOverlay = () => {
+    setVisible(!visible);
+  };
+  
+
+  return(
+    <View>
+    <MyPressable onPressing={toggleOverlay}></MyPressable>
+    <Overlay isVisible={visible} onBackdropPress={toggleOverlay}>
+      <Text>Hello from Overlay!</Text>
+    </Overlay> 
+    </View>)
+}
+
+const MyPressable = ({onPressing}) => {
   
   const myStyle = ({ pressed }) => [
     {
@@ -169,7 +185,8 @@ const MyPressable = () => {
     styles.pressable
   ];
 
-  return <Pressable activeOpacity={0.7} style={myStyle} >
+
+  return <Pressable activeOpacity={0.7} style={myStyle} onPress={() => onPressing()}>
   <Image style={styles.icon} source={require("./assets/add-24px.png")}/>
 </Pressable >
 };
