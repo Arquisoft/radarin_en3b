@@ -19,9 +19,9 @@ test("testing qr page, key management and location fetching", async () => {
     });
 
     let sessionNew = await client.login({
-        refreshToken: "zc45ywWGJ4wzxjvOCwcvl19EyXmvWCSy",
-        clientId: "ztZJQCttnCGtrZGyiNStZaGuUZo4G5Fu",
-        clientSecret: "K41NTQFc68TZOfJgC1skQyWePvWlYLUf",
+        refreshToken: "57IW1UdJ4qsUftGfKJxIg6CE2YXVZ2xa",
+        clientId: "a4wKKhfny7ZKsbkuyodqRzLxqCEaRES2",
+        clientSecret: "FrwWBfn82ijyU8isvkoSp9Vh6xNMM3cU",
         oidcIssuer: "https://broker.pod.inrupt.com/",
     });
 
