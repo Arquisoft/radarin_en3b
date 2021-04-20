@@ -11,6 +11,7 @@ import { List, Divider } from "@material-ui/core";
 import "../css/Map.css";
 import LocationList from "./LocationsList";
 import LocationListMock from "./LocationsListMock";
+import { useSession } from "@inrupt/solid-ui-react";
 
 
 const drawerWidth = 240;
@@ -52,6 +53,10 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function LocationsView(props) {
+  const { session } = useSession();
+  if(typeof props.sess !== "undefined")
+    session.info.webId = props.sess;
+    
   const classes = useStyles();
   const theme = useTheme();
   const [mobileOpen, setMobileOpen] = React.useState(false);

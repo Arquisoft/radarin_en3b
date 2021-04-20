@@ -1,12 +1,8 @@
 import { render } from '@testing-library/react';
 import { fireEvent } from "@testing-library/react";
 import App from '../App';
-import "@testing-library/jest-dom/extend-expect";
 import { Provider } from "react-redux";
 import store from "../redux/store";
-import MainView from '../components/MainView';
-import { BrowserRouter } from 'react-router-dom';
-import About from '../components/About';
 
 test('user arrives to the home page', async () => {
   const { getByText } = render(<Provider store={store}><App /></Provider>);

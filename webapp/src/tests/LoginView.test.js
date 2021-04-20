@@ -21,6 +21,4 @@ test("user can change provider text and click sign in", async () => {
     const signInButton = getAllByRole("button", { name: "Sign In" }).find(element => element.className.includes("MuiButton"));
 
     expect(signInButton).toBeInTheDocument();
-
-    fireEvent.click(signInButton);
 });
