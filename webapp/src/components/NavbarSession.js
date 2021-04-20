@@ -35,6 +35,7 @@ function NavbarSession() {
 
 
     function logout() {
+        console.log("clicked");
         dispatch(setLogguedStatus(false));
         session.info.isLoggedIn = false;
         history.push("/login");
@@ -64,7 +65,7 @@ function NavbarSession() {
                         </NavDropdown.Item>
                     </NavDropdown>
                     <LogoutButton>
-                        <Button color="primary" variant="contained" className="ml-3 mr-2" onClick={logout}>Log out</Button>
+                        <Button color="primary" variant="contained" className="ml-3 mr-2" id="logoutButton" onClick={logout}>Log out</Button>
                     </LogoutButton>
                 </Nav>
             </Navbar.Collapse>
