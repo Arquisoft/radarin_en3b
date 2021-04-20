@@ -35,6 +35,7 @@ function NavbarSession() {
 
 
     function logout() {
+        console.log("clicked");
         dispatch(setLogguedStatus(false));
         session.info.isLoggedIn = false;
         history.push("/login");
