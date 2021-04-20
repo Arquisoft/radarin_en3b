@@ -7,7 +7,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { setSearchText } from "../redux/slices/locationsSlice";
 import "../css/LocationsList.css";
-import Location from "./locations/Location";
+import Polyline from "./locations/Polyline";
 
 
 export default function LocationList() {
@@ -46,12 +46,12 @@ export default function LocationList() {
                 {
                     locations.filter(item => item.name.toLowerCase().includes(filterText.toLowerCase()))
                         .map(item =>
-                            <Location
+                            <Polyline
                                 key={item.id}
                                 childKey={item.id}
                                 name={item.name}
                                 details={item.details}
-                                coords={item.coordinates}
+                                coords={item.coords}
                             />
                         )
                 }
