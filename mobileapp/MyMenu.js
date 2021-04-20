@@ -3,6 +3,7 @@ import { View, TouchableOpacity, Image } from "react-native";
 import { Menu, Divider } from "react-native-paper";
 import AsyncStorage from "@react-native-community/async-storage";
 import styles from "./MyStyles";
+import * as Updates from 'expo-updates';
 
 export default function MyMenu ({navigation}){
 
@@ -29,7 +30,7 @@ export default function MyMenu ({navigation}){
           onPress={() => {navigation.navigate("About"); closeMenu();}} title="About Radarin" />
           <Divider />
           <Menu.Item icon={require("./assets/door.png")}
-          onPress={() => {AsyncStorage.setItem("userId",""); navigation.navigate('Login');  closeMenu();}} title="Logout" />
+          onPress={() => {AsyncStorage.setItem("userId",""); Updates.reloadAsync();}} title="Logout" />
         </Menu>
         </View>
       </View>
