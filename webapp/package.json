@@ -34,6 +34,7 @@
     "react-slick": "^0.28.1",
     "reactstrap": "^8.9.0",
     "slick-carousel": "^1.8.1",
+    "solid-node-client": "^2.0.2",
     "web-vitals": "^0.2.4"
   },
   "scripts": {
