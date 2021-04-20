@@ -8,6 +8,8 @@ export default function MapView() {
     const polyline = useSelector(state => state.locations.polyline);
     const [map, setMap] = useState(null);
 
+    let result;
+
     useEffect(() => {
         if (map) {
             map.flyTo(coordinates, 15, {
@@ -18,7 +20,7 @@ export default function MapView() {
     });
 
     if (polyline === []) {
-        return <div className="divMap d-flex justify-content-center">
+        result = (
             <MapContainer
                 whenCreated={(map) => setMap(map)}
                 className="mapContainer"
@@ -35,16 +37,16 @@ export default function MapView() {
                         A pretty CSS3 popup. <br /> Easily customizable.
                 </Popup>
                 </Marker>
-            </MapContainer>
-        </div>;
+            </MapContainer>);
     } else {
-        return <div className="divMap d-flex justify-content-center">
+        result = (
             <MapContainer
                 whenCreated={(map) => setMap(map)}
                 className="mapContainer"
                 center={coordinates}
                 zoom={9}
                 scrollWheelZoom={true}
+                preferCanvas={true}
                 dragging={true}>
                 <TileLayer
                     attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
@@ -57,8 +59,12 @@ export default function MapView() {
                     opacity={0.7}
                     smoothFactor={1}
                 />
-            </MapContainer>
-        </div>;
+            </MapContainer>);
     }
+
+    return (
+        <div className="divMap d-flex justify-content-center">
+            {result}
+        </div>);
 
 }
