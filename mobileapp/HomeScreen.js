@@ -9,15 +9,6 @@ import { useFocusEffect } from '@react-navigation/native';
 import { getFriendsNames } from './FetchFriends';
 import { getLocationAsync } from "./GetAsyncLocation";
 
-{/*Esto debería ir en el return delante de Navigation container pero.. cosas raras con comentarios
-    <SafeAreaView>
-      <TouchableOpacity
-        activeOpacity={0.7}
-        onPress={()=>{navigation.navigate('Post')}}
-        style={styles.touchableOpacityStile}>
-          <Image style={styles.icon} source={require("./assets/add-24px.png")}/>
-    </TouchableOpacity>*/}
-
 
 export default function HomeScreen({ navigation }) {
   
@@ -79,7 +70,7 @@ export default function HomeScreen({ navigation }) {
           <Card.Divider style={styles.divider} />
           <DataTable>
             {
-              friends.map((u) => {
+              friendsNames.map((u) => {
                 return (
                   <DataTable.Row key={u}>
                     <DataTable.Cell><Text style={styles.name}>{u}</Text></DataTable.Cell>
