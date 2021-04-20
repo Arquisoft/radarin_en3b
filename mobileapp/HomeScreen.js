@@ -70,7 +70,7 @@ export default function HomeScreen({ navigation }) {
           <Card.Divider style={styles.divider} />
           <DataTable>
             {
-              friends.map((u) => {
+              friendsNames.map((u) => {
                 return (
                   <DataTable.Row key={u}>
                     <DataTable.Cell><Text style={styles.name}>{u}</Text></DataTable.Cell>
