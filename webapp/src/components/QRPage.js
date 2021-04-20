@@ -6,8 +6,11 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { manageKeys, setPair } from '../redux/slices/keysSlice';
 
-export default function QRPage() {
-  const { session } = useSession();
+export default function QRPage(props) {
+  let { session } = useSession();
+  if(typeof props.sess !== "undefined")
+    session = props.sess;
+
   const { webId } = session.info;
   const dispatch = useDispatch();
   const status = useSelector(state => state.keys.status);
