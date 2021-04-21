@@ -18,7 +18,7 @@ export default function NavbarAnonym() {
                 <Nav className="mr-auto">
                     {NavbarItems.filter((element) => !element.key.includes("locations")).map((item, index) => {
                         return (
-                            <NavLink key={item.key} className={item.cName} as={Link} to={item.url}>
+                            <NavLink key={item.key} id={item.id} className={item.cName} as={Link} to={item.url}>
                                 {item.title}
                             </NavLink>
                         )

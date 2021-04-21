@@ -51,15 +51,15 @@ function NavbarSession() {
                 <Nav className="mr-auto">
                     {NavbarItems.map((item, index) => {
                         return (
-                            <NavLink key={item.key} className={item.cName} as={Link} to={item.url}>
+                            <NavLink key={item.key} id={item.id} className={item.cName} as={Link} to={item.url}>
                                 {item.title}
                             </NavLink>
                         )
                     })}
                 </Nav>
                 <Nav>
-                    <NavDropdown title={dropdownTitle} className="nav-item mr-3">
-                        <NavDropdown.Item as={Link} to="/qr">
+                    <NavDropdown title={dropdownTitle} className="nav-item mr-3" id=".fifth-step">
+                        <NavDropdown.Item as={Link} to="/qr" id=".fifth.5-step">
                             <CodeIcon className="mr-2"/>
                             QR
                         </NavDropdown.Item>
