@@ -24,7 +24,6 @@ export async function getFriendsLocation(friends) {
             headers: { 'Content-Type': 'application/json', 'Authorization': "Bearer " + auth }
         });
         locations = await response.json();
-        console.log(JSON.stringify(locations));
     } catch (error) {
         console.log("Error loading locations :" + error);
         throw error;
