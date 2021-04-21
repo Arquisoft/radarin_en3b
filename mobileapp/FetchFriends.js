@@ -17,15 +17,15 @@ export async function getFriendsWithDistance(friends) {
   }
 
   let names = getNames(friends, friendsWithDistance);
+console.log(names);
   return names;
 }
 
 export const getFriendsNames = (friends) => friends.map(f => f.fn ?? f.webId);
 
 
-const getNames = (friends, friendsWithDistance) => friends.filter(friend => friendsWithDistance.has(friend.value))
-  .map(name => ({name, fn: rdfStore.getNameIfPossible(name)}))
+const getNames = (friends, friendsWithDistance) => friends.filter( friend => friendsWithDistance.has(friend.webId))
   .reduce((map, x) => ({
     ...map,
-    [x.fn?.value ?? x.name.value]: { value: friendsWithDistance.get(x.name.value).value, mapsUrl: friendsWithDistance.get(x.name.value).mapsUrl }
+    [x.fn ?? x.webId]: { value: friendsWithDistance.get(x.webId).value, mapsUrl: friendsWithDistance.get(x.webId).mapsUrl }
   }), {});
