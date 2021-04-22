@@ -26,7 +26,10 @@ class RDFStore {
     }
 
     getNameIfPossible(webId) {
-        return this._store.any(webId, this.VCARD("fn"))?.value;
+        if (this._store.any(webId, this.VCARD("fn"))?.value !== undefined)
+            return this._store.any(webId, this.VCARD("fn"))?.value;
+        else
+            return null;
     }
 }
 
