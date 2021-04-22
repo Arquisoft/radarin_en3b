@@ -8,6 +8,7 @@ import { useSelector } from "react-redux";
 import { useFocusEffect } from '@react-navigation/native';
 import { getFriendsNames } from './FetchFriends';
 import { getLocationAsync } from "./GetAsyncLocation";
+import { TextInput } from "react-native";
 
 
 export default function HomeScreen({ navigation }) {
@@ -168,13 +169,42 @@ const MyOverlay = () => {
   
 
   return(
-    <View>
+    <View style={styles.homeScreenContainer}>
     <MyPressable onPressing={toggleOverlay}></MyPressable>
-    <Overlay isVisible={visible} onBackdropPress={toggleOverlay}>
-      <Text>Hello from Overlay!</Text>
+    <Overlay  isVisible={visible} onBackdropPress={toggleOverlay}>
+      <MyForm></MyForm>
     </Overlay> 
     </View>)
 }
+
+const MyForm = () => {
+
+  
+
+  return(
+    <ScrollView >
+      
+      <Card containerStyle={styles.formCard}>
+          <Text style={styles.cardTitle}>Title</Text>
+          <TextInput placeholder="Title of the ubication" label="Title" style = {styles.titleForm}></TextInput>
+          <Card.Divider style={styles.divider} />
+          <Text style={styles.cardTitle}>Comment</Text>
+          <View style = {styles.commentView}>
+          <TextInput placeholder="Comment here..." label = "Comment" style = {styles.commentForm} multiline={true} ></TextInput>
+          </View>
+          <Button color='#094072' title="Send location"></Button>
+          <Card.Divider style={styles.divider} />
+          <Button color='#094072' title="Send location with photo"></Button>
+        </Card>
+       
+    </ScrollView>
+  )
+}
+
+/*
+<TextInput placeholder="Title of the ubication" label="Title" style = {styles.titleForm}></TextInput>
+        <TextInput placeholder="Comment here..." label = "Comment" style = {styles.commentForm}></TextInput>
+*/
 
 const MyPressable = ({onPressing}) => {
   
