@@ -54,6 +54,9 @@ export default function App() {
           <Route path="/qr">
             <QRPage></QRPage>
           </Route>
+          <Route path="/uploadLocation">
+            <UploadLocation></UploadLocation>
+          </Route>
           <Route path="/">
             <MainView />
           </Route>
