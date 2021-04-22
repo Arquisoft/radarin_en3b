@@ -1,0 +1,26 @@
+.loch1{
+  font-size: 1.8rem;
+}
+
+.loch2{
+  font-size: 1.3rem;
+}
+
+.loctext{
+  font-size: 1rem;
+}
+
+.fabcontainer{
+  display: flex; 
+  justify-content: flex-end;
+}
+
+.pictureButton{
+  margin: 20px;
+  margin-left: 50px;
+}
+
+.svg_icons_container{
+  transform: scale(1.5);
+  
+}

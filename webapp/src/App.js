@@ -7,6 +7,7 @@ import MainNavbar from "./components/MainNavbar";
 import { Router } from "react-router-dom";
 import MainFooter from "./components/MainFooter";
 import LocationsView from "./components/LocationsView";
+import UploadLocation from "./components/UploadLocation";
 import MainView from "./components/MainView";
 import LoginPage from "./components/LoginPage";
 import QRPage from "./components/QRPage";
