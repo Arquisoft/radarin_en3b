@@ -8,22 +8,22 @@ import {
 
 import LocationOnIcon from "@material-ui/icons/LocationOn";
 import { useDispatch } from "react-redux";
-import { moveTo } from "../../redux/slices/locationsSlice";
+import { moveTo, setPolyline } from "../../redux/slices/locationsSlice";
 
-export default function Location({ childKey, name, details, coords }) {
+export default function Location({ childKey, title, description, coords, photo, date }) {
     const dispatch = useDispatch();
 
     function onClick() {
         dispatch(moveTo([0, 0])); 
         dispatch(moveTo(coords));
+        dispatch(setPolyline([]));
     }
 
-    //const textCoords = () => `${props.coords.latitude}, ${props.coords.longitude}`;
     return (
         <ListItem
             button
             type="checkbox"
-            value={coords}
+            value={title}
             key={childKey}
             defaultChecked={false}
             onClick={onClick}
@@ -31,16 +31,16 @@ export default function Location({ childKey, name, details, coords }) {
             <ListItemIcon>
                 <LocationOnIcon />
             </ListItemIcon>
-            <ListItemText primary={coords}
+            <ListItemText primary={title}
                 secondary={
                     <React.Fragment>
                         <Typography
                             component="span"
                             variant="body2"
                             color="textPrimary">
-                            {name} —
+                            {description} —
                     </Typography>
-                        {details}
+                        {date}
                     </React.Fragment>
                 } />
         </ListItem>

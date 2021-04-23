@@ -1,4 +1,4 @@
-import { getSolidDataset, getThing, getUrlAll, getSourceUrl, getThingAll } from "@inrupt/solid-client";
+import { getSolidDataset, getThing, getUrlAll, getSourceUrl, getThingAll, getStringNoLocale } from "@inrupt/solid-client";
 import getOrCreatePublicFilePod from "../../utils/GetOrCreatePublicFilePod";
 
 let session;
@@ -25,7 +25,23 @@ export default async function FetchPodCreatedLocations(sessionP) {
     
     const existing = getThingAll(dataset, locationsUrl);
 
-    //console.log(existing);
+    const photo = getStringNoLocale(existing[3], "http://xmlns.com/foaf/spec/#term_Image");
 
-    return existing;
+    const toBase64 = file => new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = error => reject(error);
+    });
+
+    const base64Photo = await toBase64(new Blob([JSON.stringify(photo)],{ type: 'application/json'}));
+    
+    console.log(base64Photo);
+
+    if(existing.length > 0)
+        return [];
+    else {
+        console.log("oops");
+        return existing;
+    }
 }
