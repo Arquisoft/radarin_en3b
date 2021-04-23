@@ -24,7 +24,8 @@ export default function App() {
   const history = createBrowserHistory();
 
   onSessionRestore((url) => {
-      history.push("/");
+      const uri = url.split("//")[1].split("/")[1];
+      history.push(uri);
   });
 
   useEffect(() => {

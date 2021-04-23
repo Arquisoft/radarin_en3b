@@ -5,8 +5,8 @@ import {
 } from "@inrupt/solid-client";
 
 
-export default async function getOrCreatePublicFilePod(containerUri, fetch) {
-    const pKeyFileUrl = `${containerUri}publicKey.ttl`;
+export default async function getOrCreatePublicFilePod(containerUri, fetch, filename) {
+    const pKeyFileUrl = `${containerUri}${filename}`;
 
     try {
         const pKeyFile = await getSolidDataset(pKeyFileUrl, {fetch});
