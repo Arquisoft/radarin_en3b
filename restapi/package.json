@@ -22,6 +22,7 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.12.2",
     "prom-client": "^13.1.0",
+    "quick-lru": "^6.0.0",
     "rdflib": "^2.2.0"
   },
   "devDependencies": {
