@@ -20,6 +20,11 @@
   margin-left: 50px;
 }
 
+.picture{
+  width:100%;
+  max-width: 150px;
+}
+
 .svg_icons_container{
   transform: scale(1.5);
   
