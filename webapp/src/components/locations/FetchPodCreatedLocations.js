@@ -3,6 +3,8 @@ import getOrCreatePublicFilePod from "../../utils/GetOrCreatePublicFilePod";
 
 let session;
 
+const FC = require("solid-file-client");
+
 export default async function FetchPodCreatedLocations(sessionP) {
     session = sessionP;
     const profileDataset = await getSolidDataset(session.info.webId, {
@@ -25,7 +27,7 @@ export default async function FetchPodCreatedLocations(sessionP) {
     
     const existing = getThingAll(dataset, locationsUrl);
 
-    const photo = getStringNoLocale(existing[3], "http://xmlns.com/foaf/spec/#term_Image");
+    const photo = getStringNoLocale(existing[4], "http://xmlns.com/foaf/spec/#term_Image");
 
     const toBase64 = file => new Promise((resolve, reject) => {
         const reader = new FileReader();
