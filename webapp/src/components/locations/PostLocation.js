@@ -31,7 +31,7 @@ export default async function postLocation(session, title, description, photo, c
     await overwriteFile(
         `${containerUri}/${photoName}`,
         photo,
-        { type: "image/png", fetch: session.fetch },
+        { type: photo.type, fetch: session.fetch },
     );
 
     console.log("done");

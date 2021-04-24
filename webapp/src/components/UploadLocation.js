@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import Container from 'react-bootstrap/Container';
 import Jumbotron from 'react-bootstrap/Jumbotron';
 import Row from 'react-bootstrap/Row';
@@ -11,16 +11,12 @@ import { setPicture } from "../redux/slices/locationsSlice";
 import "../css/UploadLocation.css";
 import postLocation from "./locations/PostLocation";
 import { useSession } from '@inrupt/solid-ui-react';
+import { getURL } from 'next/dist/next-server/lib/utils';
 
 export default function UploadLocation() {
 
-    const dispatch = useDispatch();
-    const picture = useSelector(state => state.locations.picture);
-
-    function handleChange(event){
-
-        dispatch(setPicture(URL.createObjectURL(event.target.files[0])));
     const [photo, setPhoto] = useState(null);
+    const [photoURL, setPhotoURL] = useState(null);
     const { session } = useSession();
 
     //This should be passed to the constructor
@@ -36,6 +32,7 @@ export default function UploadLocation() {
 
     function uploadPhoto(event) {
         setPhoto(event.target.files[0]);
+        setPhotoURL(URL.createObjectURL(event.target.files[0]));
     }
 
     return <Container fluid="md">
@@ -58,7 +55,6 @@ export default function UploadLocation() {
                                 startIcon={<AddPhotoAlternateIcon className="svg_icons"/>}
                                 >
                                 <input
-                                    onChange={(event) => handleChange(event)}
                                     type="file"
                                     accept="image/x-png,image/gif,image/jpeg"
                                     hidden
@@ -70,7 +66,7 @@ export default function UploadLocation() {
 
                     <Row>
                         <Col>
-                            <img class="picture" src={picture}/>
+                            <img class="picture" src={photoURL}/>
                         </Col>
                     </Row>
                 </Jumbotron>
