@@ -9,6 +9,8 @@ import { useDispatch, useSelector } from "react-redux";
 import AddPhotoAlternateIcon from '@material-ui/icons/AddPhotoAlternate';
 import { setPicture } from "../redux/slices/locationsSlice";
 import "../css/UploadLocation.css";
+import postLocation from "./locations/PostLocation";
+import { useSession } from '@inrupt/solid-ui-react';
 
 export default function UploadLocation() {
 
@@ -18,6 +20,22 @@ export default function UploadLocation() {
     function handleChange(event){
 
         dispatch(setPicture(URL.createObjectURL(event.target.files[0])));
+    const [photo, setPhoto] = useState(null);
+    const { session } = useSession();
+
+    //This should be passed to the constructor
+    const title = "Title";
+    const description = "Sample text";
+    const coords = "[80,-4]";
+
+
+    const onClick = () => {
+        postLocation(session, title, description, photo, coords);
+        //close the embedded browser
+    }
+
+    function uploadPhoto(event) {
+        setPhoto(event.target.files[0]);
     }
 
     return <Container fluid="md">
@@ -26,9 +44,9 @@ export default function UploadLocation() {
             <Col>
                 <Jumbotron className="mt-4">
                     <h2 className="loch2">Title</h2>
-                    <p className="loctext">Title for the location would go here</p>
-                    <h2 className="loch2">Comment</h2>
-                    <p className="loctext">Comment for the location would go here</p>
+                    <p className="loctext">{ title }</p>
+                    <h2 className="loch2">Description</h2>
+                    <p className="loctext">{ description }</p>
                     <h2 className="loch2">Do you want to upload pictures of this location?</h2>
                     <Row>
                         <Col className="pictureButton">
@@ -44,6 +62,7 @@ export default function UploadLocation() {
                                     type="file"
                                     accept="image/x-png,image/gif,image/jpeg"
                                     hidden
+                                    onChange={ uploadPhoto }
                                 />
                                 </Button>
                         </Col>
@@ -57,7 +76,7 @@ export default function UploadLocation() {
                 </Jumbotron>
 
                 <div className="fabcontainer">
-                    <Fab color="primary" aria-label="send" onClick={() => { alert('onClick'); }}>
+                    <Fab color="primary" aria-label="send" onClick={onClick}>
                         <SendIcon/>
                     </Fab>
                     </div>
