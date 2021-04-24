@@ -71,7 +71,7 @@ async function getLines(locations) {
                 firstFlag = false;
             }
 
-            currentPolyline = { id: counter++, name: new Date(element.timestamp).toLocaleDateString("es-ES", options), details: "Route taken on this day", coords: []};
+            currentPolyline = { type: "poly", id: counter++, name: new Date(element.timestamp).toLocaleDateString("es-ES", options), details: "Route taken on this day", coords: []};
             currentPolyline.coords.push(element.coords);
             previousTimestamp = element.timestamp;
         } else if (element.timestamp === previousTimestamp) {

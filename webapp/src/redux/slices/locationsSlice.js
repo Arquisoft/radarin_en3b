@@ -14,12 +14,19 @@ export const refreshLocations = createAsyncThunk("locations/refreshLocations", a
 async function getLocations(session) {
     let apiLocations = await fetchDBLocations(session);
 
-    await fetchPodCreatedLocations(session);
+    let podLocations = await fetchPodCreatedLocations(session, [ apiLocations[apiLocations.length - 1]?.id ?? 0]);
+
 
     if (apiLocations.length === 0) {
-        return [{ id: 1, name: "You dont have any locations", details: "Add some from the mobile!", coords: [[0, 0]] }]
+        if(podLocations.length === 0)
+            return [{ type: "poly", id: 1, name: "You dont have any locations", details: "Add some from the mobile!", coords: [[0, 0]] }]
+        else
+            return podLocations;
     } else {
-        return apiLocations;
+        if(podLocations.length === 0)
+            return apiLocations;
+        else 
+            return podLocations.concat(apiLocations);
     }
 }
 
@@ -56,7 +63,7 @@ export const locationsSlice = createSlice({
             state.status = "succeeded"
             state.locations = action.payload
             state.coordinates = state.locations[0].coords[0]
-            state.polyline = state.locations[0].coords
+            state.polyline = state.locations[0].type === "poly" ? state.locations[0].coords : []
         },
         [fetchLocations.rejected]: (state, action) => {
             state.status = "failed"
