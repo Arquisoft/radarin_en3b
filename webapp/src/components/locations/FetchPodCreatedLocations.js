@@ -3,8 +3,6 @@ import getOrCreatePublicFilePod from "../../utils/GetOrCreatePublicFilePod";
 
 let session;
 
-const FC = require("solid-file-client");
-
 export default async function FetchPodCreatedLocations(sessionP) {
     session = sessionP;
     const profileDataset = await getSolidDataset(session.info.webId, {
@@ -16,7 +14,7 @@ export default async function FetchPodCreatedLocations(sessionP) {
         "http://www.w3.org/ns/pim/space#storage"
     );
     const pod = podsUrls[0];
-    const containerUri = `${pod}public/RadarinLocations/`;
+    const containerUri = `${pod}public/RadarinLocations2/`;
     const dataset = await getOrCreatePublicFilePod(containerUri, session.fetch, "savedLocations.ttl");
 
     if(dataset === "error")
@@ -27,23 +25,6 @@ export default async function FetchPodCreatedLocations(sessionP) {
     
     const existing = getThingAll(dataset, locationsUrl);
 
-    const photo = getStringNoLocale(existing[4], "http://xmlns.com/foaf/spec/#term_Image");
-
-    const toBase64 = file => new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = () => resolve(reader.result);
-        reader.onerror = error => reject(error);
-    });
-
-    const base64Photo = await toBase64(new Blob([JSON.stringify(photo)],{ type: 'application/json'}));
+  
     
-    console.log(base64Photo);
-
-    if(existing.length > 0)
-        return [];
-    else {
-        console.log("oops");
-        return existing;
-    }
 }
