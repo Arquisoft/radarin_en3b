@@ -17,10 +17,11 @@ export default function UploadLocation() {
     //This should be passed to the constructor
     const title = "Title";
     const description = "Sample text";
+    const coords = "[80,-4]";
 
 
     const onClick = () => {
-        postLocation(session, title, description, photo);
+        postLocation(session, title, description, photo, coords);
         //close the embedded browser
     }
 

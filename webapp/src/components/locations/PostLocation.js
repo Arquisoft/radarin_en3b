@@ -12,7 +12,7 @@ import {
     overwriteFile
 } from "@inrupt/solid-client";
 
-export default async function postLocation(session, title, description, photo) {
+export default async function postLocation(session, title, description, photo, coords) {
 
     const profileDataset = await getSolidDataset(session.info.webId, {
         fetch: session.fetch,
@@ -58,9 +58,15 @@ export default async function postLocation(session, title, description, photo) {
                 "http://schema.org/text",
                 photoName
             );
+
+            const locationWithCords = addStringNoLocale(
+                locationWithPhoto,
+                "http://schema.org/text",
+                coords
+            );
     
             const locationWithTimestamp = addDatetime(
-                locationWithPhoto,
+                locationWithCords,
                 "http://www.w3.org/2002/12/cal/ical#created",
                 new Date()
             );
