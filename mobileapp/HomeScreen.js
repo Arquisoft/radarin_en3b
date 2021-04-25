@@ -53,7 +53,7 @@ export default function HomeScreen({ navigation }) {
     return (
       <View style={styles.mainScreenContainer}>
         <Card containerStyle={styles.nofriendscard}>
-          <Card.Title style={styles.cardTitle}>You haven't send any location yet</Card.Title>
+          <Card.Title style={styles.cardTitle}>Your location is not being taken</Card.Title>
           <Card.Divider style={styles.divider} />
           <Text style={styles.name}>Please, go to your profile and activate automatic location sending</Text>
 

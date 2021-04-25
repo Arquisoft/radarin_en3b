@@ -5,6 +5,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchProfile, fetchFriends, fetchFriendsWithDistance, backToIdle} from "./redux/slices/userSlice";
 import { doOnce, doOnceNotifications} from "./redux/slices/executingSlice";
 import BackgroundTask from "./FetchFriendsBackground";
+import { setScanned } from "./redux/slices/executingSlice";
+import { showMessage, hideMessage } from "react-native-flash-message";
 
 import { getFriendsNames } from "./FetchFriends";
 import { setNotificationsBackground, schedulePushNotificationFriends, schedulePushNotificationFriendsClose} from "./SetNotifications";
@@ -39,11 +41,18 @@ export default function LoadingScreen({ route, navigation }) {
         navigation.navigate("Radarin");
 
       }
-    } else if(friendsStatus === "failed"){
+    } else if(profileStatus === "failed" || friendsStatus === "failed"){
       dispatch(backToIdle());
       if(!doUna) {
         dispatch(doOnce());
+        dispatch(setScanned(false));
         navigation.navigate("Login",  { qrUpdatedFlag: true });
+        showMessage({
+          message: "Your session has expired.",
+          description: "Your QR code has been renewed. Please, log in in the aplication again again.",
+          type: "info",
+          duration: 5000,
+        });
       }
     }
 
