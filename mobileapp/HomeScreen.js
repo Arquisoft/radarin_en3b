@@ -87,7 +87,7 @@ export default function HomeScreen({ navigation }) {
     );
   }
 
-  if (Object.entries(loadedFriends).length > 0) {
+  if (loadedFriends !== null && loadedFriends !== undefined && Object.entries(loadedFriends)?.length > 0) {
     return (
       <View style={styles.homeScreenContainer}>
       <ScrollView>

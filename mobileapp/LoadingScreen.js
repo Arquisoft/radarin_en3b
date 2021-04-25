@@ -13,7 +13,6 @@ import { setNotificationsBackground, schedulePushNotificationFriends, schedulePu
 
 export default function LoadingScreen({ route, navigation }) {
   const { id } = route.params;
-
   const webId = id.replace(/['"]+/g, '');
   const dispatch = useDispatch();
   const profileStatus = useSelector(state => state.user.profileStatus);
