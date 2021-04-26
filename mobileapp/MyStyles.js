@@ -163,8 +163,8 @@ export default StyleSheet.create({
     paddingTop:180
   },
   loadingImage:{
-    width: 120,
-    height: 120,
+    width: 250,
+    height: 60
     
   },
   loadingText:{

@@ -47,7 +47,12 @@ export async function getLocationAsync() {
 }
 
 export async function getLocation() {
-    let location = await Location.getCurrentPositionAsync();
+    let location;
+    if (await Location.getPermissionsAsync() !== "granted")
+        location = null;
+    else
+        location = await Location.getCurrentPositionAsync();
+
     //let location = null;
     //sendLocation(location.coords, location.timestamp);
     //alert("location has been sent");

@@ -7,7 +7,7 @@ import Col from 'react-bootstrap/Col';
 import AboutCard from './AboutCard';
 import Alvaro from '../img/alvaro.jpg';
 import Marcos from '../img/marcos.jpg';
-import Buenaga from '../img/buenaga.jpg';
+import Pablo from '../img/pablo.jpg';
 import Juan from '../img/juan.jpg';
 import Miguel from '../img/miguel.jpg';
 import Carmen from '../img/carmen.jpg';
@@ -42,13 +42,13 @@ export default function About() {
                 <AboutCard src={Labra} name="Jose Labra" subtitle="Teacher"></AboutCard>
             </Col>
             <Col>
+                <AboutCard src={Pablo} name="Pablo González" subtitle="Teacher"></AboutCard>
+            </Col>
+            <Col>
                 <AboutCard src={Alvaro} name="Álvaro Requejo" subtitle="UO270374"></AboutCard>
             </Col>
             <Col>
                 <AboutCard src={Marcos} name="Marcos Tobías" subtitle="UO270930"></AboutCard>
-            </Col>
-            <Col>
-                <AboutCard src={Buenaga} name="Juan Buenaga" subtitle="UO271294"></AboutCard>
             </Col>
             <Col>
                 <AboutCard src={Carmen} name="Carmen Rendueles" subtitle="UO269689"></AboutCard>
