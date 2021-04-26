@@ -47,12 +47,13 @@ function getMapsUrl(coordinates) {
 }
 
 export async function getDistances(friends) {
-    const locations = await getFriendsLocation(friends);
-    const myLocation = await getLocation(); // here will go getLocation
+    const myLocation = await getLocation();
 
     if (myLocation == null) {
         return "No location";
     }
+    
+    const locations = await getFriendsLocation(friends);
 
     const date = Date.now();
     const parsedLocations = Object.entries(locations).filter(location => date < location[1].timestamp < MAX_TIME);
