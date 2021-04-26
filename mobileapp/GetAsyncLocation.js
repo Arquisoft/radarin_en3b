@@ -48,10 +48,18 @@ export async function getLocationAsync() {
 
 export async function getLocation() {
     let location;
-    if (await Location.getPermissionsAsync() !== "granted")
-        location = null;
-    else
+    if (await Location.getPermissionsAsync() != "granted"){
+        if (AsyncStorage.getItem("backgroundLocation") != "active"){
+            await Location.requestPermissionsAsync();
+            location = await Location.getCurrentPositionAsync();
+        } else {
+            location = null;
+        }
+    }else{
+        console.log("Llega");
         location = await Location.getCurrentPositionAsync();
+    }
+        
 
     //let location = null;
     //sendLocation(location.coords, location.timestamp);

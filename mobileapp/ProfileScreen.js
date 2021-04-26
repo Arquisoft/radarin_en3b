@@ -102,6 +102,7 @@ export default function ProfileScreen({ navigation }) {
 
 const MySwitch = () => {
   let initialState;
+
   AsyncStorage.getItem("backgroundLocations").then((backgroundLocation) => {
     if (backgroundLocation === "active") 
       setIsSwitchOn(true);
