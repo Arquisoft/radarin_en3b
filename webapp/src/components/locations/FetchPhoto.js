@@ -2,12 +2,7 @@ import {
     getUrlAll,
     getSolidDataset,
     getThing,
-<<<<<<< HEAD
     getFile
-=======
-    getFile,
-    getContentType
->>>>>>> 355fe9f8fc0c138c70dbcd1658bb1ec4dd5fccf5
 } from "@inrupt/solid-client";
 
 export default async function FetchPhoto(session, photoId) {
