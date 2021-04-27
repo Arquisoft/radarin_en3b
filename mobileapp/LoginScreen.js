@@ -45,7 +45,7 @@ export default function LoginScreen({ navigation, route }) {
         <View style={styles.iconWrapper}>
           <Image
             style={styles.icon}
-            source={require("./assets/icon.png")}
+            source={require("./assets/icon_small.png")}
           />
         </View>
       )),

@@ -29,12 +29,14 @@ export default function App() {
   });
 
   useEffect(() => {
+      document.title = "Radarin";
       handleIncomingRedirect({
         restorePreviousSession: true
       }).then(() => {
           dispatch(setLogguedStatus(true));
       });
   }, [dispatch]);
+
 
   return (
     <Router history={history}>

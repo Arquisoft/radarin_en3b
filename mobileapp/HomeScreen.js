@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, ScrollView, Image, Button, BackHandler, Pressable} from "react-native";
+import { View, Text, ScrollView, Image, Button, BackHandler, Pressable, TouchableOpacity, Share} from "react-native";
 import { Card, Overlay } from "react-native-elements";
 import {DataTable} from "react-native-paper";
 import styles from "./MyStyles";
@@ -105,8 +105,30 @@ export default function HomeScreen({ navigation }) {
     }
    }
 
+   const shareApp = async () => {
+    try {
+      const result = await Share.share({
+        message:
+          "Hello, I'm using Radarin, would you like to try and join? https://radarinen3bwebapp.herokuapp.com/",
+      });
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+
    const MyFarFriendsCard = () => {
-     if (loadedFriends !== null && loadedFriends !== undefined && Object.entries(loadedFriends)?.length > 0){
+    if(friendsNames.length == 0){
+      return (
+        <Card containerStyle={styles.nofriendscard}>
+          <Card.Title style={styles.cardTitle}>Seems like you don't have any friend that uses Radarin.</Card.Title>
+          <Card.Divider style={styles.divider} />
+          <Text style={styles.name}>Would you like to invite them?</Text>
+          <TouchableOpacity style={styles.sharebutton}  onPress={shareApp}>
+          <Image source={require("./assets/share.png")} style={styles.icon} />
+          </TouchableOpacity>
+        </Card>
+       );
+    } else if (loadedFriends !== null && loadedFriends !== undefined && Object.entries(loadedFriends)?.length > 0){
       return (
         <Card containerStyle={styles.card}>
         <Card.Title style={styles.cardTitle}>Disconnected or far from you</Card.Title>
