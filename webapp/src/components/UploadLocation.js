@@ -63,7 +63,7 @@ export default function UploadLocation() {
 
                     <Row>
                         <Col>
-                            <img class="picture" src={photoURL} alt="the picture you uploaded" />
+                            <img class="picture" src={photoURL} alt="What you uploaded" />
                         </Col>
                     </Row>
                 </Jumbotron>
