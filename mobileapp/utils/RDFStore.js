@@ -20,7 +20,7 @@ class RDFStore {
         const me = this._store.sym(webId);
         await this._fetcher.load(webId);
         const names = this._store.each(me, this.FOAF("knows"));
-        const namesDocs = Array.from(names.map(name => name.doc()));
+        const namesDocs = names.map(name => name.doc());
         await this._fetcher.load(namesDocs);
         return this._store.each(null, this.FOAF("knows"), me)
             .map(webId => ({ webId: webId.value, fn: this.getNameIfPossible(webId) }));
