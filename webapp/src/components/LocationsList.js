@@ -10,6 +10,7 @@ import { useEffect } from "react";
 import "../css/LocationsList.css";
 import { useSession } from "@inrupt/solid-ui-react";
 import Polyline from "./locations/Polyline";
+import Location from "./locations/Location";
 
 
 export default function LocationList() {
@@ -24,9 +25,9 @@ export default function LocationList() {
 
 
     useEffect(() => {
-        if(locationStatus === "idle"){
+        if (locationStatus === "idle") {
             dispatch(fetchLocations(session));
-        } else if(locationStatus === "succeeded" && refreshStatus === "idle") {
+        } else if (locationStatus === "succeeded" && refreshStatus === "idle") {
             setTimeout(() => {
                 dispatch(refreshLocations(session));
             }, 30000);
@@ -60,15 +61,30 @@ export default function LocationList() {
                 </ListItem>
                 {
                     locations.filter(item => item.name.toLowerCase().includes(filterText.toLowerCase()))
-                        .map(item =>
-                            <Polyline
-                                key={item.id}
-                                childKey={item.id}
-                                name={item.name}
-                                details={item.details}
-                                coords={item.coords}
-                            />
-                        )
+                        .map(item => {
+                            if (item.type === "poly") {
+                                return (
+                                    <Polyline
+                                        key={item.id}
+                                        childKey={item.id}
+                                        name={item.name}
+                                        details={item.details}
+                                        coords={item.coords}
+                                    />);
+                            } else {
+                                return (
+                                    <Location
+                                        key={item.id}
+                                        childKey={item.id}
+                                        title={item.name}
+                                        description={item.details}
+                                        coords={item.coords}
+                                        photo={item.photo}
+                                        date={item.date}
+                                    />
+                                );
+                            }
+                        })
                 }
             </List>
         );

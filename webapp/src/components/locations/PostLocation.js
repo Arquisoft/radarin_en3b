@@ -34,46 +34,41 @@ export default async function postLocation(session, title, description, photo, c
         { type: photo.type, fetch: session.fetch },
     );
 
-    console.log("done");
+
+    const locationsUrl = getSourceUrl(dataset);
+
+    const locationWithDescription = addStringNoLocale(
+        createThing(),
+        "http://schema.org/text",
+        description
+    );
 
 
-    
-            const locationsUrl = getSourceUrl(dataset);
-    
-            const locationWithDescription = addStringNoLocale(
-                createThing(),
-                "http://schema.org/text",
-                description
-            );
-    
-    
-            const locationWithTitle = addStringNoLocale(
-                locationWithDescription,
-                "http://schema.org/text",
-                title
-            );
-    
-            const locationWithPhoto = addStringNoLocale(
-                locationWithTitle,
-                "http://schema.org/text",
-                photoName
-            );
+    const locationWithTitle = addStringNoLocale(
+        locationWithDescription,
+        "http://schema.org/text",
+        title
+    );
 
-            const locationWithCords = addStringNoLocale(
-                locationWithPhoto,
-                "http://schema.org/text",
-                coords
-            );
-    
-            const locationWithTimestamp = addDatetime(
-                locationWithCords,
-                "http://www.w3.org/2002/12/cal/ical#created",
-                new Date()
-            );
-    
-            const updatedLocationsList = setThing(dataset, locationWithTimestamp);
-    
-            await saveSolidDatasetAt(locationsUrl, updatedLocationsList, { fetch: session.fetch });
-    
-            console.log("done");
+    const locationWithPhoto = addStringNoLocale(
+        locationWithTitle,
+        "http://schema.org/text",
+        photoName
+    );
+
+    const locationWithCords = addStringNoLocale(
+        locationWithPhoto,
+        "http://schema.org/text",
+        coords
+    );
+
+    const locationWithTimestamp = addDatetime(
+        locationWithCords,
+        "http://www.w3.org/2002/12/cal/ical#created",
+        new Date()
+    );
+
+    const updatedLocationsList = setThing(dataset, locationWithTimestamp);
+
+    await saveSolidDatasetAt(locationsUrl, updatedLocationsList, { fetch: session.fetch });
 }
