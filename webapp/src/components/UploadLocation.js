@@ -5,13 +5,10 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { Button, Fab} from "@material-ui/core";
 import SendIcon from "@material-ui/icons/Send";
-import { useDispatch, useSelector } from "react-redux";
 import AddPhotoAlternateIcon from '@material-ui/icons/AddPhotoAlternate';
-import { setPicture } from "../redux/slices/locationsSlice";
 import "../css/UploadLocation.css";
 import postLocation from "./locations/PostLocation";
 import { useSession } from '@inrupt/solid-ui-react';
-import { getURL } from 'next/dist/next-server/lib/utils';
 
 export default function UploadLocation() {
 
@@ -66,7 +63,7 @@ export default function UploadLocation() {
 
                     <Row>
                         <Col>
-                            <img class="picture" src={photoURL}/>
+                            <img class="picture" src={photoURL} alt="photo"/>
                         </Col>
                     </Row>
                 </Jumbotron>

@@ -28,3 +28,4 @@ node_modules
 
 
 .eslintcache
+restapi/tests/api.test.js
