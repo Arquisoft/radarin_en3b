@@ -4,8 +4,6 @@ const TrackedLocation = require("./models/TrackedLocation");
 const router = express.Router();
 const webIdQueryChecker = require('./middleware/WebIdQueryChecker');
 
-router.get("/locations", webIdQueryChecker);
-
 router.post("/locations", async (req, res) => {
     const trackedLocation = new TrackedLocation({
         webId: req.claims.webid,
@@ -15,6 +13,8 @@ router.post("/locations", async (req, res) => {
     trackedLocation.save();
     res.send(trackedLocation);
 });
+
+router.get("/locations", webIdQueryChecker);
 
 router.get("/locations", async (req, res) => {
     const webId = req.claims.webid;
@@ -26,21 +26,6 @@ router.get("/locations", async (req, res) => {
 
     const userLocations = await TrackedLocation.find({ webId }).sort({ timestamp: -1 });
     res.send(userLocations);
-});
-
-router.get("/friendslocations", webIdQueryChecker);
-
-router.get("/friendslocations", async (req, res) => {
-    const friendIds = req.query.friendIds;
-    let locations = {};
-    let parsedIds = friendIds.split(',');
-    for (let friendId of parsedIds) {
-        let location = await TrackedLocation.findOne({ webId: friendId }).sort({ timestamp: -1 });
-        if (location != null)
-            locations[friendId] = location;
-    }
-
-    res.send(locations);
 });
 
 module.exports = router;
