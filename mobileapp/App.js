@@ -12,6 +12,7 @@ import LoginScreen from "./LoginScreen";
 import LoadingScreen from "./LoadingScreen";
 import store from "./redux/store";
 import { TabRouter } from "react-navigation";
+import FlashMessage from "react-native-flash-message";
 
 const Stack = createStackNavigator();
 
@@ -19,6 +20,7 @@ export default function App() {
   return (
     <ProviderRedux store={store}>
       <Provider>
+        <FlashMessage position="top"/>
         <NavigationContainer>
           <Stack.Navigator initialRouteName="Login">
             <Stack.Screen name="Radarin" component={HomeScreen} options={{

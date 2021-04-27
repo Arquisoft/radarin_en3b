@@ -12,7 +12,8 @@ class RDFStore {
         const me = this._store.sym(webId);
         const profile = me.doc();
         await this._fetcher.load(profile);
-        return { webId, fn: this.getNameIfPossible(webId) };
+        const name = this.getNameIfPossible(me);
+        return { webId, fn: name };
     }
 
     async getFriends(webId) {
@@ -26,7 +27,11 @@ class RDFStore {
     }
 
     getNameIfPossible(webId) {
-        return this._store.any(webId, this.VCARD("fn"))?.value;
+        if (this._store.any(webId, this.VCARD("fn"))?.value !== undefined){
+            let name = this._store.any(webId, this.VCARD("fn"))?.value;
+            return name;
+        } else
+            return null;
     }
 }
 

@@ -102,6 +102,7 @@ export default function ProfileScreen({ navigation }) {
 
 const MySwitch = () => {
   let initialState;
+
   AsyncStorage.getItem("backgroundLocations").then((backgroundLocation) => {
     if (backgroundLocation === "active") 
       setIsSwitchOn(true);
@@ -121,7 +122,6 @@ const MySwitch = () => {
     
     getLocationAsync();
   }
-
 
   return <Switch color="#094072" value={isSwitchOff} onValueChange={onToggleSwitch} />;
 };

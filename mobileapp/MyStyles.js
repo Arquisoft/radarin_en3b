@@ -10,6 +10,52 @@ export default StyleSheet.create({
     justifyContent: 'flex-start',
     padding: 0
   },
+  homeScreenContainer: {
+    flex: 1
+  },
+  overlayContainer: {
+    flex: 0.4,
+    borderRadius:15,
+  }
+  ,modalFormContainer: {
+    flex: 0.4,
+    justifyContent: "space-between",
+    backgroundColor: "#fff",
+    padding: 40,
+    margin: 20,
+    borderRadius: 10
+  },
+  titleForm: {
+    height: 40,
+    margin: 12,
+    color: '#032C45',
+  }, 
+  commentForm: {
+    padding: 0,
+    flex: 1,
+    width: 275,
+    color: '#032C45',
+    flexWrap: "wrap",
+    overflow: "scroll",
+  },
+  commentView: {
+    padding: 50,
+    flex: 1,
+    width: 300,
+    alignItems: "center",
+    justifyContent: "center",
+    paddingHorizontal: 5,
+    marginTop: -40,
+    flexWrap: "wrap",
+    
+  },
+  formCard: {
+    width: 300,
+    justifyContent: 'center',
+    borderRadius:5,
+    padding:10,
+    borderColor: '#0A4A84',
+  },
   header: {
     backgroundColor: '#094072',
   },
@@ -26,17 +72,17 @@ export default StyleSheet.create({
   iconWrapper: {
     padding:12
   },
-  touchableOpacityStile: {
+  pressable: {
     resizeMode: 'contain',
     position: 'absolute',
     width: 50,
     height: 50,
     alignItems: 'center',
     justifyContent: 'center',
-    alignSelf: 'center',
-    bottom: 30,
-    backgroundColor:'#0074A4',
+    alignSelf: 'baseline',
+    bottom: 20,
     borderRadius: 30,
+    marginLeft: 300,
     zIndex: 1
   },
   menu: {
@@ -73,6 +119,13 @@ export default StyleSheet.create({
     borderRadius:5,
     padding:10,
     backgroundColor:'#D5E7F2',
+  },
+  sharebutton: {
+    alignSelf:'flex-end',
+    color:'#094072',
+    backgroundColor: '#D5E7F2',
+    borderRadius: 20,
+    padding: 10,
   },
   friends: {
     fontSize:16,
@@ -117,8 +170,8 @@ export default StyleSheet.create({
     paddingTop:180
   },
   loadingImage:{
-    width: 120,
-    height: 120,
+    width: 250,
+    height: 60
     
   },
   loadingText:{

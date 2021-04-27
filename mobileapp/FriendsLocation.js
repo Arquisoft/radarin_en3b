@@ -24,7 +24,6 @@ export async function getFriendsLocation(friends) {
             headers: { 'Content-Type': 'application/json', 'Authorization': "Bearer " + auth }
         });
         locations = await response.json();
-        console.log(JSON.stringify(locations));
     } catch (error) {
         console.log("Error loading locations :" + error);
         throw error;
@@ -48,12 +47,13 @@ function getMapsUrl(coordinates) {
 }
 
 export async function getDistances(friends) {
-    const locations = await getFriendsLocation(friends);
-    const myLocation = await getLocation(); // here will go getLocation
+    const myLocation = await getLocation();
 
     if (myLocation == null) {
         return "No location";
     }
+    
+    const locations = await getFriendsLocation(friends);
 
     const date = Date.now();
     const parsedLocations = Object.entries(locations).filter(location => date < location[1].timestamp < MAX_TIME);
