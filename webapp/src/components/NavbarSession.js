@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import { useSession, CombinedDataProvider, Text } from "@inrupt/solid-ui-react";
 import { Link } from "react-router-dom";
@@ -16,6 +16,7 @@ import NavLink from "react-bootstrap/NavLink";
 import "../css/MainNavbar.css";
 import Logo from "../img/radarin_logo.png";
 import { useHistory } from "react-router-dom";
+import { fetchLocations } from "../redux/slices/locationsSlice";
 
 
 function NavbarSession() {
@@ -23,6 +24,13 @@ function NavbarSession() {
     const { webId } = session.info;
     const dispatch = useDispatch();
     const history = useHistory();
+
+
+    useEffect(() => {
+        if(typeof webId !== "undefined" && webId.includes("https://")) {
+            dispatch(fetchLocations(session));
+        }
+    });
 
     const dropdownTitle = (
         <span>
@@ -35,7 +43,6 @@ function NavbarSession() {
 
 
     function logout() {
-        console.log("clicked");
         dispatch(setLogguedStatus(false));
         session.info.isLoggedIn = false;
         history.push("/login");
