@@ -120,6 +120,13 @@ export default StyleSheet.create({
     padding:10,
     backgroundColor:'#D5E7F2',
   },
+  sharebutton: {
+    alignSelf:'flex-end',
+    color:'#094072',
+    backgroundColor: '#D5E7F2',
+    borderRadius: 20,
+    padding: 10,
+  },
   friends: {
     fontSize:16,
     color:'#0A4A84', 
