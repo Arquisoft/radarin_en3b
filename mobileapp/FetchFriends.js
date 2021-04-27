@@ -16,9 +16,7 @@ export async function getFriendsWithDistance(friends) {
     return friendsWithDistance;
   }
 
-  let names = getNames(friends, friendsWithDistance);
-console.log(names);
-  return names;
+  return getNames(friends, friendsWithDistance);
 }
 
 export const getFriendsNames = (friends) => friends.map(f => f.fn ?? f.webId);

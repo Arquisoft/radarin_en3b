@@ -8,13 +8,14 @@ const geolocationSchema = mongoose.Schema({
     heading: Number,
     latitude: { type: Number, required: true },
     longitude: { type: Number, required: true },
-    speed: Number,
+    speed: Number
 });
 
 const trackedLocationSchema = mongoose.Schema({
     webId: {type: String, required: true},
     coords: {type: geolocationSchema, required: true},
-    timestamp: {type: Number, required: true}
+    timestamp: {type: Number, required: true},
+    loc_name: {type: String, required: false}
 });
 
 module.exports = mongoose.model("TrackedLocation", trackedLocationSchema);
