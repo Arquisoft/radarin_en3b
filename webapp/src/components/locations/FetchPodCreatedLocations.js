@@ -14,7 +14,7 @@ export default async function FetchPodCreatedLocations(session, lastId) {
     const containerUri = `${pod}public/RadarinLocations_/`;
     const dataset = await getOrCreatePublicFilePod(containerUri, session.fetch, "savedLocations.ttl");
 
-    if(dataset === "error")
+    if(dataset?.error === "error")
         return [];
 
     const locationsUrl = getSourceUrl(dataset);

@@ -23,7 +23,5 @@ export default async function FetchPhoto(session, photoId) {
         { fetch: session.fetch }
     )
 
-    console.log(`${getContentType(photo)}`);
-
     return photo;
 }

@@ -14,7 +14,7 @@ test('Locations work', async () => {
 
     const { getByRole } = render(<Provider store={store}><Location key={key} childKey={childKey} name={name} details={details} coords={coords}/></Provider>);
 
-    const button = getByRole("button", {name: "50-4 location test — this is a test location" });
+    const button = getByRole("button", {name: "Open" });
 
     expect(button).toBeInTheDocument();
 

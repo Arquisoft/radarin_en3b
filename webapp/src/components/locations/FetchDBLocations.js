@@ -17,7 +17,7 @@ export default async function fetchDBLocations(session) {
     const privateContainerUri = `${pod}private/RadarinPrKey/`;
     const prKeyFile = await getOrCreatePrivateFilePod(privateContainerUri, session.fetch);
 
-    if(prKeyFile === "error")
+    if(prKeyFile?.error === "error")
         return [];
 
     const prKeyUrl = getSourceUrl(prKeyFile);
@@ -38,7 +38,13 @@ export default async function fetchDBLocations(session) {
         return [];
     }
 
-    const l = await Api.getLocations();
+    let l;
+
+    try {
+        l = await Api.getLocations();
+    } catch(err) {
+        return [];
+    }
 
     const withPolyline = getLines(l);
 

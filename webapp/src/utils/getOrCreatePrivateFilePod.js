@@ -12,9 +12,9 @@ export default async function getOrCreatePrivateFilePod(containerUri, fetch) {
         return prKeyFile;
     } catch(error) {
         if(error.statusCode === 404) {
-            await saveSolidDatasetAt(prKeyFileUrl, createSolidDataset(), {fetch});
+            let res = await saveSolidDatasetAt(prKeyFileUrl, createSolidDataset(), {fetch});
 
-            return "error";
+            return { error: "error", res: res };
         }
     }
 }
