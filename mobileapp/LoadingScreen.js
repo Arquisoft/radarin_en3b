@@ -76,11 +76,13 @@ export default function LoadingScreen({ route, navigation }) {
               }}
             />
       <BackgroundTask
-              interval={6000}
+              interval={60000}
               function={() => {
                 let prevFriends = onlineCloseFriends;
                 dispatch(fetchFriendsWithDistance());
-                let newFriends = Array.from(Object.keys(onlineCloseFriends)).filter(friend => !(Array.from(Object.keys(prevFriends)).includes(friend)));
+                let newFriends = new Array();
+                if (onlineCloseFriends !== null && onlineCloseFriends !== undefined && Array.from(Object.keys(onlineCloseFriends)).length > 0)
+                  newFriends = Array.from(Object.keys(onlineCloseFriends)).filter(friend => !(Array.from(Object.keys(prevFriends)).includes(friend)));
                 if (newFriends.length > 0)
                 schedulePushNotificationFriendsClose(newFriends);
               }}

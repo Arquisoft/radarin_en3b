@@ -8,12 +8,15 @@ const MAX_TIME = 30000000000; //Testing value, should be something like 3600.000
 
 export async function getFriendsLocation(friends) {
     const auth = await BuildToken();
+    console.log(auth);
     try {
         const locations = await Promise.all(
-            friends.map(f => fetch(`${apiEndPoint}/locations?webId=${encodeURIComponent(f.webId)}&last=true`, {
+            friends.map(f => {fetch(`${apiEndPoint}/locations?webId=${encodeURIComponent(f.webId)}&last=true`, {
                 method: 'GET',
                 headers: { 'Content-Type': 'application/json', 'Authorization': "Bearer " + auth }
-            }).then(location => location.json())));
+            })}));
+
+        console.log(locations);
         return locations.map(location => [location.webId, location]);
     } catch (error) {
         console.log("Error loading locations :" + error);
