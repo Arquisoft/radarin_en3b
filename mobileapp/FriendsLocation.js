@@ -45,7 +45,7 @@ export async function getDistances(friends) {
     const locations = await getFriendsLocation(friends);
 
     const date = Date.now();
-    const parsedLocations = Object.entries(locations).filter(location => date < location[1].timestamp < MAX_TIME);
+    const parsedLocations = locations.filter(location => date < location[1].timestamp < MAX_TIME);
 
     return new Map(parsedLocations.map(location => [location[0],
     { value: calculateDistance(location[1], myLocation), mapsUrl: getMapsUrl(location[1]) }]).filter(([k, v]) => v.value <= MAX_DISTANCE));

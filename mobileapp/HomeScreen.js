@@ -14,11 +14,6 @@ import { useDispatch} from "react-redux";
 
 
 export default function HomeScreen({ navigation }) {
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(fetchFriendsWithDistance()); 
-  });
 
   const onlineFriends = useSelector(state => state.user.onlineFriends);
   const loadedFriends = useSelector(state => state.user.onlineCloseFriends);

@@ -25,6 +25,7 @@ router.get("/locations", async (req, res) => {
     }
 
     const userLocations = await TrackedLocation.find({ webId }).sort({ timestamp: -1 });
+    console.log(userLocations);
     res.send(userLocations);
 });
 
