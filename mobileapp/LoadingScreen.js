@@ -10,6 +10,7 @@ import { showMessage, hideMessage } from "react-native-flash-message";
 
 import { getFriendsNames } from "./FetchFriends";
 import { setNotificationsBackground, schedulePushNotificationFriends, schedulePushNotificationFriendsClose} from "./SetNotifications";
+import AsyncStorage from "@react-native-community/async-storage";
 
 export default function LoadingScreen({ route, navigation }) {
   const { id } = route.params;
@@ -68,16 +69,19 @@ export default function LoadingScreen({ route, navigation }) {
       <BackgroundTask
               interval={300000}
               function={() => {
-                let prevFriends = getFriendsNames();
+                if (AsyncStorage.getItem("userId") !== null && AsyncStorage.getItem("userId") !== undefined && AsyncStorage.getItem("userId") != "" ){
+                  let prevFriends = getFriendsNames();
                 dispatch(fetchFriends());
                 let newFriends = getFriendsNames().filter(friend => !(prevFriends.includes(friend)));
                 if (newFriends.length > 0)
                 schedulePushNotificationFriends(newFriends);
+                }
               }}
             />
       <BackgroundTask
               interval={60000}
               function={() => {
+                if (AsyncStorage.getItem("userId") !== null && AsyncStorage.getItem("userId") !== undefined && AsyncStorage.getItem("userId") != "" ){
                 let prevFriends = onlineCloseFriends;
                 dispatch(fetchFriendsWithDistance());
                 let newFriends = new Array();
@@ -85,6 +89,7 @@ export default function LoadingScreen({ route, navigation }) {
                   newFriends = Array.from(Object.keys(onlineCloseFriends)).filter(friend => !(Array.from(Object.keys(prevFriends)).includes(friend)));
                 if (newFriends.length > 0)
                 schedulePushNotificationFriendsClose(newFriends);
+                }
               }}
             />
     </View>

@@ -7,7 +7,7 @@ export async function getFriends(webId) {
   //TODO: do it only once
   const locations = await getFriendsLocation(friends);
 
-  return friends.filter(friend => locations.some(location => location.webId == friend.webId));
+  return friends.filter(friend => locations.some(location => location[0] == friend.webId));
 }
 
 export async function getFriendsWithDistance(friends) {
