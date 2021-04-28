@@ -21,10 +21,14 @@ router.get("/locations", async (req, res) => {
 
     if (req.query.last === "true") {
         const lastLocation = await TrackedLocation.findOne({ webId }).sort({ timestamp: -1 });
+        if (lastLocation == null)
+            return res.send([]);
         return res.send(lastLocation);
     }
 
     const userLocations = await TrackedLocation.find({ webId }).sort({ timestamp: -1 });
+    if (userLocations == null)
+        return res.send([]);
     console.log(userLocations);
     res.send(userLocations);
 });
