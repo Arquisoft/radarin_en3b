@@ -17,7 +17,7 @@ router.post("/locations", async (req, res) => {
 router.get("/locations", webIdQueryChecker);
 
 router.get("/locations", async (req, res) => {
-    const webId = req.claims.webid;
+    const webId = req.query.webId;
 
     if (req.query.last === "true") {
         const lastLocation = await TrackedLocation.findOne({ webId }).sort({ timestamp: -1 });
