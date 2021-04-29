@@ -21,6 +21,7 @@ export default function Location({ childKey, title, description, coords, photo, 
     const dispatch = useDispatch();
     const session = sess;
     const [open, setOpen] = useState(false);
+    const [open2, setOpen2] = useState(false);
     const [img, setImg] = useState(null);
 
     useEffect(() => {
@@ -40,6 +41,19 @@ export default function Location({ childKey, title, description, coords, photo, 
 
     const handleClose = () => {
         setOpen(false);
+    }
+
+    const handleOpen2 = () => {
+        setOpen2(true);
+    }
+
+    const handleClose2 = () => {
+        setOpen2(false);
+    }
+
+    const removeAndClose = () => {
+        //remove
+        handleClose2();
     }
 
     function onClick() {
@@ -85,6 +99,19 @@ export default function Location({ childKey, title, description, coords, photo, 
                     <img src={img} alt="Location" />
                     <DialogActions>
                         <Button onClick={handleClose} color="primary">Close</Button>
+                        <Button onClick={handleOpen2} color="secondary">Remove</Button>
+                        <Dialog
+                        open={open2}
+                        onClose={handleClose}
+                        aria-labelledby="alert-dialog-title2"
+                        aria-describedby="alert-dialog-description2"
+                        >
+                            <DialogTitle id="alert-dialog-title2">Are you sure?</DialogTitle>
+                            <DialogContent>
+                                <Button onClick={handleClose2} color="primary">Close</Button>
+                                <Button onClick={removeAndClose} color="secondary">Remove</Button>
+                            </DialogContent>
+                        </Dialog>
                     </DialogActions>
                 </DialogContent>
             </Dialog>
