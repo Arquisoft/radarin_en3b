@@ -56,7 +56,6 @@ export async function getLocation() {
             location = null;
         }
     }else{
-        console.log("Llega");
         location = await Location.getCurrentPositionAsync();
     }
         

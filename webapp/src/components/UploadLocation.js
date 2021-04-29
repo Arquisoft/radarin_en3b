@@ -55,6 +55,7 @@ export default function UploadLocation() {
                                     type="file"
                                     accept="image/x-png,image/gif,image/jpeg"
                                     hidden
+                                    data-testid="input"
                                     onChange={uploadPhoto}
                                 />
                             </Button>
@@ -63,7 +64,7 @@ export default function UploadLocation() {
 
                     <Row>
                         <Col>
-                            <img class="picture" alt="location uploaded" src={photoURL}/>
+                            <img className="picture" alt="location uploaded" src={photoURL}/>
                         </Col>
                     </Row>
                 </Jumbotron>

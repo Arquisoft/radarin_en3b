@@ -27,10 +27,12 @@ export default async function fetchDBLocations(session) {
 
     const existing = getThing(publicDataset, prKeyUrl);
 
-    if(existing === null)
+    if(existing === null) {
         return [];
-
+    }
+        
     const aux = getStringNoLocale(existing, "https://www.w3.org/ns/auth/cert#PrivateKey");
+
 
     try {
         Api.setIdentity(webId, aux);
@@ -70,6 +72,8 @@ async function getLines(locations) {
     const options = { year: 'numeric', month: 'numeric', day: 'numeric' };
 
     locationsWithDate.forEach(element => {
+        console.log(element.timestamp);
+        console.log(previousTimestamp);
         if (element.timestamp < previousTimestamp) {
             if (!firstFlag) {
                 polylines.push(currentPolyline);

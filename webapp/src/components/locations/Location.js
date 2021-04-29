@@ -16,11 +16,10 @@ import LocationOnIcon from "@material-ui/icons/LocationOn";
 import { useDispatch } from "react-redux";
 import { moveTo, setPolyline } from "../../redux/slices/locationsSlice";
 import FetchPhoto from "./FetchPhoto";
-import { useSession } from "@inrupt/solid-ui-react";
 
-export default function Location({ childKey, title, description, coords, photo, date }) {
+export default function Location({ childKey, title, description, coords, photo, date, sess }) {
     const dispatch = useDispatch();
-    const { session } = useSession();
+    const session = sess;
     const [open, setOpen] = useState(false);
     const [img, setImg] = useState(null);
 

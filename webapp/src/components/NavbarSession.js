@@ -19,9 +19,11 @@ import { useHistory } from "react-router-dom";
 import { fetchLocations } from "../redux/slices/locationsSlice";
 
 
-function NavbarSession() {
+function NavbarSession(props) {
     const { session } = useSession();
-    const { webId } = session.info;
+    let { webId } = session.info;
+    if(typeof props.webId !== "undefined")
+    webId = props.webId;
     const dispatch = useDispatch();
     const history = useHistory();
 

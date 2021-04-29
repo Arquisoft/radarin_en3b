@@ -19,6 +19,7 @@ export default function MapView() {
         }
     });
 
+
     if (polyline.length === 0) {
         result = (
             <MapContainer

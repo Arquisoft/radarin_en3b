@@ -59,3 +59,13 @@ test("user can go to main page", async () => {
 
     expect(mainHeader).toBeInTheDocument();
 });
+
+test("navbar dispatchs setlogguedstatus false", async () => {
+    const { queryByText, getByRole } = render(<BrowserRouter><Provider store={store}><MainNavbar /></Provider></BrowserRouter>);
+
+    const logout = queryByText("Logout");
+    const login = getByRole("button", { name: "Sign In" });
+
+    expect(logout).not.toBeInTheDocument();
+    expect(login).toBeInTheDocument();
+});

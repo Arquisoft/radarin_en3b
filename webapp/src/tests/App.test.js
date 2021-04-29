@@ -4,6 +4,8 @@ import App from '../App';
 import { Provider } from "react-redux";
 import store from "../redux/store";
 
+jest.setTimeout(20000);
+
 test('user arrives to the home page', async () => {
   const { getByText } = render(<Provider store={store}><App /></Provider>);
 
