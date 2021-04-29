@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, ScrollView, Image, Button, BackHandler, Pressable, TouchableOpacity, Share} from "react-native";
+import { View, Text, ScrollView, Image, Button, BackHandler, Pressable, TouchableOpacity, Share, Linking} from "react-native";
 import { Card, Overlay } from "react-native-elements";
 import {DataTable} from "react-native-paper";
 import styles from "./MyStyles";
@@ -9,9 +9,7 @@ import { useFocusEffect } from '@react-navigation/native';
 import { getFriendsNames } from './FetchFriends';
 import { getLocationAsync } from "./GetAsyncLocation";
 import { TextInput } from "react-native";
-import {fetchFriendsWithDistance} from "./redux/slices/userSlice";
-import { useDispatch} from "react-redux";
-import { WebView } from "react-native-webview";
+import * as WebBrowser from "expo-web-browser";
 
 
 export default function HomeScreen({ navigation }) {
@@ -186,26 +184,29 @@ const MyOverlay = () => {
   const toggleOverlay = () => {
     setVisible(!visible);
   };
-
-  const toggleWebOverlay = () => {
-    setWebvisible(!webvisible)
-  }
   
 
   return(
     <View style={styles.homeScreenContainer}>
     <MyPressable onPressing={toggleOverlay}></MyPressable>
     <Overlay  isVisible={visible} onBackdropPress={toggleOverlay}>
-      <MyForm webVisible={toggleWebOverlay}></MyForm>
+      <MyForm></MyForm>
     </Overlay> 
-    <Overlay isVisible={webvisible} onBackdropPress={toggleWebOverlay}>
-      <MyWebView></MyWebView>
-    </Overlay>
     </View>)
 }
 
 
-const MyForm = ({onSending}) => {
+const MyForm = () =>{
+
+  const [result, setResult] = useState(null);
+
+  const _handlePressButtonAsync = async () => {
+    let browserParams = {
+      toolbarColor: '#094072'
+    };
+    let result = await WebBrowser.openBrowserAsync('https://radarinen3bwebapp.herokuapp.com', browserParams);
+    setResult(result);
+  };
 
   return(
     <ScrollView > 
@@ -218,8 +219,7 @@ const MyForm = ({onSending}) => {
               <TextInput placeholder="Comment here..." label = "Comment" style = {styles.commentForm} multiline={true} ></TextInput>
             </View>
             <Card.Divider style={styles.divider} />
-          <Button color='#094072' title="Send location" onPress={onSending()}></Button>
-          <Button color='#094072' title="Send location with photo"></Button>
+          <Button color='#094072' title="Send location" onPress={_handlePressButtonAsync}></Button>
         </Card>
        
     </ScrollView>
@@ -246,16 +246,4 @@ const MyPressable = ({onPressing}) => {
   return <Pressable activeOpacity={0.7} style={myStyle} onPress={() => onPressing()}>
   <Image style={styles.icon} source={require("./assets/add-24px.png")}/>
 </Pressable >
-};
-
-const MyWebView = () => {
-  return (
-    <View containerStyle={styles.webBrowser}>
-    <WebView
-      source={{
-        uri: `www.google.com`,
-      }}
-    />
-    </View>
-  )
 };

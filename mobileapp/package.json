@@ -25,6 +25,7 @@
     "expo-status-bar": "^1.0.4",
     "expo-task-manager": "^9.1.0",
     "expo-updates": "^0.5.4",
+    "expo-web-browser": "^9.1.0",
     "geolib": "^3.3.1",
     "graphql-tag": "^2.11.0",
     "navigationbar-react-native": "0.0.5",

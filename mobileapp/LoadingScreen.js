@@ -41,7 +41,7 @@ export default function LoadingScreen({ route, navigation }) {
         navigation.navigate("Radarin");
 
       }
-    } else if(profileStatus === "failed" || friendsStatus === "failed"){
+    } else if(profileStatus === "failed"){
       dispatch(backToIdle());
       if(!doUna) {
         dispatch(doOnce());

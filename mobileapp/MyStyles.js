@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+import { Dimensions, StyleSheet } from "react-native";
 
 export default StyleSheet.create({
   container: {
@@ -14,8 +14,8 @@ export default StyleSheet.create({
     flex: 1
   },
   webBrowser: {
-    padding: 500,
-    width: 500
+    height: Dimensions.get('screen').height - 100,
+    width: Dimensions.get('screen').width,
   },
   overlayContainer: {
     flex: 0.4,
