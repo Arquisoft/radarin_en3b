@@ -2,13 +2,12 @@ const { defineFeature, loadFeature } = require("jest-cucumber");
 const feature = loadFeature("./features/change-view.feature");
 
 
-jest.setTimeout(50000);
-
 defineFeature(feature, (test) => {
 
   beforeEach(async () => {
     /*global page*/
     /*eslint no-undef: "error"*/
+    await page.setDefaultNavigationTimeout(0);
     await global.page.goto("http://localhost:3000");
   });
 
