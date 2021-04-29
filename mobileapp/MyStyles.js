@@ -13,6 +13,10 @@ export default StyleSheet.create({
   homeScreenContainer: {
     flex: 1
   },
+  webBrowser: {
+    padding: 500,
+    width: 500
+  },
   overlayContainer: {
     flex: 0.4,
     borderRadius:15,

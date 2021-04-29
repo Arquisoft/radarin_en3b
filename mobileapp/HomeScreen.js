@@ -11,6 +11,7 @@ import { getLocationAsync } from "./GetAsyncLocation";
 import { TextInput } from "react-native";
 import {fetchFriendsWithDistance} from "./redux/slices/userSlice";
 import { useDispatch} from "react-redux";
+import { WebView } from "react-native-webview";
 
 
 export default function HomeScreen({ navigation }) {
@@ -185,22 +186,31 @@ export default function HomeScreen({ navigation }) {
 
 const MyOverlay = () => {
   const [visible, setVisible] = useState(false);
+  const [webvisible, setWebvisible] = useState(false);
 
   const toggleOverlay = () => {
     setVisible(!visible);
   };
+
+  const toggleWebOverlay = () => {
+    setWebvisible(!webvisible)
+  }
   
 
   return(
     <View style={styles.homeScreenContainer}>
     <MyPressable onPressing={toggleOverlay}></MyPressable>
     <Overlay  isVisible={visible} onBackdropPress={toggleOverlay}>
-      <MyForm></MyForm>
+      <MyForm webVisible={toggleWebOverlay}></MyForm>
     </Overlay> 
+    <Overlay isVisible={webvisible} onBackdropPress={toggleWebOverlay}>
+      <MyWebView></MyWebView>
+    </Overlay>
     </View>)
 }
 
-const MyForm = () => {
+
+const MyForm = ({onSending}) => {
 
   return(
     <ScrollView > 
@@ -208,12 +218,12 @@ const MyForm = () => {
           <Text style={styles.cardTitle}>Title</Text>
           <TextInput placeholder="Title of the ubication" label="Title" style = {styles.titleForm}></TextInput>
           <Card.Divider style={styles.divider} />
-          <Text style={styles.cardTitle}>Comment</Text>
-          <View style = {styles.commentView}>
-          <TextInput placeholder="Comment here..." label = "Comment" style = {styles.commentForm} multiline={true} ></TextInput>
-          </View>
-          <Button color='#094072' title="Send location"></Button>
-          <Card.Divider style={styles.divider} />
+            <Text style={styles.cardTitle}>Comment</Text>
+            <View style = {styles.commentView}>
+              <TextInput placeholder="Comment here..." label = "Comment" style = {styles.commentForm} multiline={true} ></TextInput>
+            </View>
+            <Card.Divider style={styles.divider} />
+          <Button color='#094072' title="Send location" onPress={onSending()}></Button>
           <Button color='#094072' title="Send location with photo"></Button>
         </Card>
        
@@ -241,4 +251,16 @@ const MyPressable = ({onPressing}) => {
   return <Pressable activeOpacity={0.7} style={myStyle} onPress={() => onPressing()}>
   <Image style={styles.icon} source={require("./assets/add-24px.png")}/>
 </Pressable >
+};
+
+const MyWebView = () => {
+  return (
+    <View containerStyle={styles.webBrowser}>
+    <WebView
+      source={{
+        uri: `www.google.com`,
+      }}
+    />
+    </View>
+  )
 };

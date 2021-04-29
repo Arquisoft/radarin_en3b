@@ -38,6 +38,7 @@
     "react-native-elements": "^3.3.2",
     "react-native-flash-message": "^0.1.23",
     "react-native-gesture-handler": "^1.10.3",
+    "react-native-inappbrowser-reborn": "^3.5.1",
     "react-native-material-menu": "^1.2.0",
     "react-native-paper": "^4.7.2",
     "react-native-screens": "^2.18.0",
