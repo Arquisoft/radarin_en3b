@@ -30,9 +30,10 @@ module.exports.startserver = async () => {
     app.options('*', cors());
     app.use(express.json());
     app.use(auth);
-    // app.use(blacklist);
+    app.use(blacklist);
     app.use("/api", api);
-    app.use("/admin", adminChecker, admin);
+    admin.use(adminChecker);
+    app.use("/admin", admin);
 
     server = await app.listen(5000);
     console.log("Server has started!");

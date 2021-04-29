@@ -131,8 +131,22 @@ describe('FriendsStore specific testing', () => {
 describe('Admin endpoints testing', () => {
     
     const adminAccount = "https://radarin.inrupt.net/profile/card#me";
+    const radarin = "https://radarin.inrupt.net/profile/card#me";
+    const timestamp = 1509152059444;
+    const coords = {
+        accuracy: 52,
+        altitude: null,
+        altitudeAccuracy: null,
+        heading: null,
+        latitude: 27.380583,
+        longitude: 33.631839,
+        speed: null
+    };
 
     it("Can get the list of users", async () => {
+        const x = await request(app).post('/api/locations')
+        .send({ webId: radarin, coords, timestamp })
+        .set('Accept', 'application/json');
         const response = await request(app).get(`/admin/users`);
         expect(response.statusCode).toBe(200);
     });

@@ -23,7 +23,8 @@ function connect() {
         app.use(blacklist);
         app.use(express.json());
         app.use("/api", api);
-        app.use("/admin", adminChecker, admin);
+        admin.use(adminChecker);
+        app.use("/admin", admin);
 
         app.listen(process.env.PORT || 5000, () => {
             console.log("Server has started! Using db in " + mongo_uri);
