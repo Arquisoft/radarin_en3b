@@ -17,14 +17,18 @@ router.post("/locations", async (req, res) => {
 router.get("/locations", webIdQueryChecker);
 
 router.get("/locations", async (req, res) => {
-    const webId = req.claims.webid;
+    const webId = req.query.webId;
 
     if (req.query.last === "true") {
         const lastLocation = await TrackedLocation.findOne({ webId }).sort({ timestamp: -1 });
+        if (lastLocation == null)
+            return res.send([]);
         return res.send(lastLocation);
     }
 
     const userLocations = await TrackedLocation.find({ webId }).sort({ timestamp: -1 });
+    if (userLocations == null)
+        return res.send([]);
     console.log(userLocations);
     res.send(userLocations);
 });

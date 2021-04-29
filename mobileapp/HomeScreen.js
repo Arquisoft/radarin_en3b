@@ -9,8 +9,6 @@ import { useFocusEffect } from '@react-navigation/native';
 import { getFriendsNames } from './FetchFriends';
 import { getLocationAsync } from "./GetAsyncLocation";
 import { TextInput } from "react-native";
-import {fetchFriendsWithDistance} from "./redux/slices/userSlice";
-import { useDispatch} from "react-redux";
 
 
 export default function HomeScreen({ navigation }) {

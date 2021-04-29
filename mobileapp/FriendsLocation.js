@@ -3,17 +3,19 @@ import { getPreciseDistance } from "geolib";
 import BuildToken from "./utils/BuildToken";
 
 const apiEndPoint = 'https://radarinen3brestapi.herokuapp.com/api';
-const MAX_DISTANCE = 2000; //Testing value, should be something like 2000m
+const MAX_DISTANCE = 20000; //Testing value, should be something like 2000m
 const MAX_TIME = 30000000000; //Testing value, should be something like 3600.000ms
 
 export async function getFriendsLocation(friends) {
     const auth = await BuildToken();
     try {
-        const locations = await Promise.all(
+        const responses = await Promise.all(
             friends.map(f => fetch(`${apiEndPoint}/locations?webId=${encodeURIComponent(f.webId)}&last=true`, {
                 method: 'GET',
                 headers: { 'Content-Type': 'application/json', 'Authorization': "Bearer " + auth }
-            }).then(location => location.json())));
+            })));
+        const locations = await Promise.all(responses.map(r => r.json()));
+        
         return locations.map(location => [location.webId, location]);
     } catch (error) {
         console.log("Error loading locations :" + error);
