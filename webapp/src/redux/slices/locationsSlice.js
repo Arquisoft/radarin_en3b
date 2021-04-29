@@ -14,7 +14,7 @@ export const refreshLocations = createAsyncThunk("locations/refreshLocations", a
 async function getLocations(session) {
     let apiLocations = await fetchDBLocations(session);
 
-    let podLocations = await fetchPodCreatedLocations(session, [ apiLocations[apiLocations.length - 1]?.id ?? 0]);
+    let podLocations = await fetchPodCreatedLocations(session, [ apiLocations[apiLocations.length - 1]?.id + 1 ?? 0]);
 
 
     if (apiLocations.length === 0) {

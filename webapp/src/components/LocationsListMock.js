@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setSearchText } from "../redux/slices/locationsSlice";
 import "../css/LocationsList.css";
 import Polyline from "./locations/Polyline";
+import Location from "./locations/Location";
 
 
 export default function LocationList() {
@@ -46,15 +47,31 @@ export default function LocationList() {
                 </ListItem>
                 {
                     locations.filter(item => item.name.toLowerCase().includes(filterText.toLowerCase()))
-                        .map(item =>
-                            <Polyline
-                                key={item.id}
-                                childKey={item.id}
-                                name={item.name}
-                                details={item.details}
-                                coords={item.coords}
-                            />
-                        )
+                    .map(item => {
+                        if (item.type === "poly") {
+                            return (
+                                <Polyline
+                                    key={item.id}
+                                    childKey={item.id}
+                                    name={item.name}
+                                    details={item.details}
+                                    coords={item.coords}
+                                />);
+                        } else {
+                            return (
+                                <Location
+                                    key={item.id}
+                                    childKey={item.id}
+                                    title={item.name}
+                                    description={item.details}
+                                    coords={item.coords}
+                                    photo={item.photo}
+                                    date={item.date}
+                                    webId={item.webId}
+                                />
+                            );
+                        }
+                    })
                 }
             </List>
         );

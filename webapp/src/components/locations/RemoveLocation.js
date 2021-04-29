@@ -1,7 +1,7 @@
-import { getSolidDataset, getThing, getUrlAll, getSourceUrl, getThingAll, getStringNoLocaleAll, getDatetime } from "@inrupt/solid-client";
+import { getSolidDataset, getThing, getUrlAll, getSourceUrl, getThingAll, getStringNoLocaleAll, removeThing, saveSolidDatasetAt, isThing } from "@inrupt/solid-client";
 import getOrCreatePublicFilePod from "../../utils/GetOrCreatePublicFilePod";
 
-export default async function FetchPodCreatedLocations(session, lastId) {
+export default async function removeLocation(session, title, description) {
     const profileDataset = await getSolidDataset(session.info.webId, {
         fetch: session.fetch,
     });
@@ -20,18 +20,20 @@ export default async function FetchPodCreatedLocations(session, lastId) {
     const locationsUrl = getSourceUrl(dataset);
     const existing = getThingAll(dataset, locationsUrl);
 
+    let updatedDataset;
+    let flag = true;
 
-    let createdLocations = [];
-    let counter = lastId;
-    const options = { year: 'numeric', month: 'numeric', day: 'numeric' };
-
-    existing.forEach(async location => {
+    existing.forEach(location => {
         const text = getStringNoLocaleAll(location, "http://schema.org/text");
 
-        const date = getDatetime(location, "http://www.w3.org/2002/12/cal/ical#created");
+        const name = text[1];
+        const details = text[0];
 
-        createdLocations.push({ type: "loc", id: counter++, name: text[1], details: text[0], coords: [JSON.parse(text[2])], photo: text[3], date: new Date(date).toLocaleDateString("es-ES", options), webId: session.info.webId })
-    });
-
-    return createdLocations;  
+        if(name === title && description === details && flag) {
+            updatedDataset = removeThing(dataset, location);
+            flag = false;
+        }
+    }); 
+    
+    await saveSolidDatasetAt(locationsUrl, updatedDataset, { fetch: session.fetch });
 }
