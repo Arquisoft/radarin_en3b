@@ -4,7 +4,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import About from "./components/About";
 import { Switch, Route } from "react-router-dom";
 import MainNavbar from "./components/MainNavbar";
-import { Router } from "react-router-dom";
+import { HashRouter as Router }  from "react-router-dom";
 import MainFooter from "./components/MainFooter";
 import LocationsView from "./components/LocationsView";
 import UploadLocation from "./components/UploadLocation";
@@ -17,16 +17,15 @@ import {
 } from "@inrupt/solid-client-authn-browser";
 import { useDispatch } from "react-redux";
 import { setLogguedStatus } from "./redux/slices/userSlice";
-import { createBrowserHistory }  from "history";
+import { createHashHistory }  from "history";
 
 export default function App() {
   const dispatch = useDispatch();
-  const history = createBrowserHistory();
+  const history = createHashHistory();
 
-  onSessionRestore((url) => {
+onSessionRestore((url) => {
     //https://radarinen3bwebapp.herokuapp.com/about
-      const uri = url.split("//")[1].split("/")[1];
-      console.log(uri);
+      const uri = url.split("//")[1].split("/")[2];
       history.push(uri);
   });
 
