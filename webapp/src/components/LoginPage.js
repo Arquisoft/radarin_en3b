@@ -47,7 +47,13 @@ const useStyles = makeStyles({
   },
 });
 
-function LoginPage() {
+function LoginPage(props) {
+  let redirectUrl;
+
+  if(typeof props.redirectUrl === "undefined")
+    redirectUrl = window.location.origin;
+  else
+    redirectUrl = window.location.origin.concat("#" + props.redirectUrl);
 
   const classes = useStyles();
   const [idp, setIdp] = useState("https://inrupt.net");
@@ -83,7 +89,7 @@ function LoginPage() {
         <Typography variant="body2" component="p" className="text-center">
           Don't have one? You can get it here: <Link className="ml-1" href="https://inrupt.com/" target="_blank"><strong>Inrupt</strong></Link>
         </Typography>
-        <LoginButton oidcIssuer={idp} redirectUrl={window.location.origin}>
+        <LoginButton oidcIssuer={idp} redirectUrl={ redirectUrl }>
           <Button id="SignInButton" data-testid="button" color="primary" variant="contained" className={classes.signIn} onClick={callback}>Sign In</Button>
         </LoginButton>
       </CardActions>

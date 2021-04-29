@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Container from 'react-bootstrap/Container';
 import Jumbotron from 'react-bootstrap/Jumbotron';
 import Row from 'react-bootstrap/Row';
@@ -9,18 +9,25 @@ import AddPhotoAlternateIcon from '@material-ui/icons/AddPhotoAlternate';
 import "../css/UploadLocation.css";
 import postLocation from "./locations/PostLocation";
 import { useSession } from '@inrupt/solid-ui-react';
+import { useDispatch } from 'react-redux';
+import { setLimitedVersion } from '../redux/slices/userSlice';
 
 export default function UploadLocation() {
 
     const [photo, setPhoto] = useState(null);
     const [photoURL, setPhotoURL] = useState(null);
     const { session } = useSession();
+    const dispatch = useDispatch();
 
     //This should be passed to the constructor
     const title = "Title";
     const description = "Sample text";
     const coords = "[80,-4]";
 
+
+    useEffect(() => {
+        dispatch(setLimitedVersion(true));
+    });
 
     const onClick = () => {
         postLocation(session, title, description, photo, coords);
