@@ -92,16 +92,16 @@ export default StyleSheet.create({
   },
   menu: {
     flex: 1,
-    width: 220,
+    width: Dimensions.get('screen').width - 100,
   },
   menuitem: {
-    flex: 1,
-    width: 200
+    flex: 0,
+    width: Dimensions.get('screen').width - 150
   },
   menuwrapper: {
     position: 'absolute',
-    width: 200,
-    height: 200,
+    width: Dimensions.get('screen').width - 150,
+    height: Dimensions.get('screen').height - 150,
   },
   textInput: {
     height: 40,
@@ -112,14 +112,14 @@ export default StyleSheet.create({
     margin:20
   },
   card: {
-    width: 360,
+    width: Dimensions.get('screen').width - 28,
     justifyContent: 'center',
     borderRadius:5,
     padding:10,
     borderColor: '#0A4A84',
   },
   nofriendscard: {
-    width: 360,
+    width: Dimensions.get('screen').width - 28,
     justifyContent: 'center',
     borderRadius:5,
     padding:10,

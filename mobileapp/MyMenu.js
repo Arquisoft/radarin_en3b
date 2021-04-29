@@ -1,5 +1,5 @@
 import React from "react";
-import { View, TouchableOpacity, Image } from "react-native";
+import { View, TouchableOpacity, Image, Dimensions } from "react-native";
 import { Menu, Divider } from "react-native-paper";
 import AsyncStorage from "@react-native-community/async-storage";
 import styles from "./MyStyles";
@@ -22,17 +22,17 @@ export default function MyMenu ({navigation}){
         <Menu style={styles.menuitem}
           visible={visible}
           onDismiss={closeMenu}
-          anchor={{ x: 180, y: 80 }}>
+          anchor={{ x: Dimensions.get('screen').width, y: 80 }}>
           <Menu.Item icon={require("./assets/profile.png")} 
-          onPress={()=>{navigation.navigate("Profile"); closeMenu();}} title="Profile"/>
+            onPress={() => {navigation.navigate("Profile"); closeMenu();}} title="Profile"/>
           <Divider />
           <Menu.Item icon={require("./assets/about.png")}
-          onPress={() => {navigation.navigate("About"); closeMenu();}} title="About Radarin" />
+            onPress={() => {navigation.navigate("About"); closeMenu();}} title="About Radarin" />
           <Divider />
           <Menu.Item icon={require("./assets/door.png")}
-          onPress={() => {AsyncStorage.setItem("userId",""); 
-          AsyncStorage.setItem("backgroundLocations","inactive"); 
-          Updates.reloadAsync();}
+            onPress={() => {AsyncStorage.setItem("userId",""); 
+            AsyncStorage.setItem("backgroundLocations","inactive"); 
+            Updates.reloadAsync();}
           } title="Logout" />
         </Menu>
         </View>
