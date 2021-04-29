@@ -27,10 +27,12 @@ export default async function fetchDBLocations(session) {
 
     const existing = getThing(publicDataset, prKeyUrl);
 
-    if(existing === null)
+    if(existing === null) {
         return [];
-
+    }
+        
     const aux = getStringNoLocale(existing, "https://www.w3.org/ns/auth/cert#PrivateKey");
+
 
     try {
         Api.setIdentity(webId, aux);
