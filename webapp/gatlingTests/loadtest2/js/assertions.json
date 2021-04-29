@@ -1,0 +1,10 @@
+{
+  "simulation": "radarin_en3b.loadTest2",
+  "simulationId": "loadtest2",
+  "start": 1619622013822,
+  "description": "first run",
+  "scenarios": ["loadTest2"],
+  "assertions": [
+
+  ]
+}

@@ -24,7 +24,9 @@ export default function App() {
   const history = createBrowserHistory();
 
   onSessionRestore((url) => {
+    //https://radarinen3bwebapp.herokuapp.com/about
       const uri = url.split("//")[1].split("/")[1];
+      console.log(uri);
       history.push(uri);
   });
 

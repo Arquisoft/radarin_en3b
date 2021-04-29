@@ -38,7 +38,6 @@ export default function LocationList() {
                             data-testid="input"
                             placeholder="Search"
                             className="textField"
-                            data-testid="input"
                             name="busqueda"
                             onChange={onChange}
                             value={filterText}

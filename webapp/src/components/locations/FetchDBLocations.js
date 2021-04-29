@@ -72,8 +72,6 @@ async function getLines(locations) {
     const options = { year: 'numeric', month: 'numeric', day: 'numeric' };
 
     locationsWithDate.forEach(element => {
-        console.log(element.timestamp);
-        console.log(previousTimestamp);
         if (element.timestamp < previousTimestamp) {
             if (!firstFlag) {
                 polylines.push(currentPolyline);
