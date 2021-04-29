@@ -2,14 +2,19 @@ import React, { useEffect, useState } from "react";
 import {  Image } from "react-native";
 import { View, Text, Button, Linking, StyleSheet } from "react-native";
 import { Card } from "react-native-elements";
+import { useDispatch, useSelector } from "react-redux";
 import styles from "./MyStyles";
 import { BarCodeScanner } from "expo-barcode-scanner";
 import * as SecureStore from "expo-secure-store";
 import AsyncStorage from "@react-native-community/async-storage";
+import { setScanned } from "./redux/slices/executingSlice";
+import { showMessage, hideMessage } from "react-native-flash-message";
 
 export default function LoginScreen({ navigation, route }) {
 
+  const dispatch = useDispatch();
   const { qrUpdatedFlag } = route.params;
+  const scanned = useSelector(state => state.executing.scanned);
 
     /*AsyncStorage.getItem("userId").then(function (webId){
       if (webId != null && webId != "" && !qrUpdatedFlag){
@@ -28,7 +33,6 @@ export default function LoginScreen({ navigation, route }) {
     
   
   const [hasCameraPermission, setHasCameraPermission] = useState(null);
-  const [scanned, setScanned] = useState(false);
   const [showScanner, setShowScanner] = useState(false);
   
   async function save(key, value) {
@@ -41,7 +45,7 @@ export default function LoginScreen({ navigation, route }) {
         <View style={styles.iconWrapper}>
           <Image
             style={styles.icon}
-            source={require("./assets/icon.png")}
+            source={require("./assets/icon_small.png")}
           />
         </View>
       )),
@@ -53,12 +57,23 @@ export default function LoginScreen({ navigation, route }) {
   }, [navigation]);
   
   const handleQrScanned = async ({ type, data }) => {
-    setScanned(true);
+    try{
     await save("op234iyu5v6oy234iuv6", data);
     const parsed = JSON.parse(data);
     const webId = parsed.webId;
+    dispatch(setScanned(true));
     AsyncStorage.setItem("userId",webId);
     navigation.navigate("Loading", {id: webId });
+    }catch(err){
+      console.log("Wrong qr");
+      setShowScanner(false);
+      showMessage({
+        message: "The QR code you read was not valid",
+        description: "Please, try again with a different QR",
+        type: "danger",
+        duration: 5000,
+      });
+    }
   };
 
   function changeShowScanner() {

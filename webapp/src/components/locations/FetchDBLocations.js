@@ -16,17 +16,35 @@ export default async function fetchDBLocations(session) {
     const pod = podsUrls[0];
     const privateContainerUri = `${pod}private/RadarinPrKey/`;
     const prKeyFile = await getOrCreatePrivateFilePod(privateContainerUri, session.fetch);
+
+    if(prKeyFile?.error === "error")
+        return [];
+
     const prKeyUrl = getSourceUrl(prKeyFile);
+
+
     const publicDataset = await getSolidDataset(prKeyUrl, { fetch: session.fetch });
 
     const existing = getThing(publicDataset, prKeyUrl);
 
-    //const prKField = setStringNoLocale(existing, "https://www.w3.org/ns/auth/cert#PrivateKey", privateKey);
+    if(existing === null)
+        return [];
 
     const aux = getStringNoLocale(existing, "https://www.w3.org/ns/auth/cert#PrivateKey");
 
-    Api.setIdentity(webId, aux);
-    const l = await Api.getLocations();
+    try {
+        Api.setIdentity(webId, aux);
+    } catch(err) {
+        return [];
+    }
+
+    let l;
+
+    try {
+        l = await Api.getLocations();
+    } catch(err) {
+        return [];
+    }
 
     const withPolyline = getLines(l);
 
@@ -59,7 +77,7 @@ async function getLines(locations) {
                 firstFlag = false;
             }
 
-            currentPolyline = { id: counter++, name: new Date(element.timestamp).toLocaleDateString("es-ES", options), details: "Route taken on this day", coords: []};
+            currentPolyline = { type: "poly", id: counter++, name: new Date(element.timestamp).toLocaleDateString("es-ES", options), details: "Route taken on this day", coords: []};
             currentPolyline.coords.push(element.coords);
             previousTimestamp = element.timestamp;
         } else if (element.timestamp === previousTimestamp) {
@@ -67,7 +85,9 @@ async function getLines(locations) {
         }
     });
 
-    polylines.push(currentPolyline);
+    if(typeof currentPolyline !== "undefined") {
+        polylines.push(currentPolyline);
+    }
 
     return polylines;
 }

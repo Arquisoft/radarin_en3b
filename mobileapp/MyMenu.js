@@ -30,7 +30,10 @@ export default function MyMenu ({navigation}){
           onPress={() => {navigation.navigate("About"); closeMenu();}} title="About Radarin" />
           <Divider />
           <Menu.Item icon={require("./assets/door.png")}
-          onPress={() => {AsyncStorage.setItem("userId",""); Updates.reloadAsync();}} title="Logout" />
+          onPress={() => {AsyncStorage.setItem("userId",""); 
+          AsyncStorage.setItem("backgroundLocations","inactive"); 
+          Updates.reloadAsync();}
+          } title="Logout" />
         </Menu>
         </View>
       </View>

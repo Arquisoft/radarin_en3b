@@ -22,10 +22,16 @@ export default async function keyManagement(sessionP, pairP) {
     );
     const pod = podsUrls[0];
     const containerUri = `${pod}public/RadarinPKey/`;
-    const dataset = await getOrCreatePublicFilePod(containerUri, session.fetch);
+    let dataset = await getOrCreatePublicFilePod(containerUri, session.fetch, "publicKey.ttl");
+
+    if(dataset?.error === "error")
+        dataset = dataset.res;
 
     const privateContainerUri = `${pod}private/RadarinPrKey/`;
-    const dataset2 = await getOrCreatePrivateFilePod(privateContainerUri, session.fetch);
+    let dataset2 = await getOrCreatePrivateFilePod(privateContainerUri, session.fetch);
+
+    if(dataset2?.error === "error")
+        dataset2 = dataset2.res;
 
     addPublicKey(dataset);
     addPrivateKey(dataset2);
