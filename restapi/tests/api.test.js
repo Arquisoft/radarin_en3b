@@ -1,7 +1,6 @@
 const request = require('supertest');
 const server = require('./server-for-tests');
 const friendsStore = require("../middleware/FriendsStore");
-
 /**
  * Connect to a new in-memory database before running any tests.
  */
@@ -31,6 +30,7 @@ afterAll(async () => {
  * Product test suite.
  */
 describe('Locations saving and fetching', () => {
+    
     const radarin = "https://radarin.inrupt.net/profile/card#me";
     const timestamp = 1509152059444;
     const coords = {
@@ -83,6 +83,7 @@ describe('Locations saving and fetching', () => {
 });
 
 describe('Locations security testing', () => {
+    
     const friend = "https://carmen279.inrupt.net/profile/card#me";
     const nonAdded = "https://efecto2k.solidcommunity.net/profile/card#me";
     const addedByRadarinButNotByHim = "https://efecto2k.inrupt.net/profile/card#me";
@@ -101,6 +102,7 @@ describe('Locations security testing', () => {
 });
 
 describe('FriendsStore specific testing', () => {
+    
     const radarin = "https://radarin.inrupt.net/profile/card#me";
     const friend = "https://carmen279.inrupt.net/profile/card#me";
 
@@ -125,3 +127,13 @@ describe('FriendsStore specific testing', () => {
     });
 });
 
+
+describe('Admin endpoints testing', () => {
+    
+    const adminAccount = "https://radarin.inrupt.net/profile/card#me";
+
+    it("Can get the list of users", async () => {
+        const response = await request(app).get(`/admin/users`);
+        expect(response.statusCode).toBe(200);
+    });
+});
