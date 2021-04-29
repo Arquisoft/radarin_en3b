@@ -44,7 +44,6 @@ export default function QRPage(props) {
 
   } else if (status === "failed") {
     content = <div className="centerMe">{error}</div>;
-    console.error(error);
   }
 
   return <div>{content}</div>;

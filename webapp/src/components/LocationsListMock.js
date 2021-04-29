@@ -35,6 +35,7 @@ export default function LocationList() {
                     <div className="table-responsible mt-3 mb-3 ml-2">
                         <TextField
                             type="text"
+                            data-testid="input"
                             placeholder="Search"
                             className="textField"
                             name="busqueda"

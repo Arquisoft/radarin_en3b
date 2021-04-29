@@ -1,15 +1,16 @@
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import "@testing-library/jest-dom/extend-expect";
 import { Provider } from "react-redux";
 import store from "../redux/store";
+import LocationsList from '../components/LocationsList';
+import "@testing-library/jest-dom/extend-expect";
 import { SolidNodeClient } from 'solid-node-client';
-import QRPage from "../components/QRPage";
-import fetchDBLocations from "../components/locations/FetchDBLocations";
 
+jest.setTimeout(50000);
 
-jest.setTimeout(20000);
+test("testing location fetching 2", async () => {
+    global.URL.createObjectURL = jest.fn();
 
-test("testing qr page, key management and location fetching", async () => {
     const client = new SolidNodeClient({
         handlers: { https: 'solid-client-authn-node' }
     });
@@ -21,11 +22,7 @@ test("testing qr page, key management and location fetching", async () => {
         oidcIssuer: "https://solidcommunity.net",
     });
 
-    const data = await fetchDBLocations(sessionNew);
-
-    expect(data).not.toBeNull();
-
-    render(<Provider store={store}><QRPage sess={sessionNew} /></Provider>);
+    const { getAllByRole } = render(<Provider store={store}><LocationsList sess={sessionNew}/></Provider>);
 
 
     const loading = screen.getAllByText("Loading...")[0];
@@ -37,7 +34,12 @@ test("testing qr page, key management and location fetching", async () => {
     await new Promise(res => setTimeout(() => {
         expect(true).toBe(true);
         res();
-    }, 5000));
+        const open = getAllByRole("button", { name: "Open" })[0];
+
+        expect(open).toBeInTheDocument();
+    }, 35000));
+
+
 
     sessionNew.logout();
 });
