@@ -1,6 +1,6 @@
 import "@testing-library/jest-dom/extend-expect";
 import getOrCreatePublicFilePod from "../utils/GetOrCreatePublicFilePod";
-import getOrCreatePrivateFilePod from "../utils/GetOrCreatePrivateFilePod";
+import getOrCreatePrivateFilePod from "../utils/getOrCreatePrivateFilePod";
 
 
 const solid = require("@inrupt/solid-client");
