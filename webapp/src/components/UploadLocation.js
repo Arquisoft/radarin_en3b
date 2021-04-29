@@ -3,15 +3,12 @@ import Container from 'react-bootstrap/Container';
 import Jumbotron from 'react-bootstrap/Jumbotron';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import { Button, Fab} from "@material-ui/core";
+import { Button, Fab } from "@material-ui/core";
 import SendIcon from "@material-ui/icons/Send";
-import { useDispatch, useSelector } from "react-redux";
 import AddPhotoAlternateIcon from '@material-ui/icons/AddPhotoAlternate';
-import { setPicture } from "../redux/slices/locationsSlice";
 import "../css/UploadLocation.css";
 import postLocation from "./locations/PostLocation";
 import { useSession } from '@inrupt/solid-ui-react';
-import { getURL } from 'next/dist/next-server/lib/utils';
 
 export default function UploadLocation() {
 
@@ -28,7 +25,7 @@ export default function UploadLocation() {
     const onClick = () => {
         postLocation(session, title, description, photo, coords);
         //close the embedded browser
-    }
+    };
 
     function uploadPhoto(event) {
         setPhoto(event.target.files[0]);
@@ -41,43 +38,43 @@ export default function UploadLocation() {
             <Col>
                 <Jumbotron className="mt-4">
                     <h2 className="loch2">Title</h2>
-                    <p className="loctext">{ title }</p>
+                    <p className="loctext">{title}</p>
                     <h2 className="loch2">Description</h2>
-                    <p className="loctext">{ description }</p>
+                    <p className="loctext">{description}</p>
                     <h2 className="loch2">Do you want to upload pictures of this location?</h2>
                     <Row>
                         <Col className="pictureButton">
-                                <Button
+                            <Button
                                 variant="contained"
                                 color="primary"
                                 component="label"
                                 className="svg_icons_container"
-                                startIcon={<AddPhotoAlternateIcon className="svg_icons"/>}
-                                >
+                                startIcon={<AddPhotoAlternateIcon className="svg_icons" />}
+                            >
                                 <input
                                     type="file"
                                     accept="image/x-png,image/gif,image/jpeg"
                                     hidden
-                                    onChange={ uploadPhoto }
+                                    onChange={uploadPhoto}
                                 />
-                                </Button>
+                            </Button>
                         </Col>
                     </Row>
 
                     <Row>
                         <Col>
-                            <img class="picture" src={photoURL}/>
+                            <img class="picture" alt="location uploaded" src={photoURL}/>
                         </Col>
                     </Row>
                 </Jumbotron>
 
                 <div className="fabcontainer">
                     <Fab color="primary" aria-label="send" onClick={onClick}>
-                        <SendIcon/>
+                        <SendIcon />
                     </Fab>
-                    </div>
+                </div>
             </Col>
-            
+
         </Row>
     </Container>;
 }
