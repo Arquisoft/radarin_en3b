@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, ScrollView, Image, Button, BackHandler, Pressable, TouchableOpacity, Share} from "react-native";
+import { View, Text, ScrollView, Image, Button, BackHandler, Pressable, TouchableOpacity, Share, Linking} from "react-native";
 import { Card, Overlay } from "react-native-elements";
 import {DataTable} from "react-native-paper";
 import styles from "./MyStyles";
@@ -9,6 +9,7 @@ import { useFocusEffect } from '@react-navigation/native';
 import { getFriendsNames } from './FetchFriends';
 import { getLocationAsync } from "./GetAsyncLocation";
 import { TextInput } from "react-native";
+import * as WebBrowser from "expo-web-browser";
 
 
 export default function HomeScreen({ navigation }) {
@@ -178,6 +179,7 @@ export default function HomeScreen({ navigation }) {
 
 const MyOverlay = () => {
   const [visible, setVisible] = useState(false);
+  const [webvisible, setWebvisible] = useState(false);
 
   const toggleOverlay = () => {
     setVisible(!visible);
@@ -193,7 +195,18 @@ const MyOverlay = () => {
     </View>)
 }
 
-const MyForm = () => {
+
+const MyForm = () =>{
+
+  const [result, setResult] = useState(null);
+
+  const _handlePressButtonAsync = async () => {
+    let browserParams = {
+      toolbarColor: '#094072'
+    };
+    let result = await WebBrowser.openBrowserAsync('https://radarinen3bwebapp.herokuapp.com', browserParams);
+    setResult(result);
+  };
 
   return(
     <ScrollView > 
@@ -201,13 +214,12 @@ const MyForm = () => {
           <Text style={styles.cardTitle}>Title</Text>
           <TextInput placeholder="Title of the ubication" label="Title" style = {styles.titleForm}></TextInput>
           <Card.Divider style={styles.divider} />
-          <Text style={styles.cardTitle}>Comment</Text>
-          <View style = {styles.commentView}>
-          <TextInput placeholder="Comment here..." label = "Comment" style = {styles.commentForm} multiline={true} ></TextInput>
-          </View>
-          <Button color='#094072' title="Send location"></Button>
-          <Card.Divider style={styles.divider} />
-          <Button color='#094072' title="Send location with photo"></Button>
+            <Text style={styles.cardTitle}>Comment</Text>
+            <View style = {styles.commentView}>
+              <TextInput placeholder="Comment here..." label = "Comment" style = {styles.commentForm} multiline={true} ></TextInput>
+            </View>
+            <Card.Divider style={styles.divider} />
+          <Button color='#094072' title="Send location" onPress={_handlePressButtonAsync}></Button>
         </Card>
        
     </ScrollView>
