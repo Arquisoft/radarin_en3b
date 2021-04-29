@@ -13,8 +13,11 @@ import Polyline from "./locations/Polyline";
 import Location from "./locations/Location";
 
 
-export default function LocationList() {
-    const { session } = useSession();
+export default function LocationList(props) {
+    let { session } = useSession();
+    if(typeof props.sess !== "undefined")
+        session = props.sess;
+
     const dispatch = useDispatch();
     const locationStatus = useSelector(state => state.locations.status);
     const refreshStatus = useSelector(state => state.locations.refreshStatus);
@@ -54,6 +57,7 @@ export default function LocationList() {
                             placeholder="Search"
                             className="textField"
                             name="busqueda"
+                            data-testid="input"
                             onChange={onChange}
                             value={filterText}
                         />
@@ -81,6 +85,7 @@ export default function LocationList() {
                                         coords={item.coords}
                                         photo={item.photo}
                                         date={item.date}
+                                        sess={session}
                                     />
                                 );
                             }

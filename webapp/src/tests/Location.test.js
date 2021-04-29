@@ -20,5 +20,8 @@ test('Locations work', async () => {
 
     fireEvent.click(button);
 
-    expect(button).toBeInTheDocument();
+    const button2 = getByRole("button", { name: "Close" });
+
+    expect(button2).toBeInTheDocument();
+    fireEvent.click(button2);
 });
