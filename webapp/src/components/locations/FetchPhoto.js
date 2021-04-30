@@ -5,11 +5,11 @@ import {
     getFile
 } from "@inrupt/solid-client";
 
-export default async function FetchPhoto(session, photoId) {
-    const profileDataset = await getSolidDataset(session.info.webId, {
+export default async function FetchPhoto(session, photoId, webId) {
+    const profileDataset = await getSolidDataset(webId, {
         fetch: session.fetch,
     });
-    const profileThing = getThing(profileDataset, session.info.webId);
+    const profileThing = getThing(profileDataset, webId);
     const podsUrls = getUrlAll(
         profileThing,
         "http://www.w3.org/ns/pim/space#storage"
