@@ -6,7 +6,7 @@ const api = require("./api");
 const admin = require("./admin");
 const auth = require("./middleware/Auth");
 const blacklist = require("./middleware/BlacklistMiddleware");
-const adminChecker = require("./middleware/AdminChecker");
+// const adminChecker = require("./middleware/AdminChecker");
 
 function connect() {
     //The MONGO_URI variable is the connection string to MongoDB Atlas (for production). This env variable is created in heroku.
@@ -23,7 +23,7 @@ function connect() {
         app.use(blacklist);
         app.use(express.json());
         app.use("/api", api);
-        admin.use(adminChecker);
+        // admin.use(adminChecker);
         app.use("/admin", admin);
 
         app.listen(process.env.PORT || 5000, () => {

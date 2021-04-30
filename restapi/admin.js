@@ -2,6 +2,9 @@ const express = require("express");
 const TrackedLocation = require('./models/TrackedLocation');
 const Blacklisted = require("./models/Blacklisted");
 const router = express.Router();
+const adminChecker = require("./middleware/AdminChecker");
+
+router.use(adminChecker);
 
 router.get("/users", async (req, res) => {
     const users = await TrackedLocation.distinct("webId");

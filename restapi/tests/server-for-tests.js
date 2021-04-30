@@ -10,7 +10,7 @@ const mongoose = require("mongoose");
 const api = require("../api");
 const auth = require("../middleware/MockAuthMiddleware");
 const blacklist = require("../middleware/BlacklistMiddleware");
-const adminChecker = require("../middleware/AdminChecker");
+// const adminChecker = require("../middleware/AdminChecker");
 const admin = require("../admin");
 
 module.exports.startdb = async () => {
@@ -32,8 +32,8 @@ module.exports.startserver = async () => {
     app.use(auth);
     app.use(blacklist);
     app.use("/api", api);
-    admin.use(adminChecker);
     app.use("/admin", admin);
+    // admin.use(adminChecker);
 
     server = await app.listen(5000);
     console.log("Server has started!");
