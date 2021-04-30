@@ -42,7 +42,7 @@ export default function Location({ childKey, title, description, coords, photo, 
         }
 
         getImg();
-    }, [session, photo]);
+    }, [session, photo, webId]);
 
     const handleOpen = () => {
         setOpen(true);
