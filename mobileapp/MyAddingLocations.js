@@ -1,8 +1,9 @@
-import React, { useState} from "react";
-import { View, Image, TextInput, Text, Button, ScrollView, Pressable} from "react-native";
+import React, { useState } from "react";
+import { View, Image, TextInput, Text, Button, ScrollView, Pressable } from "react-native";
 import { Card, Overlay } from "react-native-elements";
 import styles from "./MyStyles";
 import * as WebBrowser from "expo-web-browser";
+import { getLocation } from "./GetAsyncLocation";
 
 export default function MyOverlay() {
   const [visible, setVisible] = useState(false);
@@ -10,43 +11,49 @@ export default function MyOverlay() {
   const toggleOverlay = () => {
     setVisible(!visible);
   };
-  
-  return(
+
+  return (
     <View style={styles.homeScreenContainer}>
-    <MyPressable onPressing={toggleOverlay}></MyPressable>
-    <Overlay  isVisible={visible} onBackdropPress={toggleOverlay}>
-      <MyForm></MyForm>
-    </Overlay> 
+      <MyPressable onPressing={toggleOverlay}></MyPressable>
+      <Overlay isVisible={visible} onBackdropPress={toggleOverlay}>
+        <MyForm></MyForm>
+      </Overlay>
     </View>)
 }
 
 
-const MyForm = () =>{
+const MyForm = () => {
 
   const [result, setResult] = useState(null);
+  const [title, setTitle] = useState("");
+  const [comment, setComment] = useState("");
 
   const _handlePressButtonAsync = async () => {
     let browserParams = {
       toolbarColor: '#094072'
     };
-    let result = await WebBrowser.openBrowserAsync('https://radarinen3bwebapp.herokuapp.com', browserParams);
+
+    const coords = await getLocation();
+    let uri = "uploadLocation?title=" + title + "&comment=" + comment + "&lat=" + coords.coords.latitude + "&long=" + coords.coords.longitude;
+
+    let result = await WebBrowser.openBrowserAsync("https://radarinen3bwebapp.herokuapp.com/#/" + uri, browserParams);
     setResult(result);
   };
 
-  return(
-    <ScrollView > 
+  return (
+    <ScrollView >
       <Card containerStyle={styles.formCard}>
-          <Text style={styles.cardTitle}>Title</Text>
-          <TextInput placeholder="Title of the ubication" label="Title" style = {styles.titleForm}></TextInput>
-          <Card.Divider style={styles.divider} />
-            <Text style={styles.cardTitle}>Comment</Text>
-            <View style = {styles.commentView}>
-              <TextInput placeholder="Comment here..." label = "Comment" style = {styles.commentForm} multiline={true} ></TextInput>
-            </View>
-            <Card.Divider style={styles.divider} />
-          <Button color='#094072' title="Send location" onPress={_handlePressButtonAsync}></Button>
-        </Card>
-       
+        <Text style={styles.cardTitle}>Title</Text>
+        <TextInput placeholder="Title of the ubication" label="Title" style={styles.titleForm} onChangeText={(title) => setTitle(title)}></TextInput>
+        <Card.Divider style={styles.divider} />
+        <Text style={styles.cardTitle}>Comment</Text>
+        <View style={styles.commentView}>
+          <TextInput placeholder="Comment here..." label="Comment" style={styles.commentForm} multiline={true} onChangeText={(comment) => setComment(comment)}></TextInput>
+        </View>
+        <Card.Divider style={styles.divider} />
+        <Button color='#094072' title="Send location" onPress={_handlePressButtonAsync}></Button>
+      </Card>
+
     </ScrollView>
   )
 }
@@ -56,8 +63,8 @@ const MyForm = () =>{
         <TextInput placeholder="Comment here..." label = "Comment" style = {styles.commentForm}></TextInput>
 */
 
-const MyPressable = ({onPressing}) => {
-  
+const MyPressable = ({ onPressing }) => {
+
   const myStyle = ({ pressed }) => [
     {
       backgroundColor: pressed
@@ -69,6 +76,6 @@ const MyPressable = ({onPressing}) => {
 
 
   return <Pressable activeOpacity={0.7} style={myStyle} onPress={() => onPressing()}>
-  <Image style={styles.icon} source={require("./assets/add-24px.png")}/>
-</Pressable >
+    <Image style={styles.icon} source={require("./assets/add-24px.png")} />
+  </Pressable >
 };
