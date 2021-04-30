@@ -1,8 +1,8 @@
 const express = require("express");
-const TrackedLocation = require("../models/TrackedLocation");
+const TrackedLocation = require("./models/TrackedLocation");
 /*eslint new-cap: ["error", { "capIsNewExceptionPattern": "^express\.." }]*/
 const router = express.Router();
-const webIdQueryChecker = require('../middleware/WebIdQueryChecker');
+const webIdQueryChecker = require('./middleware/WebIdQueryChecker');
 
 router.post("/locations", async (req, res) => {
     const trackedLocation = new TrackedLocation({
