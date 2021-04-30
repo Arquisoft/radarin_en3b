@@ -19,5 +19,7 @@ ENV MONGO_URI=$MONGO_URI
 COPY server.js api.js admin.js ./
 ADD models ./models
 ADD middleware ./middleware
+ADD endpoints ./endpoints
+ADD utils ./utils
 
 CMD [ "node", "server.js" ]
