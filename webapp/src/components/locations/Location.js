@@ -14,14 +14,23 @@ import {
 
 import LocationOnIcon from "@material-ui/icons/LocationOn";
 import { useDispatch } from "react-redux";
-import { moveTo, setPolyline } from "../../redux/slices/locationsSlice";
+import { moveTo, refreshLocations, setPolyline } from "../../redux/slices/locationsSlice";
 import FetchPhoto from "./FetchPhoto";
+import { useSession } from "@inrupt/solid-ui-react";
+import removeLocation from "./RemoveLocation";
 
-export default function Location({ childKey, title, description, coords, photo, date, sess }) {
+export default function Location({ childKey, title, description, coords, photo, date, sess, webId }) {
     const dispatch = useDispatch();
-    const session = sess;
+    let { session } = useSession();
+    
+    if(typeof sess !== "undefined")
+        session = sess;
+
     const [open, setOpen] = useState(false);
+    const [open2, setOpen2] = useState(false);
     const [img, setImg] = useState(null);
+
+    const propietary = session.info.webId === webId;
 
     useEffect(() => {
         async function getImg() {
@@ -40,6 +49,21 @@ export default function Location({ childKey, title, description, coords, photo, 
 
     const handleClose = () => {
         setOpen(false);
+    }
+
+    const handleOpen2 = () => {
+        setOpen2(true);
+    }
+
+    const handleClose2 = () => {
+        setOpen2(false);
+    }
+
+    const removeAndClose = async () => {
+        await removeLocation(session, title, description);
+        dispatch(refreshLocations(session));
+        handleClose2();
+        handleClose();
     }
 
     function onClick() {
@@ -85,6 +109,21 @@ export default function Location({ childKey, title, description, coords, photo, 
                     <img src={img} alt="Location" />
                     <DialogActions>
                         <Button onClick={handleClose} color="primary">Close</Button>
+                        {propietary &&
+                            <Button onClick={handleOpen2} color="secondary">Remove</Button>
+                        }
+                        <Dialog
+                            open={open2}
+                            onClose={handleClose}
+                            aria-labelledby="alert-dialog-title2"
+                            aria-describedby="alert-dialog-description2"
+                        >
+                            <DialogTitle id="alert-dialog-title2">Are you sure?</DialogTitle>
+                            <DialogContent>
+                                <Button onClick={handleClose2} color="primary">Close</Button>
+                                <Button onClick={removeAndClose} color="secondary">Remove</Button>
+                            </DialogContent>
+                        </Dialog>
                     </DialogActions>
                 </DialogContent>
             </Dialog>

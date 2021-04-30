@@ -37,15 +37,16 @@ export default StyleSheet.create({
   commentForm: {
     padding: 0,
     flex: 1,
-    width: 275,
+    width: Dimensions.get('screen').width - 75,
     color: '#032C45',
     flexWrap: "wrap",
     overflow: "scroll",
+    marginBottom: -40
   },
   commentView: {
     padding: 50,
     flex: 1,
-    width: 300,
+    width: Dimensions.get('screen').width - 50,
     alignItems: "center",
     justifyContent: "center",
     paddingHorizontal: 5,
@@ -54,7 +55,7 @@ export default StyleSheet.create({
     
   },
   formCard: {
-    width: 300,
+    width: Dimensions.get('screen').width - 50,
     justifyContent: 'center',
     borderRadius:5,
     padding:10,
@@ -86,21 +87,21 @@ export default StyleSheet.create({
     alignSelf: 'baseline',
     bottom: 20,
     borderRadius: 30,
-    marginLeft: 300,
+    marginLeft: Dimensions.get('screen').width - 60,
     zIndex: 1
   },
   menu: {
     flex: 1,
-    width: 220,
+    width: Dimensions.get('screen').width - 100,
   },
   menuitem: {
-    flex: 1,
-    width: 200
+    flex: 0,
+    width: Dimensions.get('screen').width - 150
   },
   menuwrapper: {
     position: 'absolute',
-    width: 200,
-    height: 200,
+    width: Dimensions.get('screen').width - 150,
+    height: Dimensions.get('screen').height - 150,
   },
   textInput: {
     height: 40,
@@ -111,14 +112,14 @@ export default StyleSheet.create({
     margin:20
   },
   card: {
-    width: 360,
+    width: Dimensions.get('screen').width - 28,
     justifyContent: 'center',
     borderRadius:5,
     padding:10,
     borderColor: '#0A4A84',
   },
   nofriendscard: {
-    width: 360,
+    width: Dimensions.get('screen').width - 28,
     justifyContent: 'center',
     borderRadius:5,
     padding:10,
