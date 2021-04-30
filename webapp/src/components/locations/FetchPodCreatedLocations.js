@@ -28,9 +28,14 @@ export default async function FetchPodCreatedLocations(session, lastId) {
     existing.forEach(async location => {
         const text = getStringNoLocaleAll(location, "http://schema.org/text");
 
+        const name = text.filter(t => t.includes("Title:"))[0].split("Title:")[1];
+        const details = text.filter(t => t.includes("Desc:"))[0].split("Desc:")[1];
+        const coords = text.filter(t => t.includes("Coords:"))[0].split("Coords:")[1];
+        const photo = text.filter(t => t.includes("Photo:"))[0].split("Photo:")[1];
+
         const date = getDatetime(location, "http://www.w3.org/2002/12/cal/ical#created");
 
-        createdLocations.push({ type: "loc", id: counter++, name: text[1], details: text[0], coords: [JSON.parse(text[2])], photo: text[3], date: new Date(date).toLocaleDateString("es-ES", options), webId: session.info.webId })
+        createdLocations.push({ type: "loc", id: counter++, name: name, details: details, coords: [JSON.parse(coords)], photo: photo, date: new Date(date).toLocaleDateString("es-ES", options), webId: session.info.webId })
     });
 
     return createdLocations;  

@@ -14,7 +14,7 @@ import {
 
 import LocationOnIcon from "@material-ui/icons/LocationOn";
 import { useDispatch } from "react-redux";
-import { moveTo, setPolyline } from "../../redux/slices/locationsSlice";
+import { moveTo, refreshLocations, setPolyline } from "../../redux/slices/locationsSlice";
 import FetchPhoto from "./FetchPhoto";
 import { useSession } from "@inrupt/solid-ui-react";
 import removeLocation from "./RemoveLocation";

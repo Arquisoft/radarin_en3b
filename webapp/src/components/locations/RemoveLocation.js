@@ -1,4 +1,4 @@
-import { getSolidDataset, getThing, getUrlAll, getSourceUrl, getThingAll, getStringNoLocaleAll, removeThing, saveSolidDatasetAt, isThing } from "@inrupt/solid-client";
+import { getSolidDataset, getThing, getUrlAll, getSourceUrl, getThingAll, getStringNoLocaleAll, removeThing, saveSolidDatasetAt, deleteFile } from "@inrupt/solid-client";
 import getOrCreatePublicFilePod from "../../utils/GetOrCreatePublicFilePod";
 
 export default async function removeLocation(session, title, description) {
@@ -22,18 +22,27 @@ export default async function removeLocation(session, title, description) {
 
     let updatedDataset;
     let flag = true;
+    let photoName = "";
 
     existing.forEach(location => {
         const text = getStringNoLocaleAll(location, "http://schema.org/text");
 
-        const name = text[1];
-        const details = text[0];
+        const name = text.filter(t => t.includes("Title:"))[0].split("Title:")[1];
+        const details = text.filter(t => t.includes("Desc:"))[0].split("Desc:")[1];
 
         if(name === title && description === details && flag) {
+            photoName = text.filter(t => t.includes("Photo:"))[0].split("Photo:")[1];
             updatedDataset = removeThing(dataset, location);
             flag = false;
         }
     }); 
+
+    if(photoName !== "") {
+        await deleteFile(
+            `${containerUri}/${photoName}`,
+            { fetch: session.fetch },
+        );
+    }        
     
     await saveSolidDatasetAt(locationsUrl, updatedDataset, { fetch: session.fetch });
 }
