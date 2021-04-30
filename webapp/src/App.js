@@ -4,9 +4,10 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import About from "./components/About";
 import { Switch, Route } from "react-router-dom";
 import MainNavbar from "./components/MainNavbar";
-import { Router } from "react-router-dom";
+import { HashRouter as Router } from "react-router-dom";
 import MainFooter from "./components/MainFooter";
 import LocationsView from "./components/LocationsView";
+import UploadLocation from "./components/UploadLocation";
 import MainView from "./components/MainView";
 import LoginPage from "./components/LoginPage";
 import QRPage from "./components/QRPage";
@@ -15,42 +16,23 @@ import {
   handleIncomingRedirect,
   onSessionRestore
 } from "@inrupt/solid-client-authn-browser";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setLogguedStatus } from "./redux/slices/userSlice";
-import { createBrowserHistory } from "history";
+import { createHashHistory } from "history";
 
 export default function App() {
   const dispatch = useDispatch();
-  const history = createBrowserHistory();
-
-  const routes = (
-    <Switch>
-      <Route exact path="/">
-        <MainView />
-      </Route>
-      <Route path="/locations">
-        <LocationsView />
-      </Route>
-      <Route path="/about">
-        <About />
-      </Route>
-      <Route path="/login">
-        <LoginPage></LoginPage>
-      </Route>
-      <Route path="/qr">
-        <QRPage></QRPage>
-      </Route>
-      <Route path="/help">
-        <HelpPage></HelpPage>
-      </Route>
-    </Switch>
-  )
+  const history = createHashHistory();
+  const limitedVersion = useSelector(state => state.user.limitedVersion);
 
   onSessionRestore((url) => {
-    history.push("/");
+    //https://radarinen3bwebapp.herokuapp.com/about
+    const uri = url.split("//")[1].split("/")[2];
+    history.push(uri);
   });
 
   useEffect(() => {
+    document.title = "Radarin";
     handleIncomingRedirect({
       restorePreviousSession: true
     }).then(() => {
@@ -58,18 +40,66 @@ export default function App() {
     });
   }, [dispatch]);
 
-  return (
-    <span>
-      <Router history={history}>
+  let content;
+
+  if (limitedVersion) {
+    content = (
+      <div className="App">
+        <header>
+          <MainNavbar />
+        </header>
+        <br /><br /><br /><br /><br/>
+        <Switch>
+          <Route path="/uploadLocation">
+            <UploadLocation/>
+          </Route>
+          <Route path="/login">
+              <LoginPage redirectUrl="/uploadLocation"/>
+            </Route>
+        </Switch>
+      </div>
+    );
+  } else {
+    content = (
+      <div>
         <div className="App">
           <header>
             <MainNavbar />
           </header>
           <br /><br /><br /><br />
-          {routes}
+          <Switch>
+            <Route path="/locations">
+              <LocationsView />
+            </Route>
+            <Route path="/about">
+              <About />
+            </Route>
+            <Route path="/login">
+              <LoginPage/>
+            </Route>
+            <Route path="/qr">
+              <QRPage/>
+            </Route>
+            <Route path="/uploadLocation">
+              <UploadLocation/>
+            </Route>
+            <Route path="/help">
+              <HelpPage/>
+            </Route>
+            <Route path="/">
+              <MainView />
+            </Route>
+          </Switch>
         </div>
         <MainFooter />
-      </Router>
-    </span>
+      </div>
+    );
+  }
+
+
+  return (
+    <Router history={history}>
+      {content}
+    </Router>
   );
 }

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import { useSession, CombinedDataProvider, Text } from "@inrupt/solid-ui-react";
 import { Link } from "react-router-dom";
@@ -7,7 +7,7 @@ import { FOAF } from "@inrupt/lit-generated-vocab-common";
 import Button from "@material-ui/core/Button";
 import { LogoutButton } from "@inrupt/solid-ui-react";
 import Navbar from "react-bootstrap/Navbar";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setLogguedStatus } from "../redux/slices/userSlice";
 import { NavDropdown } from "react-bootstrap";
 import CodeIcon from "@material-ui/icons/Code";
@@ -16,13 +16,24 @@ import NavLink from "react-bootstrap/NavLink";
 import "../css/MainNavbar.css";
 import Logo from "../img/radarin_logo.png";
 import { useHistory } from "react-router-dom";
+import { fetchLocations } from "../redux/slices/locationsSlice";
 
 
-function NavbarSession() {
+function NavbarSession(props) {
     const { session } = useSession();
-    const { webId } = session.info;
+    let { webId } = session.info;
+    if (typeof props.webId !== "undefined")
+        webId = props.webId;
     const dispatch = useDispatch();
     const history = useHistory();
+    const limitedVersion = useSelector(state => state.user.limitedVersion);
+
+
+    useEffect(() => {
+        if (typeof webId !== "undefined" && webId.includes("https://")) {
+            dispatch(fetchLocations(session));
+        }
+    });
 
     const dropdownTitle = (
         <span>
@@ -35,38 +46,55 @@ function NavbarSession() {
 
 
     function logout() {
-        console.log("clicked");
         dispatch(setLogguedStatus(false));
         session.info.isLoggedIn = false;
         history.push("/login");
     }
 
     return (
-        <Navbar bg="white" expand="lg" className="navBar fixed-top align-items center shadow rounded">
-            <Navbar.Brand as={Link} to="/" className="mb-1">
-                <img src={Logo} alt="Radarin Logo"></img>
-            </Navbar.Brand>
+        <Navbar bg="white" expand="lg" className="navBar fixed-top align-items center shadow rounded" >
+            { !limitedVersion &&
+                <Navbar.Brand as={Link} to="/" className="mb-1">
+                    <img src={Logo} alt="Radarin Logo"></img>
+                </Navbar.Brand>
+            }
+            { limitedVersion &&
+                <Navbar.Brand className="mb-1">
+                    <img src={Logo} alt="Radarin Logo"></img>
+                </Navbar.Brand>
+            }
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
-            <Navbar.Collapse id="basic-navbar-nav">
-                <Nav className="mr-auto">
-                    {NavbarItems.map((item, index) => {
-                        return (
-                            <NavLink key={item.key} id={item.id} className={item.cName} as={Link} to={item.url}>
-                                {item.title}
-                            </NavLink>
-                        )
-                    })}
-                </Nav>
+            <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
+                {!limitedVersion &&
+                    <Nav className="mr-auto">
+                        {NavbarItems.map((item, index) => {
+                            return (
+                                <NavLink key={item.key} className={item.cName} as={Link} to={item.url} id={item.id}>
+                                    {item.title}
+                                </NavLink>
+                            )
+                        })}
+                    </Nav>
+                }
                 <Nav>
-                    <NavDropdown title={dropdownTitle} className="nav-item mr-3" id=".fifth-step">
-                        <NavDropdown.Item as={Link} to="/qr" id=".fifth.5-step">
-                            <CodeIcon className="mr-2"/>
-                            QR
-                        </NavDropdown.Item>
-                    </NavDropdown>
+                    {!limitedVersion &&
+                        <NavDropdown title={dropdownTitle} className="nav-item mr-3" id=".fifth-step">
+                            
+                                <NavDropdown.Item as={Link} to="/qr">
+                                    <CodeIcon className="mr-2" />
+                                QR
+                                </NavDropdown.Item>
+                            
+                        </NavDropdown>
+                    }
+                    
+                    {limitedVersion &&
+                        <Navbar.Text className="nav-item mr-3">{dropdownTitle}</Navbar.Text>
+                    }
                     <LogoutButton>
                         <Button color="primary" variant="contained" className="ml-3 mr-2" id="logoutButton" onClick={logout}>Log out</Button>
                     </LogoutButton>
+                    
                 </Nav>
             </Navbar.Collapse>
         </Navbar >

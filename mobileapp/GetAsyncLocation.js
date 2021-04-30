@@ -47,7 +47,19 @@ export async function getLocationAsync() {
 }
 
 export async function getLocation() {
-    let location = await Location.getCurrentPositionAsync();
+    let location;
+    if (await Location.getPermissionsAsync() != "granted"){
+        if (AsyncStorage.getItem("backgroundLocation") != "active"){
+            await Location.requestPermissionsAsync();
+            location = await Location.getCurrentPositionAsync();
+        } else {
+            location = null;
+        }
+    }else{
+        location = await Location.getCurrentPositionAsync();
+    }
+        
+
     //let location = null;
     //sendLocation(location.coords, location.timestamp);
     //alert("location has been sent");

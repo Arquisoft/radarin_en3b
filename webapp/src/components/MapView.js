@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { MapContainer, TileLayer, Marker, Popup, Polyline } from "react-leaflet";
+import { MapContainer, TileLayer, Marker, Polyline, Popup } from "react-leaflet";
 import "react-leaflet/";
 import { useSelector } from "react-redux";
 
@@ -19,7 +19,8 @@ export default function MapView() {
         }
     });
 
-    if (polyline === []) {
+
+    if (polyline.length === 0) {
         result = (
             <MapContainer
                 whenCreated={(map) => setMap(map)}
@@ -33,9 +34,7 @@ export default function MapView() {
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                 />
                 <Marker position={coordinates}>
-                    <Popup>
-                        A pretty CSS3 popup. <br /> Easily customizable.
-                </Popup>
+                    <Popup></Popup>
                 </Marker>
             </MapContainer>);
     } else {

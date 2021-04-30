@@ -23,7 +23,6 @@ const initialState = {
     friendsStatus: "idle",
     closeFriendsStatus: "idle",
     profileStatus: "idle",
-    doOnce: false,
     friendsError: null,
     closeFriendsError: null,
     profileError: null,
@@ -37,9 +36,6 @@ export const userSlice = createSlice({
     reducers: {
         backToIdle: (state, action) => {
             state.friendsStatus = "idle";
-        },
-        doOnce: (state, action) => {
-            state.doOnce = true;
         },
     },
     extraReducers: {
@@ -82,4 +78,4 @@ export const userSlice = createSlice({
 
 export default userSlice.reducer;
 
-export const { backToIdle, doOnce } = userSlice.actions;
+export const { backToIdle} = userSlice.actions;

@@ -32,7 +32,7 @@ export default function HelpPage() {
       },
       {
         selector: '[id=".fifth-step"]',
-        content: "If you click here you would be able to access the qr page.",
+        content: "If you click here you would be able to see all options regarding your Radarin Account.",
         position: "bottom",
       },
     ];

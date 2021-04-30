@@ -18,7 +18,6 @@ export default function Polyline({ childKey, name, details, coords }) {
         dispatch(setPolyline(coords));
     }
 
-    //const textCoords = () => `${props.coords.latitude}, ${props.coords.longitude}`;
     return (
         <ListItem
             button

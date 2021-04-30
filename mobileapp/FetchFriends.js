@@ -7,7 +7,7 @@ export async function getFriends(webId) {
   //TODO: do it only once
   const locations = await getFriendsLocation(friends);
 
-  return friends.filter(friend => Array.from(Object.keys(locations)).includes(friend.webId));
+  return friends.filter(friend => locations.some(location => location[0] == friend.webId));
 }
 
 export async function getFriendsWithDistance(friends) {
@@ -16,16 +16,14 @@ export async function getFriendsWithDistance(friends) {
     return friendsWithDistance;
   }
 
-  let names = getNames(friends, friendsWithDistance);
-  return names;
+  return getNames(friends, friendsWithDistance);
 }
 
 export const getFriendsNames = (friends) => friends.map(f => f.fn ?? f.webId);
 
 
-const getNames = (friends, friendsWithDistance) => friends.filter(friend => friendsWithDistance.has(friend.value))
-  .map(name => ({name, fn: rdfStore.getNameIfPossible(name)}))
+const getNames = (friends, friendsWithDistance) => friends.filter(friend => friendsWithDistance.has(friend.webId))
   .reduce((map, x) => ({
     ...map,
-    [x.fn?.value ?? x.name.value]: { value: friendsWithDistance.get(x.name.value).value, mapsUrl: friendsWithDistance.get(x.name.value).mapsUrl }
+    [x.fn ?? x.webId]: { value: friendsWithDistance.get(x.webId).value, mapsUrl: friendsWithDistance.get(x.webId).mapsUrl }
   }), {});

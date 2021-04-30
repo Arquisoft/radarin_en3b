@@ -9,15 +9,18 @@ import NavbarSession from '../components/NavbarSession';
 jest.setTimeout(10000);
 
 test("user is not loggued in by default", async () => {
-    const { getAllByRole } = render(<BrowserRouter><Provider store={store}><NavbarSession /></Provider></BrowserRouter>);
+
+    const webId = "https://radarin.inrupt.net/profile/card#me";
+
+    const { getAllByRole } = render(<BrowserRouter><Provider store={store}><NavbarSession webId={webId}/></Provider></BrowserRouter>);
 
     const logout = getAllByRole("button", { name: "Log out" });
 
-    //console.log(logout);
-
     expect(logout[0]).toBeInTheDocument();
-
     fireEvent.click(logout[0]);
+
+    expect(logout[1]).toBeInTheDocument();
+    fireEvent.click(logout[1]);
 
     await new Promise(res => setTimeout(() => {
         expect(true).toBe(true);
