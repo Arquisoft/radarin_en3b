@@ -18,6 +18,7 @@ import { moveTo, refreshLocations, setPolyline } from "../../redux/slices/locati
 import FetchPhoto from "./FetchPhoto";
 import { useSession } from "@inrupt/solid-ui-react";
 import removeLocation from "./RemoveLocation";
+import "../../css/Location.css";
 
 export default function Location({ childKey, title, description, coords, photo, date, sess, webId }) {
     const dispatch = useDispatch();
@@ -34,7 +35,7 @@ export default function Location({ childKey, title, description, coords, photo, 
 
     useEffect(() => {
         async function getImg() {
-            const imgBlob = await FetchPhoto(session, photo);
+            const imgBlob = await FetchPhoto(session, photo, webId);
 
             const imgUrl = URL.createObjectURL(imgBlob);
             setImg(imgUrl);

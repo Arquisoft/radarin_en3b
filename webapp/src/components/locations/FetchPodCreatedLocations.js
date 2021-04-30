@@ -22,7 +22,7 @@ export default async function FetchPodCreatedLocations(session, lastId) {
 
 
     let createdLocations = [];
-    let counter = lastId;
+    let counter = lastId + 1;
     const options = { year: 'numeric', month: 'numeric', day: 'numeric' };
 
     existing.forEach(async location => {
