@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const blacklisted = mongoose.Schema({
+const blacklisted = new mongoose.Schema({
     webId: { type: String, required: true, unique: true }
 });
 
