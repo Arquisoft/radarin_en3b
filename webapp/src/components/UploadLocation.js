@@ -25,7 +25,7 @@ export default function UploadLocation() {
     let description;
     let coords;
 
-    if (urlParams !== "/uploadLocation") {
+    if (typeof urlParams !== "undefined" && urlParams !== "/uploadLocation") {
         urlParamsArray = urlParams.split("?")[1].split("&");
 
         //This should be passed to the constructor
