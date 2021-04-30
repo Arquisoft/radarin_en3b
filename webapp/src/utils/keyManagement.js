@@ -10,6 +10,7 @@ let pair;
 export default async function keyManagement(sessionP, pairP) {
     session = sessionP;
     pair = pairP;
+    console.log(pair);
     publicKey = pair.public;
     privateKey = pair.private;
     const profileDataset = await getSolidDataset(session.info.webId, {

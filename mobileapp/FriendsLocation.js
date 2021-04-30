@@ -14,6 +14,9 @@ export async function getFriendsLocation(friends) {
                 method: 'GET',
                 headers: { 'Content-Type': 'application/json', 'Authorization': "Bearer " + auth }
             })));
+
+            console.log(auth);
+        
         const locations = await Promise.all(responses.map(r => r.json()));
         
         return locations.map(location => [location.webId, location]);

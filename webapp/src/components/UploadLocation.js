@@ -9,8 +9,9 @@ import AddPhotoAlternateIcon from '@material-ui/icons/AddPhotoAlternate';
 import "../css/UploadLocation.css";
 import postLocation from "./locations/PostLocation";
 import { useSession } from '@inrupt/solid-ui-react';
-import { useDispatch } from 'react-redux';
-import { setLimitedVersion } from '../redux/slices/userSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { setLimitedVersion, setUrlParams } from '../redux/slices/userSlice';
+import { useHistory } from 'react-router';
 
 export default function UploadLocation() {
 
@@ -18,15 +19,32 @@ export default function UploadLocation() {
     const [photoURL, setPhotoURL] = useState(null);
     const { session } = useSession();
     const dispatch = useDispatch();
+    const urlParams = useSelector(state => state.user.urlParams);
 
-    //This should be passed to the constructor
-    const title = "Title";
-    const description = "Sample text";
-    const coords = "[80,-4]";
+    let urlParamsArray;
+    let title;
+    let description;
+    let coords;
+
+    if (urlParams !== "/uploadLocation") {
+        urlParamsArray = urlParams.split("?")[1].split("&");
+
+        //This should be passed to the constructor
+        title = urlParamsArray[0].split("=")[1];
+        description = urlParamsArray[1].split("=")[1];
+        const lat = urlParamsArray[2].split("=")[1];
+        const long = urlParamsArray[3].split("=")[1];
+
+        coords = [parseInt(lat), parseInt(long)];
+    }
 
 
     useEffect(() => {
+        const params = window.location.hash.split("#")[1];
+        dispatch(setUrlParams(params));
         dispatch(setLimitedVersion(true));
+
+
     });
 
     const onClick = () => {
@@ -71,7 +89,7 @@ export default function UploadLocation() {
 
                     <Row>
                         <Col>
-                            <img className="picture" alt="location uploaded" src={photoURL}/>
+                            <img className="picture" alt="location uploaded" src={photoURL} />
                         </Col>
                     </Row>
                 </Jumbotron>
