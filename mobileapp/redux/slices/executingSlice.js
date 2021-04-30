@@ -12,10 +12,10 @@ export const executingSlice = createSlice({
     initialState,
     reducers: {
         doOnce: (state, action) => {
-            state.doOnce = true;
+            state.doOnce = !state.doOnce;
         },
         doOnceNotifications: (state, action) => {
-            state.doOnceNotifications = true;
+            state.doOnceNotifications = !state.doOnce;
         },
         setExpoPushToken: (state, action) => {
             state.expoPushToken = action.payload;

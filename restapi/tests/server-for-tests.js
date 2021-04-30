@@ -4,23 +4,25 @@ This will be handy for testing
 */
 
 const { MongoMemoryServer } = require('mongodb-memory-server');
-const express = require("express")
+const express = require("express");
 const cors = require('cors');
-const mongoose = require("mongoose")
-const api = require("../api") 
-const auth = require("../middleware/MockAuthMiddleware")
-
+const mongoose = require("mongoose");
+const api = require("../api");
+const auth = require("../middleware/Auth");
+const blacklist = require("../middleware/Blacklist");
+// const adminChecker = require("../middleware/AdminChecker");
+const admin = require("../endpoints/admin");
 
 module.exports.startdb = async () => {
-    mongod = new MongoMemoryServer({ instance: { port: 27017,dbName: 'testdb'}});
-    const mongo_uri =await mongod.getUri();
+    mongod = new MongoMemoryServer({ instance: { port: 27017, dbName: 'testdb' } });
+    const mongo_uri = await mongod.getUri();
     console.log(mongo_uri);
-    
-}
+
+};
 
 module.exports.startserver = async () => {
     console.log("conecceting to database");
-    await mongoose.connect("mongodb://127.0.0.1:27017/testdb?", { useNewUrlParser: true,useUnifiedTopology: true });
+    await mongoose.connect("mongodb://127.0.0.1:27017/testdb?", { useNewUrlParser: true, useUnifiedTopology: true });
     console.log("connected");
     app = express();
 
@@ -28,22 +30,25 @@ module.exports.startserver = async () => {
     app.options('*', cors());
     app.use(express.json());
     app.use(auth);
+    app.use(blacklist);
     app.use("/api", api);
+    app.use("/admin", admin);
+    // admin.use(adminChecker);
 
     server = await app.listen(5000);
     console.log("Server has started!");
     return app;
-}
+};
 
 module.exports.closeServer = async () => {
     await mongoose.connection.dropDatabase();
     await mongoose.connection.close();
     await server.close();
-}
+};
 
 module.exports.closeDB = async () => {
     await mongod.stop();
-}
+};
 
 module.exports.clearDatabase = async () => {
     const collections = mongoose.connection.collections;
@@ -52,4 +57,4 @@ module.exports.clearDatabase = async () => {
         const collection = collections[key];
         await collection.deleteMany();
     }
-}
+};

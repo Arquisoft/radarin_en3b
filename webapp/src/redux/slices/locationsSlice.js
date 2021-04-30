@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import fetchDBLocations from "../../components/locations/FetchDBLocations";
 import fetchPodCreatedLocations from "../../components/locations/FetchPodCreatedLocations";
+import fetchPodFriendsCreatedLocations from "../../components/locations/FetchPodFriendsCreatedLocations";
 
 export const fetchLocations = createAsyncThunk("locations/fetchLocations", async (session) => {
     return await getLocations(session);
@@ -16,18 +17,15 @@ async function getLocations(session) {
 
     let podLocations = await fetchPodCreatedLocations(session, [ apiLocations[apiLocations.length - 1]?.id ?? 0]);
 
+    let podFriendsLocations = await fetchPodFriendsCreatedLocations(session, [ podLocations[podLocations.length - 1]?.id ?? 0]);
 
-    if (apiLocations.length === 0) {
-        if(podLocations.length === 0)
-            return [{ type: "poly", id: 1, name: "You dont have any locations", details: "Add some from the mobile!", coords: [[0, 0]] }]
-        else
-            return podLocations;
-    } else {
-        if(podLocations.length === 0)
-            return apiLocations;
-        else 
-            return podLocations.concat(apiLocations);
-    }
+    const result = podLocations.concat(podFriendsLocations).concat(apiLocations);
+    
+
+    if(result.length === 0)
+        return [{ type: "poly", id: 1, name: "You dont have any locations", details: "Add some from the mobile!", coords: [[0, 0]] }]
+    else
+        return result;
 }
 
 

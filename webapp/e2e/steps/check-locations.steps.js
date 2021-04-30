@@ -1,12 +1,12 @@
 const { defineFeature, loadFeature } = require("jest-cucumber");
 const feature = loadFeature("./features/check-locations.feature");
-
 defineFeature(feature, (test) => {
 
     beforeEach(async () => {
         /*global page*/
         /*eslint no-undef: "error"*/
-       // await global.page.goto("http://localhost:3000");
+        //await page.setDefaultNavigationTimeout(0);
+        //await global.page.goto("http://localhost:3000");
     });
 
     test("The user can see his locations correctly", ({ given, when, then, and }) => {

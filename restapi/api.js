@@ -10,7 +10,7 @@ router.post("/locations", async (req, res) => {
         coords: req.body.coords,
         timestamp: req.body.timestamp
     });
-    trackedLocation.save();
+    await trackedLocation.save();
     res.send(trackedLocation);
 });
 
@@ -29,7 +29,6 @@ router.get("/locations", async (req, res) => {
     const userLocations = await TrackedLocation.find({ webId }).sort({ timestamp: -1 });
     if (userLocations == null)
         return res.send([]);
-    console.log(userLocations);
     res.send(userLocations);
 });
 

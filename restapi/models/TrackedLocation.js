@@ -1,7 +1,7 @@
 /*eslint new-cap: ["error", { "capIsNewExceptionPattern": "^mongoose\.." }]*/
 const mongoose = require("mongoose");
 
-const geolocationSchema = mongoose.Schema({
+const geolocationSchema = new mongoose.Schema({
     accuracy: { type: Number, required: true },
     altitude: Number,
     altitudeAccuracy: Number,
@@ -11,11 +11,10 @@ const geolocationSchema = mongoose.Schema({
     speed: Number
 });
 
-const trackedLocationSchema = mongoose.Schema({
+const trackedLocationSchema = new mongoose.Schema({
     webId: {type: String, required: true},
     coords: {type: geolocationSchema, required: true},
-    timestamp: {type: Number, required: true},
-    loc_name: {type: String, required: false}
+    timestamp: {type: Number, required: true}
 });
 
 module.exports = mongoose.model("TrackedLocation", trackedLocationSchema);
