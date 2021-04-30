@@ -26,8 +26,6 @@ export default function LoadingScreen({ route, navigation }) {
   
 
   useEffect(() => {
-    console.log("Friends: " + friendsStatus);
-    console.log("CloseFriends: " + closeFriendsStatus);
     if (profileStatus === "idle") {
       dispatch(fetchProfile(webId));
 
