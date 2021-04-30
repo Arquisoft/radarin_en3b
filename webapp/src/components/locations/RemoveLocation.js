@@ -1,7 +1,7 @@
-import { getSolidDataset, getThing, getUrlAll, getSourceUrl, getThingAll, getStringNoLocaleAll, getDatetime } from "@inrupt/solid-client";
+import { getSolidDataset, getThing, getUrlAll, getSourceUrl, getThingAll, getStringNoLocaleAll, removeThing, saveSolidDatasetAt, deleteFile } from "@inrupt/solid-client";
 import getOrCreatePublicFilePod from "../../utils/GetOrCreatePublicFilePod";
 
-export default async function FetchPodCreatedLocations(session, lastId) {
+export default async function removeLocation(session, title, description) {
     const profileDataset = await getSolidDataset(session.info.webId, {
         fetch: session.fetch,
     });
@@ -20,23 +20,29 @@ export default async function FetchPodCreatedLocations(session, lastId) {
     const locationsUrl = getSourceUrl(dataset);
     const existing = getThingAll(dataset, locationsUrl);
 
+    let updatedDataset;
+    let flag = true;
+    let photoName = "";
 
-    let createdLocations = [];
-    let counter = lastId;
-    const options = { year: 'numeric', month: 'numeric', day: 'numeric' };
-
-    existing.forEach(async location => {
+    existing.forEach(location => {
         const text = getStringNoLocaleAll(location, "http://schema.org/text");
 
         const name = text.filter(t => t.includes("Title:"))[0].split("Title:")[1];
         const details = text.filter(t => t.includes("Desc:"))[0].split("Desc:")[1];
-        const coords = text.filter(t => t.includes("Coords:"))[0].split("Coords:")[1];
-        const photo = text.filter(t => t.includes("Photo:"))[0].split("Photo:")[1];
 
-        const date = getDatetime(location, "http://www.w3.org/2002/12/cal/ical#created");
+        if(name === title && description === details && flag) {
+            photoName = text.filter(t => t.includes("Photo:"))[0].split("Photo:")[1];
+            updatedDataset = removeThing(dataset, location);
+            flag = false;
+        }
+    }); 
 
-        createdLocations.push({ type: "loc", id: counter++, name: name, details: details, coords: [JSON.parse(coords)], photo: photo, date: new Date(date).toLocaleDateString("es-ES", options), webId: session.info.webId })
-    });
-
-    return createdLocations;  
+    if(photoName !== "") {
+        await deleteFile(
+            `${containerUri}/${photoName}`,
+            { fetch: session.fetch },
+        );
+    }        
+    
+    await saveSolidDatasetAt(locationsUrl, updatedDataset, { fetch: session.fetch });
 }
