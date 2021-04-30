@@ -11,7 +11,6 @@ import postLocation from "./locations/PostLocation";
 import { useSession } from '@inrupt/solid-ui-react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setLimitedVersion, setUrlParams } from '../redux/slices/userSlice';
-import { useHistory } from 'react-router';
 
 export default function UploadLocation() {
 
