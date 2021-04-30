@@ -20,7 +20,6 @@ async function getLocations(session) {
     let podFriendsLocations = await fetchPodFriendsCreatedLocations(session, [ podLocations[podLocations.length - 1]?.id ?? 0]);
 
     const result = podLocations.concat(podFriendsLocations).concat(apiLocations);
-    
 
     if(result.length === 0)
         return [{ type: "poly", id: 1, name: "You dont have any locations", details: "Add some from the mobile!", coords: [[0, 0]] }]
@@ -37,7 +36,6 @@ const initialState = {
     error: null,
     locations: [],
     polyline: [],
-    picture: null,
 };
 
 export const locationsSlice = createSlice({
@@ -53,9 +51,6 @@ export const locationsSlice = createSlice({
         setPolyline: (state, action) => {
             state.polyline = action.payload
         },
-        setPicture: (state, action) => {
-            state.picture = action.payload
-        }
     },
     extraReducers: {
         [fetchLocations.pending]: (state, action) => {
@@ -85,6 +80,6 @@ export const locationsSlice = createSlice({
     }
 });
 
-export const { moveTo, setSearchText, setPolyline, setPicture } = locationsSlice.actions;
+export const { moveTo, setSearchText, setPolyline } = locationsSlice.actions;
 
 export default locationsSlice.reducer;

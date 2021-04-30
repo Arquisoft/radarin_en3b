@@ -28,10 +28,13 @@ export default function LocationList(props) {
 
 
     useEffect(() => {
+        console.log("Refresh: " + refreshStatus);
+        console.log("normal" + locationStatus);
         if (locationStatus === "idle") {
             dispatch(fetchLocations(session));
         } else if (locationStatus === "succeeded" && refreshStatus === "idle") {
             setTimeout(() => {
+                console.log("entrar entra");
                 dispatch(refreshLocations(session));
             }, 30000);
         }

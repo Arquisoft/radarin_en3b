@@ -1,7 +1,7 @@
 import { getSolidDataset, getThing, getUrlAll, getSourceUrl, getThingAll, getStringNoLocaleAll, getDatetime } from "@inrupt/solid-client";
 import getOrCreatePublicFilePod from "../../utils/GetOrCreatePublicFilePod";
 
-export default async function FetchPodFriendsCreatedLocations(session, lastId) {
+export default async function fetchPodFriendsCreatedLocations(session, lastId) {
     
     let createdLocations = [];
     
@@ -16,7 +16,6 @@ export default async function FetchPodFriendsCreatedLocations(session, lastId) {
     );
 
     for (let friend of friends){
-        
         let friendLocs = await fetchFriendLocations(friend, session, lastId);
 
         for (let loc of friendLocs){

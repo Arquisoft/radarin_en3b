@@ -1,15 +1,26 @@
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import "@testing-library/jest-dom/extend-expect";
 import { Provider } from "react-redux";
 import store from "../redux/store";
 import LocationsList from '../components/LocationsList';
 import "@testing-library/jest-dom/extend-expect";
 import { SolidNodeClient } from 'solid-node-client';
+import fetchDBLocations from "../components/locations/FetchDBLocations";
+import fetchPodCreatedLocations from "../components/locations/FetchPodCreatedLocations";
+import fetchPodFriendsCreatedLocations from "../components/locations/FetchPodFriendsCreatedLocations";
 
-jest.setTimeout(60000);
+jest.mock("../components/locations/FetchDBLocations");
+jest.mock("../components/locations/FetchPodCreatedLocations");
+jest.mock("../components/locations/FetchPodFriendsCreatedLocations");
+
+jest.setTimeout(50000);
+
 
 test("testing location fetching 2", async () => {
     global.URL.createObjectURL = jest.fn();
+    fetchDBLocations.mockReturnValue([]);
+    fetchPodCreatedLocations.mockReturnValue([]);
+    fetchPodFriendsCreatedLocations.mockReturnValue([]);
 
     const client = new SolidNodeClient({
         handlers: { https: 'solid-client-authn-node' }
@@ -22,24 +33,12 @@ test("testing location fetching 2", async () => {
         oidcIssuer: "https://solidcommunity.net",
     });
 
-    const { getAllByRole } = render(<Provider store={store}><LocationsList sess={sessionNew}/></Provider>);
+    render(<Provider store={store}><LocationsList sess={sessionNew}/></Provider>);
 
 
     const loading = screen.getAllByText("Loading...")[0];
 
     expect(loading).toBeInTheDocument();
-
-
-    // Need to wait for the qr to load, didn't find another way
-    await new Promise(res => setTimeout(() => {
-        expect(true).toBe(true);
-        res();
-        const open = getAllByRole("button", { name: "Open" })[0];
-
-        expect(open).toBeInTheDocument();
-    }, 45000));
-
-
 
     sessionNew.logout();
 });

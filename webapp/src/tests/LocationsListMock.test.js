@@ -31,3 +31,25 @@ test("testing search bar", async () => {
 
     expect(searchBar2[0]).toBeInTheDocument();
 });
+
+test("testing polyline", async () => {
+    let counter = 0;
+    redux.useSelector.mockImplementation(() => {
+        counter += 1;
+        if(counter === 3)
+            return [{ type: "poly", key: 2, childKey: 3, name: "test", details: "a test", coords: [0,0]}];
+        else if(counter === 4)
+            return "";
+        return "succeeded";
+    });
+
+    const { getAllByRole } = render(<Provider store={store}><LocationsListMock/></Provider>);
+
+    const searchBar2 = getAllByRole("textbox");
+
+
+    fireEvent.focus(searchBar2[0]);
+    fireEvent.change(searchBar2[0], { target: { value: "a" }});
+
+    expect(searchBar2[0]).toBeInTheDocument();
+});
