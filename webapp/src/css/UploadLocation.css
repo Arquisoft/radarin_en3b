@@ -29,3 +29,16 @@
   transform: scale(1.5);
   
 }
+
+.divCenter {
+  text-align: center;
+}
+
+.text {
+  padding-bottom: 2em;
+  padding-top: 4em;
+}
+
+.loginButton {
+  margin-top: 5em;
+}

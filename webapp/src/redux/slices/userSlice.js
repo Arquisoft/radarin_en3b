@@ -5,7 +5,7 @@ const initialState = {
     logguedStatus: false,
     canLogin: true,
     limitedVersion: false,
-    urlParams: "/uploadLocation",
+    urlParams: "undefined",
 };
 
 

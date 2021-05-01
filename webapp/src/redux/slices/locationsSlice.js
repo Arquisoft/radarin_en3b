@@ -37,7 +37,6 @@ const initialState = {
     error: null,
     locations: [],
     polyline: [],
-    picture: null,
 };
 
 export const locationsSlice = createSlice({
@@ -52,9 +51,6 @@ export const locationsSlice = createSlice({
         },
         setPolyline: (state, action) => {
             state.polyline = action.payload
-        },
-        setPicture: (state, action) => {
-            state.picture = action.payload
         }
     },
     extraReducers: {
@@ -85,6 +81,6 @@ export const locationsSlice = createSlice({
     }
 });
 
-export const { moveTo, setSearchText, setPolyline, setPicture } = locationsSlice.actions;
+export const { moveTo, setSearchText, setPolyline } = locationsSlice.actions;
 
 export default locationsSlice.reducer;
