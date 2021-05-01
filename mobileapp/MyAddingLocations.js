@@ -34,7 +34,9 @@ const MyForm = ({navigation}) => {
     };
 
     const coords = await getLocation();
-    let uri = "uploadLocation?title=" + title + "&comment=" + comment + "&lat=" + coords.coords.latitude + "&long=" + coords.coords.longitude;
+    const titleLoc = encodeURI(title);
+    const commentLoc = encodeURI(comment);
+    let uri = "uploadLocation?title=" + titleLoc + "&comment=" + commentLoc + "&lat=" + coords.coords.latitude + "&long=" + coords.coords.longitude;
 
     let result = await WebBrowser.openBrowserAsync("https://radarinen3bwebapp.herokuapp.com/#/" + uri, browserParams);
     setResult(result);

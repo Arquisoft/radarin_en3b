@@ -11,6 +11,7 @@ import UploadLocation from "./components/UploadLocation";
 import MainView from "./components/MainView";
 import LoginPage from "./components/LoginPage";
 import QRPage from "./components/QRPage";
+import HelpPage from "./components/HelpPage";
 import {
   handleIncomingRedirect,
   onSessionRestore
@@ -28,14 +29,7 @@ export default function App() {
   onSessionRestore((url) => {
     //https://radarinen3bwebapp.herokuapp.com/about
     let uri = url.split("//")[1].split("/");
-
-    if (urlParams !== "undefined") {
-      history.push(urlParams);
-    } else if (uri[3] !== null) {
-      history.push("/uploadLocation/" + uri[3]);
-    } else {
-      history.push(uri[2]);
-    }
+    history.push(uri[2]);
   });
 
   useEffect(() => {
@@ -89,6 +83,9 @@ export default function App() {
             </Route>
             <Route path="/uploadLocation">
               <UploadLocation />
+            </Route>
+            <Route path="/help">
+              <HelpPage/>
             </Route>
             <Route path="/">
               <MainView />
