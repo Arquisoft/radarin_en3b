@@ -7,7 +7,6 @@ import styles from "./MyStyles";
 import HomeScreen from "./HomeScreen";
 import AboutScreen from "./AboutScreen";
 import ProfileScreen from "./ProfileScreen";
-import PostScreen from "./PostScreen";
 import LoginScreen from "./LoginScreen";
 import LoadingScreen from "./LoadingScreen";
 import store from "./redux/store";
@@ -25,11 +24,6 @@ export default function App() {
           <Stack.Navigator initialRouteName="Login">
             <Stack.Screen name="Radarin" component={HomeScreen} options={{
               title: "Radarin",
-              headerStyle: styles.header,
-              headerTintColor: "#fff"
-            }} />
-            <Stack.Screen name="Post" component={PostScreen} options={{
-              title: "Write a post",
               headerStyle: styles.header,
               headerTintColor: "#fff"
             }} />

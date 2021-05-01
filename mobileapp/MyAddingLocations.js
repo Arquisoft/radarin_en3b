@@ -5,7 +5,7 @@ import styles from "./MyStyles";
 import * as WebBrowser from "expo-web-browser";
 import { getLocation } from "./GetAsyncLocation";
 
-export default function MyOverlay() {
+export default function MyOverlay({navigation}) {
   const [visible, setVisible] = useState(false);
 
   const toggleOverlay = () => {
@@ -16,13 +16,13 @@ export default function MyOverlay() {
     <View style={styles.homeScreenContainer}>
       <MyPressable onPressing={toggleOverlay}></MyPressable>
       <Overlay isVisible={visible} onBackdropPress={toggleOverlay}>
-        <MyForm></MyForm>
+        <MyForm navigation={navigation}></MyForm>
       </Overlay>
     </View>)
 }
 
 
-const MyForm = () => {
+const MyForm = ({navigation}) => {
 
   const [result, setResult] = useState(null);
   const [title, setTitle] = useState("");
@@ -38,10 +38,12 @@ const MyForm = () => {
 
     let result = await WebBrowser.openBrowserAsync("https://radarinen3bwebapp.herokuapp.com/#/" + uri, browserParams);
     setResult(result);
+
+    navigation.replace("Radarin");
   };
 
   return (
-    <ScrollView >
+    <ScrollView>
       <Card containerStyle={styles.formCard}>
         <Text style={styles.cardTitle}>Title</Text>
         <TextInput placeholder="Title of the ubication" label="Title" style={styles.titleForm} onChangeText={(title) => setTitle(title)}></TextInput>
@@ -53,15 +55,9 @@ const MyForm = () => {
         <Card.Divider style={styles.divider} />
         <Button color='#094072' title="Send location" onPress={_handlePressButtonAsync}></Button>
       </Card>
-
     </ScrollView>
   )
 }
-
-/*
-<TextInput placeholder="Title of the ubication" label="Title" style = {styles.titleForm}></TextInput>
-        <TextInput placeholder="Comment here..." label = "Comment" style = {styles.commentForm}></TextInput>
-*/
 
 const MyPressable = ({ onPressing }) => {
 
