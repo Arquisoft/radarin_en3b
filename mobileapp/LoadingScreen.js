@@ -73,7 +73,7 @@ export default function LoadingScreen({ route, navigation }) {
                 if (AsyncStorage.getItem("userId") !== null && AsyncStorage.getItem("userId") !== undefined && AsyncStorage.getItem("userId") != "" ){
                   let prevFriends = getFriendsNames(onlineFriends);
                 dispatch(fetchFriends());
-                let newFriends = getFriendsNames(onlineFriends).filter(friend => !(prevFriends.includes(friend)));
+                let newFriends = getFriendsNames()?.filter(friend => !(prevFriends.includes(friend)));
                 if (newFriends.length > 0)
                 schedulePushNotificationFriends(newFriends);
                 }

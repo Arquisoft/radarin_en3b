@@ -19,10 +19,10 @@ export async function getFriendsWithDistance(friends) {
   return getNames(friends, friendsWithDistance);
 }
 
-export const getFriendsNames = (friends) => friends.map(f => f.fn ?? f.webId);
+export const getFriendsNames = (friends) => friends?.map(f => f.fn ?? f.webId);
 
 
-const getNames = (friends, friendsWithDistance) => friends.filter(friend => friendsWithDistance.has(friend.webId))
+const getNames = (friends, friendsWithDistance) => friends?.filter(friend => friendsWithDistance?.has(friend.webId))
   .reduce((map, x) => ({
     ...map,
     [x.fn ?? x.webId]: { value: friendsWithDistance.get(x.webId).value, mapsUrl: friendsWithDistance.get(x.webId).mapsUrl }
