@@ -169,6 +169,44 @@ export default function HomeScreen({ navigation }) {
       setVisible(!visible);
     };
   
+    const MyForm = () => {
+  
+      const [result, setResult] = useState(null);
+      const [title, setTitle] = useState("");
+      const [comment, setComment] = useState("");
+    
+      const _handlePressButtonAsync = async () => {
+        let browserParams = {
+          toolbarColor: '#094072'
+        };
+    
+        const coords = await getLocation();
+        let uri = "uploadLocation?title=" + title + "&comment=" + comment + "&lat=" + coords.coords.latitude + "&long=" + coords.coords.longitude;
+    
+        let result = await WebBrowser.openBrowserAsync("https://radarinen3bwebapp.herokuapp.com/#/" + uri, browserParams);
+        setResult(result);
+    
+        setVisible(false);
+        
+      };
+    
+      return (
+        <ScrollView>
+          <Card containerStyle={styles.formCard}>
+            <Text style={styles.cardTitle}>Title</Text>
+            <TextInput placeholder="Title of the ubication" label="Title" style={styles.titleForm} onChangeText={(title) => setTitle(title)}></TextInput>
+            <Card.Divider style={styles.divider} />
+            <Text style={styles.cardTitle}>Comment</Text>
+            <View style={styles.commentView}>
+              <TextInput placeholder="Comment here..." label="Comment" style={styles.commentForm} multiline={true} onChangeText={(comment) => setComment(comment)}></TextInput>
+            </View>
+            <Card.Divider style={styles.divider} />
+            <Button color='#094072' title="Send location" onPress={_handlePressButtonAsync}></Button>
+          </Card>
+        </ScrollView>
+      )
+    }
+
     return (
       <View style={styles.homeScreenContainer}>
         <MyPressable onPressing={toggleOverlay}></MyPressable>
@@ -176,44 +214,6 @@ export default function HomeScreen({ navigation }) {
           <MyForm></MyForm>
         </Overlay>
       </View>)
-  }
-  
-  
-  const MyForm = () => {
-  
-    const [result, setResult] = useState(null);
-    const [title, setTitle] = useState("");
-    const [comment, setComment] = useState("");
-  
-    const _handlePressButtonAsync = async () => {
-      let browserParams = {
-        toolbarColor: '#094072'
-      };
-  
-      const coords = await getLocation();
-      let uri = "uploadLocation?title=" + title + "&comment=" + comment + "&lat=" + coords.coords.latitude + "&long=" + coords.coords.longitude;
-  
-      let result = await WebBrowser.openBrowserAsync("https://radarinen3bwebapp.herokuapp.com/#/" + uri, browserParams);
-      setResult(result);
-  
-      navigation.navigate("Radarin");
-    };
-  
-    return (
-      <ScrollView>
-        <Card containerStyle={styles.formCard}>
-          <Text style={styles.cardTitle}>Title</Text>
-          <TextInput placeholder="Title of the ubication" label="Title" style={styles.titleForm} onChangeText={(title) => setTitle(title)}></TextInput>
-          <Card.Divider style={styles.divider} />
-          <Text style={styles.cardTitle}>Comment</Text>
-          <View style={styles.commentView}>
-            <TextInput placeholder="Comment here..." label="Comment" style={styles.commentForm} multiline={true} onChangeText={(comment) => setComment(comment)}></TextInput>
-          </View>
-          <Card.Divider style={styles.divider} />
-          <Button color='#094072' title="Send location" onPress={_handlePressButtonAsync}></Button>
-        </Card>
-      </ScrollView>
-    )
   }
   
   const MyPressable = ({ onPressing }) => {
