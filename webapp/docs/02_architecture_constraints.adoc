@@ -25,6 +25,9 @@ allowing or rejecting apps to access it at any moment.
 |Git
 |GitHub is a framework for creating a Version Control System
 
+|Heroku
+|The application must be deployed in Heroku for everyone to use.
+
 |===
 
 === Business Constraints
@@ -44,6 +47,6 @@ Ones related on unchangeable business decisions that restrict the software archi
 we won't be able to use any paid software or tools
 
 |Team composition
-|The development team consists in 6 people
+|The development team consists in 5 people
 
 |===

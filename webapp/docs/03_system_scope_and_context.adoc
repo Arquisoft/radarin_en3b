@@ -11,7 +11,7 @@ image:Business_Context_Diagram.png["Business context diagram"]
 |Output
 
 |User
-|As user, the input he will receive is the service provided by the application. The communication Will be performed by a mobile device and complemented by a desktop computer or some sort of computer.
+|As a user, the input we will receive is the service provided by the application. The communication will be performed with a mobile device and complemented by a desktop computer or some sort of computer. Nonetheless, the web application is fully 
 |The output of the user will be referred in multiple classes and he will provide most of the input to the application.
  
 |User POD
