@@ -11,7 +11,7 @@ import MyMenu from "./MyMenu";
 //import { sendLocation } from "./SendLocation";
 import { useSelector } from "react-redux";
 import {getLocation, getLocationAsync} from "./GetAsyncLocation";
-import AsyncStorage from "@react-native-community/async-storage";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 
 export default function ProfileScreen({ navigation }) {

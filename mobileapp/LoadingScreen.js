@@ -10,7 +10,7 @@ import { showMessage, hideMessage } from "react-native-flash-message";
 
 import { getFriendsNames } from "./FetchFriends";
 import { setNotificationsBackground, schedulePushNotificationFriends, schedulePushNotificationFriendsClose} from "./SetNotifications";
-import AsyncStorage from "@react-native-community/async-storage";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function LoadingScreen({ route, navigation }) {
   const { id } = route.params;

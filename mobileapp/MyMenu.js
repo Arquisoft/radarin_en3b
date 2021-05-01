@@ -1,7 +1,7 @@
 import React from "react";
 import { View, TouchableOpacity, Image, Dimensions } from "react-native";
 import { Menu, Divider } from "react-native-paper";
-import AsyncStorage from "@react-native-community/async-storage";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import styles from "./MyStyles";
 import * as Updates from 'expo-updates';
 
