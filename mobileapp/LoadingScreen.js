@@ -44,15 +44,16 @@ TaskManager.defineTask("friendsLocation", () => {
     const taskToExecute = () => {
       if (AsyncStorage.getItem("userId") !== null && AsyncStorage.getItem("userId") !== undefined && AsyncStorage.getItem("userId") != "" ){
         let prevFriends = onlineCloseFriends;
-        dispatch(fetchFriendsWithDistance());
+        if (dispatch !== undefined)
+          dispatch(fetchFriendsWithDistance());
         let newFriends = new Array();
         if (onlineCloseFriends !== null && onlineCloseFriends !== undefined && Array.from(Object.keys(onlineCloseFriends)).length > 0)
-          newFriends = Array.from(Object.keys(onlineCloseFriends)).filter(friend => (Array.from(Object.keys(prevFriends)).includes(friend)));
-        if (newFriends !== undefined && newFriends !== null && newFriends.length > 0)
-        schedulePushNotificationFriendsClose(newFriends);
+          newFriends = Array.from(Object.keys(onlineCloseFriends)).filter(friend => !(Array.from(Object.keys(prevFriends)).includes(friend)));
+        if (newFriends !== undefined && newFriends !== null && newFriends.length > 0){
+          schedulePushNotificationFriendsClose(newFriends);
         }
-
-        console.log("Background fetch location executed");
+          
+        }
 
         return "Executed correctly";
     }

@@ -12,6 +12,7 @@ export async function getFriends(webId) {
 
 export async function getFriendsWithDistance(friends) {
   const friendsWithDistance = await getDistances(friends);
+
   if (friendsWithDistance == "No location") {
     return friendsWithDistance;
   }

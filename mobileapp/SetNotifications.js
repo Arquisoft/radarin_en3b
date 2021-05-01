@@ -17,6 +17,7 @@ export function setNotificationsBackground(){
 }
 
 export async function schedulePushNotificationFriendsClose( newFriends ) {
+  console.log("Sending notification");
     let friendsStr = "";
     if (newFriends.length == 1){
       friendsStr += (newFriends[0] + " is now close to you")
@@ -36,6 +37,8 @@ export async function schedulePushNotificationFriendsClose( newFriends ) {
       },
       trigger: { seconds: 2 },
     });
+
+    console.log("Notification sent");
   }
 
 export async function schedulePushNotificationFriends( newFriends ) {
