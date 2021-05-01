@@ -13,6 +13,7 @@ import { Link } from "@material-ui/core";
 import "../css/LoginPage.css";
 import { useDispatch } from "react-redux";
 import { setLogguedStatus } from "../redux/slices/userSlice";
+import Autocomplete from '@material-ui/lab/Autocomplete';
 
 
 const useStyles = makeStyles({
@@ -56,8 +57,13 @@ function LoginPage(props) {
     redirectUrl = window.location.origin.concat("#" + props.redirectUrl);
 
   const classes = useStyles();
-  const [idp, setIdp] = useState("https://inrupt.net");
+  const [idp, setIdp] = useState(0);
   const dispatch = useDispatch();
+
+  const providers = [
+    {name: "Inrupt", value:"https://inrupt.net"},
+    {name: "SolidCommunity", value:"https://solidcommunity.net"},
+  ]
 
   function callback() {
     dispatch(setLogguedStatus(true));
@@ -74,14 +80,14 @@ function LoginPage(props) {
           <Typography variant="h5" component="p" align="center">
             Sign In
           </Typography>
-          <TextField
-            label="URL"
-            helperText="Introduce your Provider URL"
-            variant="outlined"
+          <Autocomplete
+            options={providers}
+            getOptionLabel={(option) => option.name}
             fullWidth
-            placeholder={idp}
+            data-testid="provider"
+            renderInput={(params) => <TextField {...params} label="Provider" variant="outlined"/>}
+            onChange={(e) => {setIdp(e.target.value); console.log(e.target.value);}}
             className={classes.input}
-            onChange={(e) => setIdp(e.target.value)}
           />
         </CardContent>
       </CardActionArea>
@@ -89,7 +95,7 @@ function LoginPage(props) {
         <Typography variant="body2" component="p" className="text-center">
           Don't have one? You can get it here: <Link className="ml-1" href="https://inrupt.com/" target="_blank"><strong>Inrupt</strong></Link>
         </Typography>
-        <LoginButton oidcIssuer={idp} redirectUrl={ redirectUrl }>
+        <LoginButton oidcIssuer={providers[idp].value} redirectUrl={ redirectUrl }>
           <Button id="SignInButton" data-testid="button" color="primary" variant="contained" className={classes.signIn} onClick={callback}>Sign In</Button>
         </LoginButton>
       </CardActions>
