@@ -19,6 +19,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { setLogguedStatus } from "./redux/slices/userSlice";
 import { createHashHistory } from "history";
+import AdminPage from "./components/AdminPage";
 
 export default function App() {
   const dispatch = useDispatch();
@@ -86,6 +87,9 @@ export default function App() {
             </Route>
             <Route path="/help">
               <HelpPage/>
+            </Route>
+            <Route path="/admin">
+              <AdminPage/>
             </Route>
             <Route path="/">
               <MainView />
