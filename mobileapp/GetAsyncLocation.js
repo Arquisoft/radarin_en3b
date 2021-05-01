@@ -1,7 +1,7 @@
 import * as Location from 'expo-location';
 import {sendLocation} from './SendLocation';
 import * as TaskManager from 'expo-task-manager';
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const fiveMin = 300000; //minumum interval of time to send the location -> 5 min
 const minDistance = 500; //minimum interval of distance to send the location -> 500 m

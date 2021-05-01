@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import styles from "./MyStyles";
 import { BarCodeScanner } from "expo-barcode-scanner";
 import * as SecureStore from "expo-secure-store";
-import AsyncStorage from "@react-native-community/async-storage";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { setScanned } from "./redux/slices/executingSlice";
 import { showMessage, hideMessage } from "react-native-flash-message";
 
