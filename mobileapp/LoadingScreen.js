@@ -11,7 +11,10 @@ import { showMessage} from "react-native-flash-message";
 
 import { getFriendsNames } from "./FetchFriends";
 import { setNotificationsBackground, schedulePushNotificationFriends, schedulePushNotificationFriendsClose} from "./SetNotifications";
-import AsyncStorage from "@react-native-community/async-storage";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
+let onlineCloseFriends;
+let onlineFriends;
 
 TaskManager.defineTask("friendsFromPod", () => {
   try {
@@ -45,7 +48,7 @@ TaskManager.defineTask("friendsLocation", () => {
         dispatch(fetchFriendsWithDistance());
         let newFriends = new Array();
         if (onlineCloseFriends !== null && onlineCloseFriends !== undefined && Array.from(Object.keys(onlineCloseFriends)).length > 0)
-          newFriends = Array.from(Object.keys(onlineCloseFriends)).filter(friend => !(Array.from(Object.keys(prevFriends)).includes(friend)));
+          newFriends = Array.from(Object.keys(onlineCloseFriends)).filter(friend => (Array.from(Object.keys(prevFriends)).includes(friend)));
         if (newFriends !== undefined && newFriends !== null && newFriends.length > 0)
         schedulePushNotificationFriendsClose(newFriends);
         }
@@ -58,6 +61,7 @@ TaskManager.defineTask("friendsLocation", () => {
     const receivedNewData = taskToExecute();// do your background fetch here
     return receivedNewData ? BackgroundFetch.Result.NewData : BackgroundFetch.Result.NoData;
   } catch (error) {
+    console.log("Error" + error)
     return BackgroundFetch.Result.Failed;
   }
 });
@@ -72,7 +76,6 @@ const registerTaskAsync = async () => {
           startOnBoot: true,
         },
     ).then(() => BackgroundFetch.setMinimumIntervalAsync(30)));
-    alert('friends task registered');
 
     await (BackgroundFetch.registerTaskAsync(
       "friendsLocation",
@@ -82,8 +85,6 @@ const registerTaskAsync = async () => {
           startOnBoot: true,
         },
     ).then(() => BackgroundFetch.setMinimumIntervalAsync(10)));
-
-    alert('location task registered');
 };
 
 export default function LoadingScreen({ route, navigation }) {
@@ -95,8 +96,8 @@ export default function LoadingScreen({ route, navigation }) {
   const closeFriendsStatus = useSelector(state => state.user.closeFriendsStatus);
   const doUna = useSelector(state => state.executing.doOnce);
   const doUnaNots = useSelector(state => state.executing.doOnceNotifications);
-  const onlineCloseFriends = useSelector(state => state.user.onlineCloseFriends);
-  const onlineFriends = useSelector(state => state.user.onlineFriends);
+  onlineCloseFriends = useSelector(state => state.user.onlineCloseFriends);
+  onlineFriends = useSelector(state => state.user.onlineFriends);
 
   const [isMounted, setIsMounted] = useState(false);
   
