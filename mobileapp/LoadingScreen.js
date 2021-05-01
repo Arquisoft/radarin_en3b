@@ -15,10 +15,10 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 let onlineCloseFriends;
 let onlineFriends;
+let dispatch;
 
 TaskManager.defineTask("friendsFromPod", () => {
   try {
-    alert('background featch running');
     const taskToExecute = () => {
       if (AsyncStorage.getItem("userId") !== null && AsyncStorage.getItem("userId") !== undefined && AsyncStorage.getItem("userId") != "" ){
         let prevFriends = getFriendsNames(onlineFriends);
@@ -27,7 +27,7 @@ TaskManager.defineTask("friendsFromPod", () => {
       if (newFriends.length > 0)
         schedulePushNotificationFriends(newFriends);
 
-        alert("Se ejecuta");
+        console.log("Background fetch friends executed");
 
         return "Executed correctly";
       }
@@ -41,7 +41,6 @@ TaskManager.defineTask("friendsFromPod", () => {
 
 TaskManager.defineTask("friendsLocation", () => {
   try {
-    alert('background featch running');
     const taskToExecute = () => {
       if (AsyncStorage.getItem("userId") !== null && AsyncStorage.getItem("userId") !== undefined && AsyncStorage.getItem("userId") != "" ){
         let prevFriends = onlineCloseFriends;
@@ -53,7 +52,7 @@ TaskManager.defineTask("friendsLocation", () => {
         schedulePushNotificationFriendsClose(newFriends);
         }
 
-        alert("Se ejecuta");
+        console.log("Background fetch location executed");
 
         return "Executed correctly";
     }
@@ -90,7 +89,7 @@ const registerTaskAsync = async () => {
 export default function LoadingScreen({ route, navigation }) {
   const { id } = route.params;
   const webId = id.replace(/['"]+/g, '');
-  const dispatch = useDispatch();
+  dispatch = useDispatch();
   const profileStatus = useSelector(state => state.user.profileStatus);
   const friendsStatus = useSelector(state => state.user.friendsStatus);
   const closeFriendsStatus = useSelector(state => state.user.closeFriendsStatus);
