@@ -23,10 +23,12 @@ export default function App() {
   const dispatch = useDispatch();
   const history = createHashHistory();
   const limitedVersion = useSelector(state => state.user.limitedVersion);
+  const urlParams = useSelector(state => state.user.urlParams);
 
   onSessionRestore((url) => {
     //https://radarinen3bwebapp.herokuapp.com/about
-    const uri = url.split("//")[1].split("/")[2];
+    let uri = url.split("//")[1].split("/");
+
     history.push(uri);
   });
 
@@ -53,7 +55,7 @@ export default function App() {
             <UploadLocation/>
           </Route>
           <Route path="/login">
-              <LoginPage redirectUrl="/uploadLocation"/>
+              <LoginPage redirectUrl={urlParams}/>
             </Route>
         </Switch>
       </div>

@@ -86,6 +86,7 @@ export default function LocationList(props) {
                                         photo={item.photo}
                                         date={item.date}
                                         sess={session}
+                                        webId={item.webId}
                                     />
                                 );
                             }

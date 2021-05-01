@@ -65,7 +65,6 @@ export default function LoginScreen({ navigation, route }) {
     AsyncStorage.setItem("userId",webId);
     navigation.navigate("Loading", {id: webId });
     }catch(err){
-      console.log("Wrong qr");
       setShowScanner(false);
       showMessage({
         message: "The QR code you read was not valid",

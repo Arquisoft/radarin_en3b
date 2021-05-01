@@ -22,6 +22,7 @@ export default function LoadingScreen({ route, navigation }) {
   const doUna = useSelector(state => state.executing.doOnce);
   const doUnaNots = useSelector(state => state.executing.doOnceNotifications);
   const onlineCloseFriends = useSelector(state => state.user.onlineCloseFriends);
+  const onlineFriends = useSelector(state => state.user.onlineFriends);
   
 
   useEffect(() => {
@@ -35,13 +36,13 @@ export default function LoadingScreen({ route, navigation }) {
     } else if (closeFriendsStatus === "succeeded") {
       if(!doUnaNots) {
         dispatch(doOnceNotifications());
-
+        dispatch(doOnce());
         setNotificationsBackground();
-
-        navigation.navigate("Radarin");
-
       }
-    } else if(profileStatus === "failed"){
+      
+      navigation.navigate("Radarin");
+
+    } else if(friendsStatus === "failed" || closeFriendsStatus === "failed"){
       dispatch(backToIdle());
       if(!doUna) {
         dispatch(doOnce());
@@ -70,7 +71,7 @@ export default function LoadingScreen({ route, navigation }) {
               interval={300000}
               function={() => {
                 if (AsyncStorage.getItem("userId") !== null && AsyncStorage.getItem("userId") !== undefined && AsyncStorage.getItem("userId") != "" ){
-                  let prevFriends = getFriendsNames();
+                  let prevFriends = getFriendsNames(onlineFriends);
                 dispatch(fetchFriends());
                 let newFriends = getFriendsNames()?.filter(friend => !(prevFriends.includes(friend)));
                 if (newFriends.length > 0)
