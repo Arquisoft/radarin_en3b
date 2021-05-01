@@ -17,17 +17,40 @@ participant IDProvider
 database MongoDb as "Database"
 Bob -> PhoneApp: Press "Log-In"
 PhoneApp --> Bob: Asks user for scanning the qr code
-Bob -> IDProvider: Logs into his provider
-IDProvider --> PhoneApp: Provides Token
-Bob -> PhoneApp: Bob clicks "Store location"
+PhoneApp -> PhoneApp: stores private key
 PhoneApp  -> RestAPI: Sends location with token
 RestAPI -> IDProvider: Asks for public key to verify token
 IDProvider --> RestAPI: Sends public key
 RestAPI -> MongoDb: Stores location
 MongoDb --> RestAPI: Notify success
 RestAPI --> PhoneApp: Notify success
-PhoneApp --> Bob: Shows a "done!" toast
 ----
+
+=== Store created location by the user
+
+This would be how we handle the creation of a location from the user
+
+[plantuml,"Store created location diagram",png]
+----
+actor Bob
+participant PhoneApp
+participant WebApp
+participant IDProvider
+database Pod as "Bob's Pod"
+Bob -> PhoneApp: Press "Log-In"
+PhoneApp --> Bob: Asks user for scanning the qr code
+PhoneApp -> PhoneApp: stores private key
+Bob -> PhoneApp: Bob clicks "Create location"
+PhoneApp -> WebApp: Bob is redirected to the webapp
+Bob -> IDProvider: Logs into his provider
+IDProvider --> WebApp: Provides Token
+Bob -> WebApp: Bob clicks "Store location"
+WebApp -> Pod: Stores location
+Pod --> WebApp: Notify success
+WebApp --> PhoneApp: Notify success
+PhoneApp --> Bob: Notify success
+----
+
 === Check for users nearby
 Here we have omitted authentication steps as they are already stated in previous diagrams. The following conditions must be met before this diagram:
 

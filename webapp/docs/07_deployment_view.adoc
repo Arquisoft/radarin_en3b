@@ -15,7 +15,7 @@ rectangle :Website{
 }
 
 node <<device>>\n:WebServer as n2{
-node <<execution\tenvironment>>\n:GithubPages{
+node <<execution\tenvironment>>\n:Heroku{
 }
 }
 
@@ -63,7 +63,7 @@ Mapping of Building Blocks to Infrastructure::
 |Solid PODs are provided by Solid Community or Inrupt servers.
 
 |:Radarin
-|Our app hosted in GitHub pages.
+|Our app hosted in Heroku.
 
 |OpenStreetMapAPI
 |Free maps API that will be used by Radarin. More APIs could be used in the future.

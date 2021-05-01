@@ -36,15 +36,15 @@ Q --> C
 |High
 
 |Privacy
-|Private data from the users have to be protected. The application only takes essential data from the user, and these data are not centralized.
+|Private data from the users has to be protected. The application only takes essential data from the user, and in a decentralized approach.
 |High
 
 |Security
-|The application have to be highly secure for the users, data should never be given to any thrid part, and application must prevent user's data leak
+|The application has to be highly secure for the users, data should never be given to any third party, and the application must prevent user's data leaks
 |High
 
 |Reliability
-|All the errors of the application have to be handled by the application itself, there should not be system crashes.
+|Errors from the application have to be handled by the application itself, there should not be system crashes.
 |Medium-High
 
 |Maintainability
@@ -56,7 +56,7 @@ Q --> C
 |Low-Medium
 
 |Compatibility
-|The application should be capable of operat satisfactorily together with another system on the same computer or different computers.
+|The application should be capable of operate satisfactorily together with another system on the same computer or different computers.
 |Low-Medium
 
 |===

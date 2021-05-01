@@ -11,26 +11,34 @@ image:Business_Context_Diagram.png["Business context diagram"]
 |Output
 
 |User
-|As a user, the input we will receive is the service provided by the application. The communication will be performed with a mobile device and complemented by a desktop computer or some sort of computer. Nonetheless, the web application is fully 
+|As a user, the input we will receive is the service provided by the application. The communication will be performed with a mobile device and complemented by a desktop computer or some sort of computer. Nonetheless, the web application is fully adaptable for mobiles.
 |The output of the user will be referred in multiple classes and he will provide most of the input to the application.
  
 |User POD
 |**Creates**. The user must create a personal POD in order to safely manage the application and store his data so that it is compatible with the SOLID project.
-**Request login**. The User POD will receive a request login and will check that the username and password is correct communicating with the Mobile and Desktop App.  
-**Send info**. The Mobile App will be able to send any kind of data to the personal POD and it will store sensitive and private user information. 
-|**Send info**. As the POD receives information from the Mobile App, it can send requested information to both, Desktop and Mobile App, for its functionality. 
+
+**Login request**. The User POD will receive a login request and it will check that the username and password are correct, communicating with the Mobile and Desktop App.
+
+**Send info**. The Mobile App will be able to send any type of data to the personal POD and it will store sensitive and private user information there.
+
+|**Send info**. As the POD receives information from the Mobile App, it can send the requested information to both, Desktop and Mobile App, depending on the action performed. 
 
 |Mobile App
-|**User location**. The app will receive the location of the user by two different ways: by periodically taking the position or manually introducing it. The position will be saved with a timestamp. 
-|**Notification**. The app will notify the user whenever there is a friend whose last location is near the user.
+|**User location**. The app will receive the users location in two different ways: by periodically taking the position, or by manually introducing it. This position will be saved with a timestamp.
+
+|**Notification**. The app will notify the user whenever there is a friend whose last location is near him/her.
 
 
 |Desktop App
-|**User management**. The app will be managed by the user, who can look search for his history of positions with their timestamps, share those points with their friends and link photos, videos or text to those points where they were.
+|**User management**. The app will be managed by the user, who can see his/her locations with their corresponding timestamps and share those points with photos with his/her friends.
+
 |The output of this entity is the service it provides to the user and the changes made in the Database.
 
 |Database
-|**Requests**. The database will be managing requests from the app to return information to the user. **Storage**. Despite most of the user information being stored in the POD, some will be stored here and the information is received by the app. 
+|**Requests**. The database will be managing requests from the app for returning information to the user.
+
+**Storage**. Despite most of the user information being stored in the POD, some will be stored here, like the locations. This is due to the sheer impact on performance that it would provoke doing it otherwise.
+
 |**Request respond**. The database is responsible for sending information to the app in order to work.
 
 |===
@@ -40,9 +48,9 @@ image:Business_Context_Diagram.png["Business context diagram"]
 
 The system makes use of the SOLID architecture, which is focused on the decentralization of the web. For accomplishing this purpose, the user will be provided with a SOLID POD linked to him. In SOLID, a POD is a Personal Online Data Store, a place where the personal data is stored and hosted wherever the user desires. 
 
-The application, both the Mobile and Desktop App, will require internet in order to work and the Mobile one will require localization permission so that he can store his locations. The user can select when the application stores his locations, the frequency of taking measurements and the documents linked in case he wants to upload something.
+The application, both the Mobile and Desktop App, will require internet in order to work and the Mobile one will require localization permissions so that he can store his locations. The user can select when the application fetches his location, being able to turn it off anytime.
 
-The application, both Mobile and Desktop applications, will be written in Javascript with React. React is an open-source library made to ease the process of building user interface.
+The applications, both Mobile and Desktop, will be written in Javascript with React. React is an open-source library made to ease the process of building user interface.
 
 [%header, cols=2]
 |===

@@ -46,6 +46,10 @@ Apart from the already mentioned framework or services, our intention is to use 
 
 * securestore: to encrypt and secure the webid and the private key read from the qr code on the mobile.
 
+* material-ui: provides professional looking stylized components, which will help us save work creating them.
+
+* inrupt/solid-client: provides methods for communicating with the pod, for read and write operations.
+
 *React Redux* will also be used for our data stores in order to easily update our component's state. 
 
 === Safety and security concepts
