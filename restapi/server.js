@@ -3,9 +3,9 @@ const promBundle = require("express-prom-bundle");
 const cors = require('cors');
 const mongoose = require("mongoose");
 const api = require("./api");
-const admin = require("./admin");
+const admin = require("./endpoints/admin");
 const auth = require("./middleware/Auth");
-const blacklist = require("./middleware/BlacklistMiddleware");
+const blacklist = require("./middleware/Blacklist");
 // const adminChecker = require("./middleware/AdminChecker");
 
 function connect() {

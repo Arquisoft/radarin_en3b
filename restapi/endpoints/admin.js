@@ -1,8 +1,8 @@
 const express = require("express");
-const TrackedLocation = require('./models/TrackedLocation');
-const Blacklisted = require("./models/Blacklisted");
+const TrackedLocation = require('../models/TrackedLocation');
+const Blacklisted = require("../models/Blacklisted");
 const router = express.Router();
-const adminChecker = require("./middleware/AdminChecker");
+const adminChecker = require("../middleware/AdminChecker");
 
 router.use(adminChecker);
 
@@ -26,7 +26,7 @@ router.post("/blacklist", async (req, res) => {
         return res.sendStatus(200);
 
     const blacklisted = new Blacklisted({ webId: req.body.webId });
-    blacklisted.save();
+    await blacklisted.save();
     res.sendStatus(200);
 });
 

@@ -11,7 +11,7 @@ import MyMenu from "./MyMenu";
 //import { sendLocation } from "./SendLocation";
 import { useSelector } from "react-redux";
 import {getLocation, getLocationAsync} from "./GetAsyncLocation";
-import AsyncStorage from "@react-native-community/async-storage";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 
 export default function ProfileScreen({ navigation }) {
@@ -36,7 +36,7 @@ export default function ProfileScreen({ navigation }) {
 
   useEffect(() => {
     (async () => {
-      let { status } = await Location.requestPermissionsAsync();
+      let { status } = await Location.requestBackgroundPermissionsAsync();
       if (status !== "granted") {
         setErrorMsg("Permission to access location was denied");
         return;

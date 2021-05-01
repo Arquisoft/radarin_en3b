@@ -8,10 +8,10 @@ const express = require("express");
 const cors = require('cors');
 const mongoose = require("mongoose");
 const api = require("../api");
-const auth = require("../middleware/MockAuthMiddleware");
-const blacklist = require("../middleware/BlacklistMiddleware");
+const auth = require("../middleware/Auth");
+const blacklist = require("../middleware/Blacklist");
 // const adminChecker = require("../middleware/AdminChecker");
-const admin = require("../admin");
+const admin = require("../endpoints/admin");
 
 module.exports.startdb = async () => {
     mongod = new MongoMemoryServer({ instance: { port: 27017, dbName: 'testdb' } });

@@ -7,11 +7,12 @@ export async function getFriends(webId) {
   //TODO: do it only once
   const locations = await getFriendsLocation(friends);
 
-  return friends.filter(friend => locations.some(location => location[0] == friend.webId));
+  return friends?.filter(friend => locations.some(location => location[0] == friend.webId));
 }
 
 export async function getFriendsWithDistance(friends) {
   const friendsWithDistance = await getDistances(friends);
+
   if (friendsWithDistance == "No location") {
     return friendsWithDistance;
   }
@@ -19,10 +20,10 @@ export async function getFriendsWithDistance(friends) {
   return getNames(friends, friendsWithDistance);
 }
 
-export const getFriendsNames = (friends) => friends.map(f => f.fn ?? f.webId);
+export const getFriendsNames = (friends) => friends?.map(f => f.fn ?? f.webId);
 
 
-const getNames = (friends, friendsWithDistance) => friends.filter(friend => friendsWithDistance.has(friend.webId))
+const getNames = (friends, friendsWithDistance) => friends?.filter(friend => friendsWithDistance?.has(friend.webId))
   .reduce((map, x) => ({
     ...map,
     [x.fn ?? x.webId]: { value: friendsWithDistance.get(x.webId).value, mapsUrl: friendsWithDistance.get(x.webId).mapsUrl }

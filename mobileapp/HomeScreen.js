@@ -17,6 +17,7 @@ export default function HomeScreen({ navigation }) {
   const friendsNames = getFriendsNames(onlineFriends);
   getLocationAsync();
 
+
   React.useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: (() => (
@@ -169,7 +170,7 @@ export default function HomeScreen({ navigation }) {
         <MyFarFriendsCard></MyFarFriendsCard>
       </View>
       </ScrollView>
-      <MyOverlay></MyOverlay>
+      <MyOverlay/>
       </View>
     );
 

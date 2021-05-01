@@ -52,7 +52,7 @@ function NavbarSession(props) {
     }
 
     return (
-        <Navbar bg="white" expand="lg" className="navBar fixed-top align-items center shadow rounded">
+        <Navbar bg="white" expand="lg" className="navBar fixed-top align-items center shadow rounded" >
             { !limitedVersion &&
                 <Navbar.Brand as={Link} to="/" className="mb-1">
                     <img src={Logo} alt="Radarin Logo"></img>
@@ -69,7 +69,7 @@ function NavbarSession(props) {
                     <Nav className="mr-auto">
                         {NavbarItems.map((item, index) => {
                             return (
-                                <NavLink key={item.key} className={item.cName} as={Link} to={item.url}>
+                                <NavLink key={item.key} className={item.cName} as={Link} to={item.url} id={item.id}>
                                     {item.title}
                                 </NavLink>
                             )
@@ -78,19 +78,23 @@ function NavbarSession(props) {
                 }
                 <Nav>
                     {!limitedVersion &&
-                        <NavDropdown title={dropdownTitle} className="nav-item mr-3">
-                            <NavDropdown.Item as={Link} to="/qr">
-                                <CodeIcon className="mr-2" />
-                            QR
-                        </NavDropdown.Item>
+                        <NavDropdown title={dropdownTitle} className="nav-item mr-3" id=".fifth-step">
+                            
+                                <NavDropdown.Item as={Link} to="/qr">
+                                    <CodeIcon className="mr-2" />
+                                QR
+                                </NavDropdown.Item>
+                            
                         </NavDropdown>
                     }
+                    
                     {limitedVersion &&
                         <Navbar.Text className="nav-item mr-3">{dropdownTitle}</Navbar.Text>
                     }
                     <LogoutButton>
                         <Button color="primary" variant="contained" className="ml-3 mr-2" id="logoutButton" onClick={logout}>Log out</Button>
                     </LogoutButton>
+                    
                 </Nav>
             </Navbar.Collapse>
         </Navbar >

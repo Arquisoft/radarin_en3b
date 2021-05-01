@@ -11,6 +11,7 @@ import UploadLocation from "./components/UploadLocation";
 import MainView from "./components/MainView";
 import LoginPage from "./components/LoginPage";
 import QRPage from "./components/QRPage";
+import HelpPage from "./components/HelpPage";
 import {
   handleIncomingRedirect,
   onSessionRestore
@@ -23,11 +24,12 @@ export default function App() {
   const dispatch = useDispatch();
   const history = createHashHistory();
   const limitedVersion = useSelector(state => state.user.limitedVersion);
+  const urlParams = useSelector(state => state.user.urlParams);
 
   onSessionRestore((url) => {
     //https://radarinen3bwebapp.herokuapp.com/about
-    const uri = url.split("//")[1].split("/")[2];
-    history.push(uri);
+    let uri = url.split("//")[1].split("/");
+    history.push(uri[2]);
   });
 
   useEffect(() => {
@@ -47,14 +49,14 @@ export default function App() {
         <header>
           <MainNavbar />
         </header>
-        <br /><br /><br /><br /><br/>
+        <br /><br /><br /><br /><br />
         <Switch>
           <Route path="/uploadLocation">
-            <UploadLocation/>
+            <UploadLocation />
           </Route>
           <Route path="/login">
-              <LoginPage redirectUrl="/uploadLocation"/>
-            </Route>
+            <LoginPage redirectUrl={urlParams} />
+          </Route>
         </Switch>
       </div>
     );
@@ -74,13 +76,16 @@ export default function App() {
               <About />
             </Route>
             <Route path="/login">
-              <LoginPage/>
+              <LoginPage />
             </Route>
             <Route path="/qr">
-              <QRPage/>
+              <QRPage />
             </Route>
             <Route path="/uploadLocation">
-              <UploadLocation/>
+              <UploadLocation />
+            </Route>
+            <Route path="/help">
+              <HelpPage/>
             </Route>
             <Route path="/">
               <MainView />

@@ -5,6 +5,7 @@ const initialState = {
     logguedStatus: false,
     canLogin: true,
     limitedVersion: false,
+    urlParams: "undefined",
 };
 
 
@@ -17,10 +18,13 @@ export const userSlice = createSlice({
         },
         setLimitedVersion: (state, action) => {
             state.limitedVersion = action.payload
+        },
+        setUrlParams: (state, action) => {
+            state.urlParams = action.payload
         }
     },
 });
 
-export const { setLogguedStatus, setLimitedVersion } = userSlice.actions;
+export const { setLogguedStatus, setLimitedVersion, setUrlParams } = userSlice.actions;
 
 export default userSlice.reducer;

@@ -50,7 +50,7 @@ export const locationsSlice = createSlice({
         },
         setPolyline: (state, action) => {
             state.polyline = action.payload
-        },
+        }
     },
     extraReducers: {
         [fetchLocations.pending]: (state, action) => {
