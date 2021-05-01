@@ -174,3 +174,25 @@ export default function HomeScreen({ navigation }) {
     );
 
 }
+
+const MyOverlaySupport = () => {
+  const [visible, setVisible] = useState(false);
+
+  const toggleOverlay = () => {
+    setVisible(!visible);
+  };
+  
+  return(
+    <View style={styles.homeScreenContainer}>
+    <Overlay  isVisible={visible} onBackdropPress={toggleOverlay}>
+      <MyTour></MyTour>
+    </Overlay> 
+    </View>)
+}
+
+const MyTour = () => {
+
+  <View>
+    
+  </View>
+}

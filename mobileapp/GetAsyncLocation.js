@@ -40,7 +40,7 @@ export async function getLocationAsync() {
         }
     } else {
         if (backgroundLocation) {
-            Location.stopLocationUpdatesAsync("backgroundLocations");
+            Location.stopLocationUpdatesAsync("backgroundLocations").then(() => {}).catch(() => {}); //TODO: proper handle
         }
     }
     return;
