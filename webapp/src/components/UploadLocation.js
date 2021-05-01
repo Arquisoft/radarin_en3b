@@ -28,12 +28,11 @@ export default function UploadLocation() {
     let coords;
 
     if (urlParams !== "undefined") {
-        console.log(urlParams.split("?"));
         urlParamsArray = urlParams.split("?")[1].split("&");
 
         //This should be passed to the constructor
-        title = urlParamsArray[0].split("=")[1];
-        description = urlParamsArray[1].split("=")[1];
+        title = decodeURI(urlParamsArray[0].split("=")[1]);
+        description = decodeURI(urlParamsArray[1].split("=")[1]);
         const lat = urlParamsArray[2].split("=")[1];
         const long = urlParamsArray[3].split("=")[1];
 
@@ -79,7 +78,7 @@ export default function UploadLocation() {
                         <p className="loctext">{title}</p>
                         <h2 className="loch2">Description</h2>
                         <p className="loctext">{description}</p>
-                        <h2 className="loch2">Do you want to upload pictures of this location?</h2>
+                        <h2 className="loch2">Do you want to upload a picture of this location?</h2>
                         <Row>
                             <Col className="pictureButton">
                                 <Button

@@ -29,14 +29,7 @@ export default function App() {
   onSessionRestore((url) => {
     //https://radarinen3bwebapp.herokuapp.com/about
     let uri = url.split("//")[1].split("/");
-
-    if (urlParams !== "undefined") {
-      history.push(urlParams);
-    } else if (uri[3] !== null) {
-      history.push("/uploadLocation/" + uri[3]);
-    } else {
-      history.push(uri[2]);
-    }
+    history.push(uri[2]);
   });
 
   useEffect(() => {
