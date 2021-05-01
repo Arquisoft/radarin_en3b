@@ -30,7 +30,13 @@ export default function App() {
     //https://radarinen3bwebapp.herokuapp.com/about
     let uri = url.split("//")[1].split("/");
 
-    history.push(uri);
+    if (urlParams !== "undefined") {
+      history.push(urlParams);
+    } else if (uri[3] !== null) {
+      history.push("/uploadLocation/" + uri[3]);
+    } else {
+      history.push(uri[2]);
+    }
   });
 
   useEffect(() => {
@@ -50,14 +56,14 @@ export default function App() {
         <header>
           <MainNavbar />
         </header>
-        <br /><br /><br /><br /><br/>
+        <br /><br /><br /><br /><br />
         <Switch>
           <Route path="/uploadLocation">
-            <UploadLocation/>
+            <UploadLocation />
           </Route>
           <Route path="/login">
-              <LoginPage redirectUrl={urlParams}/>
-            </Route>
+            <LoginPage redirectUrl={urlParams} />
+          </Route>
         </Switch>
       </div>
     );
@@ -77,13 +83,13 @@ export default function App() {
               <About />
             </Route>
             <Route path="/login">
-              <LoginPage/>
+              <LoginPage />
             </Route>
             <Route path="/qr">
-              <QRPage/>
+              <QRPage />
             </Route>
             <Route path="/uploadLocation">
-              <UploadLocation/>
+              <UploadLocation />
             </Route>
             <Route path="/help">
               <HelpPage/>
