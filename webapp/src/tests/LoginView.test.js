@@ -8,13 +8,17 @@ import LoginPage from '../components/LoginPage';
 
 
 test("user can change provider text and click sign in", async () => {
-    const correctProvider = "https://inrupt.net";
 
-    const { getAllByRole, getByTestId } = render(<BrowserRouter><Provider store={store}><LoginPage/></Provider></BrowserRouter>);
+    const { getAllByRole, getByTestId, getByRole } = render(<BrowserRouter><Provider store={store}><LoginPage/></Provider></BrowserRouter>);
 
-    const providerTextField = getByTestId("provider");
+    const providerTextField = getByRole("combobox");
 
     expect(providerTextField).toBeInTheDocument();
+
+    console.log(providerTextField);
+
+    fireEvent.click(providerTextField);
+    fireEvent.keyDown(providerTextField, { key: "S", code: "KeyS" });
 
     const signInButton = getAllByRole("button", { name: "Sign In" }).find(element => element.className.includes("MuiButton"));
 
@@ -23,4 +27,13 @@ test("user can change provider text and click sign in", async () => {
     const button = getByTestId("button");
 
     fireEvent.click(button);
+});
+
+test("login page 2", async () => {
+
+    const { getAllByRole, getByTestId } = render(<BrowserRouter><Provider store={store}><LoginPage redirectUrl={"hola"}/></Provider></BrowserRouter>);
+
+    const providerTextField = getByTestId("provider");
+
+    expect(providerTextField).toBeInTheDocument();
 });

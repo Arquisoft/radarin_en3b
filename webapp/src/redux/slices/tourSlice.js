@@ -2,7 +2,6 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     isTourOpen: false,
-    isShowingMore: false,
 };
 
 export const tourSlice = createSlice({
@@ -11,13 +10,10 @@ export const tourSlice = createSlice({
     reducers: {
         setIsTourOpen: (state, action) => {
             state.isTourOpen = action.payload
-        },
-        setIsShowingMore: (state, action) => {
-            state.isShowingMore = action.payload
         }
     }
 });
 
-export const { setIsTourOpen, setIsShowingMore } = tourSlice.actions;
+export const { setIsTourOpen } = tourSlice.actions;
 
 export default tourSlice.reducer;

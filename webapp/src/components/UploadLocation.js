@@ -36,7 +36,7 @@ export default function UploadLocation() {
         const lat = urlParamsArray[2].split("=")[1];
         const long = urlParamsArray[3].split("=")[1];
 
-        coords = "[" + parseInt(lat) + "," + parseInt(long) + "]";
+        coords = "[" + parseFloat(lat) + "," + parseFloat(long) + "]";
     }
 
 

@@ -19,6 +19,8 @@ async function getLocations(session) {
 
     let podFriendsLocations = await fetchPodFriendsCreatedLocations(session, [ podLocations[podLocations.length - 1]?.id ?? 0]);
 
+    console.log(podFriendsLocations);
+
     const result = podLocations.concat(podFriendsLocations).concat(apiLocations);
 
     if(result.length === 0)
