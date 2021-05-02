@@ -1,11 +1,15 @@
 {
   "extends": "stylelint-config-standard",
-  "indentation": [
-    4,
-    {
-      "except": ["block"],
-      "message": "Please use 4 spaces for indentation.",
-      "severity": "warning"
-    }
-  ]
+  "rules": {
+    "indentation": [
+      4,
+      {
+        "except": [
+          "block"
+        ],
+        "message": "Please use 4 spaces for indentation.",
+        "severity": "warning"
+      }
+    ]
+  }
 }

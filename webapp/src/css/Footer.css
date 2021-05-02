@@ -1,19 +1,19 @@
 .footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  height: 3.5rem;
-  background: rgb(224, 224, 224);
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 3.5rem;
+    background: rgb(224, 224, 224);
 }
 
 .lightBg {
-  background: linear-gradient(90deg, rgb(9, 64, 114) 0%, rgb(116, 196, 231) 100%);
+    background: linear-gradient(90deg, rgb(9, 64, 114) 0%, rgb(116, 196, 231) 100%);
 }
 
 .footer-links {
-  color: white;
+    color: white;
 }
 
 .nav-item {
-  color: white;
+    color: white;
 }
