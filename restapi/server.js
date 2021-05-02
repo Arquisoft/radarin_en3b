@@ -9,7 +9,7 @@ const swaggerUi = require("swagger-ui-express");
 
 function connect() {
     //The MONGO_URI variable is the connection string to MongoDB Atlas (for production). This env variable is created in heroku.
-    mongo_uri = process.env.MONGO_URI || "mongodb://localhost:27017";
+    const mongoUri = process.env.MONGO_URI || "mongodb://localhost:27017";
     const options = {
         definition: {
             openapi: "3.0.0",
@@ -43,7 +43,7 @@ function connect() {
         apis: ["./endpoints/*.js"],
     };
     const specs = swaggerJsDoc(options);
-    mongoose.connect(mongo_uri, {useNewUrlParser: true, useUnifiedTopology: true}).then(() => {
+    mongoose.connect(mongoUri, {useNewUrlParser: true, useUnifiedTopology: true}).then(() => {
         const app = express();
 
         //Monitoring middleware
@@ -54,9 +54,10 @@ function connect() {
         app.use(express.json());
         app.use("/api", api);
         app.use("/admin", admin);
-        app.use('/docs', swaggerUi.serve, swaggerUi.setup(specs));
+        app.use("/docs", swaggerUi.serve, swaggerUi.setup(specs));
         app.listen(process.env.PORT || 5000, () => {
-            console.log("Server has started! Using db in " + mongo_uri);
+            // eslint-disable-next-line no-console
+            console.log("Server has started! Using db in " + mongoUri);
         });
     });
 }

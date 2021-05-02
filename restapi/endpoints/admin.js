@@ -1,6 +1,7 @@
 const express = require("express");
-const TrackedLocation = require('../models/TrackedLocation');
+const TrackedLocation = require("../models/TrackedLocation");
 const Blacklisted = require("../models/Blacklisted");
+// eslint-disable-next-line new-cap
 const router = express.Router();
 const adminChecker = require("../middleware/AdminChecker");
 const auth = require("../middleware/Auth");
@@ -44,7 +45,7 @@ router.use(adminChecker);
 router.get("/users", async (req, res) => {
     const users = await TrackedLocation.distinct("webId");
     if (users == null)
-        return res.send([]);
+    {return res.send([]);}
     res.send(users);
 });
 
@@ -92,10 +93,10 @@ router.get("/blacklist", async (req, res) => {
  */
 router.post("/blacklist", async (req, res) => {
     if (req.body.webId == null)
-        return res.sendStatus(400);
+    {return res.sendStatus(400);}
 
     if (await Blacklisted.exists({webId: req.body.webId}))
-        return res.sendStatus(200);
+    {return res.sendStatus(200);}
 
     const blacklisted = new Blacklisted({webId: req.body.webId});
     await blacklisted.save();

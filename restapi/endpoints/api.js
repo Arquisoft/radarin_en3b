@@ -2,7 +2,7 @@ const express = require("express");
 const TrackedLocation = require("../models/TrackedLocation");
 /*eslint new-cap: ["error", { "capIsNewExceptionPattern": "^express\.." }]*/
 const router = express.Router();
-const webIdQueryChecker = require('../middleware/WebIdQueryChecker');
+const webIdQueryChecker = require("../middleware/WebIdQueryChecker");
 const auth = require("../middleware/Auth");
 const blacklist = require("../middleware/Blacklist");
 
@@ -117,13 +117,13 @@ router.get("/locations", async (req, res) => {
     if (req.query.last === "true") {
         const lastLocation = await TrackedLocation.findOne({webId}).sort({timestamp: -1});
         if (lastLocation == null)
-            return res.send([]);
+        {return res.send([]);}
         return res.send(lastLocation);
     }
 
     const userLocations = await TrackedLocation.find({webId}).sort({timestamp: -1});
     if (userLocations == null)
-        return res.send([]);
+    {return res.send([]);}
     res.send(userLocations);
 });
 
