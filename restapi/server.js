@@ -59,8 +59,6 @@ function connect() {
             console.log("Server has started! Using db in " + mongo_uri);
         });
     });
-    const admin = new Admin({webId: "https://radarin.inrupt.net/profile/card#me"});
-    admin.save();
 }
 
 // Connect to MongoDB database, the wait is for giving time to mongodb to finish loading
