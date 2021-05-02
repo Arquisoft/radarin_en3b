@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, ScrollView, Image, Button, Dimensions} from "react-native";
+import { View, Text, ScrollView, Image, Button} from "react-native";
 import styles from "./MyStyles";
 import { Overlay } from "react-native-elements/dist/overlay/Overlay";
 

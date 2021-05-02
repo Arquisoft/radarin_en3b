@@ -10,7 +10,8 @@ import { getFriendsNames } from './FetchFriends';
 import { getLocation, getLocationAsync } from "./GetAsyncLocation";
 import * as WebBrowser from "expo-web-browser";
 import MyOverlaySupport from "./MyFirstTour";
-import AsyncStorage from "@react-native-community/async-storage";
+import MyOverlayLocationSupport from "./MyLocationTour";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function HomeScreen({ navigation }) {
 
@@ -219,6 +220,7 @@ export default function HomeScreen({ navigation }) {
         <Overlay isVisible={visible} onBackdropPress={toggleOverlay}>
           <MyForm></MyForm>
         </Overlay>
+        {(firstLogin && visible) ? <MyOverlayLocationSupport></MyOverlayLocationSupport> : null}
       </View>)
   }
   

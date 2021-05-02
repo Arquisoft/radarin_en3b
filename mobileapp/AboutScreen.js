@@ -6,6 +6,7 @@ import {HeaderBackButton} from "@react-navigation/stack";
 import styles from "./MyStyles";
 import MyMenu from "./MyMenu";
 import MyOverlaySupport from "./MyFirstTour";
+import MyOverlayLocationSupport from "./MyLocationTour";
 
 const supportedURL = "https://solidproject.org/";;
 
@@ -59,6 +60,7 @@ export default function AboutScreen({navigation}) {
             <Pressable onPress={() =>{setLocationTutorial(!locationTutorial)}}>
               <Text style={styles.normalText}>How to send a location</Text>
             </Pressable>
+            {locationTutorial ? (<MyOverlayLocationSupport></MyOverlayLocationSupport>):null}
       </Card>
       <Card containerStyle={styles.card}>
             <Card.Title style={styles.cardTitle}>About Radarin</Card.Title>
