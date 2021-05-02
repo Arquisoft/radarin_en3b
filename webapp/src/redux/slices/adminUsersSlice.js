@@ -1,22 +1,46 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import BlockUser from "../../components/BlockUser";
 import FetchUsersAdmin from "../../components/FetchUsersAdmin";
+import GetBlacklist from "../../components/GetBlacklist";
+import UnblockUser from "../../components/UnblockUser";
 
-export const fetchUsersAdmin = createAsyncThunk("users/fetchUsersAdmin", async (session) => {
-    return await getUsers(session);
+export const fetchUsersAdmin = createAsyncThunk("users/fetchUsersAdmin", async () => {
+    return await getUsers();
 });
 
-export const refreshUsersAdmin = createAsyncThunk("users/refreshUsersAdmin", async (session) => {
-    return await getUsers(session);
+export const refreshUsersAdmin = createAsyncThunk("users/refreshUsersAdmin", async () => {
+    return await getUsers();
 });
 
-async function getUsers(session) {
-    let users = await FetchUsersAdmin(session);
+async function getUsers() {
+    let users = await FetchUsersAdmin();
 
     if(users.length === 0)
-        return [{ webId: "No users" }];
+        return [ "No users" ];
     else
         return users;
-}
+};
+
+export const blockUserAdmin = createAsyncThunk("user/blockUser", async (webId) => {
+    return await BlockUser(webId);
+});
+
+export const unblockUserAdmin = createAsyncThunk("user/unblockUser", async (webId) => {
+    return await UnblockUser(webId);
+});
+
+export const getBlacklistAdmin = createAsyncThunk("users/getBlacklist", async () => {
+    return await getBlacklist();
+});
+
+async function getBlacklist() {
+    let users = await GetBlacklist();
+
+    if(users.length === 0)
+        return [];
+    else
+        return users;
+};
 
 const initialState = {
     status: "idle",
@@ -24,6 +48,7 @@ const initialState = {
     users: [],
     searchText: "",
     error: null,
+    usersBL: [],
 };
 
 export const usersSlice = createSlice({
@@ -56,9 +81,12 @@ export const usersSlice = createSlice({
             state.refreshStatus = "failed"
             state.error = action.error.message
         },
+        [getBlacklistAdmin.fulfilled]: (state, action) => {
+            state.usersBL = action.payload
+        },
     }
 });
 
-export const {  setSearchText } = usersSlice.actions;
+export const { setSearchText } = usersSlice.actions;
 
 export default usersSlice.reducer;

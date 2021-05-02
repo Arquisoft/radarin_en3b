@@ -35,15 +35,26 @@ class API {
     }
 
     async getUsers() {
-        console.log(this.adminEndPoint);
         const response = await fetch(`${this.adminEndPoint}/users`,
             { method: "GET", headers: this.buildHeaders() });
         return await response.json();
     }
 
-    async postBlacklist() {
+    async postBlacklist(body = {}) {
         const response = await fetch(`${this.adminEndPoint}/blacklist`,
-            { method: "POST", headers: this.buildHeaders() });
+            { method: "POST", headers: this.buildHeaders(), body: JSON.stringify(body) });
+        return await response;
+    }
+
+    async deleteBlacklist(webId) {
+        const response = await fetch(`${this.adminEndPoint}/blacklist/${encodeURIComponent(webId)}`,
+            { method: "DELETE", headers: this.buildHeaders() });
+        return await response;
+    }
+
+    async getBlacklist() {
+        const response = await fetch(`${this.adminEndPoint}/blacklist`,
+            { method: "GET", headers: this.buildHeaders() });
         return await response.json();
     }
 }
