@@ -6,20 +6,20 @@ import { useSession } from "@inrupt/solid-ui-react";
 import { setLogguedStatus } from "../redux/slices/userSlice";
 
 function MainNavbar() {
-    const loggued = useSelector(state => state.user.logguedStatus);
+    const loggued = useSelector((state) => state.user.logguedStatus);
     const { session } = useSession();
     const dispatch = useDispatch();
 
     useEffect(() => {
         if(session.info.isLoggedIn)
-            dispatch(setLogguedStatus(true));
+        {dispatch(setLogguedStatus(true));}
         else
-            dispatch(setLogguedStatus(false));
+        {dispatch(setLogguedStatus(false));}
     });
 
     if (!loggued)
-        return <NavbarAnonym></NavbarAnonym>;
+    {return <NavbarAnonym></NavbarAnonym>;}
     else
-        return <NavbarSession></NavbarSession>;
+    {return <NavbarSession></NavbarSession>;}
 }
 export default MainNavbar;
