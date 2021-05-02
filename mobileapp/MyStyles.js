@@ -148,6 +148,15 @@ export default StyleSheet.create({
     fontSize:18,
     color:'#094072', 
   },
+  titleText: {
+    fontSize:33,
+    alignSelf: 'center',
+    color:'#094072', 
+  },
+  helpGuideView:{
+    width: Dimensions.get('screen').width - 50,
+    height: Dimensions.get('screen').height - 150,
+  },
   normalText: {
     fontSize: 16,
     margin: 10,
