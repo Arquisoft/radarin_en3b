@@ -125,7 +125,7 @@ export default function UploadLocation() {
     } else {
         if (!showClose) {
             return (
-                <div className="spinner-border mt-5 center2" role="status">
+                <div className="spinner-border mt-5 center3" role="status">
                     <span className="sr-only">Loading...</span>
                 </div>
             );

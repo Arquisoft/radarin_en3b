@@ -87,7 +87,7 @@ function LoginPage(props) {
                         fullWidth
                         data-testid="provider"
                         renderInput={(params) => <TextField {...params} label="Provider" variant="outlined"/>}
-                        onChange={(e) => {setIdp(e.target.value); }}
+                        onChange={(e, value) => {setIdp(value); console.log(value)}}
                         className={classes.input}
                     />
                 </CardContent>
@@ -96,7 +96,7 @@ function LoginPage(props) {
                 <Typography variant="body2" component="p" className="text-center">
           Don't have one? You can get it here: <Link className="ml-1" href="https://inrupt.com/" target="_blank"><strong>Inrupt</strong></Link>
                 </Typography>
-                <LoginButton oidcIssuer={providers[`${idp}`].value} redirectUrl={ redirectUrl }>
+                <LoginButton oidcIssuer={idp.value} redirectUrl={ redirectUrl }>
                     <Button id="SignInButton" data-testid="button" color="primary" variant="contained" className={classes.signIn} onClick={callback}>Sign In</Button>
                 </LoginButton>
             </CardActions>
