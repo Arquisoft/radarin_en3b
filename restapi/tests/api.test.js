@@ -44,23 +44,22 @@ function buildTestToken(webId) {
 jest.mock("../utils/fetchFriends");
 
 jest.mock("../utils/fetchPKey");
-
+fetchFriends.mockImplementation((webId) => {
+        switch (webId) {
+            case nonAdded:
+                return requejoFriends;
+            case carmenWebId:
+                return carmenFriends;
+            case adminWebId:
+                return radarinFriends;
+        }
+    }
+);
+fetchPKey.mockReturnValue(pKey);
 beforeAll(async () => {
     await server.startdb();
     app = await server.startserver();
     const admin = new Admin({webId: adminWebId});
-    fetchFriends.mockImplementation((webId) => {
-            switch (webId) {
-                case nonAdded:
-                    return requejoFriends;
-                case carmenWebId:
-                    return carmenFriends;
-                case adminWebId:
-                    return radarinFriends;
-            }
-        }
-    );
-    fetchPKey.mockResolvedValue(Promise.resolve(pKey));
     await admin.save();
 });
 

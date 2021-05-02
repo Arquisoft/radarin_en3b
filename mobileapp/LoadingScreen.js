@@ -147,7 +147,7 @@ export default function LoadingScreen({ route, navigation }) {
     <ImageBackground source={require("./assets/background.jpg")} style={styles.background}>
     <View style={styles.loadingScreen}>
       <Image style={styles.loadingImage}
-        source={require("./assets/icon.png")}
+        source={require("./assets/iconFull.png")}
       />
       <Text style={styles.loadingText}>Loading...</Text>
     </View>
