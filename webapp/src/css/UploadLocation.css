@@ -36,3 +36,9 @@
 .loginButton {
     margin-top: 5em;
 }
+
+.center2 {
+    position: fixed;
+    top: 30%;
+    left: 5%;
+}
