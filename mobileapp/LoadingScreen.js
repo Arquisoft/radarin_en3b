@@ -103,22 +103,27 @@ export default function LoadingScreen({ route, navigation }) {
   
 
   useEffect(() => {
-
+    console.log(closeFriendsStatus);
     setIsMounted(true);
     if (profileStatus === "idle") {
+      console.log("profile");
       dispatch(fetchProfile(webId));
 
     } else if (friendsStatus === "idle" && profileStatus === "succeeded") {
       dispatch(fetchFriends(webId));
+      console.log("friends");
     } else if (closeFriendsStatus === "idle" && friendsStatus === "succeeded") {  
       dispatch(fetchFriendsWithDistance()); 
+      console.log("friends2");
     } else if (closeFriendsStatus === "succeeded") {
       if(!doUnaNots) {
+        console.log("la buena");
         dispatch(doOnceNotifications());
         dispatch(doOnce());
         setNotificationsBackground();
       }
       
+      console.log("as");
       navigation.navigate("Radarin");
 
     } else if(friendsStatus === "failed" || closeFriendsStatus === "failed"){

@@ -16,34 +16,30 @@ const optionsAndroid = {
   }
 };
 
-export async function getLocationAsync() {
-  let status = await Location.requestBackgroundPermissionsAsync();
-  let errorMsg;
-  let backgroundLocation = await Location.hasStartedLocationUpdatesAsync("backgroundLocations");
-  let savedState = await AsyncStorage.getItem("backgroundLocations");
+export async function getLocationAsyncStatus() {
+  return await Location.hasStartedLocationUpdatesAsync("backgroundLocations");
+}
 
+export async function startLocationAsync() {
+  let status = await Location.requestBackgroundPermissionsAsync();
+  
   if (status.status !== "granted") {
     errorMsg = "Permission to access location was denied";
     alert(errorMsg);
     return;
   }
 
-  if (savedState === "active") {
-    if (!backgroundLocation) {
-      Location.startLocationUpdatesAsync("backgroundLocations", optionsAndroid);
+  Location.startLocationUpdatesAsync("backgroundLocations", optionsAndroid);
       TaskManager.defineTask("backgroundLocations", ({ data: { locations }, error }) => {
         if (error) {
           return;
         }
         sendLocation(locations[locations.length - 1].coords, locations[locations.length - 1].timestamp);
       });
-    }
-  } else {
-    if (backgroundLocation) {
-      Location.stopLocationUpdatesAsync("backgroundLocations").then(() => {}).catch(() => {}); //TODO: proper handle
-    }
-  }
-  return;
+}
+
+export async function stopLocationAsync() {
+  Location.stopLocationUpdatesAsync("backgroundLocations").then(() => {}).catch(() => {}); //TODO: proper handle
 }
 
 export async function getLocation() {

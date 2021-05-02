@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, TextInput, ScrollView, Image, Button, BackHandler, Pressable, TouchableOpacity, Share, Linking} from "react-native";
+import { View, Text, TextInput, ScrollView, Image, Button, BackHandler, Pressable, TouchableOpacity, Share, Linking } from "react-native";
 import { Card, Overlay } from "react-native-elements";
-import {DataTable} from "react-native-paper";
+import { DataTable } from "react-native-paper";
 import styles from "./MyStyles";
 import MyMenu from "./MyMenu";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useFocusEffect } from '@react-navigation/native';
 import { getFriendsNames } from './FetchFriends';
-import { getLocation, getLocationAsync } from "./GetAsyncLocation";
+import { getLocation, startLocationAsync, stopLocationAsync, getLocationAsyncStatus } from "./GetAsyncLocation";
 import * as WebBrowser from "expo-web-browser";
 import MyOverlaySupport from "./MyFirstTour";
 import MyOverlayLocationSupport from "./MyLocationTour";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { setSwitchStatus } from "./redux/slices/LocationsSlice";
 
 export default function HomeScreen({ navigation }) {
 
@@ -19,10 +20,23 @@ export default function HomeScreen({ navigation }) {
   const loadedFriends = useSelector(state => state.user.onlineCloseFriends);
   const friendsNames = getFriendsNames(onlineFriends);
   const [firstLogin, setFirstLogin] = useState(false);
+  const switchValue = AsyncStorage.getItem("switch");
+  const dispatch = useDispatch();
+  const switchStatus = useSelector(state => state.locations.switchStatus);
 
   useEffect(() => {
-    AsyncStorage.getItem("firstLogin").then((login)=>{login==="true" ? setFirstLogin(true) : setFirstLogin(false); AsyncStorage.setItem("firstLogin", "false");});
-  },[]);
+    AsyncStorage.getItem("firstLogin").then((login) => { login === "true" ? setFirstLogin(true) : setFirstLogin(false); AsyncStorage.setItem("firstLogin", "false"); });
+    console.log("a");
+    dispatch(setSwitchStatus(switchValue));
+  });
+
+  if(switchStatus) {
+    if(!getLocationAsyncStatus())
+      startLocationAsync();
+  } else {
+    if(getLocationAsyncStatus())
+      stopLocationAsync();
+  }
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
@@ -56,42 +70,42 @@ export default function HomeScreen({ navigation }) {
   );
 
   const MyCloseFriendsCard = () => {
-    if (loadedFriends == "No location"){
+    if (loadedFriends == "No location") {
       return (
-       <Card containerStyle={styles.nofriendscard}>
-       <Card.Title style={styles.cardTitle}>Your location is not being taken</Card.Title>
-       <Card.Divider style={styles.divider} />
-       <Text style={styles.name}>Please, go to your profile and activate automatic location sending</Text>
-   
-       <View style={styles.cardButton}>
-         <Button color="#094072" title="Go to profile" onPress={() => {
-           navigation.navigate("Profile");
-         }
-         }>
-           Go to profile
+        <Card containerStyle={styles.nofriendscard}>
+          <Card.Title style={styles.cardTitle}>Your location is not being taken</Card.Title>
+          <Card.Divider style={styles.divider} />
+          <Text style={styles.name}>Please, go to your profile and activate automatic location sending</Text>
+
+          <View style={styles.cardButton}>
+            <Button color="#094072" title="Go to profile" onPress={() => {
+              navigation.navigate("Profile");
+            }
+            }>
+              Go to profile
          </Button>
-       </View>
-     </Card>
+          </View>
+        </Card>
       );
     } else if (loadedFriends !== null && loadedFriends !== undefined && Object.entries(loadedFriends)?.length > 0) {
       return (
         <Card containerStyle={styles.card}>
-        <Card.Title style={styles.cardTitle}>Friends close to your location</Card.Title>
-        <Card.Divider style={styles.divider} />
-        <DataTable>
-          {
-            Object.entries(loadedFriends).map(([u, d]) => {
-              return (
-                <DataTable.Row key={u} onPress={() => Linking.openURL(d.mapsUrl)}>
-                  <DataTable.Cell style={{ flex: 2 }}><Text style={styles.name}>{u}</Text></DataTable.Cell>
-                  <DataTable.Cell><Text style={styles.name}>{d.value} m</Text></DataTable.Cell>
-                </DataTable.Row>
-              );
-            })
-          }
+          <Card.Title style={styles.cardTitle}>Friends close to your location</Card.Title>
+          <Card.Divider style={styles.divider} />
+          <DataTable>
+            {
+              Object.entries(loadedFriends).map(([u, d]) => {
+                return (
+                  <DataTable.Row key={u} onPress={() => Linking.openURL(d.mapsUrl)}>
+                    <DataTable.Cell style={{ flex: 2 }}><Text style={styles.name}>{u}</Text></DataTable.Cell>
+                    <DataTable.Cell><Text style={styles.name}>{d.value} m</Text></DataTable.Cell>
+                  </DataTable.Row>
+                );
+              })
+            }
 
-        </DataTable>
-      </Card>
+          </DataTable>
+        </Card>
       );
     } else {
       return (
@@ -102,9 +116,9 @@ export default function HomeScreen({ navigation }) {
         </Card>
       );
     }
-   }
+  }
 
-   const shareApp = async () => {
+  const shareApp = async () => {
     try {
       const result = await Share.share({
         message:
@@ -115,39 +129,39 @@ export default function HomeScreen({ navigation }) {
     }
   };
 
-   const MyFarFriendsCard = () => {
-    if(friendsNames.length == 0){
+  const MyFarFriendsCard = () => {
+    if (friendsNames.length == 0) {
       return (
         <Card containerStyle={styles.nofriendscard}>
           <Card.Title style={styles.cardTitle}>Seems like you don't have any friend that uses Radarin.</Card.Title>
           <Card.Divider style={styles.divider} />
           <Text style={styles.name}>Would you like to invite them?</Text>
-          <TouchableOpacity style={styles.sharebutton}  onPress={shareApp}>
-          <Image source={require("./assets/share.png")} style={styles.icon} />
+          <TouchableOpacity style={styles.sharebutton} onPress={shareApp}>
+            <Image source={require("./assets/share.png")} style={styles.icon} />
           </TouchableOpacity>
         </Card>
-       );
-    } else if (loadedFriends !== null && loadedFriends !== undefined && Object.entries(loadedFriends)?.length > 0){
+      );
+    } else if (loadedFriends !== null && loadedFriends !== undefined && Object.entries(loadedFriends)?.length > 0) {
       return (
         <Card containerStyle={styles.card}>
-        <Card.Title style={styles.cardTitle}>Disconnected or far from you</Card.Title>
-        <Card.Divider style={styles.divider} />
-        <DataTable>
-          {
-            friendsNames.filter(f => !(f in loadedFriends)).map((u) => {
-              return (
-                <DataTable.Row key={u}>
-                  <DataTable.Cell><Text style={styles.name}>{u}</Text></DataTable.Cell>
-                </DataTable.Row>
-              );
-            })
-          }
+          <Card.Title style={styles.cardTitle}>Disconnected or far from you</Card.Title>
+          <Card.Divider style={styles.divider} />
+          <DataTable>
+            {
+              friendsNames.filter(f => !(f in loadedFriends)).map((u) => {
+                return (
+                  <DataTable.Row key={u}>
+                    <DataTable.Cell><Text style={styles.name}>{u}</Text></DataTable.Cell>
+                  </DataTable.Row>
+                );
+              })
+            }
 
-        </DataTable>
-      </Card>
-       );
-     } else {
-       return (
+          </DataTable>
+        </Card>
+      );
+    } else {
+      return (
         <Card containerStyle={styles.card}>
           <Card.Title style={styles.cardTitle}>Friends</Card.Title>
           <Card.Divider style={styles.divider} />
@@ -164,38 +178,38 @@ export default function HomeScreen({ navigation }) {
 
           </DataTable>
         </Card>
-       );
-     }
-   }
+      );
+    }
+  }
 
-   function MyOverlay() {
+  function MyOverlay() {
     const [visible, setVisible] = useState(false);
-  
+
     const toggleOverlay = () => {
       setVisible(!visible);
     };
-  
+
     const MyForm = () => {
-  
+
       const [result, setResult] = useState(null);
       const [title, setTitle] = useState("");
       const [comment, setComment] = useState("");
-    
+
       const _handlePressButtonAsync = async () => {
         let browserParams = {
           toolbarColor: '#094072'
         };
-    
+
         const coords = await getLocation();
         let uri = "uploadLocation?title=" + title + "&comment=" + comment + "&lat=" + coords.coords.latitude + "&long=" + coords.coords.longitude;
-    
+
         let result = await WebBrowser.openBrowserAsync("https://radarinen3bwebapp.herokuapp.com/#/" + uri, browserParams);
         setResult(result);
-    
+
         setVisible(false);
-        
+
       };
-    
+
       return (
         <ScrollView>
           <Card containerStyle={styles.formCard}>
@@ -222,9 +236,9 @@ export default function HomeScreen({ navigation }) {
         {(firstLogin && visible) ? <MyOverlayLocationSupport></MyOverlayLocationSupport> : null}
       </View>)
   }
-  
+
   const MyPressable = ({ onPressing }) => {
-  
+
     const myStyle = ({ pressed }) => [
       {
         backgroundColor: pressed
@@ -233,25 +247,25 @@ export default function HomeScreen({ navigation }) {
       },
       styles.pressable
     ];
-  
-  
+
+
     return <Pressable activeOpacity={0.7} style={myStyle} onPress={() => onPressing()}>
       <Image style={styles.icon} source={require("./assets/add-24px.png")} />
     </Pressable >
   }
 
-    return (
-      <View style={styles.homeScreenContainer}>
+  return (
+    <View style={styles.homeScreenContainer}>
       <ScrollView>
-      <View style={styles.mainScreenContainer}>
-        <MyCloseFriendsCard></MyCloseFriendsCard>
-        <MyFarFriendsCard></MyFarFriendsCard>
-      </View>
+        <View style={styles.mainScreenContainer}>
+          <MyCloseFriendsCard></MyCloseFriendsCard>
+          <MyFarFriendsCard></MyFarFriendsCard>
+        </View>
       </ScrollView>
       {firstLogin ? <MyOverlaySupport></MyOverlaySupport> : null}
-      <MyOverlay visibility={true}/>
-      
-      </View>
-    );
+      <MyOverlay visibility={true} />
+
+    </View>
+  );
 
 }

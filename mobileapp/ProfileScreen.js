@@ -2,14 +2,12 @@
 import React from "react";
 import { View, Text } from "react-native";
 import { Card } from "react-native-elements";
-import { Switch } from "react-native-paper";
 import { DataTable, Avatar } from "react-native-paper";
 import { HeaderBackButton } from "@react-navigation/stack";
 import styles from "./MyStyles";
 import MyMenu from "./MyMenu";
 import { useSelector } from "react-redux";
-import { getLocationAsync } from "./GetAsyncLocation";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import MySwitch from "./MySwitch";
 
 
 export default function ProfileScreen({ navigation }) {
@@ -57,28 +55,3 @@ export default function ProfileScreen({ navigation }) {
     </View>
   );
 }
-
-
-const MySwitch = () => {
-  let initialState;
-
-  AsyncStorage.getItem("backgroundLocations").then((backgroundLocation) => {
-    if (backgroundLocation === "active") 
-      setIsSwitchOn(true);
-    
-    else  
-      setIsSwitchOn(false);
-    getLocationAsync();
-  });
-  const [isSwitchOff, setIsSwitchOn] = React.useState(initialState);
-
-  const onToggleSwitch = () => {
-    setIsSwitchOn(!isSwitchOff);
-    if (isSwitchOff) 
-        AsyncStorage.setItem("backgroundLocations", "inactive");
-    else 
-        AsyncStorage.setItem("backgroundLocations", "active");
-  }
-
-  return <Switch color="#094072" value={isSwitchOff} onValueChange={onToggleSwitch} />;
-};
