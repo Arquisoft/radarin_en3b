@@ -78,6 +78,8 @@
     "jest-environment-node": "^26.6.2",
     "jest-puppeteer": "^4.4.0",
     "puppeteer": "^5.5.0",
-    "shx": "^0.3.3"
+    "shx": "^0.3.3",
+    "stylelint": "^13.13.1",
+    "stylelint-config-standard": "^22.0.0"
   }
 }

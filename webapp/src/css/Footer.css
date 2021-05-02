@@ -7,13 +7,13 @@
 }
 
 .lightBg {
-  background: linear-gradient(90deg, rgb(9, 64, 114) 0%, rgb(116, 196, 231, 1) 100%);
+  background: linear-gradient(90deg, rgb(9, 64, 114) 0%, rgb(116, 196, 231) 100%);
 }
 
 .footer-links {
-  color:white;
+  color: white;
 }
 
 .nav-item {
-  color:white;
+  color: white;
 }
