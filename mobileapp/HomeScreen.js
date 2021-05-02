@@ -19,7 +19,6 @@ export default function HomeScreen({ navigation }) {
   const loadedFriends = useSelector(state => state.user.onlineCloseFriends);
   const friendsNames = getFriendsNames(onlineFriends);
   const [firstLogin, setFirstLogin] = useState(false);
-  getLocationAsync();
 
   useEffect(() => {
     AsyncStorage.getItem("firstLogin").then((login)=>{login==="true" ? setFirstLogin(true) : setFirstLogin(false); AsyncStorage.setItem("firstLogin", "false");});

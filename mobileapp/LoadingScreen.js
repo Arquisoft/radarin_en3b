@@ -52,7 +52,7 @@ TaskManager.defineTask("friendsLocation", () => {
         if (newFriends !== undefined && newFriends !== null && newFriends.length > 0){
           schedulePushNotificationFriendsClose(newFriends);
         }
-          
+        console.log("Background fetch locations executed");
         }
 
         return "Executed correctly";
