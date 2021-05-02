@@ -86,7 +86,7 @@ function LoginPage(props) {
                         fullWidth
                         data-testid="provider"
                         renderInput={(params) => <TextField {...params} label="Provider" variant="outlined"/>}
-                        onChange={(e) => {setIdp(e.target.value); console.log(e.target.value);}}
+                        onChange={(e) => {setIdp(e.target.value); }}
                         className={classes.input}
                     />
                 </CardContent>

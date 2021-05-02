@@ -15,7 +15,7 @@ import {
 import LocationOnIcon from "@material-ui/icons/LocationOn";
 import { useDispatch } from "react-redux";
 import { moveTo, refreshLocations, setPolyline } from "../../redux/slices/locationsSlice";
-import FetchPhoto from "./FetchPhoto";
+import fetchPhoto from "./FetchPhoto";
 import { useSession } from "@inrupt/solid-ui-react";
 import removeLocation from "./RemoveLocation";
 import "../../css/Location.css";
@@ -25,7 +25,7 @@ export default function Location({ childKey, title, description, coords, photo, 
     let { session } = useSession();
     
     if(typeof sess !== "undefined")
-        session = sess;
+    {session = sess;}
 
     const [open, setOpen] = useState(false);
     const [open2, setOpen2] = useState(false);
@@ -35,7 +35,7 @@ export default function Location({ childKey, title, description, coords, photo, 
 
     useEffect(() => {
         async function getImg() {
-            const imgBlob = await FetchPhoto(session, photo, webId);
+            const imgBlob = await fetchPhoto(session, photo, webId);
 
             const imgUrl = URL.createObjectURL(imgBlob);
             setImg(imgUrl);
@@ -46,26 +46,26 @@ export default function Location({ childKey, title, description, coords, photo, 
 
     const handleOpen = () => {
         setOpen(true);
-    }
+    };
 
     const handleClose = () => {
         setOpen(false);
-    }
+    };
 
     const handleOpen2 = () => {
         setOpen2(true);
-    }
+    };
 
     const handleClose2 = () => {
         setOpen2(false);
-    }
+    };
 
     const removeAndClose = async () => {
         await removeLocation(session, title, description);
         dispatch(refreshLocations(session));
         handleClose2();
         handleClose();
-    }
+    };
 
     function onClick() {
         dispatch(moveTo([0, 0]));
@@ -76,9 +76,9 @@ export default function Location({ childKey, title, description, coords, photo, 
     let user = "";
 
     if (propietary)
-        user = "you"
+    {user = "you";}
     else
-        user = webId.split("//")[1].split('.')[0];
+    {user = webId.split("//")[1].split(".")[0];}
 
     return (
         <ListItem
@@ -101,7 +101,7 @@ export default function Location({ childKey, title, description, coords, photo, 
                             color="textPrimary"
                             style={{ wordWrap: "break-word"}}>
                             {user} —
-                    </Typography>
+                        </Typography>
                         {date}
                     </React.Fragment>
                 } />

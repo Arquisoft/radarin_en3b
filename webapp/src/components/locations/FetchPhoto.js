@@ -5,7 +5,7 @@ import {
     getFile
 } from "@inrupt/solid-client";
 
-export default async function FetchPhoto(session, photoId, webId) {
+export default async function fetchPhoto(session, photoId, webId) {
     const profileDataset = await getSolidDataset(webId, {
         fetch: session.fetch,
     });

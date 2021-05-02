@@ -19,12 +19,12 @@ export default function MainFooter() {
             </div>
             <div className="d-flex align-items-center justify-content-center">
                 <Navbar expand="lg">
-                    {FooterItems.map((item, index) => {
+                    {FooterItems.map((item) => {
                         return (
                             <NavLink key={item.key} className={item.cName} as={Link} to={item.url}>
                                 {item.title}
                             </NavLink>
-                        )
+                        );
                     })}
                     <NavDropdown title={<span className="footer-links">Language</span>} className="nav-item dropup mx-5 ">
                         <NavDropdown.Item href="/" className="mr-5 pr-3">English</NavDropdown.Item>

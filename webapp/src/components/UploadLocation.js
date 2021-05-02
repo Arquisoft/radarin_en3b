@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from 'react';
-import Container from 'react-bootstrap/Container';
-import Jumbotron from 'react-bootstrap/Jumbotron';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
+import React, { useEffect, useState } from "react";
+import Container from "react-bootstrap/Container";
+import Jumbotron from "react-bootstrap/Jumbotron";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 import { Button, Fab, Typography } from "@material-ui/core";
 import SendIcon from "@material-ui/icons/Send";
-import AddPhotoAlternateIcon from '@material-ui/icons/AddPhotoAlternate';
+import AddPhotoAlternateIcon from "@material-ui/icons/AddPhotoAlternate";
 import "../css/UploadLocation.css";
-import { useSession } from '@inrupt/solid-ui-react';
-import { useDispatch, useSelector } from 'react-redux';
-import { setLimitedVersion, setUrlParams } from '../redux/slices/userSlice';
+import { useSession } from "@inrupt/solid-ui-react";
+import { useDispatch, useSelector } from "react-redux";
+import { setLimitedVersion, setUrlParams } from "../redux/slices/userSlice";
 import { Link } from "react-router-dom";
 import postLocation from "./locations/PostLocation";
 
@@ -18,8 +18,8 @@ export default function UploadLocation() {
     const [photoURL, setPhotoURL] = useState(null);
     const { session } = useSession();
     const dispatch = useDispatch();
-    const urlParams = useSelector(state => state.user.urlParams);
-    const logguedStatus = useSelector(state => state.user.logguedStatus);
+    const urlParams = useSelector((state) => state.user.urlParams);
+    const logguedStatus = useSelector((state) => state.user.logguedStatus);
     const [locationSent, setLocationSent] = useState(false);
 
     let urlParamsArray;
