@@ -10,7 +10,6 @@ import ProfileScreen from "./ProfileScreen";
 import LoginScreen from "./LoginScreen";
 import LoadingScreen from "./LoadingScreen";
 import store from "./redux/store";
-import { TabRouter } from "react-navigation";
 import FlashMessage from "react-native-flash-message";
 
 const Stack = createStackNavigator();

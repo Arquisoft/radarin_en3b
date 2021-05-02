@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from "react";
-import { View, Text, Button } from "react-native";
+import { View, Text } from "react-native";
 import { Card } from "react-native-elements";
 import { Switch } from "react-native-paper";
 import { DataTable, Avatar } from "react-native-paper";
@@ -10,7 +10,7 @@ import styles from "./MyStyles";
 import MyMenu from "./MyMenu";
 //import { sendLocation } from "./SendLocation";
 import { useSelector } from "react-redux";
-import {getLocation, getLocationAsync} from "./GetAsyncLocation";
+import { getLocationAsync } from "./GetAsyncLocation";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 

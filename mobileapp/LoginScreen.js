@@ -7,7 +7,7 @@ import styles from "./MyStyles";
 import { BarCodeScanner } from "expo-barcode-scanner";
 import * as SecureStore from "expo-secure-store";
 import { setScanned } from "./redux/slices/executingSlice";
-import { showMessage, hideMessage } from "react-native-flash-message";
+import { showMessage } from "react-native-flash-message";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function LoginScreen({ navigation, route }) {

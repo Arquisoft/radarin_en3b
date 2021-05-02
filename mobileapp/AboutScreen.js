@@ -8,7 +8,7 @@ import MyMenu from "./MyMenu";
 import MyOverlaySupport from "./MyFirstTour";
 import MyOverlayLocationSupport from "./MyLocationTour";
 
-const supportedURL = "https://solidproject.org/";;
+const supportedURL = "https://solidproject.org/";
 
 const OpenURLButton = ({ url, children }) => {
   const handlePress = useCallback(async () => {
