@@ -33,6 +33,7 @@ const pKey = "-----BEGIN RSA PUBLIC KEY-----\n" +
     "V+1ZpvIRGil7azhwuaQb+0UEykQ5wudw3xlNAgMBAAE=\n" +
     "-----END RSA PUBLIC KEY-----";
 
+let app;
 
 function buildTestToken(webId) {
     const payload = {
@@ -59,7 +60,7 @@ fetchFriends.mockImplementation((webId) => {
 fetchPKey.mockReturnValue(pKey);
 beforeAll(async () => {
     await server.startdb();
-    await server.startserver();
+    app = await server.startserver();
     const admin = new Admin({webId: adminWebId});
     await admin.save();
 });
