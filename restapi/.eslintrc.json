@@ -5,7 +5,9 @@
     "commonjs": true,
     "es2021": true
   },
-  "extends": "eslint:recommended",
+  "extends": ["eslint:recommended",
+    "plugin:security/recommended"
+  ],
   "parserOptions": {
     "ecmaVersion": 12
   },
@@ -107,5 +109,6 @@
     "no-use-before-define": 2,
     "object-shorthand": 2,
     "wrap-iife": 2
-  }
+  },
+  "plugins": ["security"]
 }

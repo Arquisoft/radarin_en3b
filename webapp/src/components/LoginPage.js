@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React, { useState } from "react";
 import { LoginButton } from "@inrupt/solid-ui-react";
 import Button from "@material-ui/core/Button";
@@ -95,7 +96,7 @@ function LoginPage(props) {
                 <Typography variant="body2" component="p" className="text-center">
           Don't have one? You can get it here: <Link className="ml-1" href="https://inrupt.com/" target="_blank"><strong>Inrupt</strong></Link>
                 </Typography>
-                <LoginButton oidcIssuer={providers[idp].value} redirectUrl={ redirectUrl }>
+                <LoginButton oidcIssuer={providers[`${idp}`].value} redirectUrl={ redirectUrl }>
                     <Button id="SignInButton" data-testid="button" color="primary" variant="contained" className={classes.signIn} onClick={callback}>Sign In</Button>
                 </LoginButton>
             </CardActions>

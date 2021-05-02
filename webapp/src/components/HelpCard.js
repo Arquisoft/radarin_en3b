@@ -60,7 +60,7 @@ export default function HelpCard({ item, counter }) {
         <Card className={classes.root} variant="outlined">
             <CardActionArea style={{ alignItems: "center", justify: "center" }} onClick={handleClickOpen}>
 
-                {icons[counter]}
+                {icons[`${counter}`]}
 
                 <CardContent>
                     <Typography className={classes.title} variant="h5" component="h2">

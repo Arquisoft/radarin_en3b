@@ -9,6 +9,8 @@ const auth = async function (req, res, next) {
 
     const token = authHeader && authHeader.split(" ")[1];
 
+    // You can't time-attack this, it's just checking if it is empty
+    // eslint-disable-next-line security/detect-possible-timing-attacks
     if (token == null)
     {return res.sendStatus(401);}
 
