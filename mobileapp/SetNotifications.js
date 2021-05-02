@@ -46,7 +46,7 @@ export async function schedulePushNotificationFriends(newFriends) {
     if (newFriends.length === 1) {
         friendsStr = newFriends[0] + " has started to use the app.";
     } else {
-        friendsStr = newFriends.slice(0, newFriends.length - 2).reduce((str, friend) => str += `${friend}, `);
+        friendsStr = newFriends.slice(0, newFriends.length - 2).reduce((str, friend) => str.concat(`${friend}, `));
         friendsStr
             += `${newFriends[newFriends.length - 2]} and ${newFriends[newFriends.length - 1]} have started to use the app.`;
     }
