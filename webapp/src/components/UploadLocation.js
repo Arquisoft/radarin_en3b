@@ -23,6 +23,8 @@ export default function UploadLocation() {
     const [locationSent, setLocationSent] = useState(false);
     const [showClose, setShowClose] = useState(false);
 
+    session.logout();
+
     let urlParamsArray;
     let title;
     let description;
