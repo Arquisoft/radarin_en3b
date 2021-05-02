@@ -20,7 +20,7 @@ export default async function FetchPhoto(session, photoId, webId) {
     const photo = await getFile(
         `${containerUri}${photoId}`,
         { fetch: session.fetch }
-    )
+    );
 
     return photo;
 }

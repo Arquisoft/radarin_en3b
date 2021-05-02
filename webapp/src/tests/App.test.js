@@ -1,29 +1,29 @@
-import { render } from '@testing-library/react';
+import { render } from "@testing-library/react";
 import { fireEvent } from "@testing-library/react";
-import App from '../App';
+import App from "../App";
 import { Provider } from "react-redux";
 import store from "../redux/store";
 
 jest.setTimeout(20000);
 
-test('user arrives to the home page', async () => {
-  const { getByText } = render(<Provider store={store}><App /></Provider>);
+test("user arrives to the home page", async () => {
+    const { getByText } = render(<Provider store={store}><App /></Provider>);
 
-  const mainHeader = getByText("The ease and simplicity of Radarin, wherever you are.");
+    const mainHeader = getByText("The ease and simplicity of Radarin, wherever you are.");
 
-  expect(mainHeader).toBeInTheDocument();
+    expect(mainHeader).toBeInTheDocument();
 });
 
 test("user can go to sign in page", async () => {
-  const { getAllByRole, getByText } = render(<Provider store={store}><App /></Provider>);
+    const { getAllByRole, getByText } = render(<Provider store={store}><App /></Provider>);
 
-  const about = getAllByRole("link", { name: "About" })[0];
+    const about = getAllByRole("link", { name: "About" })[0];
 
-  expect(about).toBeInTheDocument();
+    expect(about).toBeInTheDocument();
 
-  fireEvent.click(about);
+    fireEvent.click(about);
 
-  const aboutText = getByText("About Radarin");
+    const aboutText = getByText("About Radarin");
 
-  expect(aboutText).toBeInTheDocument();
+    expect(aboutText).toBeInTheDocument();
 });

@@ -9,7 +9,7 @@ import Logo from "../img/radarin_logo.png";
 import { useSelector } from "react-redux";
 
 export default function NavbarAnonym() {
-    const limitedVersion = useSelector(state => state.user.limitedVersion);
+    const limitedVersion = useSelector((state) => state.user.limitedVersion);
 
     return (
         <Navbar bg="white" expand="lg" className="navBar fixed-top align-items center shadow rounded">
@@ -32,7 +32,7 @@ export default function NavbarAnonym() {
                                 <NavLink key={item.key} className={item.cName} as={Link} to={item.url}>
                                     {item.title}
                                 </NavLink>
-                            )
+                            );
                         })}
                     </Nav>
                 }

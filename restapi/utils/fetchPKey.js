@@ -11,9 +11,10 @@ const fetchPKey = async function fetchPKey(webId) {
     const AUTH = new rdf.Namespace("https://www.w3.org/ns/auth/cert#");
 
     await fetcher.load(prKeyFile);
+    // eslint-disable-next-line new-cap
     const keyNode = store.any(prKeyFile, AUTH("RSAPublicKey"));
 
     return keyNode.value;
-}
+};
 
 module.exports = fetchPKey;
