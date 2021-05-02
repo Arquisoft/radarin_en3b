@@ -1,8 +1,8 @@
-import { fireEvent, render } from '@testing-library/react';
+import { fireEvent, render } from "@testing-library/react";
 import "@testing-library/jest-dom/extend-expect";
 import { Provider } from "react-redux";
 import store from "../redux/store";
-import LocationsList from '../components/LocationsList';
+import LocationsList from "../components/LocationsList";
 import "@testing-library/jest-dom/extend-expect";
 
 jest.setTimeout(20000);
@@ -14,7 +14,7 @@ test("testing search bar", async () => {
     let counter = 1;
     redux.useSelector.mockImplementation(() => {
         if(counter++ === 5)
-            return [];
+        {return [];}
         return "succeeded";
     });
 

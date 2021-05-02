@@ -16,15 +16,15 @@ import Location from "./locations/Location";
 export default function LocationList(props) {
     let { session } = useSession();
     if(typeof props.sess !== "undefined")
-        session = props.sess;
+    {session = props.sess;}
 
     const dispatch = useDispatch();
-    const locationStatus = useSelector(state => state.locations.status);
-    const refreshStatus = useSelector(state => state.locations.refreshStatus);
-    const error = useSelector(state => state.locations.error);
-    const filterText = useSelector(state => state.locations.searchText);
+    const locationStatus = useSelector((state) => state.locations.status);
+    const refreshStatus = useSelector((state) => state.locations.refreshStatus);
+    const error = useSelector((state) => state.locations.error);
+    const filterText = useSelector((state) => state.locations.searchText);
 
-    const locations = useSelector(state => state.locations.locations);
+    const locations = useSelector((state) => state.locations.locations);
 
 
     useEffect(() => {
@@ -37,9 +37,9 @@ export default function LocationList(props) {
         }
     }, [locationStatus, refreshStatus, dispatch, session]);
 
-    const onChange = e => {
+    const onChange = (e) => {
         dispatch(setSearchText(e.target.value));
-    }
+    };
 
     let content;
 
@@ -64,8 +64,8 @@ export default function LocationList(props) {
                     </div>
                 </ListItem>
                 {
-                    locations.filter(item => item.name.toLowerCase().includes(filterText.toLowerCase()))
-                        .map(item => {
+                    locations.filter((item) => item.name.toLowerCase().includes(filterText.toLowerCase()))
+                        .map((item) => {
                             if (item.type === "poly") {
                                 return (
                                     <Polyline
@@ -95,7 +95,7 @@ export default function LocationList(props) {
             </List>
         );
     } else if (locationStatus === "failed") {
-        content = <div className="center2">{error}</div>
+        content = <div className="center2">{error}</div>;
     }
 
     return (

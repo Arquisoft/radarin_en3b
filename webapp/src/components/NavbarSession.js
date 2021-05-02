@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React, { useEffect } from "react";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import { useSession, CombinedDataProvider, Text } from "@inrupt/solid-ui-react";
@@ -23,10 +24,10 @@ function NavbarSession(props) {
     const { session } = useSession();
     let { webId } = session.info;
     if (typeof props.webId !== "undefined")
-        webId = props.webId;
+    {webId = props.webId;}
     const dispatch = useDispatch();
     const history = useHistory();
-    const limitedVersion = useSelector(state => state.user.limitedVersion);
+    const limitedVersion = useSelector((state) => state.user.limitedVersion);
 
 
     useEffect(() => {
@@ -67,12 +68,12 @@ function NavbarSession(props) {
             <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
                 {!limitedVersion &&
                     <Nav className="mr-auto">
-                        {NavbarItems.map((item, index) => {
+                        {NavbarItems.map((item) => {
                             return (
                                 <NavLink key={item.key} className={item.cName} as={Link} to={item.url} id={item.id}>
                                     {item.title}
                                 </NavLink>
-                            )
+                            );
                         })}
                     </Nav>
                 }
@@ -80,10 +81,10 @@ function NavbarSession(props) {
                     {!limitedVersion &&
                         <NavDropdown title={dropdownTitle} className="nav-item mr-3" id=".fifth-step">
                             
-                                <NavDropdown.Item as={Link} to="/qr">
-                                    <CodeIcon className="mr-2" />
+                            <NavDropdown.Item as={Link} to="/qr">
+                                <CodeIcon className="mr-2" />
                                 QR
-                                </NavDropdown.Item>
+                            </NavDropdown.Item>
                             
                         </NavDropdown>
                     }

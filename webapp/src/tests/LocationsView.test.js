@@ -1,8 +1,8 @@
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom/extend-expect";
 import { Provider } from "react-redux";
 import store from "../redux/store";
-import LocationsView from '../components/LocationsView';
+import LocationsView from "../components/LocationsView";
 import fetchDBLocations from "../components/locations/FetchDBLocations";
 import "@testing-library/jest-dom/extend-expect";
 
