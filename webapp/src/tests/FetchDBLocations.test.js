@@ -15,7 +15,7 @@ test("testing location fetching 2", async () => {
         counter++;
 
         if(counter === 1)
-            return "test";
+        {return "test";}
 
         const error = new Error("test");
         error.statusCode = 404;
@@ -36,7 +36,7 @@ test("testing location fetching 2", async () => {
 
 test("testing location fetching 3", async () => {
     solid.getSolidDataset.mockImplementation(() => {
-            return "test";
+        return "test";
     });
 
     solid.saveSolidDatasetAt.mockReturnValueOnce("test");
@@ -56,7 +56,7 @@ test("testing location fetching 4", async () => {
     jest.spyOn(API, "setIdentity").mockReturnValueOnce("test");
 
     solid.getSolidDataset.mockImplementation(() => {
-            return "test";
+        return "test";
     });
 
     solid.saveSolidDatasetAt.mockReturnValueOnce("test");
@@ -74,7 +74,7 @@ test("testing location fetching 4", async () => {
 
 test("testing location fetching 5", async () => {
     solid.getSolidDataset.mockImplementation(() => {
-            return "test";
+        return "test";
     });
 
     solid.saveSolidDatasetAt.mockReturnValueOnce("test");
@@ -114,7 +114,7 @@ test("testing location fetching 5", async () => {
     });
 
     solid.getSolidDataset.mockImplementation(() => {
-            return "test";
+        return "test";
     });
 
     solid.saveSolidDatasetAt.mockReturnValueOnce("test");

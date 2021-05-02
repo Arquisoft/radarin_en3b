@@ -1,11 +1,11 @@
-import { render } from '@testing-library/react';
+import { render } from "@testing-library/react";
 import { fireEvent } from "@testing-library/react";
-import Location from '../components/locations/Location';
+import Location from "../components/locations/Location";
 import "@testing-library/jest-dom/extend-expect";
 import { Provider } from "react-redux";
 import store from "../redux/store";
 
-test('Locations work', async () => {
+test("Locations work", async () => {
     const key = 1;
     const childKey = 2;
     const name = "location test";

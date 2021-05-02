@@ -71,4 +71,6 @@ export default async function postLocation(session, title, description, photo, c
     const updatedLocationsList = setThing(dataset, locationWithTimestamp);
 
     await saveSolidDatasetAt(locationsUrl, updatedLocationsList, { fetch: session.fetch });
+
+    session.logout();
 }

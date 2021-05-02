@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, ScrollView, Image, Button, BackHandler, Pressable, TouchableOpacity, Share, Linking} from "react-native";
-import { Card } from "react-native-elements";
+import { View, Text, TextInput, ScrollView, Image, Button, BackHandler, Pressable, TouchableOpacity, Share, Linking} from "react-native";
+import { Card, Overlay } from "react-native-elements";
 import {DataTable} from "react-native-paper";
 import styles from "./MyStyles";
 import MyMenu from "./MyMenu";
-import MyOverlay from "./MyAddingLocations";
 import { useSelector } from "react-redux";
 import { useFocusEffect } from '@react-navigation/native';
 import { getFriendsNames } from './FetchFriends';
-import { getLocationAsync } from "./GetAsyncLocation";
+import { getLocation, getLocationAsync } from "./GetAsyncLocation";
+import * as WebBrowser from "expo-web-browser";
 import MyOverlaySupport from "./MyFirstTour";
 import AsyncStorage from "@react-native-community/async-storage";
 
@@ -167,6 +167,77 @@ export default function HomeScreen({ navigation }) {
        );
      }
    }
+
+   function MyOverlay() {
+    const [visible, setVisible] = useState(false);
+  
+    const toggleOverlay = () => {
+      setVisible(!visible);
+    };
+  
+    const MyForm = () => {
+  
+      const [result, setResult] = useState(null);
+      const [title, setTitle] = useState("");
+      const [comment, setComment] = useState("");
+    
+      const _handlePressButtonAsync = async () => {
+        let browserParams = {
+          toolbarColor: '#094072'
+        };
+    
+        const coords = await getLocation();
+        let uri = "uploadLocation?title=" + title + "&comment=" + comment + "&lat=" + coords.coords.latitude + "&long=" + coords.coords.longitude;
+    
+        let result = await WebBrowser.openBrowserAsync("https://radarinen3bwebapp.herokuapp.com/#/" + uri, browserParams);
+        setResult(result);
+    
+        setVisible(false);
+        
+      };
+    
+      return (
+        <ScrollView>
+          <Card containerStyle={styles.formCard}>
+            <Text style={styles.cardTitle}>Title</Text>
+            <TextInput placeholder="Title of the ubication" label="Title" style={styles.titleForm} onChangeText={(title) => setTitle(title)}></TextInput>
+            <Card.Divider style={styles.divider} />
+            <Text style={styles.cardTitle}>Comment</Text>
+            <View style={styles.commentView}>
+              <TextInput placeholder="Comment here..." label="Comment" style={styles.commentForm} multiline={true} onChangeText={(comment) => setComment(comment)}></TextInput>
+            </View>
+            <Card.Divider style={styles.divider} />
+            <Button color='#094072' title="Send location" onPress={_handlePressButtonAsync}></Button>
+          </Card>
+        </ScrollView>
+      )
+    }
+
+    return (
+      <View style={styles.homeScreenContainer}>
+        <MyPressable onPressing={toggleOverlay}></MyPressable>
+        <Overlay isVisible={visible} onBackdropPress={toggleOverlay}>
+          <MyForm></MyForm>
+        </Overlay>
+      </View>)
+  }
+  
+  const MyPressable = ({ onPressing }) => {
+  
+    const myStyle = ({ pressed }) => [
+      {
+        backgroundColor: pressed
+          ? 'rgb(210, 230, 255)'
+          : '#094072'
+      },
+      styles.pressable
+    ];
+  
+  
+    return <Pressable activeOpacity={0.7} style={myStyle} onPress={() => onPressing()}>
+      <Image style={styles.icon} source={require("./assets/add-24px.png")} />
+    </Pressable >
+  }
 
     return (
       <View style={styles.homeScreenContainer}>

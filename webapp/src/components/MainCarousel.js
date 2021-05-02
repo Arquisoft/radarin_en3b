@@ -99,7 +99,7 @@ export default function MainCarousel() {
                     </div>
                 </div>
                 <div>
-                <div className="carouselText">
+                    <div className="carouselText">
                         <h2>Radarin</h2>
                         <p>Your Radarin friends are got from Solid Pods, so your data will always be protected with the most
                             modern improvements on security. </p>

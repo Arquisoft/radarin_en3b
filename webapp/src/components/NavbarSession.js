@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React, { useEffect } from "react";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import { useSession, CombinedDataProvider, Text } from "@inrupt/solid-ui-react";
@@ -23,10 +24,10 @@ function NavbarSession(props) {
     const { session } = useSession();
     let { webId } = session.info;
     if (typeof props.webId !== "undefined")
-        webId = props.webId;
+    {webId = props.webId;}
     const dispatch = useDispatch();
     const history = useHistory();
-    const limitedVersion = useSelector(state => state.user.limitedVersion);
+    const limitedVersion = useSelector((state) => state.user.limitedVersion);
 
 
     useEffect(() => {
@@ -52,7 +53,7 @@ function NavbarSession(props) {
     }
 
     return (
-        <Navbar bg="white" expand="lg" className="navBar fixed-top align-items center shadow rounded">
+        <Navbar bg="white" expand="lg" className="navBar fixed-top align-items center shadow rounded" >
             { !limitedVersion &&
                 <Navbar.Brand as={Link} to="/" className="mb-1">
                     <img src={Logo} alt="Radarin Logo"></img>
@@ -67,30 +68,34 @@ function NavbarSession(props) {
             <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
                 {!limitedVersion &&
                     <Nav className="mr-auto">
-                        {NavbarItems.map((item, index) => {
+                        {NavbarItems.map((item) => {
                             return (
-                                <NavLink key={item.key} className={item.cName} as={Link} to={item.url}>
+                                <NavLink key={item.key} className={item.cName} as={Link} to={item.url} id={item.id}>
                                     {item.title}
                                 </NavLink>
-                            )
+                            );
                         })}
                     </Nav>
                 }
                 <Nav>
                     {!limitedVersion &&
-                        <NavDropdown title={dropdownTitle} className="nav-item mr-3">
+                        <NavDropdown title={dropdownTitle} className="nav-item mr-3" id=".fifth-step">
+                            
                             <NavDropdown.Item as={Link} to="/qr">
                                 <CodeIcon className="mr-2" />
-                            QR
-                        </NavDropdown.Item>
+                                QR
+                            </NavDropdown.Item>
+                            
                         </NavDropdown>
                     }
+                    
                     {limitedVersion &&
                         <Navbar.Text className="nav-item mr-3">{dropdownTitle}</Navbar.Text>
                     }
                     <LogoutButton>
                         <Button color="primary" variant="contained" className="ml-3 mr-2" id="logoutButton" onClick={logout}>Log out</Button>
                     </LogoutButton>
+                    
                 </Nav>
             </Navbar.Collapse>
         </Navbar >

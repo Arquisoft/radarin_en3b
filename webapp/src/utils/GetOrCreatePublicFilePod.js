@@ -15,7 +15,7 @@ export default async function getOrCreatePublicFilePod(containerUri, fetch, file
         if(error.statusCode === 404) {
             let res = await saveSolidDatasetAt(pKeyFileUrl, createSolidDataset(), {fetch});
 
-            return { error: "error", res: res };
+            return { error: "error", res };
         }
     }
 }

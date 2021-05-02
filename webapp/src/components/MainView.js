@@ -7,6 +7,6 @@ export default function MainView() {
         <div>
             <MainCarousel />
             <AppInfo />
-      </div>
+        </div>
     );
 }
