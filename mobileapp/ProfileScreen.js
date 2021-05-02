@@ -83,15 +83,6 @@ export default function ProfileScreen({ navigation }) {
                 <DataTable.Cell style={{flex: 3}}><Text style={styles.name}>Get location automatically:</Text></DataTable.Cell>
                 <DataTable.Cell><MySwitch></MySwitch></DataTable.Cell>
             </DataTable.Row>
-            <DataTable.Row>
-                <DataTable.Cell>
-                <Button color="#094072" title="Get my position" onPress={() =>{
-                        alert(getLocation());
-                      } 
-                        }>Get My Position
-                </Button>
-            </DataTable.Cell>
-          </DataTable.Row>
         </DataTable>
 
       </Card>
