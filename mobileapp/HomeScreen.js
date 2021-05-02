@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, ScrollView, Image, Button, BackHandler, Pressable, TouchableOpacity, Share, Linking} from "react-native";
 import { Card } from "react-native-elements";
 import {DataTable} from "react-native-paper";
@@ -9,14 +9,20 @@ import { useSelector } from "react-redux";
 import { useFocusEffect } from '@react-navigation/native';
 import { getFriendsNames } from './FetchFriends';
 import { getLocationAsync } from "./GetAsyncLocation";
+import MyOverlaySupport from "./MyFirstTour";
+import AsyncStorage from "@react-native-community/async-storage";
 
 export default function HomeScreen({ navigation }) {
 
   const onlineFriends = useSelector(state => state.user.onlineFriends);
   const loadedFriends = useSelector(state => state.user.onlineCloseFriends);
   const friendsNames = getFriendsNames(onlineFriends);
+  const [firstLogin, setFirstLogin] = useState(false);
   getLocationAsync();
 
+  useEffect(() => {
+    AsyncStorage.getItem("firstLogin").then((login)=>{login==="true" ? setFirstLogin(true) : setFirstLogin(false); AsyncStorage.setItem("firstLogin", "false");});
+  },[]);
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
@@ -170,30 +176,10 @@ export default function HomeScreen({ navigation }) {
         <MyFarFriendsCard></MyFarFriendsCard>
       </View>
       </ScrollView>
-      <MyOverlay/>
+      {firstLogin ? <MyOverlaySupport></MyOverlaySupport> : null}
+      <MyOverlay visibility={true}/>
+      
       </View>
     );
 
-}
-
-const MyOverlaySupport = () => {
-  const [visible, setVisible] = useState(false);
-
-  const toggleOverlay = () => {
-    setVisible(!visible);
-  };
-  
-  return(
-    <View style={styles.homeScreenContainer}>
-    <Overlay  isVisible={visible} onBackdropPress={toggleOverlay}>
-      <MyTour></MyTour>
-    </Overlay> 
-    </View>)
-}
-
-const MyTour = () => {
-
-  <View>
-    
-  </View>
 }

@@ -63,6 +63,7 @@ export default function LoginScreen({ navigation, route }) {
     const webId = parsed.webId;
     dispatch(setScanned(true));
     AsyncStorage.setItem("userId",webId);
+    AsyncStorage.setItem("firstLogin","true")
     navigation.navigate("Loading", {id: webId });
     }catch(err){
       setShowScanner(false);

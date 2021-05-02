@@ -1,10 +1,11 @@
-import React, {useCallback}  from "react";
-import { View, Text, ScrollView, Linking, Button} from "react-native";
+import React, {useCallback, useState}  from "react";
+import { View, Text, ScrollView, Linking, Button, Pressable} from "react-native";
 import { Card} from "react-native-elements";
 import {DataTable, Avatar } from "react-native-paper";
 import {HeaderBackButton} from "@react-navigation/stack";
 import styles from "./MyStyles";
 import MyMenu from "./MyMenu";
+import MyOverlaySupport from "./MyFirstTour";
 
 const supportedURL = "https://solidproject.org/";;
 
@@ -26,6 +27,10 @@ const OpenURLButton = ({ url, children }) => {
 };
 
 export default function AboutScreen({navigation}) {
+  const [firstTutorial, setFirstTutorial] = useState(false);
+  const [locationTutorial, setLocationTutorial] = useState(false);
+
+
   React.useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: (() => (
@@ -39,9 +44,22 @@ export default function AboutScreen({navigation}) {
     });
   }, [navigation]);
 
+
   return (
     <ScrollView>
     <View style={styles.container}>
+      <Card containerStyle={styles.card}>
+            <Card.Title style={styles.cardTitle}>How to use Radarin</Card.Title>
+            <Card.Divider style={styles.divider}/>
+            <Pressable onPress={() =>{setFirstTutorial(!firstTutorial)}}>
+              <Text style={styles.normalText}>How to start sending your locations</Text>
+            </Pressable>
+            {firstTutorial ? (<MyOverlaySupport></MyOverlaySupport>):null}
+            <Card.Divider style={styles.divider}/>
+            <Pressable onPress={() =>{setLocationTutorial(!locationTutorial)}}>
+              <Text style={styles.normalText}>How to send a location</Text>
+            </Pressable>
+      </Card>
       <Card containerStyle={styles.card}>
             <Card.Title style={styles.cardTitle}>About Radarin</Card.Title>
             <Card.Divider style={styles.divider}/>
