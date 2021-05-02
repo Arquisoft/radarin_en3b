@@ -18,16 +18,13 @@ export function setNotificationsBackground() {
 
 export async function schedulePushNotificationFriendsClose(newFriends) {
     console.log("Sending notification");
-    let friendsStr = "";
+    let friendsStr;
     if (newFriends.length === 1) {
-        friendsStr += (newFriends[0] + " is now close to you");
+        friendsStr = newFriends[0] + " is now close to you.";
     } else {
-        for (let i = 0; i < newFriends.length - 3; i++)
-            friendsStr += (newFriends[i] + ", ");
-
-        friendsStr += (newFriends[newFriends.length - 2] + " and ");
-        friendsStr += (newFriends[newFriends.length - 1] + " are now close to you.");
-
+        friendsStr = newFriends.slice(0, newFriends.length - 2).reduce((str, friend) => str.concat(`${friend}, `));
+        friendsStr
+            += `${newFriends[newFriends.length - 2]} and ${newFriends[newFriends.length - 1]} are now close to you.`;
     }
     await Notifications.scheduleNotificationAsync({
         content: {
