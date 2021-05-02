@@ -158,7 +158,7 @@ export default StyleSheet.create({
     height: Dimensions.get('screen').height - 150,
   },
   normalText: {
-    fontSize: 16,
+    fontSize: 14,
     margin: 10,
     marginLeft: 20,
     padding: 2,
@@ -212,4 +212,13 @@ export default StyleSheet.create({
   divider:{
     backgroundColor:'#126BBD'
   },
+  helpButton: {
+    width:30,
+    height:30,
+  }, 
+  preassableHelp: {
+    alignSelf: 'flex-end',
+    marginTop: -35,
+    marginBottom: 10
+  }
 });
