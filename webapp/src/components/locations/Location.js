@@ -23,9 +23,8 @@ import "../../css/Location.css";
 export default function Location({ childKey, title, description, coords, photo, date, sess, webId }) {
     const dispatch = useDispatch();
     let { session } = useSession();
-    
-    if(typeof sess !== "undefined")
-    {session = sess;}
+
+    if (typeof sess !== "undefined") { session = sess; }
 
     const [open, setOpen] = useState(false);
     const [open2, setOpen2] = useState(false);
@@ -34,14 +33,17 @@ export default function Location({ childKey, title, description, coords, photo, 
     const propietary = session.info.webId === webId;
 
     useEffect(() => {
-        async function getImg() {
-            const imgBlob = await fetchPhoto(session, photo, webId);
+        if (photo !== "") {
+            console.log(photo);
+            async function getImg() {
+                const imgBlob = await fetchPhoto(session, photo, webId);
 
-            const imgUrl = URL.createObjectURL(imgBlob);
-            setImg(imgUrl);
+                const imgUrl = URL.createObjectURL(imgBlob);
+                setImg(imgUrl);
+            }
+
+            getImg();
         }
-
-        getImg();
     }, [session, photo, webId]);
 
     const handleOpen = () => {
@@ -75,10 +77,8 @@ export default function Location({ childKey, title, description, coords, photo, 
 
     let user = "";
 
-    if (propietary)
-    {user = "you";}
-    else
-    {user = webId.split("//")[1].split(".")[0];}
+    if (propietary) { user = "you"; }
+    else { user = webId.split("//")[1].split(".")[0]; }
 
     return (
         <ListItem
@@ -99,15 +99,15 @@ export default function Location({ childKey, title, description, coords, photo, 
                             component="span"
                             variant="body2"
                             color="textPrimary"
-                            style={{ wordWrap: "break-word"}}>
+                            style={{ wordWrap: "break-word" }}>
                             {user} —
                         </Typography>
                         {date}
                     </React.Fragment>
                 } />
-            
+
             <Button color="primary" onClick={handleOpen}>Open</Button>
-            
+
             <Dialog
                 open={open}
                 onClose={handleClose}
@@ -117,7 +117,9 @@ export default function Location({ childKey, title, description, coords, photo, 
                 <DialogTitle id="alert-dialog-title">{title}</DialogTitle>
                 <DialogContent>
                     <DialogContentText id="alert-dialog-description"> {user} — {description}</DialogContentText>
-                    <img src={img} alt="Location" />
+                    {photo !== "" &&
+                        <img src={img} alt="Location" />
+                    }
                     <DialogActions>
                         <Button onClick={handleClose} color="primary">Close</Button>
                         {propietary &&

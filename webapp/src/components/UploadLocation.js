@@ -21,6 +21,9 @@ export default function UploadLocation() {
     const urlParams = useSelector((state) => state.user.urlParams);
     const logguedStatus = useSelector((state) => state.user.logguedStatus);
     const [locationSent, setLocationSent] = useState(false);
+    const [showClose, setShowClose] = useState(false);
+
+    session.logout();
 
     let urlParamsArray;
     let title;
@@ -45,7 +48,11 @@ export default function UploadLocation() {
         dispatch(setUrlParams(params));
         dispatch(setLimitedVersion(true));
 
-
+        if(locationSent){
+            setTimeout(() => {
+                setShowClose(true);
+            }, 3000);
+        }
     });
 
     const onClick = () => {
@@ -118,12 +125,20 @@ export default function UploadLocation() {
             </Row>
         </Container>;
     } else {
-        return (
-            <div className="divCenter">
-                <Typography variant="h4" component="h1" className="text">
-                    You can close the embedded browser now.
+        if (!showClose) {
+            return (
+                <div className="spinner-border mt-5 center3" role="status">
+                    <span className="sr-only">Loading...</span>
+                </div>
+            );
+        } else {
+            return (
+                <div className="divCenter">
+                    <Typography variant="h4" component="h1" className="text">
+                        You can close the embedded browser now.
                 </Typography>
-            </div>
-        );
+                </div>
+            );
+        }
     }
 }
