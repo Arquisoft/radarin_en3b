@@ -61,8 +61,3 @@ export async function getLocation() {
 
     return location;
 }
-
-// Method to implement that will send your current location with any sort of photo or stuff
-export async function getCurrentLocation() {
-    alert("not yet implemented");
-}

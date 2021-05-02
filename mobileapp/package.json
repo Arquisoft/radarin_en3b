@@ -1,4 +1,19 @@
 {
+  "expo": {
+    "name": "Radarin",
+    "icon": "./assets/icon.png",
+    "version": "1.0.0",
+    "slug": "your-app-slug",
+    "ios": {
+      "bundleIdentifier": "radarinen3b.uniovi",
+      "buildNumber": "1.0.0"
+    },
+    "android": {
+      "package": "radarinen3b.uniovi",
+      "versionCode": 1
+    }
+   },
+
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
     "start": "expo start",
