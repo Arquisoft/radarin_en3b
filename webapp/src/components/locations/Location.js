@@ -73,6 +73,13 @@ export default function Location({ childKey, title, description, coords, photo, 
         dispatch(setPolyline([]));
     }
 
+    let user = "";
+
+    if (propietary)
+        user = "you"
+    else
+        user = webId.split("//")[1].split('.')[0];
+
     return (
         <ListItem
             button
@@ -91,13 +98,16 @@ export default function Location({ childKey, title, description, coords, photo, 
                         <Typography
                             component="span"
                             variant="body2"
-                            color="textPrimary">
-                            {description} —
+                            color="textPrimary"
+                            style={{ wordWrap: "break-word"}}>
+                            {user} —
                     </Typography>
                         {date}
                     </React.Fragment>
                 } />
+            
             <Button color="primary" onClick={handleOpen}>Open</Button>
+            
             <Dialog
                 open={open}
                 onClose={handleClose}
@@ -106,7 +116,7 @@ export default function Location({ childKey, title, description, coords, photo, 
             >
                 <DialogTitle id="alert-dialog-title">{title}</DialogTitle>
                 <DialogContent>
-                    <DialogContentText id="alert-dialog-description">{description}</DialogContentText>
+                    <DialogContentText id="alert-dialog-description"> {user} — {description}</DialogContentText>
                     <img src={img} alt="Location" />
                     <DialogActions>
                         <Button onClick={handleClose} color="primary">Close</Button>
