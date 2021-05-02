@@ -1,14 +1,12 @@
 
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { View, Text } from "react-native";
 import { Card } from "react-native-elements";
 import { Switch } from "react-native-paper";
 import { DataTable, Avatar } from "react-native-paper";
 import { HeaderBackButton } from "@react-navigation/stack";
-import * as Location from "expo-location";
 import styles from "./MyStyles";
 import MyMenu from "./MyMenu";
-//import { sendLocation } from "./SendLocation";
 import { useSelector } from "react-redux";
 import { getLocationAsync } from "./GetAsyncLocation";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -31,37 +29,7 @@ export default function ProfileScreen({ navigation }) {
     });
   }, [navigation]);
 
-  const [location, setLocation] = useState(null);
-  const [errorMsg, setErrorMsg] = useState(null);
 
-  useEffect(() => {
-    (async () => {
-      let { status } = await Location.requestBackgroundPermissionsAsync();
-      if (status !== "granted") {
-        setErrorMsg("Permission to access location was denied");
-        return;
-      }
-
-      if (!Location.hasStartedLocationUpdatesAsync("LocationTask")) {
-        setErrorMsg("Please, turn on your location");
-        return;
-      } else {
-        setErrorMsg(false);
-      }
-
-      let location = await Location.getCurrentPositionAsync();
-      setLocation(location);
-    })();
-
-  }
-    , []);
-
-  let text = "Waiting for having a valid position...";
-  if (errorMsg) {
-    text = errorMsg;
-  } else if (location) {
-    text = JSON.stringify(location, null, "\t");
-  }
   return (
     <View style={styles.container}>
       <Card containerStyle={styles.card}>
@@ -110,8 +78,6 @@ const MySwitch = () => {
         AsyncStorage.setItem("backgroundLocations", "inactive");
     else 
         AsyncStorage.setItem("backgroundLocations", "active");
-    
-    getLocationAsync();
   }
 
   return <Switch color="#094072" value={isSwitchOff} onValueChange={onToggleSwitch} />;
