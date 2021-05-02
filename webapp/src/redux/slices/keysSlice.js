@@ -19,19 +19,19 @@ export const keysSlice = createSlice({
     initialState,
     reducers: {
         setPair: (state, action) => {
-            state.pair = action.payload
+            state.pair = action.payload;
         }
     },
     extraReducers: {
         [manageKeys.pending]: (state, action) => {
-            state.status = "loading"
+            state.status = "loading";
         },
         [manageKeys.fulfilled]: (state, action) => {
-            state.status = "succeeded"
+            state.status = "succeeded";
         },
         [manageKeys.rejected]: (state, action) => {
-            state.status = "failed"
-            state.error = action.error.message
+            state.status = "failed";
+            state.error = action.error.message;
         }
     }
 });
