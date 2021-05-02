@@ -6,7 +6,6 @@ const api = require("./endpoints/api");
 const admin = require("./endpoints/admin");
 const swaggerJsDoc = require("swagger-jsdoc");
 const swaggerUi = require("swagger-ui-express");
-const Admin = require("./models/Admin");
 
 function connect() {
     //The MONGO_URI variable is the connection string to MongoDB Atlas (for production). This env variable is created in heroku.
@@ -56,11 +55,6 @@ function connect() {
         app.use("/api", api);
         app.use("/admin", admin);
         app.use('/docs', swaggerUi.serve, swaggerUi.setup(specs));
-        app.use("/temp", async (req, res) => {
-            const admin = new Admin({webId: "https://radarin.inrupt.net/profile/card#me"});
-            await admin.save();
-            res.sendStatus(200);
-        })
         app.listen(process.env.PORT || 5000, () => {
             console.log("Server has started! Using db in " + mongo_uri);
         });
