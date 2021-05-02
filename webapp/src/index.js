@@ -10,17 +10,17 @@ import { Provider } from "react-redux";
 
 
 ReactDOM.render(
-  <React.StrictMode>
-    <SessionProvider sessionId="logged-user">
-    <BrowserRouter>
-      <Provider store={store}>
-        <App />
-      </Provider>
-    </BrowserRouter>
-    </SessionProvider>
+    <React.StrictMode>
+        <SessionProvider sessionId="logged-user">
+            <BrowserRouter>
+                <Provider store={store}>
+                    <App />
+                </Provider>
+            </BrowserRouter>
+        </SessionProvider>
 
-  </React.StrictMode >,
-  document.getElementById("root")
+    </React.StrictMode >,
+    document.getElementById("root")
 );
 
 // If you want to start measuring performance in your app, pass a function

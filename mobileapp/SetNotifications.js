@@ -48,13 +48,13 @@ export async function schedulePushNotificationFriends(newFriends) {
     friendsStr += (newFriends[0] + " has started to use the app.");
   } else {
     for (let i = 0; i < newFriends.length - 3; i++)
-      // eslint-disable-next-line
       friendsStr += (newFriends[i] + ", ");
 
     friendsStr += (newFriends[newFriends.length - 2] + " and ");
     friendsStr += (newFriends[newFriends.length - 1] + " have started to use the app.");
 
   }
+  
   await Notifications.scheduleNotificationAsync({
     content: {
       title: "New friends have joined Radarin!",

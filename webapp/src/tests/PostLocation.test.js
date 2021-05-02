@@ -1,5 +1,5 @@
 import "@testing-library/jest-dom/extend-expect";
-import { SolidNodeClient } from 'solid-node-client';
+import { SolidNodeClient } from "solid-node-client";
 import PostLocation from "../components/locations/PostLocation";
 const solid = require("@inrupt/solid-client");
 
@@ -7,7 +7,7 @@ solid.saveSolidDatasetAt = jest.fn();
 
 test("testing qr page, key management and location fetching", async () => {
     const client = new SolidNodeClient({
-        handlers: { https: 'solid-client-authn-node' }
+        handlers: { https: "solid-client-authn-node" }
     });
 
     let sessionNew = await client.login({
