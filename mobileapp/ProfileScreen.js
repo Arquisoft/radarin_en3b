@@ -28,8 +28,6 @@ export default function ProfileScreen({ navigation }) {
   }, [navigation]);
 
 
-<<<<<<< HEAD
-=======
   useEffect(() => {
     (async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
@@ -51,7 +49,6 @@ export default function ProfileScreen({ navigation }) {
   } else if (location) {
     text = JSON.stringify(location, null, "\t");
   }
->>>>>>> d758e213412f8b81441e4f5adb5b78d420e0e68a
   return (
     <View style={styles.container}>
       <Card containerStyle={styles.card}>

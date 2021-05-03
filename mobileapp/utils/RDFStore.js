@@ -8,16 +8,6 @@ class RDFStore {
     this._fetcher = new Fetcher(this._store);
   }
 
-<<<<<<< HEAD
-    async getUser(webId) {
-        const me = this._store.sym(webId);
-        const profile = me.doc();
-
-        await this._fetcher.load(profile);
-        const name = this.getNameIfPossible(me);
-        return { webId, fn: name };
-    }
-=======
   async getUser(webId) {
     const me = this._store.sym(webId);
     const profile = me.doc();
@@ -25,7 +15,6 @@ class RDFStore {
     const name = this.getNameIfPossible(me);
     return { webId, fn: name };
   }
->>>>>>> d758e213412f8b81441e4f5adb5b78d420e0e68a
 
   async getFriends(webId) {
     const me = this._store.sym(webId);
