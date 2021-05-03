@@ -64,7 +64,6 @@ test("location uploading", async () => {
 
     const input = getByTestId("input");
 
-    console.log(input);
 
     fireEvent.change(input, { value: new Blob() });
 });

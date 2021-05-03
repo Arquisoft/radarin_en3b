@@ -1,5 +1,5 @@
 import "@testing-library/jest-dom/extend-expect";
-import removeLocation from "../components/locations/removeLocation";
+import removeLocation from "../components/locations/RemoveLocation";
 
 const solid = require("@inrupt/solid-client");
 solid.getSolidDataset = jest.fn();
