@@ -55,6 +55,7 @@ class API {
     async getBlacklist() {
         const response = await fetch(`${this.adminEndPoint}/blacklist`,
             { method: "GET", headers: this.buildHeaders() });
+
         if (response.status === 401){
             return "unauthorized";
         }

@@ -87,7 +87,7 @@ export default function AdminPage() {
 
     let blockedUsersArray = [];
     let i;
-    for (i = 0; i < blockedUsers.length; i++) {
+    for (i = 0; i < blockedUsers?.length; i++) {
         blockedUsersArray.push(blockedUsers[i].webId);
     }
 

@@ -91,7 +91,7 @@ export default function HelpPage() {
           })
         }
       </Grid>
-      <Button onClick={() => dispatch(setIsTourOpen(true))} color="primary" variant="contained" className={classes.button}>Open Tour</Button>
+      <Button onClick={() => dispatch(setIsTourOpen(true))} color="primary" variant="contained" data-testid="tourButton" className={classes.button}>Open Tour</Button>
       <Tour
         steps={steps}
         isOpen={isTourOpen}
