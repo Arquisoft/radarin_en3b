@@ -26,7 +26,7 @@ export default function App() {
               headerStyle: styles.header,
               headerTintColor: "#fff"
             }} />
-            <Stack.Screen name="Login" component={LoginScreen} initialParams={{ qrUpdatedFlag: false }} options={{
+            <Stack.Screen name="Login" component={LoginScreen} initialParams={{ qrUpdatedFlag: false, showSc: false }} options={{
               title: "Radarin",
               headerStyle: styles.header,
               headerTintColor: "#fff"
