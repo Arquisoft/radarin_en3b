@@ -39,6 +39,7 @@ Its correct behaviour will be monitored through unit tests, acceptance tests and
 | 1 | Usability | The application should have a good aesthetic and be easy to use for all kinds of users.
 | 2 | Privacy | The application must take only the strictly necessary data from the users and use it only for the necessary purpose. The data should not be centralized.
 | 3 | Security | The system must be secure and data must not be given or be accesible from third parties.
+| 4 | Freedom  | We want the system to be as open as possible, allowing third party clients via our RESTApi.
 |===
 
 === Stakeholders
