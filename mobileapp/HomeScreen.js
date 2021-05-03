@@ -9,7 +9,6 @@ import MyCloseFriendsCard from "./HomeComponents/MyCloseFriendsCard";
 import MyFarFriendsCard from "./HomeComponents/MyFarFriendsCard";
 import MyOverlay from "./HomeComponents/MyOverlay";
 import { useDispatch } from "react-redux";
-import { changeLocationEnabled } from "./redux/slices/LocationsSlice";
 
 export default function HomeScreen({ navigation }) {
   const [firstLogin, setFirstLogin] = useState(false);
@@ -17,15 +16,6 @@ export default function HomeScreen({ navigation }) {
 
   useEffect(() => {
     AsyncStorage.getItem("firstLogin").then((login) => { login === "true" ? setFirstLogin(true) : setFirstLogin(false); AsyncStorage.setItem("firstLogin", "false"); });
-    AsyncStorage.getItem("locationStatus").then((response) => {
-      if(response === null){
-        console.log("dispatched false");
-        dispatch(changeLocationEnabled("false"));
-      } else {
-        console.log("dispatched " + response);
-        dispatch(changeLocationEnabled(response));
-      }
-    });
   }, []);
 
   React.useLayoutEffect(() => {

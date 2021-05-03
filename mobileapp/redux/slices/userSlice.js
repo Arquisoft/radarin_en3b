@@ -32,6 +32,9 @@ export const userSlice = createSlice({
     backToIdle: (state) => {
       state.friendsStatus = "idle";
     },
+    setFriends: (state, action) => {
+      state.friends = action.payload
+    }
   },
   extraReducers: {
     [fetchFriendsWithDistance.pending]: (state) => {
@@ -62,4 +65,4 @@ export const userSlice = createSlice({
 
 export default userSlice.reducer;
 
-export const { backToIdle } = userSlice.actions;
+export const { backToIdle, setFriends } = userSlice.actions;
