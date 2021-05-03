@@ -1,5 +1,5 @@
 import { createStackNavigator } from "@react-navigation/stack";
-import React from 'react';
+import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { Provider } from "react-native-paper";
 import { Provider as ProviderRedux } from "react-redux";

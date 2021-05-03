@@ -19,6 +19,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { setLogguedStatus } from "./redux/slices/userSlice";
 import { createHashHistory } from "history";
+import AdminPage from "./components/AdminPage";
 
 export default function App() {
     const dispatch = useDispatch();
@@ -27,7 +28,7 @@ export default function App() {
     const urlParams = useSelector((state) => state.user.urlParams);
 
     onSessionRestore((url) => {
-    //https://radarinen3bwebapp.herokuapp.com/about
+        //https://radarinen3bwebapp.herokuapp.com/about
         let uri = url.split("//")[1].split("/");
         history.push(uri[2]);
     });
@@ -85,7 +86,10 @@ export default function App() {
                             <UploadLocation />
                         </Route>
                         <Route path="/help">
-                            <HelpPage/>
+                            <HelpPage />
+                        </Route>
+                        <Route path="/admin">
+                            <AdminPage />
                         </Route>
                         <Route path="/">
                             <MainView />

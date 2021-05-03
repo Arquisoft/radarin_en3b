@@ -27,7 +27,7 @@ export default function NavbarAnonym() {
             <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
                 {!limitedVersion &&
                     <Nav className="mr-auto">
-                        {NavbarItems.filter((element) => !element.key.includes("locations")).map((item) => {
+                        {NavbarItems.filter((element) => !element.key.includes("locations") && !element.key.includes("admin")).map((item, index) => {
                             return (
                                 <NavLink key={item.key} className={item.cName} as={Link} to={item.url}>
                                     {item.title}

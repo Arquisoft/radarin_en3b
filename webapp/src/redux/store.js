@@ -1,4 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
+import adminUsersSlice from "./slices/adminUsersSlice";
 import keysSlice from "./slices/keysSlice";
 import locationsSlice from "./slices/locationsSlice";
 import tourSlice from "./slices/tourSlice";
@@ -10,5 +11,6 @@ export default configureStore({
         user: userSlice,
         keys: keysSlice,
         tour: tourSlice,
+        users: adminUsersSlice,
     }
 });
