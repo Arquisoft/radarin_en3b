@@ -2,16 +2,13 @@
 import React, { useState, useEffect } from "react";
 import { View, Text } from "react-native";
 import { Card } from "react-native-elements";
-import { Switch } from "react-native-paper";
 import { DataTable, Avatar } from "react-native-paper";
 import { HeaderBackButton } from "@react-navigation/stack";
 import * as Location from "expo-location";
 import styles from "./MyStyles";
 import MyMenu from "./MyMenu";
-//import { sendLocation } from "./SendLocation";
 import { useSelector } from "react-redux";
-import { getLocationAsync } from "./GetAsyncLocation";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import MySwitch from "./MySwitch";
 
 
 export default function ProfileScreen({ navigation }) {
@@ -21,11 +18,11 @@ export default function ProfileScreen({ navigation }) {
   React.useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: (() => (
-            <MyMenu navigation={navigation}></MyMenu>
-          )
+        <MyMenu navigation={navigation}></MyMenu>
+      )
       ),
       headerLeft: (() => (
-        <HeaderBackButton tintColor={"#FFF"} onPress={() => {navigation.navigate("Radarin");}}></HeaderBackButton>
+        <HeaderBackButton tintColor={"#FFF"} onPress={() => { navigation.navigate("Radarin"); }}></HeaderBackButton>
       )
       )
     });
@@ -36,17 +33,10 @@ export default function ProfileScreen({ navigation }) {
 
   useEffect(() => {
     (async () => {
-      let { status } = await Location.requestBackgroundPermissionsAsync();
+      let { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== "granted") {
         setErrorMsg("Permission to access location was denied");
         return;
-      }
-
-      if (!Location.hasStartedLocationUpdatesAsync("LocationTask")) {
-        setErrorMsg("Please, turn on your location");
-        return;
-      } else {
-        setErrorMsg(false);
       }
 
       let location = await Location.getCurrentPositionAsync();
@@ -65,54 +55,27 @@ export default function ProfileScreen({ navigation }) {
   return (
     <View style={styles.container}>
       <Card containerStyle={styles.card}>
-            <DataTable>
-              <DataTable.Row>
-                <DataTable.Cell><Avatar.Text size={45} label={fn.substr(0, 1)} backgroundColor="#126BBD"/></DataTable.Cell>
-                <DataTable.Cell style={{flex: 3}}><Card.Title style={styles.cardTitle}>{fn}</Card.Title></DataTable.Cell>
-              </DataTable.Row>
-            </DataTable>
+        <DataTable>
+          <DataTable.Row>
+            <DataTable.Cell><Avatar.Text size={45} label={fn.substr(0, 1)} backgroundColor="#126BBD" /></DataTable.Cell>
+            <DataTable.Cell style={{ flex: 3 }}><Card.Title style={styles.cardTitle}>{fn}</Card.Title></DataTable.Cell>
+          </DataTable.Row>
+        </DataTable>
 
-            <Text style={styles.username}>{webId}</Text>
-            
-            <Card.Divider style={styles.divider}/>
+        <Text style={styles.username}>{webId}</Text>
 
-            <Card.Title style={styles.cardTitle}>Settings</Card.Title>
+        <Card.Divider style={styles.divider} />
 
-            <DataTable>
-            <DataTable.Row>
-                <DataTable.Cell style={{flex: 3}}><Text style={styles.name}>Get location automatically:</Text></DataTable.Cell>
-                <DataTable.Cell><MySwitch></MySwitch></DataTable.Cell>
-            </DataTable.Row>
+        <Card.Title style={styles.cardTitle}>Settings</Card.Title>
+
+        <DataTable>
+          <DataTable.Row>
+            <DataTable.Cell style={{ flex: 3 }}><Text style={styles.name}>Get location automatically:</Text></DataTable.Cell>
+            <DataTable.Cell><MySwitch /></DataTable.Cell>
+          </DataTable.Row>
         </DataTable>
 
       </Card>
     </View>
   );
 }
-
-
-const MySwitch = () => {
-  let initialState;
-
-  AsyncStorage.getItem("backgroundLocations").then((backgroundLocation) => {
-    if (backgroundLocation === "active") 
-      setIsSwitchOn(true);
-    
-    else  
-      setIsSwitchOn(false);
-    getLocationAsync();
-  });
-  const [isSwitchOff, setIsSwitchOn] = React.useState(initialState);
-
-  const onToggleSwitch = () => {
-    setIsSwitchOn(!isSwitchOff);
-    if (isSwitchOff) 
-        AsyncStorage.setItem("backgroundLocations", "inactive");
-    else 
-        AsyncStorage.setItem("backgroundLocations", "active");
-    
-    getLocationAsync();
-  }
-
-  return <Switch color="#094072" value={isSwitchOff} onValueChange={onToggleSwitch} />;
-};

@@ -1,18 +1,16 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { setProfile } from "../../FetchProfile";
-import { getFriends, getFriendsWithDistance } from "../../FetchFriends";
+import { getFriends, getFriendsNames, getFriendsWithDistance } from "../../FetchFriends";
 
-export const fetchFriends = createAsyncThunk("user/fetchFriends", webId =>
-  getFriends(webId));
+//Fetch friends with distance, far or close
+export const fetchFriendsWithDistance = createAsyncThunk("user/fetchFriends", async (webId) => {
+  const friends = await getFriends(webId);
 
-export const fetchFriendsWithDistance = createAsyncThunk("user/fetchFriendsWithDistance", 
-  async (undefined, { getState }) => {
-    const { friendsStatus } = getState().user;
-    if (friendsStatus === "loading")
-      return;
-    const friends = getState().user.onlineFriends;
-    return await getFriendsWithDistance(friends);
-  });
+  if (friends === "No location")
+    return "No location";
+
+  return friends;
+});
 
 export const fetchProfile = createAsyncThunk("user/fetchProfile", async (webId) =>
   await setProfile(webId));
@@ -21,13 +19,10 @@ const initialState = {
   webId: "",
   fn: "",
   friendsStatus: "idle",
-  closeFriendsStatus: "idle",
   profileStatus: "idle",
   friendsError: null,
-  closeFriendsError: null,
   profileError: null,
-  onlineFriends: [],
-  onlineCloseFriends: {}
+  friends: [],
 };
 
 export const userSlice = createSlice({
@@ -39,27 +34,16 @@ export const userSlice = createSlice({
     },
   },
   extraReducers: {
-    [fetchFriends.pending]: (state) => {
+    [fetchFriendsWithDistance.pending]: (state) => {
       state.friendsStatus = "loading";
     },
-    [fetchFriends.fulfilled]: (state, action) => {
-      state.friendsStatus = "succeeded";
-      state.onlineFriends = action.payload;
-    },
-    [fetchFriends.rejected]: (state, action) => {
-      state.friendsStatus = "failed";
-      state.friendsError = action.error.message;
-    },
-    [fetchFriendsWithDistance.pending]: (state) => {
-      state.closeFriendsStatus = "loading";
-    },
     [fetchFriendsWithDistance.fulfilled]: (state, action) => {
-      state.closeFriendsStatus = "succeeded";
-      state.onlineCloseFriends = action.payload;
+      state.friendsStatus = "succeeded";
+      state.friends = action.payload;
     },
     [fetchFriendsWithDistance.rejected]: (state, action) => {
-      state.closeFriendsStatus = "failed";
-      state.closeFriendsError = action.error.message;
+      state.friendsStatus = "failed";
+      state.friendsError = action.error.message;
     },
     [fetchProfile.pending]: (state) => {
       state.profileStatus = "loading";
@@ -78,4 +62,4 @@ export const userSlice = createSlice({
 
 export default userSlice.reducer;
 
-export const { backToIdle} = userSlice.actions;
+export const { backToIdle } = userSlice.actions;
