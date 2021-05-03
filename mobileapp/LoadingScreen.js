@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { View, Image, Text, ImageBackground } from "react-native";
 import styles from "./MyStyles";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchProfile, fetchFriendsWithDistance, refreshFriends } from "./redux/slices/userSlice";
+import { fetchProfile, fetchFriendsWithDistance, refreshFriends, backToIdle } from "./redux/slices/userSlice";
 import { doOnce } from "./redux/slices/executingSlice";
 import { setScanned } from "./redux/slices/executingSlice";
 import { showMessage } from "react-native-flash-message";
@@ -19,6 +19,7 @@ export default function LoadingScreen({ route, navigation }) {
   const friendsStatus = useSelector(state => state.user.friendsStatus);
   const doUna = useSelector(state => state.executing.doOnce);
   const refreshStatus = useSelector(state => state.user.refreshStatus);
+  const friendsError = useSelector(state => state.user.friendsError);
 
 
   useEffect(() => {
@@ -46,13 +47,18 @@ export default function LoadingScreen({ route, navigation }) {
         dispatch(changeLocationEnabled(response));
 
         if (response === "true") {
-          if (friendsStatus === "idle" || friendsStatus === "failed") {
+          if (friendsStatus === "idle") {
             dispatch(fetchFriendsWithDistance(webId));
           } else if (friendsStatus === "succeeded") {
             navigation.navigate("Radarin");
 
           } else if (friendsStatus === "failed") {
+
+            console.log(friendsError);
+
             if (!doUna) {
+              
+              dispatch(backToIdle());
               dispatch(doOnce());
               dispatch(setScanned(false));
               navigation.navigate("Login", { qrUpdatedFlag: true });
@@ -60,7 +66,7 @@ export default function LoadingScreen({ route, navigation }) {
                 message: "Your session has expired.",
                 description: "Your QR code has been renewed. Please, log in in the aplication again again.",
                 type: "info",
-                duration: 5000,
+                duration: 15000,
               });
             }
           }

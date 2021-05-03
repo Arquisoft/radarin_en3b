@@ -8,6 +8,7 @@ const MAX_TIME = 30000000000; //Testing value, should be something like 3600.000
 
 export async function getFriends(webId) {
   //Get name and webId from friend
+
   let friends = await rdfStore.getFriends(webId);
 
   //get their location
@@ -32,7 +33,7 @@ export async function getDistances(friends, locations) {
   //Map friends
   const res = locations.map(location => ({
     //we try to get the name, if it does not exist we grab the webId
-    name: friends.filter(friend => friend.webId === location[1].webId)[0].fn ?? location[1].webId.split("//")[1].split(".")[0],
+    name: friends?.filter(friend => friend.webId === location[1].webId)[0].fn ?? location[1].webId.split("//")[1].split(".")[0],
     distance: calculateDistance(location[1], myLocation),
     isClose: isClose(myLocation, location),
     mapsUrl: getMapsUrl(location[1])
