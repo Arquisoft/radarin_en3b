@@ -91,7 +91,6 @@ export default function AdminPage() {
         blockedUsersArray.push(blockedUsers[i].webId);
     }
 
-    console.log(users.filter(item => item.toLowerCase().includes(filterText.toLowerCase())));
     let content;
 
 

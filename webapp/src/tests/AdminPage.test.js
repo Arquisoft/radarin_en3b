@@ -194,44 +194,11 @@ test("admin page 6", async () => {
         if (counter === 4)
             return "m";
 
-        if(counter === 8)
-            return [{ webId: "https://marcostobias.solidcommunity.net/profile/card#me" }];
     });
 
     spy.mockReturnValue(mockDispatch);
 
-    render(<BrowserRouter><Provider store={store}><AdminPage /></Provider></BrowserRouter>);
-});
-
-test("admin page 6", async () => {
-    let counter = 0;
-    redux.useSelector.mockImplementation(() => {
-        counter++;
-        if (counter === 6) {
-            return "succeeded";
-        }
-
-        if (counter === 7)
-            return true;
-
-        if (counter === 1)
-            return "failed";
-
-        if (counter === 2)
-            return "idle";
-
-        if (counter === 5)
-            return ["https://marcostobias.solidcommunity.net/profile/card#me", "https://marcostobias.solidcommunty.net/profile/card#me", "https://marcstobias.solidcommunity.net/profile/card#me"];
-
-        if (counter === 4)
-            return "m";
-
-        return [{ webId: "https://marcostobias.solidcommunity.net/profile/card#me" }];
-    });
-
-    spy.mockReturnValue(mockDispatch);
-
-    render(<BrowserRouter><Provider store={store}><AdminPage /></Provider></BrowserRouter>);
+    const aux = render(<BrowserRouter><Provider store={store}><AdminPage /></Provider></BrowserRouter>);
 });
 
 test("admin page", async () => {
