@@ -87,10 +87,11 @@ export default function AdminPage() {
 
     let blockedUsersArray = [];
     let i;
-    for (i = 0; i < blockedUsers.length; i++) {
+    for (i = 0; i < blockedUsers?.length; i++) {
         blockedUsersArray.push(blockedUsers[i].webId);
     }
 
+    console.log(users.filter(item => item.toLowerCase().includes(filterText.toLowerCase())));
     let content;
 
 
