@@ -17,7 +17,6 @@ import "../css/MainNavbar.css";
 import Logo from "../img/radarin_logo.png";
 import { useHistory } from "react-router-dom";
 import { fetchLocations } from "../redux/slices/locationsSlice";
-import { getBlacklistAdmin } from "../redux/slices/adminUsersSlice";
 
 function NavbarSession(props) {
     const { session } = useSession();
@@ -27,12 +26,10 @@ function NavbarSession(props) {
     const dispatch = useDispatch();
     const history = useHistory();
     const limitedVersion = useSelector(state => state.user.limitedVersion);
-    const response = useSelector(state => state.users.usersBL);
 
     useEffect(() => {
         if (typeof webId !== "undefined" && webId.includes("https://")) {
             dispatch(fetchLocations(session));
-            dispatch(getBlacklistAdmin());
         }
     });
 
@@ -76,7 +73,7 @@ function NavbarSession(props) {
                                 
                             )
                         })}
-                        {response!=="unauthorized" && <NavLink key='admin' className='nav-links' as={Link} to='/admin' id="">
+                        {webId === "https://radarinen3badmin.inrupt.net/profile/card#me" && <NavLink key='admin' className='nav-links' as={Link} to='/admin' id="">
                                     Admin
                                 </NavLink>}
                     </Nav>

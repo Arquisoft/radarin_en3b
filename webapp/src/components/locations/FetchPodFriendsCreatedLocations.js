@@ -1,8 +1,10 @@
 import { getSolidDataset, getThing, getUrlAll, getSourceUrl, getThingAll, getStringNoLocaleAll, getDatetime } from "@inrupt/solid-client";
 import getOrCreatePublicFilePod from "../../utils/GetOrCreatePublicFilePod";
 
-export default async function FetchPodFriendsCreatedLocations(session, lastId) {
-    
+
+export default async function FetchPodFriendsCreatedLocations(session, lastId) { 
+    let lastIdLocal = lastId;
+
     let createdLocations = [];
     
     const profileDataset = await getSolidDataset(session.info.webId, {
@@ -17,7 +19,8 @@ export default async function FetchPodFriendsCreatedLocations(session, lastId) {
 
     for (let friend of friends){
         
-        let friendLocs = await fetchFriendLocations(friend, session, lastId);
+        let friendLocs = await fetchFriendLocations(friend, session, lastIdLocal);
+        lastIdLocal += friendLocs.length + 5;
 
         for (let loc of friendLocs){
             createdLocations.push(loc);
@@ -52,8 +55,8 @@ async function fetchFriendLocations(friendId, session, lastId){
         const locationsUrl = getSourceUrl(dataset);
         const existing = getThingAll(dataset, locationsUrl);
 
-        let counter = lastId + 1;
         const options = { year: 'numeric', month: 'numeric', day: 'numeric' };
+        let counter = lastId + 1;
 
         existing.forEach(location => {
             const text = getStringNoLocaleAll(location, "http://schema.org/text");

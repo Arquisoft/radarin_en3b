@@ -52,6 +52,7 @@ const initialState = {
     error: null,
     usersBL: [],
     statusBL: "failed",
+    show: false
 };
 
 export const usersSlice = createSlice({
@@ -61,19 +62,23 @@ export const usersSlice = createSlice({
         setSearchText: (state, action) => {
             state.searchText = action.payload
         },
+        changeShow: (state, action) => {
+            state.show = action.payload
+        }
     },
     extraReducers: {
-        [fetchUsersAdmin.pending]: (state, action) => {
+        [fetchUsersAdmin.pending]: (state) => {
             state.status = "loading"
         },
         [fetchUsersAdmin.fulfilled]: (state, action) => {
             state.status = "succeeded"
+            state.users = action.payload
         },
         [fetchUsersAdmin.rejected]: (state, action) => {
             state.status = "failed"
             state.error = action.error.message
         },
-        [refreshUsersAdmin.pending]: (state, action) => {
+        [refreshUsersAdmin.pending]: (state) => {
             state.refreshStatus = "loading"
         },
         [refreshUsersAdmin.fulfilled]: (state, action) => {
@@ -88,12 +93,12 @@ export const usersSlice = createSlice({
             state.statusBL = "idle"
             state.usersBL = action.payload
         },
-        [getBlacklistAdmin.rejected]: (state, action) => {
+        [getBlacklistAdmin.rejected]: (state) => {
             state.statusBL = "failed"
         },
     }
 });
 
-export const { setSearchText } = usersSlice.actions;
+export const { setSearchText, changeShow } = usersSlice.actions;
 
 export default usersSlice.reducer;

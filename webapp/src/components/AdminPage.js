@@ -3,10 +3,9 @@ import React, { useEffect } from 'react';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import BlockIcon from '@material-ui/icons/Block';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchUsersAdmin, refreshUsersAdmin, setSearchText, blockUserAdmin, unblockUserAdmin, getBlacklistAdmin, } from "../redux/slices/adminUsersSlice";
+import { fetchUsersAdmin, refreshUsersAdmin, setSearchText, blockUserAdmin, unblockUserAdmin, getBlacklistAdmin, changeShow, } from "../redux/slices/adminUsersSlice";
 import { makeStyles } from "@material-ui/core/styles";
 import LockOpenIcon from '@material-ui/icons/LockOpen';
-import { useSession } from "@inrupt/solid-ui-react";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -37,20 +36,22 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function AdminPage() {
-    let { session } = useSession();
     const dispatch = useDispatch();
     const userStatus = useSelector(state => state.users.status);
     const refreshStatus = useSelector(state => state.users.refreshStatus);
     const error = useSelector(state => state.users.error);
     const filterText = useSelector(state => state.users.searchText);
-
     const users = useSelector(state => state.users.users);
-
     const locationStatus = useSelector(state => state.locations.status);
+    const show = useSelector(state => state.users.show);
 
     useEffect(() => {
-        console.log(locationStatus);
         if (locationStatus === "succeeded") {
+            dispatch(changeShow(true));
+        }
+
+
+        if (show) {
             if (userStatus === "idle") {
                 dispatch(getBlacklistAdmin());
                 dispatch(fetchUsersAdmin());
@@ -58,10 +59,10 @@ export default function AdminPage() {
                 setTimeout(() => {
                     dispatch(getBlacklistAdmin());
                     dispatch(refreshUsersAdmin());
-                }, 60000);
+                }, 6000);
             }
         }
-    }, [userStatus, refreshStatus, dispatch, locationStatus]);
+    });
 
     const onChange = e => {
         dispatch(setSearchText(e.target.value));
@@ -92,7 +93,7 @@ export default function AdminPage() {
     let content;
 
 
-    if (locationStatus === "loading") {
+    if (!show || userStatus === "loading") {
         content = (<div className="spinner-border mt-5 center2" role="status">
             <span className="sr-only">Loading...</span>
         </div>);
