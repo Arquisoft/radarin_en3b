@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { setProfile } from "../../FetchProfile";
-import { getFriends, getFriendsNames, getFriendsWithDistance } from "../../FetchFriends";
+import { getFriends } from "../../FetchFriends";
 
 //Fetch friends with distance, far or close
 export const fetchFriendsWithDistance = createAsyncThunk("user/fetchFriends", async (webId) => {
@@ -40,7 +40,9 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     backToIdle: (state) => {
-      state.friendsStatus = "idle";
+      state.friendsStatus = "idle"
+      state.refreshStatus = "idle"
+      state.profileStatus = "idle"
     },
     setFriends: (state, action) => {
       state.friends = action.payload
@@ -76,6 +78,9 @@ export const userSlice = createSlice({
     [refreshFriends.fulfilled]: (state, action) => {
       state.refreshStatus = "idle"
       state.friends = action.payload
+    },
+    [refreshFriends.rejected] : (state, action) => {
+      state.refreshStatus = "failed"
     }
   }
 });

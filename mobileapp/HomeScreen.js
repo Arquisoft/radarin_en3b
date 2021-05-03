@@ -15,7 +15,12 @@ export default function HomeScreen({ navigation }) {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    AsyncStorage.getItem("firstLogin").then((login) => { login === "true" ? setFirstLogin(true) : setFirstLogin(false); AsyncStorage.setItem("firstLogin", "false"); });
+    AsyncStorage.getItem("firstLogin").then((login) => { 
+      if(login === null || login === "true")
+        setFirstLogin(true);
+      else 
+        setFirstLogin(false);
+    });
   }, []);
 
   React.useLayoutEffect(() => {

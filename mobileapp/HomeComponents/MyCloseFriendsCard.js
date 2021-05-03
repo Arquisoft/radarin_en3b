@@ -23,7 +23,7 @@ export default function MyCloseFriendsCard({ navigation }) {
 
                 <View style={styles.cardButton}>
                     <Button color="#094072" title="Go to profile" onPress={() => {
-                        navigation.navigate("About");
+                        navigation.navigate("Profile");
                     }
                     }>
                         Go to profile
