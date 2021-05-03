@@ -104,7 +104,7 @@ export default function HelpPage() {
     </div>);
   } else {
     content = (<div>
-      <Typography variant="h2" component="h2" styles={classes.title}>
+      <Typography variant="h3" component="h3" className={classes.title} styles={classes.title}>
         Please log in or create an account to see the help.
       </Typography>
     </div>)
