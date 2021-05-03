@@ -1,5 +1,5 @@
 
-import React from "react";
+import React, {useEffect, useState} from "react";
 import { View, Text } from "react-native";
 import { Card } from "react-native-elements";
 import { DataTable, Avatar } from "react-native-paper";
@@ -27,6 +27,8 @@ export default function ProfileScreen({ navigation }) {
     });
   }, [navigation]);
 
+  const [location, setLocation] = useState(null);
+  const [errorMsg, setErrorMsg] = useState(null);
 
   useEffect(() => {
     (async () => {
