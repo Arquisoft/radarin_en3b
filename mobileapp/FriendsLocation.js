@@ -13,7 +13,7 @@ export async function getFriendsLocation(friends) {
         
     const locations = await Promise.all(responses.map(r => r.json()));
         
-    return locations.map(location => [location.webId, location]);
+    return locations.filter(f => !Array.isArray(f)).map(location => [location.webId, location]);
   } catch (error) {
     console.log("Error loading locations :" + error);
     throw error;
