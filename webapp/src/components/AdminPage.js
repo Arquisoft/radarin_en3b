@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchUsersAdmin, refreshUsersAdmin, setSearchText, blockUserAdmin, unblockUserAdmin, getBlacklistAdmin, changeShow, } from "../redux/slices/adminUsersSlice";
 import { makeStyles } from "@material-ui/core/styles";
 import LockOpenIcon from '@material-ui/icons/LockOpen';
+import "../css/AdminView.css";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -94,7 +95,7 @@ export default function AdminPage() {
 
 
     if (!show || userStatus === "loading") {
-        content = (<div className="spinner-border mt-5 center2" role="status">
+        content = (<div className="spinner-border mt-5 center17" role="status">
             <span className="sr-only">Loading...</span>
         </div>);
     } else if (blockedUsers === "unauthorized") {

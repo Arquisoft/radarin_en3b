@@ -4,8 +4,8 @@ import "react-leaflet/";
 import { useSelector } from "react-redux";
 
 export default function MapView() {
-    const coordinates = useSelector(state => state.locations.coordinates);
-    const polyline = useSelector(state => state.locations.polyline);
+    const coordinates = useSelector((state) => state.locations.coordinates);
+    const polyline = useSelector((state) => state.locations.polyline);
     const [map, setMap] = useState(null);
 
     let result;

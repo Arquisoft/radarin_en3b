@@ -95,6 +95,8 @@ router.post("/blacklist", async (req, res) => {
     if (req.body.webId == null)
     {return res.sendStatus(400);}
 
+    // false positive
+    // eslint-disable-next-line
     if (await Blacklisted.exists({webId: req.body.webId}))
     {return res.sendStatus(200);}
 

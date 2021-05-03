@@ -1,14 +1,13 @@
-import { render } from '@testing-library/react';
+import { render } from "@testing-library/react";
 import { fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom/extend-expect";
 import { Provider } from "react-redux";
 import store from "../redux/store";
-import { BrowserRouter } from 'react-router-dom';
-import LoginPage from '../components/LoginPage';
+import { BrowserRouter } from "react-router-dom";
+import LoginPage from "../components/LoginPage";
 
 
 test("user can change provider text and click sign in", async () => {
-    const correctProvider = "https://inrupt.net";
 
     const { getAllByRole, getByTestId } = render(<BrowserRouter><Provider store={store}><LoginPage/></Provider></BrowserRouter>);
 
@@ -16,7 +15,7 @@ test("user can change provider text and click sign in", async () => {
 
     expect(providerTextField).toBeInTheDocument();
 
-    const signInButton = getAllByRole("button", { name: "Sign In" }).find(element => element.className.includes("MuiButton"));
+    const signInButton = getAllByRole("button", { name: "Sign In" }).find((element) => element.className.includes("MuiButton"));
 
     expect(signInButton).toBeInTheDocument();
 

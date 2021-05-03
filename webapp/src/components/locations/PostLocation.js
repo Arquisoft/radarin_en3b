@@ -26,13 +26,18 @@ export default async function postLocation(session, title, description, photo, c
     const containerUri = `${pod}public/RadarinLocations_/`;
     const dataset = await getOrCreatePublicFilePod(containerUri, session.fetch, "savedLocations.ttl");
 
-    const photoName = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+    let photoName = "";
+    
+    console.log("que");
 
-    await overwriteFile(
-        `${containerUri}/${photoName}`,
-        photo,
-        { type: photo.type, fetch: session.fetch },
-    );
+    if (photo !== null) {
+        photoName = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+        await overwriteFile(
+            `${containerUri}/${photoName}`,
+            photo,
+            { type: photo.type, fetch: session.fetch },
+        );
+    }
 
 
     const locationsUrl = getSourceUrl(dataset);
@@ -43,7 +48,7 @@ export default async function postLocation(session, title, description, photo, c
         "Desc:" + description
     );
 
-
+    console.log("que");
     const locationWithTitle = addStringNoLocale(
         locationWithDescription,
         "http://schema.org/text",
@@ -67,10 +72,10 @@ export default async function postLocation(session, title, description, photo, c
         "http://www.w3.org/2002/12/cal/ical#created",
         new Date()
     );
-
+    console.log("que");
     const updatedLocationsList = setThing(dataset, locationWithTimestamp);
 
     await saveSolidDatasetAt(locationsUrl, updatedLocationsList, { fetch: session.fetch });
-
+    console.log("que");
     session.logout();
 }

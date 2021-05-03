@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, TextInput, ScrollView, Image, Button, BackHandler, Pressable, TouchableOpacity, Share, Linking} from "react-native";
 import { Card, Overlay } from "react-native-elements";
 import {DataTable} from "react-native-paper";
@@ -9,14 +9,21 @@ import { useFocusEffect } from '@react-navigation/native';
 import { getFriendsNames } from './FetchFriends';
 import { getLocation, getLocationAsync } from "./GetAsyncLocation";
 import * as WebBrowser from "expo-web-browser";
+import MyOverlaySupport from "./MyFirstTour";
+import MyOverlayLocationSupport from "./MyLocationTour";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function HomeScreen({ navigation }) {
 
   const onlineFriends = useSelector(state => state.user.onlineFriends);
   const loadedFriends = useSelector(state => state.user.onlineCloseFriends);
   const friendsNames = getFriendsNames(onlineFriends);
+  const [firstLogin, setFirstLogin] = useState(false);
   getLocationAsync();
 
+  useEffect(() => {
+    AsyncStorage.getItem("firstLogin").then((login)=>{login==="true" ? setFirstLogin(true) : setFirstLogin(false); AsyncStorage.setItem("firstLogin", "false");});
+  },[]);
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
@@ -213,6 +220,7 @@ export default function HomeScreen({ navigation }) {
         <Overlay isVisible={visible} onBackdropPress={toggleOverlay}>
           <MyForm></MyForm>
         </Overlay>
+        {(firstLogin && visible) ? <MyOverlayLocationSupport></MyOverlayLocationSupport> : null}
       </View>)
   }
   
@@ -241,7 +249,9 @@ export default function HomeScreen({ navigation }) {
         <MyFarFriendsCard></MyFarFriendsCard>
       </View>
       </ScrollView>
-      <MyOverlay/>
+      {firstLogin ? <MyOverlaySupport></MyOverlaySupport> : null}
+      <MyOverlay visibility={true}/>
+      
       </View>
     );
 

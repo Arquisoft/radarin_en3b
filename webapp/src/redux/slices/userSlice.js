@@ -14,13 +14,13 @@ export const userSlice = createSlice({
     initialState,
     reducers: {
         setLogguedStatus: (state, action) => {
-            state.logguedStatus = action.payload
+            state.logguedStatus = action.payload;
         },
         setLimitedVersion: (state, action) => {
-            state.limitedVersion = action.payload
+            state.limitedVersion = action.payload;
         },
         setUrlParams: (state, action) => {
-            state.urlParams = action.payload
+            state.urlParams = action.payload;
         }
     },
 });

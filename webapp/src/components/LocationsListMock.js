@@ -12,16 +12,16 @@ import Location from "./locations/Location";
 
 
 export default function LocationList() {
-    const locationStatus = useSelector(state => state.locations.status);
-    const error = useSelector(state => state.locations.error);
+    const locationStatus = useSelector((state) => state.locations.status);
+    const error = useSelector((state) => state.locations.error);
     const dispatch = useDispatch();
 
-    const locations = useSelector(state => state.locations.locations);
-    const filterText = useSelector(state => state.locations.searchText);
+    const locations = useSelector((state) => state.locations.locations);
+    const filterText = useSelector((state) => state.locations.searchText);
 
-    const onChange = e => {
+    const onChange = (e) => {
         dispatch(setSearchText(e.target.value));
-    }
+    };
 
     let content;
 
@@ -46,37 +46,37 @@ export default function LocationList() {
                     </div>
                 </ListItem>
                 {
-                    locations.filter(item => item.name.toLowerCase().includes(filterText.toLowerCase()))
-                    .map(item => {
-                        if (item.type === "poly") {
-                            return (
-                                <Polyline
-                                    key={item.id}
-                                    childKey={item.id}
-                                    name={item.name}
-                                    details={item.details}
-                                    coords={item.coords}
-                                />);
-                        } else {
-                            return (
-                                <Location
-                                    key={item.id}
-                                    childKey={item.id}
-                                    title={item.name}
-                                    description={item.details}
-                                    coords={item.coords}
-                                    photo={item.photo}
-                                    date={item.date}
-                                    webId={item.webId}
-                                />
-                            );
-                        }
-                    })
+                    locations.filter((item) => item.name.toLowerCase().includes(filterText.toLowerCase()))
+                        .map((item) => {
+                            if (item.type === "poly") {
+                                return (
+                                    <Polyline
+                                        key={item.id}
+                                        childKey={item.id}
+                                        name={item.name}
+                                        details={item.details}
+                                        coords={item.coords}
+                                    />);
+                            } else {
+                                return (
+                                    <Location
+                                        key={item.id}
+                                        childKey={item.id}
+                                        title={item.name}
+                                        description={item.details}
+                                        coords={item.coords}
+                                        photo={item.photo}
+                                        date={item.date}
+                                        webId={item.webId}
+                                    />
+                                );
+                            }
+                        })
                 }
             </List>
         );
     } else if (locationStatus === "failed") {
-        content = <div className="center2">{error}</div>
+        content = <div className="center2">{error}</div>;
     }
 
     return (

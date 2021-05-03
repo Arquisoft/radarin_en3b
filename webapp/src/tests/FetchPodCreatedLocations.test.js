@@ -14,7 +14,7 @@ test("testing location fetching 2", async () => {
         counter++;
 
         if(counter === 1)
-            return "test";
+        {return "test";}
 
         const error = new Error("test");
         error.statusCode = 404;

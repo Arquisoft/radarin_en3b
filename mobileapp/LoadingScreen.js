@@ -46,7 +46,7 @@ TaskManager.defineTask("friendsLocation", () => {
         let prevFriends = onlineCloseFriends;
         if (dispatch !== undefined)
           dispatch(fetchFriendsWithDistance());
-        let newFriends = new Array();
+        let newFriends = [];
         if (onlineCloseFriends !== null && onlineCloseFriends !== undefined && Array.from(Object.keys(onlineCloseFriends)).length > 0)
           newFriends = Array.from(Object.keys(onlineCloseFriends)).filter(friend => !(Array.from(Object.keys(prevFriends)).includes(friend)));
         if (newFriends !== undefined && newFriends !== null && newFriends.length > 0){

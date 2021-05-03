@@ -1,44 +1,44 @@
-.loch1{
-  font-size: 1.8rem;
+.loch1 {
+    font-size: 1.8rem;
 }
 
-.loch2{
-  font-size: 1.3rem;
+.loch2 {
+    font-size: 1.3rem;
 }
 
-.loctext{
-  font-size: 1rem;
+.loctext {
+    font-size: 1rem;
 }
 
-.fabcontainer{
-  display: flex; 
-  justify-content: flex-end;
+.fabcontainer {
+    display: flex;
+    justify-content: flex-end;
 }
 
-.pictureButton{
-  margin: 20px;
-  margin-left: 50px;
+.pictureButton {
+    margin: 20px 20px 20px 50px;
 }
 
-.picture{
-  width:100%;
-  max-width: 150px;
-}
-
-.svg_icons_container{
-  transform: scale(1.5);
-  
+.picture {
+    width: 100%;
+    max-width: 150px;
 }
 
 .divCenter {
-  text-align: center;
+    text-align: center;
 }
 
 .text {
-  padding-bottom: 2em;
-  padding-top: 4em;
+    padding-bottom: 2em;
+    padding-top: 4em;
 }
 
 .loginButton {
-  margin-top: 5em;
+    margin-top: 5em;
+}
+
+.center3 {
+    position: fixed;
+    top: 40%;
+    left: 50%;
 }

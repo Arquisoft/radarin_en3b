@@ -3,7 +3,7 @@ This server file allow to start the restapi using an in-memory database
 This will be handy for testing
 */
 
-const { MongoMemoryServer } = require("mongodb-memory-server");
+const {MongoMemoryServer} = require("mongodb-memory-server");
 const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
@@ -12,7 +12,7 @@ const api = require("../endpoints/api");
 const admin = require("../endpoints/admin");
 let mongod, server;
 module.exports.startdb = async () => {
-    mongod = new MongoMemoryServer({ instance: { port: 27017, dbName: "testdb" } });
+    mongod = new MongoMemoryServer({instance: {port: 27017, dbName: "testdb"}});
     const mongoUri = await mongod.getUri();
     // eslint-disable-next-line no-console
     console.log(mongoUri);
@@ -22,7 +22,7 @@ module.exports.startdb = async () => {
 module.exports.startserver = async () => {
     // eslint-disable-next-line no-console
     console.log("conecceting to database");
-    await mongoose.connect("mongodb://127.0.0.1:27017/testdb?", { useNewUrlParser: true, useUnifiedTopology: true });
+    await mongoose.connect("mongodb://127.0.0.1:27017/testdb?", {useNewUrlParser: true, useUnifiedTopology: true});
     // eslint-disable-next-line no-console
     console.log("connected");
     const app = express();
@@ -55,7 +55,7 @@ module.exports.clearDatabase = async () => {
 
     // eslint-disable-next-line guard-for-in
     for (const key in collections) {
-        const collection = collections[key];
+        const collection = collections[`${key}`];
         await collection.deleteMany();
     }
 };

@@ -1,17 +1,17 @@
-import React from 'react';
-import Container from 'react-bootstrap/Container';
-import Jumbotron from 'react-bootstrap/Jumbotron';
-import A from 'react-bootstrap/SafeAnchor';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import AboutCard from './AboutCard';
-import Alvaro from '../img/alvaro.jpg';
-import Marcos from '../img/marcos.jpg';
-import Pablo from '../img/pablo.jpg';
-import Juan from '../img/juan.jpg';
-import Miguel from '../img/miguel.jpg';
-import Carmen from '../img/carmen.jpg';
-import Labra from '../img/labra.png';
+import React from "react";
+import Container from "react-bootstrap/Container";
+import Jumbotron from "react-bootstrap/Jumbotron";
+import A from "react-bootstrap/SafeAnchor";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import AboutCard from "./AboutCard";
+import Alvaro from "../img/alvaro.jpg";
+import Marcos from "../img/marcos.jpg";
+import Pablo from "../img/pablo.jpg";
+import Juan from "../img/juan.jpg";
+import Miguel from "../img/miguel.jpg";
+import Carmen from "../img/carmen.jpg";
+import Labra from "../img/labra.png";
 import { Button } from "@material-ui/core";
 
 export default function About() {
@@ -25,7 +25,7 @@ export default function About() {
                         The application can get access to the mobile phone localization of the users who voluntarily activate it and
                         will allow other users who are their friends to know when they are near them. Everything will be build with Solid
                         so you can be the owner of your own data!.
-                        </p>
+                    </p>
                     <p>
                         <A href="https://solidproject.org/about" target="_blank">
                             <Button color="primary" variant="contained">Learn more about Solid</Button>
