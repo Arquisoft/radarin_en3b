@@ -1,4 +1,4 @@
-import Api from '../../api/API';
+import Api from "../../api/API";
 import getOrCreatePrivateFilePod from "../../utils/getOrCreatePrivateFilePod";
 import { getSolidDataset, getThing, getUrlAll, getSourceUrl, getStringNoLocale } from "@inrupt/solid-client";
 
@@ -18,7 +18,7 @@ export default async function fetchDBLocations(session) {
     const prKeyFile = await getOrCreatePrivateFilePod(privateContainerUri, session.fetch);
 
     if(prKeyFile?.error === "error")
-        return [];
+    {return [];}
 
     const prKeyUrl = getSourceUrl(prKeyFile);
 
@@ -54,7 +54,7 @@ export default async function fetchDBLocations(session) {
 }
 
 async function getLines(locations) {
-    const locationsWithDate = locations.map(element => ({
+    const locationsWithDate = locations.map((element) => ({
         coords: [element.coords.latitude, element.coords.longitude],
         timestamp: new Date(element.timestamp).setHours(0, 0, 0, 0)
     }));
@@ -69,9 +69,9 @@ async function getLines(locations) {
 
     let counter = 0;
 
-    const options = { year: 'numeric', month: 'numeric', day: 'numeric' };
+    const options = { year: "numeric", month: "numeric", day: "numeric" };
 
-    locationsWithDate.forEach(element => {
+    locationsWithDate.forEach((element) => {
         if (element.timestamp < previousTimestamp) {
             if (!firstFlag) {
                 polylines.push(currentPolyline);

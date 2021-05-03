@@ -1,10 +1,11 @@
+/* eslint-disable react/prop-types */
 import React from "react";
 import { Button, Typography, Card, CardContent, CardActionArea, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Slide } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import HomeIcon from '@material-ui/icons/Home';
-import LocationOnIcon from '@material-ui/icons/LocationOn';
-import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-import MyLocationIcon from '@material-ui/icons/MyLocation';
+import HomeIcon from "@material-ui/icons/Home";
+import LocationOnIcon from "@material-ui/icons/LocationOn";
+import ExitToAppIcon from "@material-ui/icons/ExitToApp";
+import MyLocationIcon from "@material-ui/icons/MyLocation";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -15,8 +16,8 @@ const useStyles = makeStyles((theme) => ({
         justify: "center",
     },
     title: {
-        textAlign: 'center',
-        align: 'center',
+        textAlign: "center",
+        align: "center",
         marginTop: "2%",
         marginBottom: "2%",
     },
@@ -59,7 +60,7 @@ export default function HelpCard({ item, counter }) {
         <Card className={classes.root} variant="outlined">
             <CardActionArea style={{ alignItems: "center", justify: "center" }} onClick={handleClickOpen}>
 
-                {icons[counter]}
+                {icons[`${counter}`]}
 
                 <CardContent>
                     <Typography className={classes.title} variant="h5" component="h2">

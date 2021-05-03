@@ -24,9 +24,9 @@ async function getLocations(session) {
     const result = podLocations.concat(podFriendsLocations).concat(apiLocations);
 
     if(result.length === 0)
-        return [{ type: "poly", id: 1, name: "You dont have any locations", details: "Add some from the mobile!", coords: [[0, 0]] }]
+    {return [{ type: "poly", id: 1, name: "You dont have any locations", details: "Add some from the mobile!", coords: [[0, 0]] }];}
     else
-        return result;
+    {return result;}
 }
 
 
@@ -45,39 +45,39 @@ export const locationsSlice = createSlice({
     initialState,
     reducers: {
         moveTo: (state, action) => {
-            state.coordinates = action.payload
+            state.coordinates = action.payload;
         },
         setSearchText: (state, action) => {
-            state.searchText = action.payload
+            state.searchText = action.payload;
         },
         setPolyline: (state, action) => {
-            state.polyline = action.payload
+            state.polyline = action.payload;
         }
     },
     extraReducers: {
         [fetchLocations.pending]: (state, action) => {
-            state.status = "loading"
+            state.status = "loading";
         },
         [fetchLocations.fulfilled]: (state, action) => {
-            state.status = "succeeded"
-            state.locations = action.payload
-            state.coordinates = state.locations[0].coords[0]
-            state.polyline = state.locations[0].type === "poly" ? state.locations[0].coords : []
+            state.status = "succeeded";
+            state.locations = action.payload;
+            state.coordinates = state.locations[0].coords[0];
+            state.polyline = state.locations[0].type === "poly" ? state.locations[0].coords : [];
         },
         [fetchLocations.rejected]: (state, action) => {
-            state.status = "failed"
-            state.error = action.error.message
+            state.status = "failed";
+            state.error = action.error.message;
         },
         [refreshLocations.pending]: (state, action) => {
-            state.refreshStatus = "loading"
+            state.refreshStatus = "loading";
         },
         [refreshLocations.fulfilled]: (state, action) => {
-            state.refreshStatus = "idle"
-            state.locations = action.payload
+            state.refreshStatus = "idle";
+            state.locations = action.payload;
         },
         [refreshLocations.rejected]: (state, action) => {
-            state.refreshStatus = "failed"
-            state.error = action.error.message
+            state.refreshStatus = "failed";
+            state.error = action.error.message;
         },
     }
 });

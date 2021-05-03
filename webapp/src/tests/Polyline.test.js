@@ -1,10 +1,10 @@
-import { fireEvent, render, screen } from '@testing-library/react';
-import Polyline from '../components/locations/Polyline';
+import { fireEvent, render, screen } from "@testing-library/react";
+import Polyline from "../components/locations/Polyline";
 import "@testing-library/jest-dom/extend-expect";
 import { Provider } from "react-redux";
 import store from "../redux/store";
 
-test('Locations work', async () => {
+test("Locations work", async () => {
     const key = 1;
     const childKey = 2;
     const name = "Polyline test";

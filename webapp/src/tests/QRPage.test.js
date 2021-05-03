@@ -1,8 +1,9 @@
-import { render, screen } from '@testing-library/react';
+/* eslint-disable */
+import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom/extend-expect";
 import { Provider } from "react-redux";
 import store from "../redux/store";
-import { SolidNodeClient } from 'solid-node-client';
+import { SolidNodeClient } from "solid-node-client";
 import QRPage from "../components/QRPage";
 import fetchDBLocations from "../components/locations/FetchDBLocations";
 
@@ -11,7 +12,7 @@ jest.setTimeout(20000);
 
 test("testing qr page, key management and location fetching", async () => {
     const client = new SolidNodeClient({
-        handlers: { https: 'solid-client-authn-node' }
+        handlers: { https: "solid-client-authn-node" }
     });
 
     let sessionNew = await client.login({
@@ -34,7 +35,7 @@ test("testing qr page, key management and location fetching", async () => {
 
 
     // Need to wait for the qr to load, didn't find another way
-    await new Promise(res => setTimeout(() => {
+    await new Promise((res) => setTimeout(() => {
         expect(true).toBe(true);
         res();
     }, 5000));

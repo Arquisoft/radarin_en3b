@@ -2,9 +2,9 @@ import { render, screen } from '@testing-library/react';
 import "@testing-library/jest-dom/extend-expect";
 import { Provider } from "react-redux";
 import store from "../redux/store";
-import LocationsList from '../components/LocationsList';
+import LocationsList from "../components/LocationsList";
 import "@testing-library/jest-dom/extend-expect";
-import { SolidNodeClient } from 'solid-node-client';
+import { SolidNodeClient } from "solid-node-client";
 
 jest.setTimeout(60000);
 
@@ -12,7 +12,7 @@ test("testing location fetching 2", async () => {
     global.URL.createObjectURL = jest.fn();
 
     const client = new SolidNodeClient({
-        handlers: { https: 'solid-client-authn-node' }
+        handlers: { https: "solid-client-authn-node" }
     });
 
     let sessionNew = await client.login({
@@ -31,7 +31,7 @@ test("testing location fetching 2", async () => {
 
 
     // Need to wait for the qr to load, didn't find another way
-    await new Promise(res => setTimeout(() => {
+    await new Promise((res) => setTimeout(() => {
         expect(true).toBe(true);
         res();
         const open = getAllByRole("button", { name: "Open" })[0];

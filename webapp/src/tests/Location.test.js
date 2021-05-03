@@ -1,6 +1,6 @@
-import { render } from '@testing-library/react';
+import { render } from "@testing-library/react";
 import { fireEvent } from "@testing-library/react";
-import Location from '../components/locations/Location';
+import Location from "../components/locations/Location";
 import "@testing-library/jest-dom/extend-expect";
 import { Provider } from "react-redux";
 import store from "../redux/store";

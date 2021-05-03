@@ -9,7 +9,10 @@ export const tourSlice = createSlice({
     initialState,
     reducers: {
         setIsTourOpen: (state, action) => {
-            state.isTourOpen = action.payload
+            state.isTourOpen = action.payload;
+        },
+        setIsShowingMore: (state, action) => {
+            state.isShowingMore = action.payload;
         }
     }
 });

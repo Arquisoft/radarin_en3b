@@ -46,7 +46,7 @@ TaskManager.defineTask("friendsLocation", () => {
         let prevFriends = onlineCloseFriends;
         if (dispatch !== undefined)
           dispatch(fetchFriendsWithDistance());
-        let newFriends = new Array();
+        let newFriends = [];
         if (onlineCloseFriends !== null && onlineCloseFriends !== undefined && Array.from(Object.keys(onlineCloseFriends)).length > 0)
           newFriends = Array.from(Object.keys(onlineCloseFriends)).filter(friend => !(Array.from(Object.keys(prevFriends)).includes(friend)));
         if (newFriends !== undefined && newFriends !== null && newFriends.length > 0){
@@ -147,7 +147,7 @@ export default function LoadingScreen({ route, navigation }) {
     <ImageBackground source={require("./assets/background.jpg")} style={styles.background}>
     <View style={styles.loadingScreen}>
       <Image style={styles.loadingImage}
-        source={require("./assets/icon.png")}
+        source={require("./assets/iconFull.png")}
       />
       <Text style={styles.loadingText}>Loading...</Text>
     </View>

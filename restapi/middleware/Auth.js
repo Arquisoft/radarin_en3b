@@ -2,23 +2,25 @@ const jwt = require("jsonwebtoken");
 const fetchPKey = require("../utils/fetchPKey");
 
 const auth = async function (req, res, next) {
-    const authHeader = req.headers['authorization'];
+    const authHeader = req.headers["authorization"];
 
     if (authHeader == null)
-        return res.sendStatus(401);
+    {return res.sendStatus(401);}
 
-    const token = authHeader && authHeader.split(' ')[1];
+    const token = authHeader && authHeader.split(" ")[1];
 
+    // You can't time-attack this, it's just checking if it is empty
+    // eslint-disable-next-line security/detect-possible-timing-attacks
     if (token == null)
-        return res.sendStatus(401);
+    {return res.sendStatus(401);}
 
     const decodedToken = jwt.decode(token);
     if (decodedToken == null)
-        return res.sendStatus(401);
+    {return res.sendStatus(401);}
 
     req.claims = {webid: decodedToken.webid};
     if (req.claims.webid == null)
-        return res.sendStatus(401);
+    {return res.sendStatus(401);}
 
     const key = await fetchPKey(req.claims.webid);
 
@@ -27,7 +29,6 @@ const auth = async function (req, res, next) {
     try {
         jwt.verify(token, key);
     } catch (e) {
-        console.log(e);
         return res.sendStatus(401);
     }
     next();

@@ -1,29 +1,29 @@
 .slick-slide img {
-  margin: auto;
+    margin: auto;
 }
 
 .slick-slide .carouselText {
-  text-align: center;
-  justify-content: center;
+    text-align: center;
+    justify-content: center;
 }
 
 .contain {
-  padding: 40px;
+    padding: 40px;
 }
 
 .carouselButton {
-  text-align: center;
-  margin-top: 4em;
+    text-align: center;
+    margin-top: 4em;
 }
 
 a:hover {
-  color: #fff;
+    color: #fff;
 }
 
 h2 {
-  font-size: 3rem;
+    font-size: 3rem;
 }
 
 p {
-  font-size: 1.6rem;
+    font-size: 1.6rem;
 }

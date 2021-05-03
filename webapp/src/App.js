@@ -13,94 +13,98 @@ import LoginPage from "./components/LoginPage";
 import QRPage from "./components/QRPage";
 import HelpPage from "./components/HelpPage";
 import {
-  handleIncomingRedirect,
-  onSessionRestore
+    handleIncomingRedirect,
+    onSessionRestore
 } from "@inrupt/solid-client-authn-browser";
 import { useDispatch, useSelector } from "react-redux";
 import { setLogguedStatus } from "./redux/slices/userSlice";
 import { createHashHistory } from "history";
+import AdminPage from "./components/AdminPage";
 
 export default function App() {
-  const dispatch = useDispatch();
-  const history = createHashHistory();
-  const limitedVersion = useSelector(state => state.user.limitedVersion);
-  const urlParams = useSelector(state => state.user.urlParams);
+    const dispatch = useDispatch();
+    const history = createHashHistory();
+    const limitedVersion = useSelector((state) => state.user.limitedVersion);
+    const urlParams = useSelector((state) => state.user.urlParams);
 
-  onSessionRestore((url) => {
-    //https://radarinen3bwebapp.herokuapp.com/about
-    let uri = url.split("//")[1].split("/");
-    history.push(uri[2]);
-  });
-
-  useEffect(() => {
-    document.title = "Radarin";
-    handleIncomingRedirect({
-      restorePreviousSession: true
-    }).then(() => {
-      dispatch(setLogguedStatus(true));
+    onSessionRestore((url) => {
+        //https://radarinen3bwebapp.herokuapp.com/about
+        let uri = url.split("//")[1].split("/");
+        history.push(uri[2]);
     });
-  }, [dispatch]);
 
-  let content;
+    useEffect(() => {
+        document.title = "Radarin";
+        handleIncomingRedirect({
+            restorePreviousSession: true
+        }).then(() => {
+            dispatch(setLogguedStatus(true));
+        });
+    }, [dispatch]);
 
-  if (limitedVersion) {
-    content = (
-      <div className="App">
-        <header>
-          <MainNavbar />
-        </header>
-        <br /><br /><br /><br /><br />
-        <Switch>
-          <Route path="/uploadLocation">
-            <UploadLocation />
-          </Route>
-          <Route path="/login">
-            <LoginPage redirectUrl={urlParams} />
-          </Route>
-        </Switch>
-      </div>
+    let content;
+
+    if (limitedVersion) {
+        content = (
+            <div className="App">
+                <header>
+                    <MainNavbar />
+                </header>
+                <br /><br /><br /><br /><br />
+                <Switch>
+                    <Route path="/uploadLocation">
+                        <UploadLocation />
+                    </Route>
+                    <Route path="/login">
+                        <LoginPage redirectUrl={urlParams} />
+                    </Route>
+                </Switch>
+            </div>
+        );
+    } else {
+        content = (
+            <div>
+                <div className="App">
+                    <header>
+                        <MainNavbar />
+                    </header>
+                    <br /><br /><br /><br />
+                    <Switch>
+                        <Route path="/locations">
+                            <LocationsView />
+                        </Route>
+                        <Route path="/about">
+                            <About />
+                        </Route>
+                        <Route path="/login">
+                            <LoginPage />
+                        </Route>
+                        <Route path="/qr">
+                            <QRPage />
+                        </Route>
+                        <Route path="/uploadLocation">
+                            <UploadLocation />
+                        </Route>
+                        <Route path="/help">
+                            <HelpPage />
+                        </Route>
+                        <Route path="/admin">
+                            <AdminPage />
+                        </Route>
+                        <Route path="/">
+                            <MainView />
+                        </Route>
+                    </Switch>
+                </div>
+                <MainFooter />
+            </div>
+        );
+    }
+
+
+    return (
+        <Router history={history}>
+            {content}
+        </Router>
     );
-  } else {
-    content = (
-      <div>
-        <div className="App">
-          <header>
-            <MainNavbar />
-          </header>
-          <br /><br /><br /><br />
-          <Switch>
-            <Route path="/locations">
-              <LocationsView />
-            </Route>
-            <Route path="/about">
-              <About />
-            </Route>
-            <Route path="/login">
-              <LoginPage />
-            </Route>
-            <Route path="/qr">
-              <QRPage />
-            </Route>
-            <Route path="/uploadLocation">
-              <UploadLocation />
-            </Route>
-            <Route path="/help">
-              <HelpPage/>
-            </Route>
-            <Route path="/">
-              <MainView />
-            </Route>
-          </Switch>
-        </div>
-        <MainFooter />
-      </div>
-    );
-  }
-
-
-  return (
-    <Router history={history}>
-      {content}
-    </Router>
-  );
 }

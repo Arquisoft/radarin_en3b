@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react';
+import { render } from "@testing-library/react";
 import "@testing-library/jest-dom/extend-expect";
 import { Provider } from "react-redux";
 import store from "../redux/store";
@@ -16,7 +16,7 @@ test("qr page fails", async () => {
     const { queryByText } = render(<Provider store={store}><QRPage /></Provider>);
 
     // Need to wait for the qr to load, didn't find another way
-    await new Promise(res => setTimeout(() => {
+    await new Promise((res) => setTimeout(() => {
         expect(true).toBe(true);
         res();
     }, 5000));

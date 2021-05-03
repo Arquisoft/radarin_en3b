@@ -1,5 +1,5 @@
 import { createStackNavigator } from "@react-navigation/stack";
-import React from 'react';
+import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { Provider } from "react-native-paper";
 import { Provider as ProviderRedux } from "react-redux";
@@ -7,11 +7,9 @@ import styles from "./MyStyles";
 import HomeScreen from "./HomeScreen";
 import AboutScreen from "./AboutScreen";
 import ProfileScreen from "./ProfileScreen";
-import PostScreen from "./PostScreen";
 import LoginScreen from "./LoginScreen";
 import LoadingScreen from "./LoadingScreen";
 import store from "./redux/store";
-import { TabRouter } from "react-navigation";
 import FlashMessage from "react-native-flash-message";
 
 const Stack = createStackNavigator();
@@ -25,11 +23,6 @@ export default function App() {
           <Stack.Navigator initialRouteName="Login">
             <Stack.Screen name="Radarin" component={HomeScreen} options={{
               title: "Radarin",
-              headerStyle: styles.header,
-              headerTintColor: "#fff"
-            }} />
-            <Stack.Screen name="Post" component={PostScreen} options={{
-              title: "Write a post",
               headerStyle: styles.header,
               headerTintColor: "#fff"
             }} />

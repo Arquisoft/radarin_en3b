@@ -15,7 +15,7 @@ export default async function removeLocation(session, title, description) {
     const dataset = await getOrCreatePublicFilePod(containerUri, session.fetch, "savedLocations.ttl");
 
     if(dataset?.error === "error")
-        return [];
+    {return [];}
 
     const locationsUrl = getSourceUrl(dataset);
     const existing = getThingAll(dataset, locationsUrl);
@@ -24,14 +24,14 @@ export default async function removeLocation(session, title, description) {
     let flag = true;
     let photoName = "";
 
-    existing.forEach(location => {
+    existing.forEach((location) => {
         const text = getStringNoLocaleAll(location, "http://schema.org/text");
 
-        const name = text.filter(t => t.includes("Title:"))[0].split("Title:")[1];
-        const details = text.filter(t => t.includes("Desc:"))[0].split("Desc:")[1];
+        const name = text.filter((t) => t.includes("Title:"))[0].split("Title:")[1];
+        const details = text.filter((t) => t.includes("Desc:"))[0].split("Desc:")[1];
 
         if(name === title && description === details && flag) {
-            photoName = text.filter(t => t.includes("Photo:"))[0].split("Photo:")[1];
+            photoName = text.filter((t) => t.includes("Photo:"))[0].split("Photo:")[1];
             updatedDataset = removeThing(dataset, location);
             flag = false;
         }

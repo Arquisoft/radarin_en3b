@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React, { useEffect } from "react";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import { useSession, CombinedDataProvider, Text } from "@inrupt/solid-ui-react";
@@ -18,16 +19,14 @@ import Logo from "../img/radarin_logo.png";
 import { useHistory } from "react-router-dom";
 import { fetchLocations } from "../redux/slices/locationsSlice";
 
-
 function NavbarSession(props) {
     const { session } = useSession();
     let { webId } = session.info;
     if (typeof props.webId !== "undefined")
-        webId = props.webId;
+    {webId = props.webId;}
     const dispatch = useDispatch();
     const history = useHistory();
-    const limitedVersion = useSelector(state => state.user.limitedVersion);
-
+    const limitedVersion = useSelector((state) => state.user.limitedVersion);
 
     useEffect(() => {
         if (typeof webId !== "undefined" && webId.includes("https://")) {
@@ -67,23 +66,27 @@ function NavbarSession(props) {
             <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
                 {!limitedVersion &&
                     <Nav className="mr-auto">
-                        {NavbarItems.map((item, index) => {
+                        {NavbarItems.map((item) => {
                             return (
                                 <NavLink key={item.key} className={item.cName} as={Link} to={item.url} id={item.id}>
                                     {item.title}
                                 </NavLink>
+                                
                             )
                         })}
+                        {webId === "https://radarinen3badmin.inrupt.net/profile/card#me" && <NavLink key='admin' className='nav-links' as={Link} to='/admin' id="">
+                                    Admin
+                                </NavLink>}
                     </Nav>
                 }
                 <Nav>
                     {!limitedVersion &&
                         <NavDropdown title={dropdownTitle} className="nav-item mr-3" id=".fifth-step">
                             
-                                <NavDropdown.Item as={Link} to="/qr">
-                                    <CodeIcon className="mr-2" />
+                            <NavDropdown.Item as={Link} to="/qr">
+                                <CodeIcon className="mr-2" />
                                 QR
-                                </NavDropdown.Item>
+                            </NavDropdown.Item>
                             
                         </NavDropdown>
                     }
