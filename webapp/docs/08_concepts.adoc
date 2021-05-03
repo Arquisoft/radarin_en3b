@@ -54,4 +54,4 @@ Apart from the already mentioned framework or services, our intention is to use 
 
 === Safety and security concepts
 
-We will use HTTPS with TLS protocol to ensure the communication from the mobile app to the web server is done securely because it may contain sensible information such as the user pod's id and location which could be used to link a person's identity to a pod. SaveLocations will be stored in our server along with its webId but everything else such as friends will be stored in user's pod.
+We will use HTTPS with TLS protocol to ensure the communication from the mobile app to the web server is done securely because it may contain sensible information such as the user pod's id and location which could be used to link a person's identity to a pod. TrackedLocations will be stored in our server along with its webId but everything else such as friends will be stored in user's pod.

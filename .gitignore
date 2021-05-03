@@ -55,3 +55,16 @@ restapi/coverage/lcov-report/restapi/models/index.html
 restapi/coverage/lcov-report/restapi/models/TrackedLocation.js.html
 restapi/coverage/lcov-report/restapi/tests/index.html
 restapi/coverage/lcov-report/restapi/tests/server-for-tests.js.html
+restapi/.idea/.gitignore
+restapi/.idea/modules.xml
+restapi/.idea/restapi.iml
+restapi/.idea/vcs.xml
+restapi/.idea/codeStyles/codeStyleConfig.xml
+restapi/.idea/codeStyles/Project.xml
+restapi/.idea/inspectionProfiles/Project_Default.xml
+webapp/.idea/.gitignore
+webapp/.idea/modules.xml
+webapp/.idea/vcs.xml
+webapp/.idea/webapp.iml
+webapp/.idea/inspectionProfiles/Project_Default.xml
+webapp/.idea/stylesheetLinters/stylelint.xml

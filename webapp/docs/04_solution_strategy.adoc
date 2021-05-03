@@ -6,21 +6,22 @@
 The technologies we have decided to use for the development of the app are: 
 **React** -> For an easier development of the user interface with JavaScript.
 **Bootstrap** -> To improve and facilitate the development of the HTML and CSS development for the web application.
-**OpenStreetMap** -> To visualize the localitations of the user in the web application. We decided to use this instead of Google Maps because it is open distribution so this avoids problems of API keys expiring and it seemed pretty detailed and updated. Also it is free.
-**JSON** -> The localitations and its associated timestamps will be stored in the form of JSON files.
+**OpenStreetMap** -> To visualize the localizations of the user in the web application. We decided to use this instead of Google Maps because it is open distribution so this avoids problems of API keys expiring and it seemed pretty detailed and updated. Also it is free.
+**JSON** -> The localizations and its associated timestamps will be stored in the form of JSON files.
+**JWT** -> **Json Web Tokens** using RS256 key type. It allows us to provide a secure authorization mechanism. It also allows us to keep our REST Api **idempotent** when needed depending on each HTTP verb (we don't work with sessions in the API, just signed tokens).
 
 === Decisions about the top-level decomposition of the system
 We will follow redux pattern to be able to manipulate data in a more predictable way. It will allow us to store the state of the application and accessing it from any component,
-avoiding passing information between components which would increase the complexity of the code innecesarily.
+avoiding passing information between components which would increase the complexity of the code unnecessarily.
 The possibility of using more patterns will be studied later.
 
 === Decisions to achieve quality goals
-To meet the usability goals, we will make an effort to develop an application as easy to use as posible, following usual organitations so users find it comfortable. We will also make sure that the application is responsive and accesible. In addition, a help view will be developed in case a new user is unaware of the posibilities of the application.
+To meet the usability goals, we will make an effort to develop an application as easy to use as possible, following usual organizations so users find it comfortable. We will also make sure that the application is responsive and accessible. In addition, a help view will be developed in case a new user is unaware of the possibilities of the application.
 In order to accomplish a good privacy we will make sure that no personal information is centralized. All of it will be only stored in the users pod, besides the locations that will
 be stored in our database for performance purposes.
-For security, we will test everything to avoid bugs that could come out as vulnerabilities. Moreover, as the information will not be centrallized, it will also prevent data theft.
+For security, we will test everything to avoid bugs that could come out as vulnerabilities. Moreover, as the information will not be centralized, it will also prevent data theft.
 
 === Organizational decisions
 All of the team meetings will be done through our Microsoft Teams channel and through a Discord server, but, for smaller things, we will communicate using a Whatsapp group.
-To organice tasks, we began by exploring the possibility of using ClickUp, but we came to see that with the Project and Issues possibilities on GitHub we had enough for the moment. In the end we migrate to the latter as it was more confortable for us and it is more versatile than we thought. 
+To organize tasks, we began by exploring the possibility of using ClickUp, but we came to see that with the Project and Issues possibilities on GitHub we had enough for the moment. In the end we migrate to the latter as it was more comfortable for us and it is more versatile than we thought. 
 

@@ -12,7 +12,7 @@
 |Hard to test and debug, we are not experts on the language
 
 |MongoDB
-|NoSQL Database, perfect for the requeriments of this proyect
+|NoSQL Database, perfect for the requirements of this project
 |Uses high memory for data storage, document size limit is 16mb. No transaction support
 
 |Node
@@ -22,24 +22,26 @@
 |Windows, Linux, and Android
 |The application have two parts, one web application that will be supported by every browser,
 and a native mobile app for Android
-|We will not suport iOS devices, but it could be extended to be used in this operating system as react allows to develop for both operating systems
+|We will not support iOS devices, but it could be extended to be used in this operating system as react allows to develop for both operating systems
 
 |React
 |A library based on JavaScript that we will use for the frontend of the application, both in the
 web and in mobile versions, using react native in the latter
-|We are not familiarised with the library itself so it can generate some problems when developing
+|We are not familiarized with the library itself so it can generate some problems when developing
 
 |React Native
-|For the mobile application we are going to use React Native, wich will provide a similar application to the web, and ease us the implementation process as the sintaxis is similar.
+|For the mobile application we are going to use React Native, which will provide a similar application to the web, and ease us the implementation process as the syntax is is similar.
 |It has some limitations since it cannot work with libraries that manipulates de DOM, specially making managing pods much harder, both read/write operations and login.
 
 |QR codes for mobile login
 |As login to the pod from the mobile with React Native has proven to be non-viable, we are going to use QR codes from the webapp to the mobile app in order to login and authenticate API requests. 
-|For actions that require the user to be loggued into the pod we are going to redirect him to an isolated side of the web application where he/she could login normally.
+|For actions that require the user to be logged into the pod we are going to redirect him to an isolated side of the web application where he/she could login normally.
 This redirect is going to be handled through an embedded browser so that the user does not need to leave the application and go to the browser, and can close it and continue using the application easily.
 
 |Redux
 |Sharing data through components is hard in React. Redux will help us keep a state that could be accessed from any point of the application.
 |The implementation is not easy and we are not familiar with the library. Only serializable elements can be stored in the store, and async operations are hard.
+
+|JWT
 
 |===
