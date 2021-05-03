@@ -4,6 +4,8 @@ import { Menu, Divider } from "react-native-paper";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import styles from "./MyStyles";
 import * as Updates from 'expo-updates';
+import { stopLocationAsync } from "./GetAsyncLocation";
+import * as BackgroundFetch from 'expo-background-fetch';
 
 export default function MyMenu ({navigation}){
 
@@ -31,7 +33,9 @@ export default function MyMenu ({navigation}){
           <Divider />
           <Menu.Item icon={require("./assets/door.png")}
             onPress={() => {AsyncStorage.setItem("userId",""); 
-            AsyncStorage.setItem("backgroundLocations","inactive"); 
+            AsyncStorage.setItem("backgroundLocations","inactive");
+            stopLocationAsync();
+            BackgroundFetch.unregisterTaskAsync("friends");
             Updates.reloadAsync();}
           } title="Logout" />
         </Menu>

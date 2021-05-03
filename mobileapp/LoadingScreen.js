@@ -7,6 +7,8 @@ import { setScanned } from "./redux/slices/executingSlice";
 import { showMessage } from "react-native-flash-message";
 import { setFriends } from "./redux/slices/userSlice";
 import { setNotificationsBackground } from "./SetNotifications";
+import { stopLocationAsync } from "./GetAsyncLocation";
+import * as BackgroundFetch from 'expo-background-fetch';
 
 
 export default function LoadingScreen({ route, navigation }) {
@@ -60,10 +62,12 @@ export default function LoadingScreen({ route, navigation }) {
       //if fetching the friends failed that means that the QR changed, so we redirect the user to the login view.
       else if (friendsStatus === "failed" || refreshStatus === "failed") {
         dispatch(setScanned(false));
+        stopLocationAsync();
+        BackgroundFetch.unregisterTaskAsync("friends");
         navigation.navigate("Login", { qrUpdatedFlag: true, showSc: false });
         showMessage({
           message: "Your session has expired.",
-          description: "Your QR code has been renewed. Please, log in in the aplication again again.",
+          description: "Your QR code has been renewed. Please, log in in the aplication again.",
           type: "info",
           duration: 5000,
         });
