@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+<<<<<<< HEAD
 import { View, Text, TextInput, ScrollView, Image, Button, BackHandler, Pressable, TouchableOpacity, Share, Linking } from "react-native";
 import { Card, Overlay } from "react-native-elements";
 import { DataTable } from "react-native-paper";
@@ -9,17 +10,26 @@ import { useFocusEffect } from '@react-navigation/native';
 import { getFriendsNames } from './FetchFriends';
 import { getLocation, startLocationAsync, stopLocationAsync, getLocationAsyncStatus } from "./GetAsyncLocation";
 import * as WebBrowser from "expo-web-browser";
+=======
+import { View, ScrollView, Image, BackHandler } from "react-native";
+import styles from "./MyStyles";
+import MyMenu from "./MyMenu";
+import { useFocusEffect } from '@react-navigation/native';
+>>>>>>> d758e213412f8b81441e4f5adb5b78d420e0e68a
 import MyOverlaySupport from "./MyFirstTour";
-import MyOverlayLocationSupport from "./MyLocationTour";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+<<<<<<< HEAD
 import { setSwitchStatus } from "./redux/slices/LocationsSlice";
+=======
+import MyCloseFriendsCard from "./HomeComponents/MyCloseFriendsCard";
+import MyFarFriendsCard from "./HomeComponents/MyFarFriendsCard";
+import MyOverlay from "./HomeComponents/MyOverlay";
+import { useDispatch } from "react-redux";
+>>>>>>> d758e213412f8b81441e4f5adb5b78d420e0e68a
 
 export default function HomeScreen({ navigation }) {
-
-  const onlineFriends = useSelector(state => state.user.onlineFriends);
-  const loadedFriends = useSelector(state => state.user.onlineCloseFriends);
-  const friendsNames = getFriendsNames(onlineFriends);
   const [firstLogin, setFirstLogin] = useState(false);
+<<<<<<< HEAD
   const switchValue = AsyncStorage.getItem("switch");
   const dispatch = useDispatch();
   const switchStatus = useSelector(state => state.locations.switchStatus);
@@ -37,6 +47,13 @@ export default function HomeScreen({ navigation }) {
     if(getLocationAsyncStatus())
       stopLocationAsync();
   }
+=======
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    AsyncStorage.getItem("firstLogin").then((login) => { login === "true" ? setFirstLogin(true) : setFirstLogin(false); AsyncStorage.setItem("firstLogin", "false"); });
+  }, []);
+>>>>>>> d758e213412f8b81441e4f5adb5b78d420e0e68a
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
@@ -69,6 +86,7 @@ export default function HomeScreen({ navigation }) {
     }, [])
   );
 
+<<<<<<< HEAD
   const MyCloseFriendsCard = () => {
     if (loadedFriends == "No location") {
       return (
@@ -254,16 +272,27 @@ export default function HomeScreen({ navigation }) {
     </Pressable >
   }
 
+=======
+>>>>>>> d758e213412f8b81441e4f5adb5b78d420e0e68a
   return (
     <View style={styles.homeScreenContainer}>
       <ScrollView>
         <View style={styles.mainScreenContainer}>
+<<<<<<< HEAD
           <MyCloseFriendsCard></MyCloseFriendsCard>
           <MyFarFriendsCard></MyFarFriendsCard>
         </View>
       </ScrollView>
       {firstLogin ? <MyOverlaySupport></MyOverlaySupport> : null}
       <MyOverlay visibility={true} />
+=======
+          <MyCloseFriendsCard navigation={ navigation }/>
+          <MyFarFriendsCard />
+        </View>
+      </ScrollView>
+      {firstLogin && <MyOverlaySupport /> }
+      <MyOverlay visibility={true} firstLogin={firstLogin}/>
+>>>>>>> d758e213412f8b81441e4f5adb5b78d420e0e68a
 
     </View>
   );

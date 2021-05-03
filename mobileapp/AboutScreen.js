@@ -1,5 +1,5 @@
 import React, {useCallback, useState}  from "react";
-import { View, Text, ScrollView, Linking, Button, Pressable} from "react-native";
+import { View, Text, ScrollView, Linking, Button, Pressable, Image} from "react-native";
 import { Card} from "react-native-elements";
 import {DataTable, Avatar } from "react-native-paper";
 import {HeaderBackButton} from "@react-navigation/stack";
@@ -52,13 +52,15 @@ export default function AboutScreen({navigation}) {
       <Card containerStyle={styles.card}>
             <Card.Title style={styles.cardTitle}>How to use Radarin</Card.Title>
             <Card.Divider style={styles.divider}/>
-            <Pressable onPress={() =>{setFirstTutorial(!firstTutorial)}}>
-              <Text style={styles.normalText}>How to start sending your locations</Text>
+            <Text style={styles.normalText}>How to start sending your locations</Text> 
+            <Pressable onPress={() =>{setFirstTutorial(!firstTutorial)}} style={styles.preassableHelp}>
+              <Image source={require("./assets/about.png")} style={styles.helpButton}></Image>
             </Pressable>
             {firstTutorial ? (<MyOverlaySupport></MyOverlaySupport>):null}
             <Card.Divider style={styles.divider}/>
-            <Pressable onPress={() =>{setLocationTutorial(!locationTutorial)}}>
-              <Text style={styles.normalText}>How to send a location</Text>
+            <Text style={styles.normalText}>How to send a location</Text>
+            <Pressable onPress={() =>{setLocationTutorial(!locationTutorial)}} style={styles.preassableHelp}>
+              <Image source={require("./assets/about.png")} style={styles.helpButton}></Image>
             </Pressable>
             {locationTutorial ? (<MyOverlayLocationSupport></MyOverlayLocationSupport>):null}
       </Card>

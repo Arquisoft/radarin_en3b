@@ -1,10 +1,13 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { setProfile } from "../../FetchProfile";
-import { getFriends, getFriendsWithDistance } from "../../FetchFriends";
+import { getFriends, getFriendsNames, getFriendsWithDistance } from "../../FetchFriends";
 
-export const fetchFriends = createAsyncThunk("user/fetchFriends", webId =>
-    getFriends(webId));
+//Fetch friends with distance, far or close
+export const fetchFriendsWithDistance = createAsyncThunk("user/fetchFriends", async (webId) => {
+  return await intermediateFriends(webId);
+});
 
+<<<<<<< HEAD
 export const fetchFriendsWithDistance = createAsyncThunk("user/fetchFriendsWithDistance", 
 async (undefined, { getState }) => {
     const { friendsStatus } = getState().user;
@@ -17,70 +20,81 @@ async (undefined, { getState }) => {
     const friendsWithDistance = await getFriendsWithDistance(friends);
     console.log(friendsWithDistance);
     return friendsWithDistance;
+=======
+export const refreshFriends = createAsyncThunk("user/refreshFriends", async (webId) => {
+  return await intermediateFriends(webId);
+>>>>>>> d758e213412f8b81441e4f5adb5b78d420e0e68a
 });
 
+async function intermediateFriends(webId) {
+  const friends = await getFriends(webId);
+
+  if (friends === "No location")
+    return "No location";
+
+  return friends;
+}
+
+
 export const fetchProfile = createAsyncThunk("user/fetchProfile", async (webId) =>
-    await setProfile(webId));
+  await setProfile(webId));
 
 const initialState = {
-    webId: "",
-    fn: "",
-    friendsStatus: "idle",
-    closeFriendsStatus: "idle",
-    profileStatus: "idle",
-    friendsError: null,
-    closeFriendsError: null,
-    profileError: null,
-    onlineFriends: [],
-    onlineCloseFriends: {}
+  webId: "",
+  fn: "",
+  friendsStatus: "idle",
+  profileStatus: "idle",
+  friendsError: null,
+  profileError: null,
+  friends: [],
+  refreshStatus: "idle",
 };
 
 export const userSlice = createSlice({
-    name: "user",
-    initialState,
-    reducers: {
-        backToIdle: (state, action) => {
-            state.friendsStatus = "idle";
-        },
+  name: "user",
+  initialState,
+  reducers: {
+    backToIdle: (state) => {
+      state.friendsStatus = "idle";
     },
-    extraReducers: {
-        [fetchFriends.pending]: (state, action) => {
-            state.friendsStatus = "loading";
-        },
-        [fetchFriends.fulfilled]: (state, action) => {
-            state.friendsStatus = "succeeded";
-            state.onlineFriends = action.payload;
-        },
-        [fetchFriends.rejected]: (state, action) => {
-            state.friendsStatus = "failed";
-            state.friendsError = action.error.message;
-        },
-        [fetchFriendsWithDistance.pending]: (state, action) => {
-            state.closeFriendsStatus = "loading";
-        },
-        [fetchFriendsWithDistance.fulfilled]: (state, action) => {
-            state.closeFriendsStatus = "succeeded";
-            state.onlineCloseFriends = action.payload;
-        },
-        [fetchFriendsWithDistance.rejected]: (state, action) => {
-            state.closeFriendsStatus = "failed";
-            state.closeFriendsError = action.error.message;
-        },
-        [fetchProfile.pending]: (state, action) => {
-            state.profileStatus = "loading";
-        },
-        [fetchProfile.fulfilled]: (state, action) => {
-            state.profileStatus = "succeeded";
-            state.webId = action.payload.webId;
-            state.fn = action.payload.fn;
-        },
-        [fetchProfile.rejected]: (state, action) => {
-            state.profileStatus = "failed";
-            state.profileError = action.error.message;
-        }
+    setFriends: (state, action) => {
+      state.friends = action.payload
     }
+  },
+  extraReducers: {
+    [fetchFriendsWithDistance.pending]: (state) => {
+      state.friendsStatus = "loading";
+    },
+    [fetchFriendsWithDistance.fulfilled]: (state, action) => {
+      state.friendsStatus = "succeeded";
+      state.friends = action.payload;
+    },
+    [fetchFriendsWithDistance.rejected]: (state, action) => {
+      state.friendsStatus = "failed";
+      state.friendsError = action.error.message;
+    },
+    [fetchProfile.pending]: (state) => {
+      state.profileStatus = "loading";
+    },
+    [fetchProfile.fulfilled]: (state, action) => {
+      state.profileStatus = "succeeded";
+      state.webId = action.payload.webId;
+      state.fn = action.payload.fn;
+    },
+    [fetchProfile.rejected]: (state, action) => {
+      state.profileStatus = "failed";
+      state.profileError = action.error.message;
+    },
+    [refreshFriends.pending] : (state) => {
+      state.refreshStatus = "loading"
+    },
+    [refreshFriends.fulfilled]: (state, action) => {
+      state.refreshStatus = "idle"
+      state.friends = action.payload
+    }
+  }
 });
 
 export default userSlice.reducer;
 
-export const { backToIdle} = userSlice.actions;
+export const { backToIdle, setFriends } = userSlice.actions;
