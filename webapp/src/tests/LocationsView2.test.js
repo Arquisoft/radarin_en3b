@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen } from '@testing-library/react';
 import "@testing-library/jest-dom/extend-expect";
 import { Provider } from "react-redux";
 import store from "../redux/store";
@@ -6,7 +6,7 @@ import LocationsList from "../components/LocationsList";
 import "@testing-library/jest-dom/extend-expect";
 import { SolidNodeClient } from "solid-node-client";
 
-jest.setTimeout(50000);
+jest.setTimeout(60000);
 
 test("testing location fetching 2", async () => {
     global.URL.createObjectURL = jest.fn();
@@ -37,7 +37,7 @@ test("testing location fetching 2", async () => {
         const open = getAllByRole("button", { name: "Open" })[0];
 
         expect(open).toBeInTheDocument();
-    }, 35000));
+    }, 45000));
 
 
 

@@ -28,7 +28,6 @@ export default async function postLocation(session, title, description, photo, c
 
     let photoName = "";
     
-    console.log("que");
 
     if (photo !== null) {
         photoName = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
@@ -48,7 +47,6 @@ export default async function postLocation(session, title, description, photo, c
         "Desc:" + description
     );
 
-    console.log("que");
     const locationWithTitle = addStringNoLocale(
         locationWithDescription,
         "http://schema.org/text",
@@ -72,10 +70,8 @@ export default async function postLocation(session, title, description, photo, c
         "http://www.w3.org/2002/12/cal/ical#created",
         new Date()
     );
-    console.log("que");
     const updatedLocationsList = setThing(dataset, locationWithTimestamp);
 
     await saveSolidDatasetAt(locationsUrl, updatedLocationsList, { fetch: session.fetch });
-    console.log("que");
     session.logout();
 }
