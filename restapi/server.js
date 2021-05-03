@@ -40,9 +40,9 @@ function connect() {
                 {
                     bearerAuth: []
                 }
-            ],
-            apis: ["./endpoints/*.js"],
-        }
+            ]
+        },
+        apis: ["./endpoints/*.js"],
     };
     const specs = swaggerJsDoc(options);
     mongoose.connect(mongoUri, { useNewUrlParser: true, useUnifiedTopology: true }).then(() => {
