@@ -13,7 +13,7 @@ import { refreshFriends } from "./redux/slices/userSlice";
 import * as BackgroundFetch from 'expo-background-fetch';
 import * as TaskManager from 'expo-task-manager';
 import { schedulePushNotificationFriends, schedulePushNotificationFriendsClose} from "./SetNotifications";
-
+import { getLocationAsyncStatus, startLocationAsync } from "./GetAsyncLocation";
 
 let dispatch;
 let friends;
@@ -73,16 +73,30 @@ const registerTaskAsync = async () => {
 
 export default function HomeScreen({ navigation }) {
   const [firstLogin, setFirstLogin] = useState(false);
+
   let isMounted = false; 
   dispatch = useDispatch();
   friends = useSelector(state => state.user.friends);
   prevfriends = useSelector(state => state.user.prevfriends);
+  let locations = useSelector(state => state.locations.getLocationEnabled);
 
   useEffect(() => {
     if (!isMounted) {
       isMounted = true;
       registerTaskAsync();
     }
+
+    getLocationAsyncStatus().then(value => {
+      console.log("Taking locations"+ value);
+      if (!value){
+        if (locations){
+          console.log("entra");
+          startLocationAsync();
+        }
+      }
+    });
+
+
     AsyncStorage.getItem("firstLogin").then((login) => { 
       if(login === null || login === "true")
         setFirstLogin(true);
@@ -90,6 +104,7 @@ export default function HomeScreen({ navigation }) {
         setFirstLogin(false);
     });
   }, []);
+
 
   React.useLayoutEffect(() => {
     navigation.setOptions({

@@ -3,6 +3,7 @@ import React, {useEffect, useState} from "react";
 import { View, Text } from "react-native";
 import { Card } from "react-native-elements";
 import { DataTable, Avatar } from "react-native-paper";
+import * as Location from "expo-location";
 import { HeaderBackButton } from "@react-navigation/stack";
 import styles from "./MyStyles";
 import MyMenu from "./MyMenu";

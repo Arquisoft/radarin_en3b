@@ -3,8 +3,8 @@ import {sendLocation} from "./SendLocation";
 import * as TaskManager from "expo-task-manager";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const fiveMin = 300000; //minumum interval of time to send the location -> 5 min
-const minDistance = 500; //minimum interval of distance to send the location -> 500 m
+const fiveMin = 10000; //minumum interval of time to send the location -> 5 min
+const minDistance = 0; //minimum interval of distance to send the location -> 500 m
 
 const optionsAndroid = {
   accuracy: Location.LocationAccuracy.High,
@@ -16,11 +16,19 @@ const optionsAndroid = {
   }
 };
 
+TaskManager.defineTask("backgroundLocations", ({ data: { locations }, error }) => {
+  if (error) {
+    return;
+  }
+  sendLocation(locations[locations.length - 1].coords, locations[locations.length - 1].timestamp);
+});
+
 export async function getLocationAsyncStatus() {
   return await Location.hasStartedLocationUpdatesAsync("backgroundLocations");
 }
 
 export async function startLocationAsync() {
+  console.log("Ask for permissions");
   let status = await Location.requestBackgroundPermissionsAsync();
   
   if (status.status !== "granted") {
@@ -29,16 +37,12 @@ export async function startLocationAsync() {
     return;
   }
 
+  console.log("Start location taking");
   Location.startLocationUpdatesAsync("backgroundLocations", optionsAndroid);
-      TaskManager.defineTask("backgroundLocations", ({ data: { locations }, error }) => {
-        if (error) {
-          return;
-        }
-        sendLocation(locations[locations.length - 1].coords, locations[locations.length - 1].timestamp);
-      });
 }
 
 export async function stopLocationAsync() {
+  console.log("Stop location taking");
   Location.stopLocationUpdatesAsync("backgroundLocations").then(() => {}).catch(() => {}); //TODO: proper handle
 }
 
