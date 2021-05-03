@@ -1,8 +1,8 @@
-import { Avatar, Grid, IconButton, List, ListItem, ListItemAvatar, ListItemSecondaryAction, ListItemText, TextField, Typography } from '@material-ui/core';
-import React, { useEffect } from 'react';
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import BlockIcon from '@material-ui/icons/Block';
-import { useDispatch, useSelector } from 'react-redux';
+import { Avatar, Grid, IconButton, List, ListItem, ListItemAvatar, ListItemSecondaryAction, ListItemText, TextField, Typography } from "@material-ui/core";
+import React, { useEffect } from "react";
+import AccountCircleIcon from "@material-ui/icons/AccountCircle";
+import BlockIcon from "@material-ui/icons/Block";
+import { useDispatch, useSelector } from "react-redux";
 import { fetchUsersAdmin, refreshUsersAdmin, setSearchText, blockUserAdmin, unblockUserAdmin, getBlacklistAdmin, changeShow, } from "../redux/slices/adminUsersSlice";
 import { makeStyles } from "@material-ui/core/styles";
 import LockOpenIcon from '@material-ui/icons/LockOpen';
@@ -100,7 +100,9 @@ export default function AdminPage() {
         </div>);
     } else if (blockedUsers === "unauthorized") {
         content = (<div className="unauthorized" role="status">
-            Unauthorized
+            <Typography variant="h3" component="h3" className={classes.title} styles={classes.title}>
+                Unauthorized
+            </Typography>
         </div>)
     }
     else if (userStatus === "succeeded" && users[0] === "No users") {

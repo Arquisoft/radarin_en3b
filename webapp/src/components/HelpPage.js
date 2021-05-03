@@ -81,30 +81,30 @@ export default function HelpPage() {
         content = (<div className={classes.title}>
             <Typography variant="h2" component="h2" styles={classes.title}>
         Start using Radarin
-            </Typography>
-            <Grid container spacing={1} alignItems="center" justify="center" >
-                {
-                    helpItems.map((item, counter) => {
-                        return (
-                            <HelpCard item={item} counter={counter}/>
-                        );
-                    })
-                }
-            </Grid>
-            <Button onClick={() => dispatch(setIsTourOpen(true))} color="primary" variant="contained" className={classes.button}>Open Tour</Button>
-            <Tour
-                steps={steps}
-                isOpen={isTourOpen}
-                onRequestClose={() => dispatch(setIsTourOpen(false))}
-                onBeforeClose={() => window.location.reload()}
-                rounded={10}
-                scrollOffset={500}
-                lastStepNextButton={<Button color="primary" variant="contained" onClick={() => dispatch(setIsTourOpen(false))}>Quit</Button>}
-            />
-        </div>);
-    } else {
-        content = (<div>
-            <Typography variant="h2" component="h2" className={classes.title}>
+      </Typography>
+      <Grid container spacing={1} alignItems="center" justify="center" >
+        {
+          helpItems.map((item, counter) => {
+            return (
+              <HelpCard item={item} counter={counter}/>
+            )
+          })
+        }
+      </Grid>
+      <Button onClick={() => dispatch(setIsTourOpen(true))} color="primary" variant="contained" className={classes.button}>Open Tour</Button>
+      <Tour
+        steps={steps}
+        isOpen={isTourOpen}
+        onRequestClose={() => dispatch(setIsTourOpen(false))}
+        onBeforeClose={() => window.location.reload()}
+        rounded={10}
+        scrollOffset={500}
+        lastStepNextButton={<Button color="primary" variant="contained" onClick={() => dispatch(setIsTourOpen(false))}>Quit</Button>}
+      />
+    </div>);
+  } else {
+    content = (<div>
+      <Typography variant="h3" component="h3" className={classes.title} styles={classes.title}>
         Please log in or create an account to see the help.
             </Typography>
         </div>);
