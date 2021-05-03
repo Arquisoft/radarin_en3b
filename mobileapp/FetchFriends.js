@@ -24,7 +24,7 @@ export async function getDistances(friends, locations) {
   //Get our location for calculating distances
   const myLocation = await getLocation();
   
-  //If my location null dont have permission, return
+  //If my location null, we dont have permission, return
   if (myLocation == null) {
     return "No location";
   }

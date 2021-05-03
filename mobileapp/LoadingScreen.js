@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { View, Image, Text, ImageBackground } from "react-native";
 import styles from "./MyStyles";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchProfile, fetchFriendsWithDistance } from "./redux/slices/userSlice";
+import { fetchProfile, fetchFriendsWithDistance, refreshFriends } from "./redux/slices/userSlice";
 import { doOnce } from "./redux/slices/executingSlice";
 import { setScanned } from "./redux/slices/executingSlice";
 import { showMessage } from "react-native-flash-message";
@@ -18,14 +18,23 @@ export default function LoadingScreen({ route, navigation }) {
   const profileStatus = useSelector(state => state.user.profileStatus);
   const friendsStatus = useSelector(state => state.user.friendsStatus);
   const doUna = useSelector(state => state.executing.doOnce);
+  const refreshStatus = useSelector(state => state.user.refreshStatus);
 
 
   useEffect(() => {
     console.log("Profile:" + profileStatus);
     console.log("Friends: " + friendsStatus);
+    console.log("Refresh: " + refreshStatus);
     
     if (profileStatus === "idle") {
       dispatch(fetchProfile(webId));
+    }
+
+    if(friendsStatus === "succeeded" && refreshStatus === "idle") {
+      setTimeout(() => {
+        dispatch(refreshFriends(webId));
+        console.log("refreshed");
+      }, 10000);
     }
 
     AsyncStorage.getItem("locationStatus").then((response) => {
@@ -37,13 +46,12 @@ export default function LoadingScreen({ route, navigation }) {
         dispatch(changeLocationEnabled(response));
 
         if (response === "true") {
-          if (friendsStatus === "idle") {
+          if (friendsStatus === "idle" || friendsStatus === "failed") {
             dispatch(fetchFriendsWithDistance(webId));
           } else if (friendsStatus === "succeeded") {
             navigation.navigate("Radarin");
 
           } else if (friendsStatus === "failed") {
-            //dispatch(backToIdle());
             if (!doUna) {
               dispatch(doOnce());
               dispatch(setScanned(false));
