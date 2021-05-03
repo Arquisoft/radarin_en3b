@@ -15,6 +15,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 let onlineCloseFriends;
 let onlineFriends;
+let friendsStatus;
 let dispatch;
 
 TaskManager.defineTask("friendsFromPod", () => {
@@ -42,6 +43,7 @@ TaskManager.defineTask("friendsFromPod", () => {
 TaskManager.defineTask("friendsLocation", () => {
   try {
     const taskToExecute = () => {
+      if (friendsStatus !== null && friendsStatus !== undefined && friendsStatus === "succeeded"){
       if (AsyncStorage.getItem("userId") !== null && AsyncStorage.getItem("userId") !== undefined && AsyncStorage.getItem("userId") != "" ){
         let prevFriends = onlineCloseFriends;
         if (dispatch !== undefined)
@@ -54,8 +56,9 @@ TaskManager.defineTask("friendsLocation", () => {
         }
         console.log("Background fetch locations executed");
         }
-
+      }
         return "Executed correctly";
+
     }
 
     const receivedNewData = taskToExecute();// do your background fetch here
@@ -92,7 +95,7 @@ export default function LoadingScreen({ route, navigation }) {
   const webId = id.replace(/['"]+/g, '');
   dispatch = useDispatch();
   const profileStatus = useSelector(state => state.user.profileStatus);
-  const friendsStatus = useSelector(state => state.user.friendsStatus);
+  friendsStatus = useSelector(state => state.user.friendsStatus);
   const closeFriendsStatus = useSelector(state => state.user.closeFriendsStatus);
   const doUna = useSelector(state => state.executing.doOnce);
   const doUnaNots = useSelector(state => state.executing.doOnceNotifications);
@@ -106,16 +109,15 @@ export default function LoadingScreen({ route, navigation }) {
     console.log(closeFriendsStatus);
     setIsMounted(true);
     if (profileStatus === "idle") {
-      console.log("profile");
       dispatch(fetchProfile(webId));
 
     } else if (friendsStatus === "idle" && profileStatus === "succeeded") {
       dispatch(fetchFriends(webId));
-      console.log("friends");
     } else if (closeFriendsStatus === "idle" && friendsStatus === "succeeded") {  
       dispatch(fetchFriendsWithDistance()); 
       console.log("friends2");
     } else if (closeFriendsStatus === "succeeded") {
+      console.log("friends3");
       if(!doUnaNots) {
         console.log("la buena");
         dispatch(doOnceNotifications());
@@ -123,10 +125,9 @@ export default function LoadingScreen({ route, navigation }) {
         setNotificationsBackground();
       }
       
-      console.log("as");
       navigation.navigate("Radarin");
 
-    } else if(friendsStatus === "failed" || closeFriendsStatus === "failed"){
+    } else if(friendsStatus === "failed"){
       dispatch(backToIdle());
       if(!doUna) {
         dispatch(doOnce());
@@ -134,7 +135,7 @@ export default function LoadingScreen({ route, navigation }) {
         navigation.navigate("Login",  { qrUpdatedFlag: true });
         showMessage({
           message: "Your session has expired.",
-          description: "Your QR code has been renewed. Please, log in in the aplication again again.",
+          description: "Your QR code has been renewed. Please, log in in the aplication again.",
           type: "info",
           duration: 5000,
         });

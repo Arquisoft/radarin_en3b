@@ -11,6 +11,7 @@ class RDFStore {
     async getUser(webId) {
         const me = this._store.sym(webId);
         const profile = me.doc();
+
         await this._fetcher.load(profile);
         const name = this.getNameIfPossible(me);
         return { webId, fn: name };

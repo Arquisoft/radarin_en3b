@@ -8,10 +8,15 @@ export const fetchFriends = createAsyncThunk("user/fetchFriends", webId =>
 export const fetchFriendsWithDistance = createAsyncThunk("user/fetchFriendsWithDistance", 
 async (undefined, { getState }) => {
     const { friendsStatus } = getState().user;
-    if (friendsStatus === "loading")
+    if (friendsStatus === "loading"){
         return;
+    }
+        
     const friends = getState().user.onlineFriends;
-    return await getFriendsWithDistance(friends);
+    
+    const friendsWithDistance = await getFriendsWithDistance(friends);
+    console.log(friendsWithDistance);
+    return friendsWithDistance;
 });
 
 export const fetchProfile = createAsyncThunk("user/fetchProfile", async (webId) =>
