@@ -38,6 +38,8 @@ async function getBlacklist() {
 
     if(users.length === 0)
         return [];
+    else if (users==="unauthorized")
+        return "unauthorized";
     else
         return users;
 };
@@ -49,6 +51,7 @@ const initialState = {
     searchText: "",
     error: null,
     usersBL: [],
+    statusBL: "failed",
 };
 
 export const usersSlice = createSlice({
@@ -82,7 +85,11 @@ export const usersSlice = createSlice({
             state.error = action.error.message
         },
         [getBlacklistAdmin.fulfilled]: (state, action) => {
+            state.statusBL = "idle"
             state.usersBL = action.payload
+        },
+        [getBlacklistAdmin.rejected]: (state, action) => {
+            state.statusBL = "failed"
         },
     }
 });

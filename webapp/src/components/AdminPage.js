@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchUsersAdmin, refreshUsersAdmin, setSearchText, blockUserAdmin, unblockUserAdmin, getBlacklistAdmin, } from "../redux/slices/adminUsersSlice";
 import { makeStyles } from "@material-ui/core/styles";
 import LockOpenIcon from '@material-ui/icons/LockOpen';
+import { useSession } from "@inrupt/solid-ui-react";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -36,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function AdminPage() {
-
+    let { session } = useSession();
     const dispatch = useDispatch();
     const userStatus = useSelector(state => state.users.status);
     const refreshStatus = useSelector(state => state.users.refreshStatus);
@@ -45,17 +46,22 @@ export default function AdminPage() {
 
     const users = useSelector(state => state.users.users);
 
+    const locationStatus = useSelector(state => state.locations.status);
+
     useEffect(() => {
-        if (userStatus === "idle") {
-            dispatch(getBlacklistAdmin());
-            dispatch(fetchUsersAdmin());
-        } else if (userStatus === "succeeded" && refreshStatus === "idle") {
-            setTimeout(() => {
+        console.log(locationStatus);
+        if (locationStatus === "succeeded") {
+            if (userStatus === "idle") {
                 dispatch(getBlacklistAdmin());
-                dispatch(refreshUsersAdmin());
-            }, 1000);
+                dispatch(fetchUsersAdmin());
+            } else if (userStatus === "succeeded" && refreshStatus === "idle") {
+                setTimeout(() => {
+                    dispatch(getBlacklistAdmin());
+                    dispatch(refreshUsersAdmin());
+                }, 60000);
+            }
         }
-    }, [userStatus, refreshStatus, dispatch]);
+    }, [userStatus, refreshStatus, dispatch, locationStatus]);
 
     const onChange = e => {
         dispatch(setSearchText(e.target.value));
@@ -63,29 +69,39 @@ export default function AdminPage() {
 
     const block = (webId) => {
         dispatch(blockUserAdmin(webId));
+        dispatch(getBlacklistAdmin());
+        dispatch(refreshUsersAdmin());
     }
 
     const unblock = (webId) => {
         dispatch(unblockUserAdmin(webId));
+        dispatch(getBlacklistAdmin());
+        dispatch(refreshUsersAdmin());
     }
 
     const classes = useStyles();
 
     const blockedUsers = useSelector(state => state.users.usersBL);
-    
+
     let blockedUsersArray = [];
     let i;
-    for ( i = 0; i< blockedUsers.length; i++) {
+    for (i = 0; i < blockedUsers.length; i++) {
         blockedUsersArray.push(blockedUsers[i].webId);
     }
 
     let content;
 
-    if (userStatus === "loading") {
+
+    if (locationStatus === "loading") {
         content = (<div className="spinner-border mt-5 center2" role="status">
             <span className="sr-only">Loading...</span>
         </div>);
-    } else if (userStatus === "succeeded" && users[0] === "No users") {
+    } else if (blockedUsers === "unauthorized") {
+        content = (<div className="unauthorized" role="status">
+            Unauthorized
+        </div>)
+    }
+    else if (userStatus === "succeeded" && users[0] === "No users") {
         content = (
             <Grid className={classes.root} item xs={12} md={6}>
                 <Typography variant="h6">

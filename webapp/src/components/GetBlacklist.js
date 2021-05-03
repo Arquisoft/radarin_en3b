@@ -6,7 +6,7 @@ export default async function GetBlacklist() {
         users = await Api.getBlacklist();
     }
     catch (err) {
-        return [];
+        return "unauthorized";
     }
     return users;
 }
