@@ -1,8 +1,37 @@
 [[section-runtime-view]]
 == Runtime View
 
-=== Solid for backend authentication
-We want to keep things simple so we are not going to create our own user/password accounts. Therefore, in order to provide a mechanism to authenticate our users in the backend (we don't want anyone to send a fake location along another user's ID), we are going to send the JWT token that we get from the Identity Provider to our RestAPI. Our api will then ask for the public key at the Identity Provider's */jwks* endpoint, store it in cache and verify the authenticated messages that the user sends from the App.
+=== Authentication mechanism
+
+==== Discarded solutions
+We wanted to keep things simple so we are not going to create our own user/password accounts. Therefore, in order to provide a mechanism to authenticate our users in the backend (we don't want anyone to send a fake location along another user's ID), we were going to send the JWT token that we get from the Identity Provider to our RestAPI. Our api will then ask for the public key at the Identity Provider's */jwks* endpoint, store it in cache and verify the authenticated messages that the user sends from the App. **BUT** we found a huge problem here: Solid provider's authorization and authentication is not uniform yet! Not every provider that we tried used the SOLID-OIDC standard and we had to use the same system for every provider (as we wanted to keep the app working among the different SOLID providers).
+
+We also thought of just using CORS and only allow requests made from our website but we wanted to use a react native app and, a very important thing, we wanted to **allow third-party** clients programmed against our RESTApi. It's our first time building an app so we want to make it possible for everyone to improve our whole solution (Radarin) by allowing them to use our public API.
+
+==== Our solution
+We didn't want to renounce to our idea of not making our own account system so, after a lot of thought, we went for the following solution that uses a combination of RSA asymmetric signatures, QR Codes, Solid Pods and Json Web Tokens!
+
+[plantuml, "Radarin auth solution", png]
+----
+actor Bob
+participant Web
+participant RestAPI
+participant PhoneApp
+participant Pod
+Bob -> Web: Selects Pod provider
+Web -> Pod: Sends user to the Pod for log-in
+Pod --> Web: Returns user to web after successful login
+note across: The web generates RSA keypair (public and private)
+Web -> Bob: Shows QRCode to the user containing the private key and its webId in JSON
+Web -> Pod: Stores private key in a private folder and public key in a public one
+Bob -> PhoneApp: Logs into PhoneApp using QRCode
+note across: The app saves the private key and the webId contained in the QRCode in a SecureStore (encrypted) in the Bob's phone
+PhoneApp -> RestAPI: Sends user's location with a JWT signed by user's private key
+RestAPI -> Pod: Asks for Bob's public key
+Pod --> RestAPI: Returns Bob's public key
+RestAPI -> RestAPI: Verifies the integrity of the request by checking the JWT against the public key
+RestAPI --> Bob: Response OK! (The ubication has been uploaded)
+----
 
 === Store current user locations
 
@@ -13,14 +42,14 @@ This is an example about how we handle authenticated requests in the backend:
 actor Bob
 participant PhoneApp
 participant RestAPI
-participant IDProvider
+participant Pod
 database MongoDb as "Database"
 Bob -> PhoneApp: Press "Log-In"
 PhoneApp --> Bob: Asks user for scanning the qr code
 PhoneApp -> PhoneApp: stores private key
 PhoneApp  -> RestAPI: Sends location with token
-RestAPI -> IDProvider: Asks for public key to verify token
-IDProvider --> RestAPI: Sends public key
+RestAPI -> Pod: Asks for public key to verify token
+Pod --> RestAPI: Sends public key
 RestAPI -> MongoDb: Stores location
 MongoDb --> RestAPI: Notify success
 RestAPI --> PhoneApp: Notify success
@@ -35,15 +64,14 @@ This would be how we handle the creation of a location from the user
 actor Bob
 participant PhoneApp
 participant WebApp
-participant IDProvider
-database Pod as "Bob's Pod"
+participant Pod
 Bob -> PhoneApp: Press "Log-In"
 PhoneApp --> Bob: Asks user for scanning the qr code
 PhoneApp -> PhoneApp: stores private key
 Bob -> PhoneApp: Bob clicks "Create location"
 PhoneApp -> WebApp: Bob is redirected to the webapp
-Bob -> IDProvider: Logs into his provider
-IDProvider --> WebApp: Provides Token
+Bob -> Pod: Logs into his provider
+Pod --> WebApp: Provides Token
 Bob -> WebApp: Bob clicks "Store location"
 WebApp -> Pod: Stores location
 Pod --> WebApp: Notify success

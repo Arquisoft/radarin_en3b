@@ -43,5 +43,5 @@ This redirect is going to be handled through an embedded browser so that the use
 |The implementation is not easy and we are not familiar with the library. Only serializable elements can be stored in the store, and async operations are hard.
 
 |JWT
-
+|JWT is an open standard, https://tools.ietf.org/html/rfc7519[rfc7519], which allows us to verify the **integrity** of the claims (such as the webId) contained in it. | There was no JWT RS256 implementation in react native (only for node or browser) so we had to implement the standard by hand only using a cryptographic library for signing.
 |===
