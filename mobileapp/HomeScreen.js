@@ -1,4 +1,4 @@
-import React, { useEffect, useState, usePrevious } from "react";
+import React, { useEffect, useState } from "react";
 import { View, ScrollView, Image, BackHandler } from "react-native";
 import styles from "./MyStyles";
 import MyMenu from "./MyMenu";
@@ -8,41 +8,43 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import MyCloseFriendsCard from "./HomeComponents/MyCloseFriendsCard";
 import MyFarFriendsCard from "./HomeComponents/MyFarFriendsCard";
 import MyOverlay from "./HomeComponents/MyOverlay";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { refreshFriends } from "./redux/slices/userSlice";
 import * as BackgroundFetch from 'expo-background-fetch';
 import * as TaskManager from 'expo-task-manager';
-import { setNotificationsBackground, schedulePushNotificationFriends, schedulePushNotificationFriendsClose} from "./SetNotifications";
+import { schedulePushNotificationFriends, schedulePushNotificationFriendsClose} from "./SetNotifications";
 
 
 let dispatch;
 let friends;
+let prevfriends;
 
 TaskManager.defineTask("friends", () => {
   try {
     const taskToExecute = () => {
+      console.log("Entra en la tarea");
       if (AsyncStorage.getItem("userId") !== null && AsyncStorage.getItem("userId") !== undefined && AsyncStorage.getItem("userId") != "" ){
 
         if (dispatch !== undefined) {
           dispatch(refreshFriends());
-        }
         
-        if (friends != "No location"){
-          let prevFriends = usePrevious(friends);
-          let newFriends = friends.filter(friend => !(prevFriends.includes(friend)));
-          
-          if (newFriends.length > 0)
-            schedulePushNotificationFriends(newFriends);
-
-            console.log("Background fetch friends executed");
-
-          let newCloseFriends = friends.filter(f => f.isClose).filter(friend => !(prevFriends.filter(f => f.isClose).includes(friend)));
+          if (friends != "No location"){
+            let newFriends = friends.filter(friend => !(prevfriends.some(f=>friend.webId===f.webId)));
+            console.log(newFriends);
             
-          if (newCloseFriends.length > 0){
-            schedulePushNotificationFriendsClose(newOnlineFriends);
-          }
-          console.log("Background fetch locations executed");
+            if (newFriends.length > 0)
+              schedulePushNotificationFriends(newFriends);
+
+              console.log("Background fetch friends executed");
+
+            let newCloseFriends = friends.filter(f => f.isClose).filter(friend => !(prevfriends.filter(f => f.isClose).some(f=>friend.webId===f.webId)));
+              
+            if (newCloseFriends.length > 0){
+              schedulePushNotificationFriendsClose(newCloseFriends);
+            }
+            console.log("Background fetch locations executed");
   
+          }
         }
       }
   
@@ -73,6 +75,8 @@ export default function HomeScreen({ navigation }) {
   const [firstLogin, setFirstLogin] = useState(false);
   let isMounted = false; 
   dispatch = useDispatch();
+  friends = useSelector(state => state.user.friends);
+  prevfriends = useSelector(state => state.user.prevfriends);
 
   useEffect(() => {
     if (!isMounted) {

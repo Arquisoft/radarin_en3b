@@ -32,6 +32,7 @@ const initialState = {
   friendsError: null,
   profileError: null,
   friends: [],
+  prevfriends: [],
   refreshStatus: "idle",
 };
 
@@ -77,6 +78,7 @@ export const userSlice = createSlice({
     },
     [refreshFriends.fulfilled]: (state, action) => {
       state.refreshStatus = "idle"
+      state.prevfriends = state.friends
       state.friends = action.payload
     },
     [refreshFriends.rejected] : (state, action) => {

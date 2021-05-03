@@ -6,11 +6,12 @@ import { fetchProfile, fetchFriendsWithDistance, refreshFriends } from "./redux/
 import { setScanned } from "./redux/slices/executingSlice";
 import { showMessage } from "react-native-flash-message";
 import { setFriends } from "./redux/slices/userSlice";
+import { setNotificationsBackground } from "./SetNotifications";
 
 
 export default function LoadingScreen({ route, navigation }) {
   const { id } = route.params;
-  const webId = id.replace(/['"]+/g, '');
+  const webId = id?.replace(/['"]+/g, '');
   const dispatch = useDispatch();
   const profileStatus = useSelector(state => state.user.profileStatus);
   const friendsStatus = useSelector(state => state.user.friendsStatus);
@@ -49,6 +50,7 @@ export default function LoadingScreen({ route, navigation }) {
       //If the friends are fetched we start the reloading process
       if (friendsStatus === "succeeded" && refreshStatus === "idle") {
         console.log("wanted to refresh");
+        setNotificationsBackground();
         setTimeout(() => {
           dispatch(refreshFriends(webId));
           console.log("refreshed");
