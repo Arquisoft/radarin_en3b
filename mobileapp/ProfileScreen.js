@@ -1,9 +1,8 @@
 
-import React, {useEffect, useState} from "react";
+import React from "react";
 import { View, Text } from "react-native";
 import { Card } from "react-native-elements";
 import { DataTable, Avatar } from "react-native-paper";
-import * as Location from "expo-location";
 import { HeaderBackButton } from "@react-navigation/stack";
 import styles from "./MyStyles";
 import MyMenu from "./MyMenu";
@@ -28,30 +27,6 @@ export default function ProfileScreen({ navigation }) {
     });
   }, [navigation]);
 
-  const [location, setLocation] = useState(null);
-  const [errorMsg, setErrorMsg] = useState(null);
-
-  useEffect(() => {
-    (async () => {
-      let { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== "granted") {
-        setErrorMsg("Permission to access location was denied");
-        return;
-      }
-
-      let location = await Location.getCurrentPositionAsync();
-      setLocation(location);
-    })();
-
-  }
-    , []);
-
-  let text = "Waiting for having a valid position...";
-  if (errorMsg) {
-    text = errorMsg;
-  } else if (location) {
-    text = JSON.stringify(location, null, "\t");
-  }
   return (
     <View style={styles.container}>
       <Card containerStyle={styles.card}>
