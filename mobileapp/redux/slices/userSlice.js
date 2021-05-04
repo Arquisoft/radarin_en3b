@@ -1,18 +1,22 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { setProfile } from "../../FetchProfile";
-import { getFriends, getFriendsWithDistance } from "../../FetchFriends";
+import { getFriends } from "../../FetchFriends";
 
-export const fetchFriends = createAsyncThunk("user/fetchFriends", webId =>
-  getFriends(webId));
+//Fetch friends with distance, far or close
+export const fetchFriendsWithDistance = createAsyncThunk("user/fetchFriends", async (webId, { getState }) => {
+  return await intermediateFriends(webId);
+});
 
-export const fetchFriendsWithDistance = createAsyncThunk("user/fetchFriendsWithDistance", 
-  async (undefined, { getState }) => {
-    const { friendsStatus } = getState().user;
-    if (friendsStatus === "loading")
-      return;
-    const friends = getState().user.onlineFriends;
-    return await getFriendsWithDistance(friends);
-  });
+export const refreshFriends = createAsyncThunk("user/refreshFriends", async (webId, { getState }) => {
+  return await intermediateFriends(webId);
+});
+
+async function intermediateFriends(webId) {
+  const friends = await getFriends(webId);
+
+  return friends;
+}
+
 
 export const fetchProfile = createAsyncThunk("user/fetchProfile", async (webId) =>
   await setProfile(webId));
@@ -21,13 +25,14 @@ const initialState = {
   webId: "",
   fn: "",
   friendsStatus: "idle",
-  closeFriendsStatus: "idle",
   profileStatus: "idle",
   friendsError: null,
-  closeFriendsError: null,
   profileError: null,
-  onlineFriends: [],
-  onlineCloseFriends: {}
+  friends: [],
+  prevfriends: [],
+  refreshStatus: "idle",
+  refreshPrevented: false,
+  refreshError: null,
 };
 
 export const userSlice = createSlice({
@@ -35,31 +40,32 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     backToIdle: (state) => {
-      state.friendsStatus = "idle";
+      state.friendsStatus = "idle"
+      state.refreshStatus = "idle"
+      state.profileStatus = "idle"
     },
+    setFriends: (state, action) => {
+      state.friends = action.payload
+    },
+    setRefreshPrevented: (state, action) => {
+      state.refreshPrevented = action.payload
+    },
+    refreshBackToIdle: (state) => {
+      state.refreshStatus = "idle"
+    }
   },
   extraReducers: {
-    [fetchFriends.pending]: (state) => {
+    [fetchFriendsWithDistance.pending]: (state) => {
       state.friendsStatus = "loading";
     },
-    [fetchFriends.fulfilled]: (state, action) => {
-      state.friendsStatus = "succeeded";
-      state.onlineFriends = action.payload;
-    },
-    [fetchFriends.rejected]: (state, action) => {
-      state.friendsStatus = "failed";
-      state.friendsError = action.error.message;
-    },
-    [fetchFriendsWithDistance.pending]: (state) => {
-      state.closeFriendsStatus = "loading";
-    },
     [fetchFriendsWithDistance.fulfilled]: (state, action) => {
-      state.closeFriendsStatus = "succeeded";
-      state.onlineCloseFriends = action.payload;
+      state.friendsStatus = "succeeded";
+      state.friends = action.payload;
+      state.prevfriends = action.payload;
     },
     [fetchFriendsWithDistance.rejected]: (state, action) => {
-      state.closeFriendsStatus = "failed";
-      state.closeFriendsError = action.error.message;
+      state.friendsStatus = "failed";
+      state.friendsError = action.error.message;
     },
     [fetchProfile.pending]: (state) => {
       state.profileStatus = "loading";
@@ -72,10 +78,25 @@ export const userSlice = createSlice({
     [fetchProfile.rejected]: (state, action) => {
       state.profileStatus = "failed";
       state.profileError = action.error.message;
+    },
+    [refreshFriends.pending]: (state) => {
+      state.refreshStatus = "loading"
+    },
+    [refreshFriends.fulfilled]: (state, action) => {
+      if (action.payload !== "stop") {
+        console.log("······");
+        state.refreshStatus = "idle"
+        state.prevfriends = state.friends
+        state.friends = action.payload
+      }
+    },
+    [refreshFriends.rejected]: (state, action) => {
+      state.refreshStatus = "failed"
+      state.refreshError = action.error.message
     }
   }
 });
 
 export default userSlice.reducer;
 
-export const { backToIdle} = userSlice.actions;
+export const { backToIdle, setFriends, setRefreshPrevented, refreshBackToIdle } = userSlice.actions;

@@ -20,11 +20,12 @@ export async function schedulePushNotificationFriendsClose(newFriends) {
   console.log("Sending notification");
   let friendsStr;
   if (newFriends.length === 1) {
-    friendsStr = newFriends[0] + " is now close to you.";
+    friendsStr = newFriends[0].name + " is now close to you.";
   } else {
-    friendsStr = newFriends.slice(0, newFriends.length - 2).reduce((str, friend) => str.concat(`${friend}, `));
+    friendsStr = "";
+    newFriends.slice(0, newFriends.length - 2).forEach(friend => { friendsStr += `${friend.name}, `});
     friendsStr
-            += `${newFriends[newFriends.length - 2]} and ${newFriends[newFriends.length - 1]} are now close to you.`;
+            += `${newFriends[newFriends.length - 2].name} and ${newFriends[newFriends.length - 1].name} are now close to you.`;
   }
   await Notifications.scheduleNotificationAsync({
     content: {
@@ -41,11 +42,12 @@ export async function schedulePushNotificationFriendsClose(newFriends) {
 export async function schedulePushNotificationFriends(newFriends) {
   let friendsStr;
   if (newFriends.length === 1) {
-    friendsStr = newFriends[0] + " has started to use the app.";
+    friendsStr = newFriends[0].name + " has started to use the app.";
   } else {
-    friendsStr = newFriends.slice(0, newFriends.length - 2).reduce((str, friend) => str.concat(`${friend}, `));
+    friendsStr = "";
+    newFriends.slice(0, newFriends.length - 2).forEach(friend => { friendsStr += `${friend.name}, `});
     friendsStr
-            += `${newFriends[newFriends.length - 2]} and ${newFriends[newFriends.length - 1]} have started to use the app.`;
+            += `${newFriends[newFriends.length - 2].name} and ${newFriends[newFriends.length - 1].name} have started to use the app.`;
   }
 
   await Notifications.scheduleNotificationAsync({

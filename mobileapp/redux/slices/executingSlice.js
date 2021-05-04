@@ -5,6 +5,7 @@ const initialState = {
   doOnceNotifications: false,
   expoPushToken: "",
   scanned: false,
+  overlayVisible: false,
 };
 
 export const executingSlice = createSlice({
@@ -22,10 +23,13 @@ export const executingSlice = createSlice({
     },
     setScanned: (state, action) => {
       state.scanned = action.payload;
+    },
+    changeOverlayVisible: (state, action) => {
+      state.overlayVisible = !state.overlayVisible
     }
   }
 });
 
 export default executingSlice.reducer;
 
-export const { doOnce, doOnceNotifications, setExpoPushToken, setScanned} = executingSlice.actions;
+export const { doOnce, doOnceNotifications, setExpoPushToken, setScanned, changeOverlayVisible } = executingSlice.actions;

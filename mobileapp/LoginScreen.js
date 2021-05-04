@@ -9,11 +9,13 @@ import * as SecureStore from "expo-secure-store";
 import { setScanned } from "./redux/slices/executingSlice";
 import { showMessage } from "react-native-flash-message";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { changeLocationEnabled } from "./redux/slices/LocationsSlice";
+import { backToIdle } from "./redux/slices/userSlice";
 
 export default function LoginScreen({ navigation, route }) {
 
   const dispatch = useDispatch();
-  const { qrUpdatedFlag } = route.params;
+  const { qrUpdatedFlag, showSc } = route.params;
   const scanned = useSelector(state => state.executing.scanned);
 
     /*AsyncStorage.getItem("userId").then(function (webId){
@@ -24,6 +26,12 @@ export default function LoginScreen({ navigation, route }) {
     });*/
 
     useEffect(() => {
+      AsyncStorage.getItem("locationStatus").then((response) => {
+        if(response === null)
+          dispatch(changeLocationEnabled(false));
+        else
+          dispatch(changeLocationEnabled(response));
+      });
       AsyncStorage.getItem("userId").then(function (webId){
         if (webId != null && webId != "" && !qrUpdatedFlag){
           navigation.navigate("Loading", {id: webId });
@@ -33,7 +41,7 @@ export default function LoginScreen({ navigation, route }) {
     
   
   const [hasCameraPermission, setHasCameraPermission] = useState(null);
-  const [showScanner, setShowScanner] = useState(false);
+  const [showScanner, setShowScanner] = useState(showSc);
   
   async function save(key, value) {
     await SecureStore.setItemAsync(key, value);
@@ -61,9 +69,12 @@ export default function LoginScreen({ navigation, route }) {
     await save("op234iyu5v6oy234iuv6", data);
     const parsed = JSON.parse(data);
     const webId = parsed.webId;
+    if (webId === undefined || webId === null ) 
+      throw new Error("");
     dispatch(setScanned(true));
     AsyncStorage.setItem("userId",webId);
-    AsyncStorage.setItem("firstLogin","true")
+    AsyncStorage.setItem("firstLogin","true");
+    dispatch(backToIdle());
     navigation.navigate("Loading", {id: webId });
     }catch(err){
       setShowScanner(false);
@@ -71,7 +82,7 @@ export default function LoginScreen({ navigation, route }) {
         message: "The QR code you read was not valid",
         description: "Please, try again with a different QR",
         type: "danger",
-        duration: 5000,
+        duration: 10000,
       });
     }
   };
