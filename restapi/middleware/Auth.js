@@ -15,12 +15,12 @@ const auth = async function (req, res, next) {
     {return res.sendStatus(401);}
 
     const decodedToken = jwt.decode(token);
-    if (decodedToken == null)
+
+    if (decodedToken?.webid == null)
     {return res.sendStatus(401);}
 
     req.claims = {webid: decodedToken.webid};
-    if (req.claims.webid == null)
-    {return res.sendStatus(401);}
+
 
     const key = await fetchPKey(req.claims.webid);
 
