@@ -104,6 +104,3 @@ export default async function FetchPodFriendsCreatedLocations(session, lastId) {
 
     return createdLocations;
 }
-
-
-

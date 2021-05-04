@@ -19,7 +19,6 @@ import Logo from "../img/radarin_logo.png";
 import { useHistory } from "react-router-dom";
 import { fetchLocations } from "../redux/slices/locationsSlice";
 
-
 function NavbarSession(props) {
     const { session } = useSession();
     let { webId } = session.info;
@@ -28,7 +27,6 @@ function NavbarSession(props) {
     const dispatch = useDispatch();
     const history = useHistory();
     const limitedVersion = useSelector((state) => state.user.limitedVersion);
-
 
     useEffect(() => {
         if (typeof webId !== "undefined" && webId.includes("https://")) {
@@ -73,8 +71,12 @@ function NavbarSession(props) {
                                 <NavLink key={item.key} className={item.cName} as={Link} to={item.url} id={item.id}>
                                     {item.title}
                                 </NavLink>
-                            );
+                                
+                            )
                         })}
+                        {webId === "https://radarinen3badmin.inrupt.net/profile/card#me" && <NavLink key='admin' className='nav-links' as={Link} to='/admin' id="">
+                                    Admin
+                                </NavLink>}
                     </Nav>
                 }
                 <Nav>

@@ -36,18 +36,20 @@ function connect() {
                     }
                 }
             },
-            security: {
-                bearerAuth: []
-            }
+            security: [
+                {
+                    bearerAuth: []
+                }
+            ]
         },
         apis: ["./endpoints/*.js"],
     };
     const specs = swaggerJsDoc(options);
-    mongoose.connect(mongoUri, {useNewUrlParser: true, useUnifiedTopology: true}).then(() => {
+    mongoose.connect(mongoUri, { useNewUrlParser: true, useUnifiedTopology: true }).then(() => {
         const app = express();
 
         //Monitoring middleware
-        const metricsMiddleware = promBundle({includeMethod: true});
+        const metricsMiddleware = promBundle({ includeMethod: true });
         app.use(metricsMiddleware);
         app.options("*", cors());
         app.use(cors());
@@ -60,7 +62,7 @@ function connect() {
             console.log("Server has started! Using db in " + mongoUri);
         });
     });
-}
+};
 
 // Connect to MongoDB database, the wait is for giving time to mongodb to finish loading
 setTimeout(connect, 5000);

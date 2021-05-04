@@ -26,5 +26,5 @@ export const NavbarItems = [
         url: "/help",
         cName: "nav-links",
         id: ".fourth-step",
-    }
-];
+    },
+]

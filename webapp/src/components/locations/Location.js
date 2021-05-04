@@ -14,7 +14,7 @@ import {
 
 import LocationOnIcon from "@material-ui/icons/LocationOn";
 import { useDispatch } from "react-redux";
-import { moveTo, refreshLocations, setPolyline } from "../../redux/slices/locationsSlice";
+import { moveTo, refreshLocations, setPolyline, saveNames } from "../../redux/slices/locationsSlice";
 import fetchPhoto from "./FetchPhoto";
 import { useSession } from "@inrupt/solid-ui-react";
 import removeLocation from "./RemoveLocation";
@@ -34,7 +34,6 @@ export default function Location({ childKey, title, description, coords, photo, 
 
     useEffect(() => {
         if (photo !== "") {
-            console.log(photo);
             async function getImg() {
                 const imgBlob = await fetchPhoto(session, photo, webId);
 
@@ -73,6 +72,7 @@ export default function Location({ childKey, title, description, coords, photo, 
         dispatch(moveTo([0, 0]));
         dispatch(moveTo(coords[0]));
         dispatch(setPolyline([]));
+        dispatch(saveNames(title.concat('$').concat(description).concat('$').concat(webId)));
     }
 
     let user = "";
