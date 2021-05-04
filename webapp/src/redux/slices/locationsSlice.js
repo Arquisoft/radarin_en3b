@@ -31,6 +31,7 @@ async function getLocations(session) {
 
 const initialState = {
     coordinates: [0, 0],
+    names: "",
     status: "idle",
     refreshStatus: "idle",
     searchText: "",
@@ -51,6 +52,9 @@ export const locationsSlice = createSlice({
         },
         setPolyline: (state, action) => {
             state.polyline = action.payload;
+        },
+        saveNames: (state, action) => {
+            state.names = action.payload;
         }
     },
     extraReducers: {
@@ -62,6 +66,7 @@ export const locationsSlice = createSlice({
             state.locations = action.payload;
             state.coordinates = state.locations[0].coords[0];
             state.polyline = state.locations[0].type === "poly" ? state.locations[0].coords : [];
+            state.names = state.locations[0].type !== "poly" ? state.locations[0].name.concat('$').concat(state.locations[0].details).concat('$').concat(state.locations[0].webId) : "";
         },
         [fetchLocations.rejected]: (state, action) => {
             state.status = "failed";
@@ -81,6 +86,6 @@ export const locationsSlice = createSlice({
     }
 });
 
-export const { moveTo, setSearchText, setPolyline } = locationsSlice.actions;
+export const { moveTo, setSearchText, setPolyline, saveNames } = locationsSlice.actions;
 
 export default locationsSlice.reducer;
