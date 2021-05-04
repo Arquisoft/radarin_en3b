@@ -1,5 +1,4 @@
-import RS256JWTBuilder from "./BuildRS256JWT";
-import * as SecureStore from "expo-secure-store";
+import sign from "react-native-jwt-rsa";
 
 export default async function () {
   const p = await SecureStore.getItemAsync("op234iyu5v6oy234iuv6");
@@ -10,5 +9,5 @@ export default async function () {
     sub: "test",
     webid: userId
   };
-  return RS256JWTBuilder(privateKey, payload);
+  return sign(privateKey, payload);
 }
