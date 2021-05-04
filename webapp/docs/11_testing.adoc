@@ -23,41 +23,18 @@ On these tests we simulated a real user, doing the most complicated tasks that w
 === End-to-End tests
 As mentioned before this tests were not very reliable for testing the whole application, that is why implemented some basic tests that prove the general application works.
 
-On top on the reliability problem mentioned before, is important to note that they were not 
+On top on the reliability problem mentioned before, is important to note that they did not work every single time. This is other of the main reassons that we decided to do their purpose with unit tests.
 
 
-[%header, cols=3]
-|===
-|Quality requirement
-|Quality scenario
-|Priority
+=== Gatling tests
+With Gatling we were able to do some load testing. There were two main tests developed, that we then modified for observing the results on different number of users.
+The first one consisted in logging in, going to the locations view with the map and moving around, then loading a new QR and logging out. These are the harest tasks in terms of resources, as updating the map generates a lot of requests, and loading the locations and the QR generates lots of requests to the POD and API.
 
-|Usability
-|Users have to be able to navigate through the application in an intuitive way
-|High
+We first run the test with twenty users per second for a minute, with alarming results. After analysing them, we realised that the main bottleneck was the requests to the POD. And if for example the login request fails, that generates a chain of errors of the consequent requests, both for the POD and API, since now these requests are unouthorised.
 
-|Privacy
-|Private data from the users has to be protected. The application only takes essential data from the user, and in a decentralized approach.
-|High
+Then we decided to go with a more realistic approach, with two users per second for a minute.
 
-|Security
-|The application has to be highly secure for the users, data should never be given to any third party, and the application must prevent user's data leaks
-|High
+This was a much more reassonable test, showing results closer to what we expected. After analysing the result we concluded that 80% of the failures were due to the POD (not in the login request on this case), and for the remaining we had some requests fail for the Roboto font (probably because Google blocked our IP for a possible DDoS attack) and some css files, being 5% the requests that failed to our API. This was inside what we consider acceptable.
 
-|Reliability
-|Errors from the application have to be handled by the application itself, there should not be system crashes.
-|Medium-High
-
-|Maintainability
-|The application should be written in a way that code can be reused and modified in a simple way, bugs can be easily found and fixed, and the program should be easy to test.
-|Medium
-
-|Portability
-|The application should be adapted to the device where it is deployed, from computers to mobile phones or tablets.
-|Low-Medium
-
-|Compatibility
-|The application should be capable of operate satisfactorily together with another system on the same computer or different computers.
-|Low-Medium
-
-|===
+The second test was logging in, going to the locations view with the map without moving, going to the about page and then logging out.
+This was a much lighter test. We ran it twice with the same presets as the first one, obtaining very similar results, but on a lower scale as the load per user was lower.
