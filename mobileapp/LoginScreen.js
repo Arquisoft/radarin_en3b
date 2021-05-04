@@ -70,6 +70,7 @@ export default function LoginScreen({ navigation, route }) {
     const parsed = JSON.parse(data);
     const webId = parsed.webId;
     dispatch(setScanned(true));
+    
     AsyncStorage.setItem("userId",webId);
     AsyncStorage.setItem("firstLogin","true");
     dispatch(backToIdle());
