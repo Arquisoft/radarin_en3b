@@ -3,11 +3,17 @@ import { setProfile } from "../../FetchProfile";
 import { getFriends } from "../../FetchFriends";
 
 //Fetch friends with distance, far or close
-export const fetchFriendsWithDistance = createAsyncThunk("user/fetchFriends", async (webId) => {
+export const fetchFriendsWithDistance = createAsyncThunk("user/fetchFriends", async (webId, { getState }) => {
+  if(getState().locations.getLocationEnabled === "false")
+    return "No location";
+  
   return await intermediateFriends(webId);
 });
 
-export const refreshFriends = createAsyncThunk("user/refreshFriends", async (webId) => {
+export const refreshFriends = createAsyncThunk("user/refreshFriends", async (webId, { getState }) => {
+  if(getState().locations.getLocationEnabled === "false")
+    return "No location";
+
   return await intermediateFriends(webId);
 });
 
@@ -34,6 +40,7 @@ const initialState = {
   friends: [],
   prevfriends: [],
   refreshStatus: "idle",
+  refreshPrevented: false,
 };
 
 export const userSlice = createSlice({
@@ -56,6 +63,7 @@ export const userSlice = createSlice({
     [fetchFriendsWithDistance.fulfilled]: (state, action) => {
       state.friendsStatus = "succeeded";
       state.friends = action.payload;
+      state.prevfriends = action.payload;
     },
     [fetchFriendsWithDistance.rejected]: (state, action) => {
       state.friendsStatus = "failed";

@@ -22,7 +22,7 @@ export default function ProfileScreen({ navigation }) {
       )
       ),
       headerLeft: (() => (
-        <HeaderBackButton tintColor={"#FFF"} onPress={() => { navigation.navigate("Radarin"); }}></HeaderBackButton>
+        <HeaderBackButton tintColor={"#FFF"} onPress={() => { navigation.navigate("Radarin"); console.log("pressed") }}></HeaderBackButton>
       )
       )
     });

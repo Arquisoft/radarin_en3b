@@ -23,7 +23,7 @@ export async function schedulePushNotificationFriendsClose(newFriends) {
     friendsStr = newFriends[0].name + " is now close to you.";
   } else {
     friendsStr = "";
-    newFriends.slice(0, newFriends.length - 2).forEach(friend => { friendStr += `${friend.name}, `});
+    newFriends.slice(0, newFriends.length - 2).forEach(friend => { friendsStr += `${friend.name}, `});
     friendsStr
             += `${newFriends[newFriends.length - 2].name} and ${newFriends[newFriends.length - 1].name} are now close to you.`;
   }
@@ -45,7 +45,7 @@ export async function schedulePushNotificationFriends(newFriends) {
     friendsStr = newFriends[0].name + " has started to use the app.";
   } else {
     friendsStr = "";
-    newFriends.slice(0, newFriends.length - 2).forEach(friend => { friendStr += `${friend.name}, `});
+    newFriends.slice(0, newFriends.length - 2).forEach(friend => { friendsStr += `${friend.name}, `});
     friendsStr
             += `${newFriends[newFriends.length - 2].name} and ${newFriends[newFriends.length - 1].name} have started to use the app.`;
   }
