@@ -27,6 +27,7 @@ import {makeStyles} from "@material-ui/core/styles";
 import LockOpenIcon from "@material-ui/icons/LockOpen";
 import "../css/AdminView.css";
 
+// Unfixable style problems for no reason
 // noinspection Stylelint
 const useStyles = makeStyles((theme) => ({
     root: {
