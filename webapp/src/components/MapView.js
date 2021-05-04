@@ -9,7 +9,6 @@ export default function MapView() {
     const names = useSelector((state) => state.locations.names);
     const polyline = useSelector((state) => state.locations.polyline);
     const [map, setMap] = useState(null);
-    console.log(names);
 
     let result;
 
