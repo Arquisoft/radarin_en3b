@@ -127,6 +127,7 @@ export default function HomeScreen({ navigation }) {
   useFocusEffect(
     React.useCallback(() => {
       const onBackPress = () => {
+        console.log("happens");
         return true;
       };
 

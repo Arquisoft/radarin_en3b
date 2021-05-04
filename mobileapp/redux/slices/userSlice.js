@@ -23,6 +23,9 @@ async function intermediateFriends(webId) {
   if (friends === "No location")
     return "No location";
 
+    
+  console.log(friends);
+
   return friends;
 }
 
@@ -41,6 +44,7 @@ const initialState = {
   prevfriends: [],
   refreshStatus: "idle",
   refreshPrevented: false,
+  refreshError: null,
 };
 
 export const userSlice = createSlice({
@@ -54,6 +58,9 @@ export const userSlice = createSlice({
     },
     setFriends: (state, action) => {
       state.friends = action.payload
+    },
+    setRefreshPrevented: (state, action) => {
+      state.refreshPrevented = action.payload
     }
   },
   extraReducers: {
@@ -91,10 +98,11 @@ export const userSlice = createSlice({
     },
     [refreshFriends.rejected] : (state, action) => {
       state.refreshStatus = "failed"
+      state.refreshError = action.error.message
     }
   }
 });
 
 export default userSlice.reducer;
 
-export const { backToIdle, setFriends } = userSlice.actions;
+export const { backToIdle, setFriends, setRefreshPrevented } = userSlice.actions;

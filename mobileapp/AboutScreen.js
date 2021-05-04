@@ -1,5 +1,5 @@
-import React, {useCallback, useState}  from "react";
-import { View, Text, ScrollView, Linking, Button, Pressable, Image} from "react-native";
+import React, {useCallback, useState, useEffect }  from "react";
+import { View, Text, ScrollView, Linking, Button, Pressable, Image, BackHandler } from "react-native";
 import { Card} from "react-native-elements";
 import {DataTable, Avatar } from "react-native-paper";
 import {HeaderBackButton} from "@react-navigation/stack";
@@ -7,6 +7,9 @@ import styles from "./MyStyles";
 import MyMenu from "./MyMenu";
 import MyOverlaySupport from "./MyFirstTour";
 import MyOverlayLocationSupport from "./MyLocationTour";
+import { useFocusEffect } from '@react-navigation/native';
+import { setRefreshPrevented } from "./redux/slices/userSlice";
+import { useDispatch } from "react-redux";
 
 const supportedURL = "https://solidproject.org/";
 
@@ -30,6 +33,7 @@ const OpenURLButton = ({ url, children }) => {
 export default function AboutScreen({navigation}) {
   const [firstTutorial, setFirstTutorial] = useState(false);
   const [locationTutorial, setLocationTutorial] = useState(false);
+  const dispatch = useDispatch();
 
 
   React.useLayoutEffect(() => {
@@ -39,11 +43,32 @@ export default function AboutScreen({navigation}) {
           )
       ),
       headerLeft: (() => (
-        <HeaderBackButton tintColor={"#FFF"} onPress={()=>{navigation.navigate("Radarin");}}></HeaderBackButton>
+        <HeaderBackButton tintColor={"#FFF"} onPress={()=>{navigation.navigate("Radarin"); dispatch(setRefreshPrevented(false)); }}></HeaderBackButton>
       )
   )
     });
   }, [navigation]);
+
+
+  useFocusEffect(
+    React.useCallback(() => {
+      const onBackPress = () => {
+        console.log("happens2");
+        dispatch(setRefreshPrevented(false));
+        return false;
+      };
+
+      BackHandler.addEventListener('hardwareBackPress', onBackPress);
+
+      return () =>
+        BackHandler.removeEventListener('hardwareBackPress', onBackPress);
+    }, [])
+  );
+
+  useEffect(() => {
+    console.log("entra");
+    dispatch(setRefreshPrevented(true));
+  });
 
 
   return (

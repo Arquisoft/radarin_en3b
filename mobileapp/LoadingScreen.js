@@ -19,6 +19,9 @@ export default function LoadingScreen({ route, navigation }) {
   const friendsStatus = useSelector(state => state.user.friendsStatus);
   const refreshStatus = useSelector(state => state.user.refreshStatus);
   const locationStatus = useSelector(state => state.locations.getLocationEnabled);
+  const setRefreshPrevented = useSelector(state => state.user.refreshPrevented);
+  const refreshError = useSelector(state => state.user.refreshError);
+  const friendsError = useSelector(state => state.user.friendsError);
 
 
   useEffect(() => {
@@ -47,30 +50,35 @@ export default function LoadingScreen({ route, navigation }) {
         //If the user changed the switch on the profile page this should be executed, and the user automatically redirected to the main page
       } else if (friendsStatus === "succeeded") {
         navigation.navigate("Radarin");
-      } 
+      }
 
       //If the friends are fetched we start the reloading process
       if (friendsStatus === "succeeded" && refreshStatus === "idle") {
         console.log("wanted to refresh");
         setNotificationsBackground();
         setTimeout(() => {
-          dispatch(refreshFriends(webId));
-          console.log("refreshed");
+          if (!setRefreshPrevented) {
+            dispatch(refreshFriends(webId));
+            console.log("refreshed");
+          }
         }, 10000);
       }
 
       //if fetching the friends failed that means that the QR changed, so we redirect the user to the login view.
       else if (friendsStatus === "failed" || refreshStatus === "failed") {
-        dispatch(setScanned(false));
-        stopLocationAsync();
-        BackgroundFetch.unregisterTaskAsync("friends");
-        navigation.navigate("Login", { qrUpdatedFlag: true, showSc: false });
-        showMessage({
-          message: "Your session has expired.",
-          description: "Your QR code has been renewed. Please, log in in the aplication again.",
-          type: "info",
-          duration: 5000,
-        });
+        if (friendsError === 'JSON Parse error: Unexpected identifier "Unauthorized"'
+          || refreshError === 'JSON Parse error: Unexpected identifier "Unauthorized"') {
+          dispatch(setScanned(false));
+          stopLocationAsync();
+          BackgroundFetch.unregisterTaskAsync("friends");
+          navigation.navigate("Login", { qrUpdatedFlag: true, showSc: false });
+          showMessage({
+            message: "Your session has expired.",
+            description: "Your QR code has been renewed. Please, log in in the aplication again.",
+            type: "info",
+            duration: 5000,
+          });
+        }
       }
     }
   });
