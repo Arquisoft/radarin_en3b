@@ -81,6 +81,7 @@ export default function HomeScreen({ navigation }) {
   let locations = useSelector(state => state.locations.getLocationEnabled);
 
   useEffect(() => {
+    console.log("hola");
     if (!isMounted) {
       isMounted = true;
       registerTaskAsync();
