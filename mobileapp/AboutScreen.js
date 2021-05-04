@@ -1,5 +1,5 @@
-import React, {useCallback, useState}  from "react";
-import { View, Text, ScrollView, Linking, Button, Pressable, Image} from "react-native";
+import React, {useCallback, useState }  from "react";
+import { View, Text, ScrollView, Linking, Button, Pressable, Image } from "react-native";
 import { Card} from "react-native-elements";
 import {DataTable, Avatar } from "react-native-paper";
 import {HeaderBackButton} from "@react-navigation/stack";
@@ -39,12 +39,11 @@ export default function AboutScreen({navigation}) {
           )
       ),
       headerLeft: (() => (
-        <HeaderBackButton tintColor={"#FFF"} onPress={()=>{navigation.navigate("Radarin");}}></HeaderBackButton>
+        <HeaderBackButton tintColor={"#FFF"} onPress={()=>{navigation.navigate("Radarin"); }}></HeaderBackButton>
       )
   )
     });
   }, [navigation]);
-
 
   return (
     <ScrollView>
