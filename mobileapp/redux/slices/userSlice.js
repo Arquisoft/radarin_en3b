@@ -4,25 +4,15 @@ import { getFriends } from "../../FetchFriends";
 
 //Fetch friends with distance, far or close
 export const fetchFriendsWithDistance = createAsyncThunk("user/fetchFriends", async (webId, { getState }) => {
-  if(getState().locations.getLocationEnabled === "false")
-    return "No location";
-  
   return await intermediateFriends(webId);
 });
 
 export const refreshFriends = createAsyncThunk("user/refreshFriends", async (webId, { getState }) => {
-  if(getState().locations.getLocationEnabled === "false")
-    return "No location";
-
   return await intermediateFriends(webId);
 });
 
 async function intermediateFriends(webId) {
   const friends = await getFriends(webId);
-
-  if (friends === "No location")
-    return "No location";
-
     
   console.log(friends);
 
