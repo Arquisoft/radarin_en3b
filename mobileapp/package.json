@@ -55,6 +55,7 @@
     "react-native-flash-message": "^0.1.23",
     "react-native-gesture-handler": "~1.10.2",
     "react-native-inappbrowser-reborn": "^3.5.1",
+    "react-native-jwt-rsa": "^1.0.0",
     "react-native-material-menu": "^1.2.0",
     "react-native-paper": "^4.7.2",
     "react-native-screens": "~3.0.0",
