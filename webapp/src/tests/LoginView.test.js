@@ -9,9 +9,9 @@ import LoginPage from "../components/LoginPage";
 
 test("user can change provider text and click sign in", async () => {
 
-    const { getAllByRole, getByTestId } = render(<BrowserRouter><Provider store={store}><LoginPage/></Provider></BrowserRouter>);
+    const { getAllByRole, getByTestId, getByRole } = render(<BrowserRouter><Provider store={store}><LoginPage/></Provider></BrowserRouter>);
 
-    const providerTextField = getByTestId("provider");
+    const providerTextField = getByRole("combobox");
 
     expect(providerTextField).toBeInTheDocument();
 
@@ -22,4 +22,13 @@ test("user can change provider text and click sign in", async () => {
     const button = getByTestId("button");
 
     fireEvent.click(button);
+});
+
+test("login page 2", async () => {
+
+    const { getAllByRole, getByTestId } = render(<BrowserRouter><Provider store={store}><LoginPage redirectUrl={"hola"}/></Provider></BrowserRouter>);
+
+    const providerTextField = getByTestId("provider");
+
+    expect(providerTextField).toBeInTheDocument();
 });

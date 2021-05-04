@@ -81,6 +81,7 @@ export default function HomeScreen({ navigation }) {
   let locations = useSelector(state => state.locations.getLocationEnabled);
 
   useEffect(() => {
+    
     if (!isMounted) {
       isMounted = true;
       registerTaskAsync();
@@ -98,8 +99,10 @@ export default function HomeScreen({ navigation }) {
 
 
     AsyncStorage.getItem("firstLogin").then((login) => { 
-      if(login === null || login === "true")
+      if(login === null || login === "true"){
         setFirstLogin(true);
+        AsyncStorage.setItem("firstLogin", "false");
+      }
       else 
         setFirstLogin(false);
     });
@@ -146,7 +149,7 @@ export default function HomeScreen({ navigation }) {
           <MyFarFriendsCard />
         </View>
       </ScrollView>
-      {firstLogin && <MyOverlaySupport /> }
+      {firstLogin ? <MyOverlaySupport /> : null}
       <MyOverlay visibility={true} firstLogin={firstLogin}/>
 
     </View>

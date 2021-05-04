@@ -23,7 +23,6 @@ export default function UploadLocation() {
     const [locationSent, setLocationSent] = useState(false);
     const [showClose, setShowClose] = useState(false);
 
-    session.logout();
 
     let urlParamsArray;
     let title;
@@ -39,7 +38,7 @@ export default function UploadLocation() {
         const lat = urlParamsArray[2].split("=")[1];
         const long = urlParamsArray[3].split("=")[1];
 
-        coords = "[" + parseInt(lat) + "," + parseInt(long) + "]";
+        coords = "[" + parseFloat(lat) + "," + parseFloat(long) + "]";
     }
 
 

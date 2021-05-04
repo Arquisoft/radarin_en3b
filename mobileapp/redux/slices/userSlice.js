@@ -4,27 +4,15 @@ import { getFriends } from "../../FetchFriends";
 
 //Fetch friends with distance, far or close
 export const fetchFriendsWithDistance = createAsyncThunk("user/fetchFriends", async (webId, { getState }) => {
-  if(getState().locations.getLocationEnabled === "false")
-    return "No location";
-  
   return await intermediateFriends(webId);
 });
 
 export const refreshFriends = createAsyncThunk("user/refreshFriends", async (webId, { getState }) => {
-  if(getState().locations.getLocationEnabled === "false")
-    return "No location";
-
   return await intermediateFriends(webId);
 });
 
 async function intermediateFriends(webId) {
   const friends = await getFriends(webId);
-
-  if (friends === "No location")
-    return "No location";
-
-    
-  console.log(friends);
 
   return friends;
 }
@@ -61,6 +49,9 @@ export const userSlice = createSlice({
     },
     setRefreshPrevented: (state, action) => {
       state.refreshPrevented = action.payload
+    },
+    refreshBackToIdle: (state) => {
+      state.refreshStatus = "idle"
     }
   },
   extraReducers: {
@@ -88,15 +79,18 @@ export const userSlice = createSlice({
       state.profileStatus = "failed";
       state.profileError = action.error.message;
     },
-    [refreshFriends.pending] : (state) => {
+    [refreshFriends.pending]: (state) => {
       state.refreshStatus = "loading"
     },
     [refreshFriends.fulfilled]: (state, action) => {
-      state.refreshStatus = "idle"
-      state.prevfriends = state.friends
-      state.friends = action.payload
+      if (action.payload !== "stop") {
+        console.log("······");
+        state.refreshStatus = "idle"
+        state.prevfriends = state.friends
+        state.friends = action.payload
+      }
     },
-    [refreshFriends.rejected] : (state, action) => {
+    [refreshFriends.rejected]: (state, action) => {
       state.refreshStatus = "failed"
       state.refreshError = action.error.message
     }
@@ -105,4 +99,4 @@ export const userSlice = createSlice({
 
 export default userSlice.reducer;
 
-export const { backToIdle, setFriends, setRefreshPrevented } = userSlice.actions;
+export const { backToIdle, setFriends, setRefreshPrevented, refreshBackToIdle } = userSlice.actions;

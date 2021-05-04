@@ -3,7 +3,7 @@ import { View, Image, Text, ImageBackground } from "react-native";
 import styles from "./MyStyles";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProfile, fetchFriendsWithDistance, refreshFriends } from "./redux/slices/userSlice";
-import { setScanned } from "./redux/slices/executingSlice";
+import { doOnce, setScanned } from "./redux/slices/executingSlice";
 import { showMessage } from "react-native-flash-message";
 import { setFriends } from "./redux/slices/userSlice";
 import { setNotificationsBackground } from "./SetNotifications";
@@ -19,15 +19,15 @@ export default function LoadingScreen({ route, navigation }) {
   const friendsStatus = useSelector(state => state.user.friendsStatus);
   const refreshStatus = useSelector(state => state.user.refreshStatus);
   const locationStatus = useSelector(state => state.locations.getLocationEnabled);
-  const setRefreshPrevented = useSelector(state => state.user.refreshPrevented);
   const refreshError = useSelector(state => state.user.refreshError);
   const friendsError = useSelector(state => state.user.friendsError);
+  const once = useSelector(state => state.executing.doOnce);
 
 
   useEffect(() => {
-    console.log(locationStatus);
-    console.log("Profile:" + profileStatus);
-    console.log("Friends: " + friendsStatus);
+    //console.log(locationStatus);
+    //console.log("Profile:" + profileStatus);
+    //console.log("Friends: " + friendsStatus);
     console.log("Refresh: " + refreshStatus);
 
     //Always fetch the profile
@@ -48,7 +48,8 @@ export default function LoadingScreen({ route, navigation }) {
 
         //once the friends are fetched, we can display the main view.
         //If the user changed the switch on the profile page this should be executed, and the user automatically redirected to the main page
-      } else if (friendsStatus === "succeeded") {
+      } else if (friendsStatus === "succeeded" && !once) {
+        dispatch(doOnce());
         navigation.navigate("Radarin");
       }
 
@@ -57,10 +58,8 @@ export default function LoadingScreen({ route, navigation }) {
         console.log("wanted to refresh");
         setNotificationsBackground();
         setTimeout(() => {
-          if (!setRefreshPrevented) {
-            dispatch(refreshFriends(webId));
-            console.log("refreshed");
-          }
+          dispatch(refreshFriends(webId));
+          console.log("refreshed");
         }, 10000);
       }
 
@@ -70,13 +69,14 @@ export default function LoadingScreen({ route, navigation }) {
           || refreshError === 'JSON Parse error: Unexpected identifier "Unauthorized"') {
           dispatch(setScanned(false));
           stopLocationAsync();
+          dispatch(doOnce());
           BackgroundFetch.unregisterTaskAsync("friends");
           navigation.navigate("Login", { qrUpdatedFlag: true, showSc: false });
           showMessage({
             message: "Your session has expired.",
             description: "Your QR code has been renewed. Please, log in in the aplication again.",
             type: "info",
-            duration: 5000,
+            duration: 10000,
           });
         }
       }

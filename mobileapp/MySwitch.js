@@ -4,7 +4,7 @@ import { getLocation } from "./GetLocation";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useDispatch, useSelector } from "react-redux";
 import { changeLocationEnabled } from "./redux/slices/LocationsSlice";
-import { stopLocationAsync, startLocationAsync } from "./GetAsyncLocation";
+import { stopLocationAsync, startLocationAsync, getLocationAsyncStatus } from "./GetAsyncLocation";
 
 export default function MySwitch() {
   const dispatch = useDispatch();

@@ -10,11 +10,12 @@ export default function MyCloseFriendsCard({ navigation }) {
 
     let closeFriends = [];
 
-    if (friends !== "No location")
+    console.log(friends);
+    if (friends !== null && friends[0].distance !== "No location")
         closeFriends = friends.filter(friend => friend.isClose);
 
 
-    if (friends == "No location") {
+    if (friends[0].distance == "No location") {
         return (
             <Card containerStyle={styles.nofriendscard}>
                 <Card.Title style={styles.cardTitle}>Your location is not being taken</Card.Title>

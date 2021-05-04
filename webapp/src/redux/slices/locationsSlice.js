@@ -19,8 +19,8 @@ async function getLocations(session) {
 
     let podFriendsLocations = await fetchPodFriendsCreatedLocations(session, [ podLocations[podLocations.length - 1]?.id ?? 0]);
 
+
     const result = podLocations.concat(podFriendsLocations).concat(apiLocations);
-    
 
     if(result.length === 0)
     {return [{ type: "poly", id: 1, name: "You dont have any locations", details: "Add some from the mobile!", coords: [[0, 0]] }];}
@@ -31,6 +31,7 @@ async function getLocations(session) {
 
 const initialState = {
     coordinates: [0, 0],
+    names: "",
     status: "idle",
     refreshStatus: "idle",
     searchText: "",
@@ -51,6 +52,9 @@ export const locationsSlice = createSlice({
         },
         setPolyline: (state, action) => {
             state.polyline = action.payload;
+        },
+        saveNames: (state, action) => {
+            state.names = action.payload;
         }
     },
     extraReducers: {
@@ -62,6 +66,7 @@ export const locationsSlice = createSlice({
             state.locations = action.payload;
             state.coordinates = state.locations[0].coords[0];
             state.polyline = state.locations[0].type === "poly" ? state.locations[0].coords : [];
+            state.names = state.locations[0].type !== "poly" ? state.locations[0].name.concat('$').concat(state.locations[0].details).concat('$').concat(state.locations[0].webId) : "";
         },
         [fetchLocations.rejected]: (state, action) => {
             state.status = "failed";
@@ -81,6 +86,6 @@ export const locationsSlice = createSlice({
     }
 });
 
-export const { moveTo, setSearchText, setPolyline } = locationsSlice.actions;
+export const { moveTo, setSearchText, setPolyline, saveNames } = locationsSlice.actions;
 
 export default locationsSlice.reducer;

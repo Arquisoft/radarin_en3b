@@ -1,3 +1,4 @@
+import { Divider, Typography } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import { MapContainer, TileLayer, Marker, Polyline, Popup } from "react-leaflet";
 import "react-leaflet/";
@@ -5,6 +6,7 @@ import { useSelector } from "react-redux";
 
 export default function MapView() {
     const coordinates = useSelector((state) => state.locations.coordinates);
+    const names = useSelector((state) => state.locations.names);
     const polyline = useSelector((state) => state.locations.polyline);
     const [map, setMap] = useState(null);
 
@@ -18,6 +20,8 @@ export default function MapView() {
             });
         }
     });
+
+    const namesSplitted = names?.split('$');
 
 
     if (polyline.length === 0) {
@@ -33,9 +37,22 @@ export default function MapView() {
                     attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                 />
-                <Marker position={coordinates}>
-                    <Popup></Popup>
-                </Marker>
+                {names !== "" &&
+                    <Marker position={coordinates}>
+                        <Popup className="popup">
+                            <Typography variant="h6" component="h6">
+                                {namesSplitted[0]}
+                            </Typography>
+                            <Divider />
+                            <Typography>
+                                {namesSplitted[1]}
+                            </Typography>
+                            <Typography>
+                                Author: {namesSplitted[2].split("//")[1].split(".")[0]}
+                            </Typography>
+                        </Popup>
+                    </Marker>
+                }
             </MapContainer>);
     } else {
         result = (

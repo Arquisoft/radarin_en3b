@@ -14,32 +14,42 @@ export async function getFriends(webId) {
   //get their location
   const locations = await getFriendsLocation(friends);
 
+  
   //filter the friends that have a location, hence that uses the app
   friends = friends?.filter(friend => locations.some(location => location[0] == friend.webId));
 
   //calculate distance from friends
-  return await getDistances(friends, locations);
+  let distances =  await getDistances(friends, locations);
+  console.log(distances);
+  return distances;
 }
 
 export async function getDistances(friends, locations) {
   //Get our location for calculating distances
   const myLocation = await getLocation();
-
-  console.log(myLocation);
   
+  let res;
   //If my location null, we dont have permission, return
-  if (myLocation == null) {
-    return "No location";
-  }
+  if (myLocation == "No location") {
+     //Map friends
+    res = locations.map(location => ({
+      //we try to get the name, if it does not exist we grab the webId
+      name: friends?.filter(friend => friend.webId === location[1].webId)[0].fn ?? location[1].webId.split("//")[1].split(".")[0],
+      distance: "No location",
+      isClose: false,
+      mapsUrl: getMapsUrl(location[1])
+    }));
 
-  //Map friends
-  const res = locations.map(location => ({
-    //we try to get the name, if it does not exist we grab the webId
-    name: friends?.filter(friend => friend.webId === location[1].webId)[0].fn ?? location[1].webId.split("//")[1].split(".")[0],
-    distance: calculateDistance(location[1], myLocation),
-    isClose: isClose(myLocation, location),
-    mapsUrl: getMapsUrl(location[1])
-  }));
+  } else {
+     //Map friends
+    res = locations.map(location => ({
+      //we try to get the name, if it does not exist we grab the webId
+      name: friends?.filter(friend => friend.webId === location[1].webId)[0].fn ?? location[1].webId.split("//")[1].split(".")[0],
+      distance: calculateDistance(location[1], myLocation),
+      isClose: isClose(myLocation, location),
+      mapsUrl: getMapsUrl(location[1])
+    }));
+  }
 
   return res;
 }
