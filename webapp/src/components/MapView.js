@@ -21,7 +21,7 @@ export default function MapView() {
         }
     });
 
-    const namesSplitted = names.split('$');
+    const namesSplitted = names?.split('$');
 
 
     if (polyline.length === 0) {

@@ -34,7 +34,6 @@ export default function Location({ childKey, title, description, coords, photo, 
 
     useEffect(() => {
         if (photo !== "") {
-            console.log(photo);
             async function getImg() {
                 const imgBlob = await fetchPhoto(session, photo, webId);
 

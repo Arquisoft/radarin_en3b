@@ -1,5 +1,4 @@
 import { render } from "@testing-library/react";
-import { fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom/extend-expect";
 import { Provider } from "react-redux";
 import store from "../redux/store";
@@ -37,7 +36,7 @@ test("admin page", async () => {
 
     spy.mockReturnValue(mockDispatch);
 
-    const { getAllByRole, getByTestId, getByRole } = render(<BrowserRouter><Provider store={store}><AdminPage /></Provider></BrowserRouter>);
+    render(<BrowserRouter><Provider store={store}><AdminPage /></Provider></BrowserRouter>);
 
 });
 
@@ -198,7 +197,7 @@ test("admin page 6", async () => {
 
     spy.mockReturnValue(mockDispatch);
 
-    const aux = render(<BrowserRouter><Provider store={store}><AdminPage /></Provider></BrowserRouter>);
+    render(<BrowserRouter><Provider store={store}><AdminPage /></Provider></BrowserRouter>);
 });
 
 test("admin page", async () => {
