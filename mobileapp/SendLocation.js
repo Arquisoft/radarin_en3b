@@ -33,5 +33,5 @@ export async function sendLocation(coords, timestamp) {
   catch (error) {
     console.log("Error loading locations :" + error);
   }
-  console.log("Position sent");
+  //console.log("Position sent");
 }

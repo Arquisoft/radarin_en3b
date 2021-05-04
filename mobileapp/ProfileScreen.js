@@ -1,20 +1,17 @@
-import React, { useEffect } from "react";
-import { View, Text, BackHandler } from "react-native";
+import React from "react";
+import { View, Text } from "react-native";
 import { Card } from "react-native-elements";
 import { DataTable, Avatar } from "react-native-paper";
 import { HeaderBackButton } from "@react-navigation/stack";
 import styles from "./MyStyles";
 import MyMenu from "./MyMenu";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import MySwitch from "./MySwitch";
-import { useFocusEffect } from '@react-navigation/native';
-import { setRefreshPrevented } from "./redux/slices/userSlice";
 
 
 export default function ProfileScreen({ navigation }) {
   const webId = useSelector(state => state.user.webId);
   const fn = useSelector(state => state.user.fn);
-  const dispatch = useDispatch();
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
@@ -23,31 +20,11 @@ export default function ProfileScreen({ navigation }) {
       )
       ),
       headerLeft: (() => (
-        <HeaderBackButton tintColor={"#FFF"} onPress={() => { navigation.navigate("Radarin"); dispatch(setRefreshPrevented(false)); }}></HeaderBackButton>
+        <HeaderBackButton tintColor={"#FFF"} onPress={() => { navigation.navigate("Radarin"); }}></HeaderBackButton>
       )
       )
     });
   }, [navigation]);
-
-  useEffect(() => {
-    console.log("entra");
-    dispatch(setRefreshPrevented(true));
-  });
-
-  useFocusEffect(
-    React.useCallback(() => {
-      const onBackPress = () => {
-        console.log("happens2");
-        dispatch(setRefreshPrevented(false));
-        return false;
-      };
-
-      BackHandler.addEventListener('hardwareBackPress', onBackPress);
-
-      return () =>
-        BackHandler.removeEventListener('hardwareBackPress', onBackPress);
-    }, [])
-  );
 
   return (
     <View style={styles.container}>
