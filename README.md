@@ -8,7 +8,7 @@ Link to the deployed sample application: [radarinen3b](https://radarinen3bwebapp
 it can take a while to load** because Heroku in the free plan, takes the containers to sleep when they are not used for
 some time and taking them up takes time.
 
-## Quick start guide
+## Quick start guide!
 
 If you want to execute the project you will need [git](https://git-scm.com/downloads)
 , [Node.js and npm](https://www.npmjs.com/get-npm) and [Docker](https://docs.docker.com/get-docker/). Make sure the
