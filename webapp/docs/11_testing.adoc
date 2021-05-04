@@ -1,0 +1,63 @@
+[[section-testing]]
+== Testing
+In this section, we are going to explain the approach to testing that we took
+There were three main kind of tests: Unit testing, End-to-End testing and Gatling tests.
+
+=== Unit testing
+This is our main way of testing. This tests consist on rendering the components and seing if they have the expected behaviour. Nonetheless, there were some major functionalities tested this way.
+We can divide this tests in two parts: mocked tests and simulated tests
+
+==== Mocked tests
+Inside the unit tests this represents the majority. On this tests we mocked calls both to the API and to the POD, achieving faster test times and avoiding making requests that are useless, and that could affect the performance of the real application.
+
+With the help of jest, we could define the expected result for each method, allowing us to test a failure in any point of the system. Later, we could check that either an element is visible on the screen for the case of visual components, or that the return value is the expected one for backend functions.
+
+
+==== Simulated tests
+There were some functionality that could not be tested mocking, or that it would be too complicated. That is why we decided to do these tests via simulating a real user with a valid login. We wanted to do this kind of testing with end-to-end tests, that deploy the application, but the inhability of jest on those tests to wait for a page to show new content when there is no loading time made us unable to do so.
+
+That is why we chose to look for a library that allowed us to log in via scripts.
+On these tests we simulated a real user, doing the most complicated tasks that would be unfeasable to test otherwise, basically for testing the whole context of the application.
+
+
+=== End-to-End tests
+As mentioned before this tests were not very reliable for testing the whole application, that is why implemented some basic tests that prove the general application works.
+
+On top on the reliability problem mentioned before, is important to note that they were not 
+
+
+[%header, cols=3]
+|===
+|Quality requirement
+|Quality scenario
+|Priority
+
+|Usability
+|Users have to be able to navigate through the application in an intuitive way
+|High
+
+|Privacy
+|Private data from the users has to be protected. The application only takes essential data from the user, and in a decentralized approach.
+|High
+
+|Security
+|The application has to be highly secure for the users, data should never be given to any third party, and the application must prevent user's data leaks
+|High
+
+|Reliability
+|Errors from the application have to be handled by the application itself, there should not be system crashes.
+|Medium-High
+
+|Maintainability
+|The application should be written in a way that code can be reused and modified in a simple way, bugs can be easily found and fixed, and the program should be easy to test.
+|Medium
+
+|Portability
+|The application should be adapted to the device where it is deployed, from computers to mobile phones or tablets.
+|Low-Medium
+
+|Compatibility
+|The application should be capable of operate satisfactorily together with another system on the same computer or different computers.
+|Low-Medium
+
+|===
