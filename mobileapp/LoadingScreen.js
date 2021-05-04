@@ -76,7 +76,7 @@ export default function LoadingScreen({ route, navigation }) {
             message: "Your session has expired.",
             description: "Your QR code has been renewed. Please, log in in the aplication again.",
             type: "info",
-            duration: 5000,
+            duration: 10000,
           });
         }
       }

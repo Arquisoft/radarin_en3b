@@ -4,7 +4,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 export async function getLocation() {
   let takeLocation =  await AsyncStorage.getItem("locationStatus");
   console.log("Takeloc"+takeLocation)
-  if (takeLocation == "true"){
+  let status = await Location.hasServicesEnabledAsync();
+  if (takeLocation === "true" && status){
     return await Location.getCurrentPositionAsync();
   }
   else{
