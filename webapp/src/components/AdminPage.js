@@ -1,13 +1,34 @@
-import { Avatar, Grid, IconButton, List, ListItem, ListItemAvatar, ListItemSecondaryAction, ListItemText, TextField, Typography } from "@material-ui/core";
-import React, { useEffect } from "react";
+import {
+    Avatar,
+    Grid,
+    IconButton,
+    List,
+    ListItem,
+    ListItemAvatar,
+    ListItemSecondaryAction,
+    ListItemText,
+    TextField,
+    Typography
+} from "@material-ui/core";
+import React, {useEffect} from "react";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import BlockIcon from "@material-ui/icons/Block";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchUsersAdmin, refreshUsersAdmin, setSearchText, blockUserAdmin, unblockUserAdmin, getBlacklistAdmin, changeShow, } from "../redux/slices/adminUsersSlice";
-import { makeStyles } from "@material-ui/core/styles";
-import LockOpenIcon from '@material-ui/icons/LockOpen';
+import {useDispatch, useSelector} from "react-redux";
+import {
+    fetchUsersAdmin,
+    refreshUsersAdmin,
+    setSearchText,
+    blockUserAdmin,
+    unblockUserAdmin,
+    getBlacklistAdmin,
+    changeShow,
+} from "../redux/slices/adminUsersSlice";
+import {makeStyles} from "@material-ui/core/styles";
+import LockOpenIcon from "@material-ui/icons/LockOpen";
 import "../css/AdminView.css";
 
+// Unfixable style problems for no reason
+// noinspection Stylelint
 const useStyles = makeStyles((theme) => ({
     root: {
         minWidth: "300px",
@@ -17,8 +38,8 @@ const useStyles = makeStyles((theme) => ({
         justify: "center",
     },
     title: {
-        textAlign: 'center',
-        align: 'center',
+        textAlign: "center",
+        align: "center",
         marginTop: "2%",
         marginBottom: "2%",
     },
@@ -104,8 +125,7 @@ export default function AdminPage() {
                 Unauthorized
             </Typography>
         </div>)
-    }
-    else if (userStatus === "succeeded" && users[0] === "No users") {
+    } else if (userStatus === "succeeded" && users[0] === "No users") {
         content = (
             <Grid className={classes.root} item xs={12} md={6}>
                 <Typography variant="h6">
@@ -135,8 +155,7 @@ export default function AdminPage() {
                 </div>
             </Grid>
         )
-    }
-    else if (userStatus === "succeeded") {
+    } else if (userStatus === "succeeded") {
         content = (
             <Grid className={classes.root} item xs={12} md={6}>
                 <Typography variant="h6">
@@ -161,29 +180,33 @@ export default function AdminPage() {
                             users.filter(item => item.toLowerCase()
                                 .includes(filterText.toLowerCase()))
                                 .map(element => {
-                                    return (< ListItem key={element} >
-                                        <ListItemAvatar>
-                                            <Avatar>
-                                                <AccountCircleIcon />
-                                            </Avatar>
-                                        </ListItemAvatar>
-                                        <ListItemText
+                                    return (< ListItem key={element}>
+                                            <ListItemAvatar>
+                                                <Avatar>
+                                                    <AccountCircleIcon/>
+                                                </Avatar>
+                                            </ListItemAvatar>
+                                            <ListItemText
 
-                                            primary={element.split('//')[1].split('.')[0]}
-                                            secondary={element}
-                                        />
-                                        <ListItemSecondaryAction>
-                                            {blockedUsersArray.length !== 0 && blockedUsersArray.includes(element) ? (
-                                                <IconButton edge="end" aria-label="block" onClick={function () { unblock(element) }}>
-                                                    <LockOpenIcon />
-                                                </IconButton>
-                                            ) : (
-                                                <IconButton edge="end" aria-label="block" onClick={function () { block(element) }}>
-                                                    <BlockIcon />
-                                                </IconButton>
-                                            )}
-                                        </ListItemSecondaryAction>
-                                    </ListItem>
+                                                primary={element.split("//")[1].split(".")[0]}
+                                                secondary={element}
+                                            />
+                                            <ListItemSecondaryAction>
+                                                {blockedUsersArray.length !== 0 && blockedUsersArray.includes(element) ? (
+                                                    <IconButton edge="end" aria-label="block" onClick={function () {
+                                                        unblock(element)
+                                                    }}>
+                                                        <LockOpenIcon/>
+                                                    </IconButton>
+                                                ) : (
+                                                    <IconButton edge="end" aria-label="block" onClick={function () {
+                                                        block(element)
+                                                    }}>
+                                                        <BlockIcon/>
+                                                    </IconButton>
+                                                )}
+                                            </ListItemSecondaryAction>
+                                        </ListItem>
                                     )
                                 })
 
@@ -200,7 +223,7 @@ export default function AdminPage() {
     return (
         <div>
             {content}
-        </div >
+        </div>
     );
 
 }

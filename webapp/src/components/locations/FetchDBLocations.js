@@ -17,8 +17,7 @@ export default async function fetchDBLocations(session) {
     const privateContainerUri = `${pod}private/RadarinPrKey/`;
     const prKeyFile = await getOrCreatePrivateFilePod(privateContainerUri, session.fetch);
 
-    if(prKeyFile?.error === "error")
-    {return [];}
+    if (prKeyFile?.error === "error") { return []; }
 
     const prKeyUrl = getSourceUrl(prKeyFile);
 
@@ -27,24 +26,23 @@ export default async function fetchDBLocations(session) {
 
     const existing = getThing(publicDataset, prKeyUrl);
 
-    if(existing === null) {
+    if (existing === null) {
         return [];
     }
-        
+
     const aux = getStringNoLocale(existing, "https://www.w3.org/ns/auth/cert#PrivateKey");
 
-
-    try {
-        Api.setIdentity(webId, aux);
-    } catch(err) {
-        return [];
-    }
 
     let l;
 
     try {
+        Api.setIdentity(webId, aux);
+
         l = await Api.getLocations();
-    } catch(err) {
+
+        if(l === "401")
+            return "blocked";
+    } catch (err) {
         return [];
     }
 
@@ -79,7 +77,7 @@ async function getLines(locations) {
                 firstFlag = false;
             }
 
-            currentPolyline = { type: "poly", id: counter++, name: new Date(element.timestamp).toLocaleDateString("es-ES", options), details: "Route taken on this day", coords: []};
+            currentPolyline = { type: "poly", id: counter++, name: new Date(element.timestamp).toLocaleDateString("es-ES", options), details: "Route taken on this day", coords: [] };
             currentPolyline.coords.push(element.coords);
             previousTimestamp = element.timestamp;
         } else if (element.timestamp === previousTimestamp) {
@@ -87,7 +85,7 @@ async function getLines(locations) {
         }
     });
 
-    if(typeof currentPolyline !== "undefined") {
+    if (typeof currentPolyline !== "undefined") {
         polylines.push(currentPolyline);
     }
 

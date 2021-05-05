@@ -1,5 +1,4 @@
 import { render } from "@testing-library/react";
-import { fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom/extend-expect";
 import { Provider } from "react-redux";
 import store from "../redux/store";
@@ -12,6 +11,11 @@ redux.useSelector = jest.fn();
 
 const mockDispatch = jest.fn();
 const spy = jest.spyOn(redux, 'useDispatch');
+
+const goodWebId = "https://marcostobias.solidcommunity.net/profile/card#me";
+const badWebId = "3https://marcostobias.solidcommunty.net/profile/card#me";
+const badWebId2 = "https://marcstobias.solidcommunity.net/profile/card#me";
+const badWebId3 = "https://marcostobias.solidcommunty.net/profile/card#me";
 
 
 test("admin page", async () => {
@@ -29,7 +33,7 @@ test("admin page", async () => {
             return "idle";
 
         if (counter === 5)
-            return ["https://marcostobias.solidcommunity.net/profile/card#me", "https://marcostobias.solidcommunty.net/profile/card#me", "https://marcstobias.solidcommunity.net/profile/card#me"];
+            return [goodWebId, badWebId3, badWebId2];
 
 
         return [{ webId: "123123" }, { webId: "123123" }];
@@ -37,7 +41,7 @@ test("admin page", async () => {
 
     spy.mockReturnValue(mockDispatch);
 
-    const { getAllByRole, getByTestId, getByRole } = render(<BrowserRouter><Provider store={store}><AdminPage /></Provider></BrowserRouter>);
+    render(<BrowserRouter><Provider store={store}><AdminPage /></Provider></BrowserRouter>);
 
 });
 
@@ -59,7 +63,7 @@ test("admin page 2", async () => {
             return "idle";
 
         if (counter === 5)
-            return ["https://marcostobias.solidcommunity.net/profile/card#me", "3https://marcostobias.solidcommunty.net/profile/card#me", "https://marcstobias.solidcommunity.net/profile/card#me"];
+            return [goodWebId, badWebId, badWebId2];
 
         if (counter === 4)
             return "marcos";
@@ -96,7 +100,7 @@ test("admin page 3", async () => {
             return "idle";
 
         if (counter === 5)
-            return ["https://marcostobias.solidcommunity.net/profile/card#me", "3https://marcostobias.solidcommunty.net/profile/card#me", "https://marcstobias.solidcommunity.net/profile/card#me"];
+            return [goodWebId, badWebId, badWebId2];
 
         if (counter === 4)
             return "marcos";
@@ -127,7 +131,7 @@ test("admin page 4", async () => {
             return "idle";
 
         if (counter === 5)
-            return ["https://marcostobias.solidcommunity.net/profile/card#me", "3https://marcostobias.solidcommunty.net/profile/card#me", "https://marcstobias.solidcommunity.net/profile/card#me"];
+            return [goodWebId, badWebId, badWebId2];
 
         if (counter === 4)
             return "marcos";
@@ -189,7 +193,7 @@ test("admin page 6", async () => {
             return "idle";
 
         if (counter === 5)
-            return ["https://marcostobias.solidcommunity.net/profile/card#me", "https://marcostobias.solidcommunty.net/profile/card#me", "https://marcstobias.solidcommunity.net/profile/card#me"];
+            return [goodWebId, badWebId3, badWebId2];
 
         if (counter === 4)
             return "m";
@@ -198,9 +202,9 @@ test("admin page 6", async () => {
 
     spy.mockReturnValue(mockDispatch);
 
-    const aux = render(<BrowserRouter><Provider store={store}><AdminPage /></Provider></BrowserRouter>);
+    render(<BrowserRouter><Provider store={store}><AdminPage /></Provider></BrowserRouter>);
 });
 
-test("admin page", async () => {
+test("admin page 7", async () => {
     render(<BrowserRouter><Provider store={store}><AdminPage /></Provider></BrowserRouter>);
 });

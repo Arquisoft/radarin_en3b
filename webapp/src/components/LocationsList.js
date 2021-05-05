@@ -49,7 +49,7 @@ export default function LocationList(props) {
         </div>);
     } else if (locationStatus === "succeeded") {
         content = (
-            <List component='nav'>
+            <List component="nav">
                 <ListItem>
                     <div className="table-responsible mt-3 mb-3 ml-2">
                         <TextField

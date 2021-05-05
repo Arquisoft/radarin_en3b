@@ -44,7 +44,7 @@ export default function MapView() {
         }
     });
 
-    const namesSplitted = names.split('$');
+    const namesSplitted = names?.split('$');
 
     var purpleIcon = L.icon({
         iconUrl: PurpleIcon,

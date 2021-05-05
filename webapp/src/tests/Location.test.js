@@ -16,7 +16,7 @@ test('Locations work', async () => {
     const webId = "test";
     const session = { info: { webId: "test" }};
 
-    const { getByRole } = render(<Provider store={store}><Location key={key} childKey={childKey} name={name} details={details} coords={coords} sess={session} webId={webId}/></Provider>);
+    const { getByRole } = render(<Provider store={store}><Location key={key} childKey={childKey} title={name} description={details} coords={coords} sess={session} webId={webId}/></Provider>);
 
     const button = getByRole("button", {name: "Open" });
 
@@ -47,7 +47,7 @@ test('Locations work', async () => {
     const webId = "test";
     const session = { info: { webId: "test" }};
 
-    const { getByRole } = render(<Provider store={store}><Location key={key} childKey={childKey} name={name} details={details} coords={coords} sess={session} webId={webId}/></Provider>);
+    const { getByRole } = render(<Provider store={store}><Location key={key} childKey={childKey} title={name} description={details} coords={coords} sess={session} webId={webId}/></Provider>);
 
     const button = getByRole("button", {name: "Open" });
 
