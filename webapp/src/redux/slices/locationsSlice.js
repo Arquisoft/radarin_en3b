@@ -39,6 +39,7 @@ const initialState = {
     error: null,
     locations: [],
     polyline: [],
+    legendAdded: false,
 };
 
 export const locationsSlice = createSlice({
@@ -59,6 +60,9 @@ export const locationsSlice = createSlice({
         },
         saveLastCoords: (state, action) => {
             state.lastCoords = action.payload;
+        },
+        setLegend: (state, action) => {
+            state.legendAdded = action.payload;
         }
     },
     extraReducers: {
@@ -90,6 +94,6 @@ export const locationsSlice = createSlice({
     }
 });
 
-export const { moveTo, setSearchText, setPolyline, saveNames, saveLastCoords } = locationsSlice.actions;
+export const { moveTo, setSearchText, setPolyline, saveNames, saveLastCoords, setLegend } = locationsSlice.actions;
 
 export default locationsSlice.reducer;

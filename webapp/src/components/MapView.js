@@ -9,9 +9,7 @@ import BlueIcon from "../img/marker-icon-blue.png";
 import GreenIcon from "../img/marker-icon-green.png";
 import Shadow from "../img/marker-shadow.png";
 import { useSession } from "@inrupt/solid-ui-react";
-import { saveLastCoords } from "../redux/slices/locationsSlice";
-
-let legendAdded = false;
+import { saveLastCoords, setLegend } from "../redux/slices/locationsSlice";
 
 export default function MapView() {
     const dispatch = useDispatch();
@@ -22,8 +20,23 @@ export default function MapView() {
     const polyline = useSelector((state) => state.locations.polyline);
     const [map, setMap] = useState(null);
     const locations = useSelector((state) => state.locations.locations);
+    const legendAdded = useSelector((state) => state.locations.legendAdded);
 
     let result;
+
+
+    function Legend() {
+        return (
+            <div className="legend">
+                <h4>Legend</h4>
+                <i style="background: #A000A2"></i><span>Friends\' locations</span><br></br>
+                <i style="background: #3C90CE"></i><span>Your own locations</span><br></br>
+                <i style="background: #00CB18"></i><span>Selected location</span><br></br>
+            </div>
+        )
+    };
+
+   
 
     var legend = L.control({ position: "bottomright" });
 
@@ -45,7 +58,7 @@ export default function MapView() {
                     duration: 1
                 });
                 if (!legendAdded) {
-                    legendAdded = true;
+                    dispatch(setLegend(true));
                     legend.addTo(map);
                 }
             }

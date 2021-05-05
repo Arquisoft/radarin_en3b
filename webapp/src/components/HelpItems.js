@@ -9,7 +9,7 @@ export const HelpItems = [
         title: "Locations page",
         className: "locationPage", 
         text: "Check our beautiful locations page",
-        fullText: "The list at the left part shows your locations are the locations of your friends. First, your created locations, after that, the created locations from your friends, and finally, your locations on the current day. If you click on a location, a marker is going to be shown on the map of the center part, and if you click on the date item of the list, a line is shown with the path you made during the day. Go find your friends!",
+        fullText: "The list at the left part shows your locations are the locations of your friends. First, your created locations, after that, the created locations from your friends, and finally, your locations on the current day. All markers are shown at the map with different colors. Blue for own locations, purple for friends' locations and green for selected location. If you click on a location, the marker referenciating that location is going to turn green and an animation with zoom towards it is going to be applied, and if you click on the date item of the list, a line is shown with the path you made during the day. Go find your friends!",
     },
     {
         title: "Login on mobile phone",
@@ -21,6 +21,6 @@ export const HelpItems = [
         title: "Upload a location",
         className: "uploadLocation", 
         text: "Learn to upload locations",
-        fullText: "From the mobile application, press the '+' button, fill the form with the name and the description of the location, and then pressing the upload button you will be redirected to an embedded browser where you can add a picture and upload a location.",
+        fullText: "From the mobile application, press the '+' button, fill the form with the name and the description of the location, and then pressing the upload button you will be redirected to an embedded browser where you can add a picture and upload a location. You will find more help on the mobile application. Go get it!",
     },
 ];
