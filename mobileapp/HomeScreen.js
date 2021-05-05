@@ -25,71 +25,23 @@ TaskManager.defineTask("friends", async () => {
 
         if (friends !== undefined && friends !== null) {
 
-          friends = new Array ();
-          friends.push({
-            "distance": 2,
-            "isClose": true,
-            "mapsUrl": "https://www.google.com/maps/dir/?api=1&destination=43.3540123,-5.8452292&travelmode=walking",
-            "name": "marcostobias",
-          });
-          friends.push({
-            "distance": 0,
-            "isClose": true,
-            "mapsUrl": "https://www.google.com/maps/dir/?api=1&destination=43.3540236,-5.8452448&travelmode=walking",
-            "name": "Carmen Rendueles",
-          });
-          friends.push({
-            "distance": 1339,
-            "isClose": false,
-            "mapsUrl": "https://www.google.com/maps/dir/?api=1&destination=43.3655436,-5.8500942&travelmode=walking",
-            "name": "Juan Rodríguez",
-          });
-          
-          console.log(friends);
           let friendsUpdated = await getFriends(await AsyncStorage.getItem("userId"));
 
-          friendsUpdated = new Array ();
-          
-          friendsUpdated.push({
-            "distance": 2,
-            "isClose": true,
-            "mapsUrl": "https://www.google.com/maps/dir/?api=1&destination=43.3540123,-5.8452292&travelmode=walking",
-            "name": "marcostobias",
-          });
-          friendsUpdated.push({
-            "distance": 0,
-            "isClose": true,
-            "mapsUrl": "https://www.google.com/maps/dir/?api=1&destination=43.3540236,-5.8452448&travelmode=walking",
-            "name": "Carmen Rendueles",
-          });
-          friendsUpdated.push({
-            "distance": 1339,
-            "isClose": true,
-            "mapsUrl": "https://www.google.com/maps/dir/?api=1&destination=43.3655436,-5.8500942&travelmode=walking",
-            "name": "Juan Rodríguez",
-          });
-        
+          console.log(friends);
           console.log(friendsUpdated);
-
+          
           if (friends.length > 0 && friends[0].distance != "No location"){
-            let newFriends = friendsUpdated.filter(friend => !(friends.some(f=>friend.webId===f.webId)));
-            console.log(newFriends);
             
-            if (newFriends.length > 0)
-              schedulePushNotificationFriends(newFriends);
+            if (friendsUpdated.length > friends.length)
+              schedulePushNotificationFriends();
 
               console.log("Background fetch friends executed");
 
             let closeFriends = friendsUpdated.filter(f => f.isClose);
-            console.log(closeFriends);
             let oldCloseFriends = friends.filter(f => f.isClose);
-            console.log(oldCloseFriends);
-
-            let newCloseFriends = closeFriends.filter(friend => !(oldCloseFriends.some(f=>friend.webId==f.webId)));
-            console.log(newCloseFriends);
             
-            if (newCloseFriends.length > 0){
-              schedulePushNotificationFriendsClose(newCloseFriends);
+            if (closeFriends.length > oldCloseFriends.length){
+              schedulePushNotificationFriendsClose();
             }
             console.log("Background fetch locations executed");
           }
