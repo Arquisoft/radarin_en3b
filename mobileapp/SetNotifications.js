@@ -17,20 +17,11 @@ export function setNotificationsBackground() {
 }
 
 export async function schedulePushNotificationFriendsClose(newFriends) {
-  console.log("Sending notification");
-  let friendsStr;
-  if (newFriends.length === 1) {
-    friendsStr = newFriends[0].name + " is now close to you.";
-  } else {
-    friendsStr = "";
-    newFriends.slice(0, newFriends.length - 2).forEach(friend => { friendsStr += `${friend.name}, `});
-    friendsStr
-            += `${newFriends[newFriends.length - 2].name} and ${newFriends[newFriends.length - 1].name} are now close to you.`;
-  }
+  
   await Notifications.scheduleNotificationAsync({
     content: {
       title: "New friends are close to you!",
-      body: friendsStr,
+      body: "Find out who :)",
       data: {data: "goes here"},
     },
     trigger: {seconds: 2},
@@ -40,20 +31,11 @@ export async function schedulePushNotificationFriendsClose(newFriends) {
 }
 
 export async function schedulePushNotificationFriends(newFriends) {
-  let friendsStr;
-  if (newFriends.length === 1) {
-    friendsStr = newFriends[0].name + " has started to use the app.";
-  } else {
-    friendsStr = "";
-    newFriends.slice(0, newFriends.length - 2).forEach(friend => { friendsStr += `${friend.name}, `});
-    friendsStr
-            += `${newFriends[newFriends.length - 2].name} and ${newFriends[newFriends.length - 1].name} have started to use the app.`;
-  }
 
   await Notifications.scheduleNotificationAsync({
     content: {
       title: "New friends have joined Radarin!",
-      body: friendsStr,
+      body: "Aren't you curious about who joined the app?",
       data: {data: "goes here"},
     },
     trigger: {seconds: 2},

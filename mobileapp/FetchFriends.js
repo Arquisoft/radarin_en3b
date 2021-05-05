@@ -4,7 +4,7 @@ import rdfStore from "./utils/RDFStore";
 import { getPreciseDistance } from "geolib";
 
 const MAX_DISTANCE = 2000; //Testing value, should be something like 2000m
-const MAX_TIME = 30000000000; //Testing value, should be something like 3600.000ms
+const MAX_TIME = 3600000; //Testing value, should be something like 3600.000ms
 
 export async function getFriends(webId) {
   //Get name and webId from friend
@@ -20,7 +20,6 @@ export async function getFriends(webId) {
 
   //calculate distance from friends
   let distances =  await getDistances(friends, locations);
-  console.log(distances);
   return distances;
 }
 

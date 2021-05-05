@@ -10,8 +10,8 @@ export default function MyFarFriendsCard() {
 
     let farFriends = [];
 
-    if (friends !== "No location")
-        farFriends = friends.filter(friend => !friend.isClose);
+    if (friends !== undefined && friends !== null && friends.length > 0)
+        farFriends = friends?.filter(friend => !friend.isClose);
 
     const shareApp = async () => {
         try {
@@ -24,7 +24,7 @@ export default function MyFarFriendsCard() {
         }
     };
 
-    if (friends.length === 0 || friends === "No location") {
+    if (friends !== undefined && friends !== null && friends.length === 0) {
         return (
             <Card containerStyle={styles.nofriendscard}>
                 <Card.Title style={styles.cardTitle}>Seems like you don't have any friend that uses Radarin.</Card.Title>
