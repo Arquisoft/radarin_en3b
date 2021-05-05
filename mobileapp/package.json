@@ -5,13 +5,12 @@
     "version": "1.0.0",
     "slug": "radarin",
     "ios": {
-      "bundleIdentifier": "com.uniovi.radarin.en3b",
+      "bundleIdentifier": "com.uniovi.radarin",
       "buildNumber": "1.0.0"
     },
     "android": {
-      "package": "com.uniovi.radarin.en3b",
-      "permissions": ["CAMERA","ACCESS_COARSE_LOCATION","ACCESS_FINE_LOCATION","ACCESS_BACKGROUND_LOCATION"],
-      "versionCode": 1
+      "package": "com.uniovi.radarin",
+       "versionCode": 1
     }
   },
   "main": "node_modules/expo/AppEntry.js",

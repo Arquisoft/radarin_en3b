@@ -12,6 +12,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { changeLocationEnabled } from "./redux/slices/LocationsSlice";
 import { backToIdle } from "./redux/slices/userSlice";
 import * as Location from "expo-location";
+import * as Notifications from 'expo-notifications';
 
 export default function LoginScreen({ navigation, route }) {
 
@@ -63,6 +64,7 @@ export default function LoginScreen({ navigation, route }) {
         const { status } = await BarCodeScanner.requestPermissionsAsync();
         setHasCameraPermission(status == "granted");
         Location.requestBackgroundPermissionsAsync();
+        Notifications.requestPermissionsAsync();
       })();
   }, [navigation]);
   

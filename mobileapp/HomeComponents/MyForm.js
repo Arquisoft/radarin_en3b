@@ -6,6 +6,7 @@ import { getLocation } from "../GetLocation";
 import * as WebBrowser from "expo-web-browser";
 import { useDispatch } from "react-redux";
 import { changeOverlayVisible } from "../redux/slices/executingSlice";
+import { showMessage } from "react-native-flash-message";
 
 export default function MyForm() {
   
@@ -20,12 +21,22 @@ export default function MyForm() {
       };
   
       const coords = await getLocation();
-      let uri = "uploadLocation?title=" + title + "&comment=" + comment + "&lat=" + coords.coords.latitude + "&long=" + coords.coords.longitude;
+
+      if (coords == "No location"){
+        showMessage({
+          message: "You location is not been taken",
+          description: "Sorry, you can't upload your location because it is not being taken, please enable it.",
+          type: "info",
+          duration: 20000,
+        });
+      } else {
+        let uri = "uploadLocation?title=" + title + "&comment=" + comment + "&lat=" + coords.coords.latitude + "&long=" + coords.coords.longitude;
   
-      let result = await WebBrowser.openBrowserAsync("https://radarinen3bwebapp.herokuapp.com/#/" + uri, browserParams);
-      setResult(result);
-  
-      dispatch(changeOverlayVisible());
+        let result = await WebBrowser.openBrowserAsync("https://radarinen3bwebapp.herokuapp.com/#/" + uri, browserParams);
+        setResult(result);
+    
+        dispatch(changeOverlayVisible());
+      }
       
     };
   

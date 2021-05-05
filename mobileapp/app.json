@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "mobileapp",
-    "slug": "mobileapp",
+    "name": "Radarin",
+    "slug": "Radarin",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -24,7 +24,8 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       },
-      "package": "com.uniovi.radarin"
+      "package": "com.uniovi.radarin",
+      "googleServicesFile": "./google-services.json"
     },
     "web": {
       "favicon": "./assets/favicon.png"

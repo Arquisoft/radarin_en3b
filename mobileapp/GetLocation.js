@@ -6,7 +6,7 @@ export async function getLocation() {
   console.log("Takeloc"+takeLocation)
   let status = await Location.hasServicesEnabledAsync();
   if (takeLocation === "true" && status){
-    return await Location.getCurrentPositionAsync();
+    return await Location.getLastKnownPositionAsync();
   }
   else{
     return "No location";
