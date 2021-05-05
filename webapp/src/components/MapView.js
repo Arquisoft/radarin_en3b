@@ -44,6 +44,7 @@ export default function MapView() {
         }
     });
 
+    console.log(locations);
     const namesSplitted = names?.split('$');
 
     var purpleIcon = L.icon({
