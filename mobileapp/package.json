@@ -3,13 +3,14 @@
     "name": "Radarin",
     "icon": "./assets/icon.png",
     "version": "1.0.0",
-    "slug": "your-app-slug",
+    "slug": "radarin",
     "ios": {
-      "bundleIdentifier": "radarinen3b.uniovi",
+      "bundleIdentifier": "com.uniovi.radarin.en3b",
       "buildNumber": "1.0.0"
     },
     "android": {
-      "package": "radarinen3b.uniovi",
+      "package": "com.uniovi.radarin.en3b",
+      "permissions": ["CAMERA","ACCESS_COARSE_LOCATION","ACCESS_FINE_LOCATION","ACCESS_BACKGROUND_LOCATION"],
       "versionCode": 1
     }
   },

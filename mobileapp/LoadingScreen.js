@@ -35,13 +35,6 @@ export default function LoadingScreen({ route, navigation }) {
       dispatch(fetchProfile(webId));
     }
 
-    //The switch is turned off on profile page
-    if (!locationStatus) {
-      dispatch(setFriends("No location"));
-      navigation.navigate("Radarin");
-
-      //the switch is on
-    } else {
       //load friends once
       if (friendsStatus === "idle") {
         dispatch(fetchFriendsWithDistance(webId));
@@ -80,7 +73,6 @@ export default function LoadingScreen({ route, navigation }) {
           });
         }
       }
-    }
   });
 
   return (

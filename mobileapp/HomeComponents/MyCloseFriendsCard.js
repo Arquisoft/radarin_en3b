@@ -12,7 +12,7 @@ export default function MyCloseFriendsCard({ navigation }) {
 
     console.log(friends);
     if (friends !== null && friends[0].distance !== "No location")
-        closeFriends = friends.filter(friend => friend.isClose);
+        closeFriends = friends?.filter(friend => friend.isClose);
 
 
     if (friends[0].distance == "No location") {

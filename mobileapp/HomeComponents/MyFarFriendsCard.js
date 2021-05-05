@@ -11,7 +11,7 @@ export default function MyFarFriendsCard() {
     let farFriends = [];
 
     if (friends !== "No location")
-        farFriends = friends.filter(friend => !friend.isClose);
+        farFriends = friends?.filter(friend => !friend.isClose);
 
     const shareApp = async () => {
         try {
