@@ -17,9 +17,6 @@
 
 |
 
-|Code debts
-|Description
-
 |The team is not familiar with Solid
 |Practising and asking the teacher for advise and personal research.
 
@@ -28,13 +25,10 @@
 
 
 |Design debts
-|Description
+|Try to plan long term for discovering problems that may come later with the use of certain patterns or libraries, as this would make us change code that was developed early on, that we probably don't remember much.
 
 |Uncertain know of parts of the application
 |Some parts can be consfusing and we are not quite experienced with the design of big projects, which means that we may need to adapt the design to our needs.
-
-|Test debts
-|Description
 
 |Few testing experience
 |As mentioned before, some test scenarios can be tested but being a huge project we may won't be able to fully test the application.
