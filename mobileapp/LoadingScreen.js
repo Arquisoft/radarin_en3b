@@ -59,9 +59,9 @@ export default function LoadingScreen({ route, navigation }) {
       else if (friendsStatus === "failed" || refreshStatus === "failed") {
         if (friendsError === 'JSON Parse error: Unexpected identifier "Unauthorized"'
           || refreshError === 'JSON Parse error: Unexpected identifier "Unauthorized"') {
+            console.log("entra");
           dispatch(setScanned(false));
           stopLocationAsync();
-          dispatch(doOnce());
           BackgroundFetch.unregisterTaskAsync("friends");
           navigation.navigate("Login", { qrUpdatedFlag: true, showSc: false });
           showMessage({
