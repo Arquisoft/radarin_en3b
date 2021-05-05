@@ -69,7 +69,7 @@ test("testing location fetching 4", async () => {
 
     const result = await fetchDBLocations({ info: { webId: "test" }});
 
-    expect(result).toStrictEqual([]);
+    expect(result).toStrictEqual("blocked");
 });
 
 test("testing location fetching 5", async () => {
