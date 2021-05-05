@@ -96,7 +96,7 @@ function LoginPage(props) {
                 <Typography variant="body2" component="p" className="text-center">
           Don't have one? You can get it here: <Link className="ml-1" href="https://inrupt.com/" target="_blank"><strong>Inrupt</strong></Link>
                 </Typography>
-                <LoginButton oidcIssuer="https://solidcommunity.net" redirectUrl={ redirectUrl }>
+                <LoginButton oidcIssuer={idp} redirectUrl={ redirectUrl }>
                     <Button id="SignInButton" data-testid="button" color="primary" variant="contained" className={classes.signIn} onClick={callback}>Sign In</Button>
                 </LoginButton>
             </CardActions>
