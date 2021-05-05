@@ -16,7 +16,7 @@ const auth = async function (req, res, next) {
 
     const decodedToken = jwt.decode(token);
 
-    if (decodedToken?.webid == null)
+    if (decodedToken == null || decodedToken.webid == null)
     {return res.sendStatus(401);}
 
     req.claims = {webid: decodedToken.webid};

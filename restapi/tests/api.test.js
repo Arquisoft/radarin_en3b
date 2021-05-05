@@ -123,12 +123,14 @@ describe("Locations saving and fetching", () => {
     });
 
     it("Empty list if no locations", async () => {
-        let response = await request(app).get(`/api/locations?webId=${encodeURIComponent(adminWebId)}`).set("authorization", buildTestToken(adminWebId));
+        const response = await request(app)
+            .get(`/api/locations?webId=${encodeURIComponent(adminWebId)}`).set("authorization", buildTestToken(adminWebId));
         expect(response.body.length).toBe(0);
         expect(response.statusCode).toBe(200);
-        response = await request(app).get(`/api/locations?webId=${encodeURIComponent(adminWebId)}?last=true`).set("authorization", buildTestToken(adminWebId));
-        expect(response.body.length).toBe(0);
-        expect(response.statusCode).toBe(200);
+        const response2 = await request(app).get(`/api/locations?webId=${encodeURIComponent(adminWebId)}?last=true`)
+            .set("authorization", buildTestToken(adminWebId));
+        expect(response2.body.length).toBe(0);
+        expect(response2.statusCode).toBe(200);
     });
 
     it("Throws an error when not passing query parameter", async () => {
@@ -222,7 +224,7 @@ describe("Admin endpoints testing", () => {
         expect(response.statusCode).toBe(401);
     });
 
-    it("Test that there's no problem in banning an already banned user", async ()=>{
+    it("Test that there's no problem in banning an already banned user", async () => {
         const firstRequest = await request(app).post("/admin/blacklist")
             .send({webId: carmenWebId})
             .set("Accept", "application/json").set("authorization", buildTestToken(adminWebId));
