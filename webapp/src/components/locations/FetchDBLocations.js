@@ -39,6 +39,9 @@ export default async function fetchDBLocations(session) {
         Api.setIdentity(webId, aux);
 
         l = await Api.getLocations();
+
+        if(l === "401")
+            return "blocked";
     } catch (err) {
         return [];
     }

@@ -20,12 +20,16 @@ async function getLocations(session) {
     let podFriendsLocations = await fetchPodFriendsCreatedLocations(session, [ podLocations[podLocations.length - 1]?.id ?? 0]);
 
 
+    if (apiLocations === "blocked")
+        return [{ type: "poly", id: 1, name: "You are blocked by the administrator", details: "System", coords: [[0, 0]] }];
+
+    if(apiLocations.length === 0)
+        return [{ type: "poly", id: 1, name: "You dont have any locations", details: "Add some from the mobile!", coords: [[0, 0]] }];
+
     const result = podLocations.concat(podFriendsLocations).concat(apiLocations);
 
-    if(result.length === 0)
-    {return [{ type: "poly", id: 1, name: "You dont have any locations", details: "Add some from the mobile!", coords: [[0, 0]] }];}
-    else
-    {return result;}
+
+    return result;
 }
 
 

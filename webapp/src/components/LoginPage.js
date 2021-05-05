@@ -58,7 +58,7 @@ function LoginPage(props) {
     {redirectUrl = window.location.origin.concat("#" + props.redirectUrl);}
 
     const classes = useStyles();
-    const [idp, setIdp] = useState(0);
+    const [idp, setIdp] = useState("https://inrupt.net");
     const dispatch = useDispatch();
 
     const providers = [

@@ -31,7 +31,11 @@ class API {
         const encodedWebId = encodeURIComponent(this._webId);
         const response = await fetch(`${this.apiEndPoint}/locations?webId=${encodedWebId}`,
             { method: "GET", headers: this.buildHeaders() });
-        return await response.json();
+
+        if(response.status === 401)
+            return "401";
+        else
+            return await response.json();
     }
 
     async getUsers() {
