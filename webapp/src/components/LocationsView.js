@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
     drawerPaper: {
         width: drawerWidth,
         marginTop: "4.2em",
-        height: "calc(100% - 8.2em)",
+        height: "calc(100% - 4.2em)",
         position: "absolute",
         "z-index": "9",
     },
