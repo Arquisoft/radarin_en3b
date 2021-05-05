@@ -12,7 +12,7 @@ const carmenWebId = "https://carmen279.inrupt.net/profile/card#me";
 const radarinFriends = [carmenWebId];
 const carmenFriends = [adminWebId];
 const requejoFriends = [];
-const privateKey = "-----BEGIN RSA PRIVATE KEY-----\n" +
+const prKey = "-----BEGIN RSA PRIVATE KEY-----\n" +
     "MIICXQIBAAKBgQCC7q2NLt0Yveri2iq0ML8r2Thajzi0zZgVpZqO/60RQwamZv1NVaSWPntc\n" +
     "F5fFN3bUAEPmtCTy0GPgw6Kv/k9g3RgKNuJoV7NFXi6v0K+e5AxZh1uTgc7cleBYAiWR5AUD\n" +
     "5MGbFlftWabyERope2s4cLmkG/tFBMpEOcLncN8ZTQIDAQABAoGARAQzWh1XM+ws4e3Ns0+D\n" +
@@ -35,11 +35,12 @@ const pKey = "-----BEGIN RSA PUBLIC KEY-----\n" +
 
 let app;
 
-function buildTestToken(webId) {
-    const payload = {
+function buildTestToken({
+    webId = adminWebId, payload = {
         sub: "test",
         webid: webId
-    };
+    }, privateKey = prKey
+}) {
     return "Bearer " + jwt.sign(payload, privateKey, {algorithm: "RS256", noTimestamp: true});
 }
 
@@ -47,15 +48,15 @@ jest.mock("../utils/fetchFriends");
 
 jest.mock("../utils/fetchPKey");
 fetchFriends.mockImplementation((webId) => {
-    switch (webId) {
-    case nonAdded:
-        return requejoFriends;
-    case carmenWebId:
-        return carmenFriends;
-    case adminWebId:
-        return radarinFriends;
+        switch (webId) {
+        case nonAdded:
+            return requejoFriends;
+        case carmenWebId:
+            return carmenFriends;
+        case adminWebId:
+            return radarinFriends;
+        }
     }
-}
 );
 fetchPKey.mockReturnValue(pKey);
 beforeAll(async () => {
@@ -98,6 +99,7 @@ describe("Locations saving and fetching", () => {
         longitude: 33.631839,
         speed: null
     };
+
     it("Can be created correctly", async () => {
         const response = await request(app).post("/api/locations")
             .send({webId: adminWebId, coords, timestamp})
@@ -107,6 +109,7 @@ describe("Locations saving and fetching", () => {
         expect(response.body.coords.latitude).toBe(coords.latitude);
         expect(response.body.timestamp).toBe(timestamp);
     });
+
     it("Can be listed", async () => {
         await request(app).post("/api/locations")
             .send({webId: adminWebId, coords, timestamp})
@@ -118,6 +121,16 @@ describe("Locations saving and fetching", () => {
         expect(last.timestamp).toBe(timestamp);
         expect(response.statusCode).toBe(200);
     });
+
+    it("Empty list if no locations", async () => {
+        let response = await request(app).get(`/api/locations?webId=${encodeURIComponent(adminWebId)}`).set("authorization", buildTestToken(adminWebId));
+        expect(response.body.length).toBe(0);
+        expect(response.statusCode).toBe(200);
+        response = await request(app).get(`/api/locations?webId=${encodeURIComponent(adminWebId)}?last=true`).set("authorization", buildTestToken(adminWebId));
+        expect(response.body.length).toBe(0);
+        expect(response.statusCode).toBe(200);
+    });
+
     it("Throws an error when not passing query parameter", async () => {
         await request(app).get("/api/locations")
             .send({webId: adminWebId, coords, timestamp})
@@ -125,6 +138,7 @@ describe("Locations saving and fetching", () => {
         const response = await request(app).get("/api/locations").set("authorization", buildTestToken(adminWebId));
         expect(response.statusCode).toBe(400);
     });
+
     it("Gets ONLY a single (the last) location", async () => {
         await request(app).post("/api/locations")
             .send({webId: adminWebId, coords, timestamp})
@@ -202,8 +216,28 @@ describe("Admin endpoints testing", () => {
         await request(app).post("/admin/blacklist")
             .send({webId: adminWebId})
             .set("Accept", "application/json").set("authorization", buildTestToken(adminWebId));
+
+        //Test that we are, indeed, banned
         const response = await request(app).get("/admin/users");
         expect(response.statusCode).toBe(401);
+    });
+
+    it("Test that there's no problem in banning an already banned user", async ()=>{
+        const firstRequest = await request(app).post("/admin/blacklist")
+            .send({webId: carmenWebId})
+            .set("Accept", "application/json").set("authorization", buildTestToken(adminWebId));
+        expect(firstRequest.statusCode).toBe(200);
+        const repeatedRequest = await request(app).post("/admin/blacklist")
+            .send({webId: carmenWebId})
+            .set("Accept", "application/json").set("authorization", buildTestToken(adminWebId));
+        expect(repeatedRequest.statusCode).toBe(200);
+    });
+
+    it("Can't use ban endpoint with empty body", async () => {
+        const response = await request(app).post("/admin/blacklist")
+            .send({})
+            .set("Accept", "application/json").set("authorization", buildTestToken(adminWebId));
+        expect(response.statusCode).toBe(400);
     });
 
     it("Shows banned users", async () => {
@@ -214,6 +248,11 @@ describe("Admin endpoints testing", () => {
         expect(response.statusCode).toBe(200);
         const bannedUser = response.body[0];
         expect(bannedUser.webId).toBe(carmenWebId);
+    });
+
+    it("Can get list of banned users if empty", async () => {
+        const response = await request(app).get("/admin/blacklist").set("authorization", buildTestToken(adminWebId));
+        expect(response.statusCode).toBe(200);
     });
 
     it("Can unban someone", async () => {
@@ -228,5 +267,42 @@ describe("Admin endpoints testing", () => {
         expect(deleteRequest.statusCode).toBe(204);
         const response2 = await request(app).get("/admin/blacklist").set("authorization", buildTestToken(adminWebId));
         expect(response2.body.length).toBe(0);
+    });
+
+    it("Can't unban someone who is not banned", async () => {
+        const deleteRequest = await request(app).delete(`/admin/blacklist/${encodeURIComponent(carmenWebId)}`).set("authorization", buildTestToken(adminWebId));
+        expect(deleteRequest.statusCode).toBe(404);
+    });
+});
+
+describe("Auth limit testing", () => {
+
+    it("Send request with no auth header", async () => {
+        const response = await request(app).get(`/api/locations?webId=${encodeURIComponent(adminWebId)}`);
+        expect(response.statusCode).toBe(401);
+    });
+
+    it("Test with bad prefix token", async () => {
+        const response = await request(app).get(`/api/locations?webId=${encodeURIComponent(adminWebId)}`).set("authorization", "BearerFakeToken");
+        expect(response.statusCode).toBe(401);
+    });
+
+    it("Test with invalid token", async () => {
+        const response = await request(app).get(`/api/locations?webId=${encodeURIComponent(adminWebId)}`).set("authorization", "Bearer InvalidTest");
+        expect(response.statusCode).toBe(401);
+    });
+
+    it("Test with no webId claim", async () => {
+        const response = await request(app).get(`/api/locations?webId=${encodeURIComponent(adminWebId)}`)
+            .set("authorization", buildTestToken({
+                payload: {sub: "test"}
+            }));
+        expect(response.statusCode).toBe(401);
+    });
+
+    it("Test with wrong key", async () => {
+        const response = await request(app).get(`/api/locations?webId=${encodeURIComponent(adminWebId)}`)
+            .set("authorization", buildTestToken({privateKey: prKey.replace("0", "1")}));
+        expect(response.statusCode).toBe(401);
     });
 });

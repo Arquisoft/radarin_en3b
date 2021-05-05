@@ -1,30 +1,78 @@
-import { getDistances, getFriendsLocation } from "./FriendsLocation";
+import { getFriendsLocation } from "./FriendsLocation";
+import { getLocation } from "./GetLocation";
 import rdfStore from "./utils/RDFStore";
+import { getPreciseDistance } from "geolib";
+
+const MAX_DISTANCE = 2000; //Testing value, should be something like 2000m
+const MAX_TIME = 30000000000; //Testing value, should be something like 3600.000ms
 
 export async function getFriends(webId) {
-  const friends = await rdfStore.getFriends(webId);
+  //Get name and webId from friend
 
-  //TODO: do it only once
+  let friends = await rdfStore.getFriends(webId);
+
+  //get their location
   const locations = await getFriendsLocation(friends);
 
-  return friends?.filter(friend => locations.some(location => location[0] == friend.webId));
+  
+  //filter the friends that have a location, hence that uses the app
+  friends = friends?.filter(friend => locations.some(location => location[0] == friend.webId));
+
+  //calculate distance from friends
+  let distances =  await getDistances(friends, locations);
+  console.log(distances);
+  return distances;
 }
 
-export async function getFriendsWithDistance(friends) {
-  const friendsWithDistance = await getDistances(friends);
+export async function getDistances(friends, locations) {
+  //Get our location for calculating distances
+  const myLocation = await getLocation();
+  
+  let res;
+  //If my location null, we dont have permission, return
+  if (myLocation == "No location") {
+     //Map friends
+    res = locations.map(location => ({
+      //we try to get the name, if it does not exist we grab the webId
+      name: friends?.filter(friend => friend.webId === location[1].webId)[0].fn ?? location[1].webId.split("//")[1].split(".")[0],
+      distance: "No location",
+      isClose: false,
+      mapsUrl: getMapsUrl(location[1])
+    }));
 
-  if (friendsWithDistance == "No location") {
-    return friendsWithDistance;
+  } else {
+     //Map friends
+    res = locations.map(location => ({
+      //we try to get the name, if it does not exist we grab the webId
+      name: friends?.filter(friend => friend.webId === location[1].webId)[0].fn ?? location[1].webId.split("//")[1].split(".")[0],
+      distance: calculateDistance(location[1], myLocation),
+      isClose: isClose(myLocation, location),
+      mapsUrl: getMapsUrl(location[1])
+    }));
   }
 
-  return getNames(friends, friendsWithDistance);
+  return res;
 }
 
-export const getFriendsNames = (friends) => friends?.map(f => f.fn ?? f.webId);
+//gets maps url, even if the friend is far and we are not going to use it
+function getMapsUrl(coordinates) {
+  const lat = coordinates.coords.latitude;
+  const long = coordinates.coords.longitude;
+  return "https://www.google.com/maps/dir/?api=1&destination=".concat(lat).concat(",").concat(long).concat("&travelmode=walking");
+}
 
+//calculates distance between two locations
+function calculateDistance(friendLoc, myLoc) {
+  return getPreciseDistance(
+    { latitude: friendLoc.coords.latitude, longitude: friendLoc.coords.longitude },
+    { latitude: myLoc.coords.latitude, longitude: myLoc.coords.longitude }
+  );
+}
 
-const getNames = (friends, friendsWithDistance) => friends?.filter(friend => friendsWithDistance?.has(friend.webId))
-  .reduce((map, x) => ({
-    ...map,
-    [x.fn ?? x.webId]: { value: friendsWithDistance.get(x.webId).value, mapsUrl: friendsWithDistance.get(x.webId).mapsUrl }
-  }), {});
+//returns true if the locations are close in distance and time
+function isClose(myLocation, location) {
+  const date = Date.now();
+  const distance = calculateDistance(location[1], myLocation);
+
+  return (date - location[1].timestamp) < MAX_TIME && distance <= MAX_DISTANCE;
+}

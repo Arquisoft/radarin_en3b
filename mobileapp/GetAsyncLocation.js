@@ -2,9 +2,10 @@ import * as Location from "expo-location";
 import {sendLocation} from "./SendLocation";
 import * as TaskManager from "expo-task-manager";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { showMessage } from "react-native-flash-message";
 
-const fiveMin = 300000; //minumum interval of time to send the location -> 5 min
-const minDistance = 500; //minimum interval of distance to send the location -> 500 m
+const fiveMin = 10000; //minumum interval of time to send the location -> 5 min
+const minDistance = 0; //minimum interval of distance to send the location -> 500 m
 
 const optionsAndroid = {
   accuracy: Location.LocationAccuracy.High,
@@ -16,34 +17,41 @@ const optionsAndroid = {
   }
 };
 
-export async function getLocationAsync() {
-  let status = await Location.requestBackgroundPermissionsAsync();
-  let errorMsg;
-  let backgroundLocation = await Location.hasStartedLocationUpdatesAsync("backgroundLocations");
-  let savedState = await AsyncStorage.getItem("backgroundLocations");
-
-  if (status.status !== "granted") {
-    errorMsg = "Permission to access location was denied";
-    alert(errorMsg);
+TaskManager.defineTask("backgroundLocations", ({ data: { locations }, error }) => {
+  if (error) {
     return;
   }
+  sendLocation(locations[locations.length - 1].coords, locations[locations.length - 1].timestamp);
+});
 
-  if (savedState === "active") {
-    if (!backgroundLocation) {
-      Location.startLocationUpdatesAsync("backgroundLocations", optionsAndroid);
-      TaskManager.defineTask("backgroundLocations", ({ data: { locations }, error }) => {
-        if (error) {
-          return;
-        }
-        sendLocation(locations[locations.length - 1].coords, locations[locations.length - 1].timestamp);
-      });
-    }
-  } else {
-    if (backgroundLocation) {
-      Location.stopLocationUpdatesAsync("backgroundLocations").then(() => {}).catch(() => {}); //TODO: proper handle
-    }
+export async function getLocationAsyncStatus() {
+  return await Location.hasStartedLocationUpdatesAsync("backgroundLocations");
+}
+
+export async function startLocationAsync() {
+  let permissions = await Location.requestBackgroundPermissionsAsync();
+  let status = await Location.hasServicesEnabledAsync(); // this returns the real state if the request permissions have been granted
+  if (status && permissions.status === "granted") {
+    Location.startLocationUpdatesAsync("backgroundLocations", optionsAndroid); 
+  }
+  else if (!status && permissions.status === "granted") {
+    showMessage({
+      message: "The location permissions are not enabled",
+      description: "Please, enable them manually or the application won't work",
+      type: "info",
+      duration: 15000,
+    });
   }
   return;
+}
+
+export async function getServicesEnabled(params) {
+  return await Location.hasServicesEnabledAsync();
+}
+
+export async function stopLocationAsync() {
+  if (await getLocationAsyncStatus())
+    Location.stopLocationUpdatesAsync("backgroundLocations").then(() => console.log("Stop location taking"));
 }
 
 export async function getLocation() {

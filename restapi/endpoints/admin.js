@@ -92,15 +92,13 @@ router.get("/blacklist", async (req, res) => {
  *         description: The user is banned or was already banned
  */
 router.post("/blacklist", async (req, res) => {
-    if (req.body.webId == null)
-    {return res.sendStatus(400);}
+    if (req.body.webId == null) { return res.sendStatus(400); }
 
     // false positive
     // eslint-disable-next-line
-    if (await Blacklisted.exists({webId: req.body.webId}))
-    {return res.sendStatus(200);}
+    if (await Blacklisted.exists({ webId: req.body.webId })) { return res.sendStatus(200); }
 
-    const blacklisted = new Blacklisted({webId: req.body.webId});
+    const blacklisted = new Blacklisted({ webId: req.body.webId });
     await blacklisted.save();
     res.sendStatus(200);
 });
@@ -127,7 +125,7 @@ router.post("/blacklist", async (req, res) => {
  */
 router.delete("/blacklist/:id", async (req, res) => {
     const webId = req.params.id;
-    const d = await Blacklisted.deleteOne({webId});
+    const d = await Blacklisted.deleteOne({ webId });
     return d.deletedCount > 0 ?
         res.sendStatus(204) :
         res.sendStatus(404);

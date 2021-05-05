@@ -28,7 +28,6 @@ export default async function postLocation(session, title, description, photo, c
 
     let photoName = "";
     
-
     if (photo !== null) {
         photoName = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
         await overwriteFile(
