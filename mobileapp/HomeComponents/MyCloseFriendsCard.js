@@ -10,7 +10,6 @@ export default function MyCloseFriendsCard({ navigation }) {
 
     let closeFriends = [];
 
-    console.log(friends);
     if (friends !== undefined && friends !== null  && friends.length > 0 && friends[0].distance !== "No location")
         closeFriends = friends?.filter(friend => friend.isClose);
 

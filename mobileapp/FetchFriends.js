@@ -20,7 +20,6 @@ export async function getFriends(webId) {
 
   //calculate distance from friends
   let distances =  await getDistances(friends, locations);
-  console.log(distances);
   return distances;
 }
 
