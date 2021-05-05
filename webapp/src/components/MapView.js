@@ -1,54 +1,36 @@
-import { Divider, Typography } from "@material-ui/core";
-import React, { useEffect, useState } from "react";
-import { MapContainer, TileLayer, Marker, Polyline, Popup } from "react-leaflet";
+import {Divider, Typography} from "@material-ui/core";
+import React, {useEffect, useState} from "react";
+import {MapContainer, TileLayer, Marker, Polyline, Popup} from "react-leaflet";
 import "react-leaflet/";
-import { useDispatch, useSelector } from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import L from "leaflet";
 import PurpleIcon from "../img/marker-icon-purple.png";
 import BlueIcon from "../img/marker-icon-blue.png";
 import GreenIcon from "../img/marker-icon-green.png";
 import Shadow from "../img/marker-shadow.png";
-import { useSession } from "@inrupt/solid-ui-react";
-import { saveLastCoords, setLegend } from "../redux/slices/locationsSlice";
+import {useSession} from "@inrupt/solid-ui-react";
+import {saveLastCoords} from "../redux/slices/locationsSlice";
 
 export default function MapView() {
     const dispatch = useDispatch();
-    const { session } = useSession();
+    const {session} = useSession();
     const coordinates = useSelector((state) => state.locations.coordinates);
     const lastCoords = useSelector((state) => state.locations.lastCoords);
     const names = useSelector((state) => state.locations.names);
     const polyline = useSelector((state) => state.locations.polyline);
     const [map, setMap] = useState(null);
     const locations = useSelector((state) => state.locations.locations);
-    const legendAdded = useSelector((state) => state.locations.legendAdded);
 
     let result;
 
-
-    function Legend() {
-        return (
-            <div className="legend">
-                <h4>Legend</h4>
-                <i style="background: #A000A2"></i><span>Friends\' locations</span><br></br>
-                <i style="background: #3C90CE"></i><span>Your own locations</span><br></br>
-                <i style="background: #00CB18"></i><span>Selected location</span><br></br>
-            </div>
-        )
-    };
-
-   
-
-    var legend = L.control({ position: "bottomright" });
-
-    legend.onAdd = function (map) {
-        var div = L.DomUtil.create("div", "legend");
-        div.innerHTML += "<h4>Legend</h4>";
-        div.innerHTML += '<i style="background: #A000A2"></i><span>Friends\' locations</span><br>';
-        div.innerHTML += '<i style="background: #3C90CE"></i><span>Your own locations</span><br>';
-        div.innerHTML += '<i style="background: #00CB18"></i><span>Selected location</span><br>';
-
-        return div;
-    };
+    const legend = function () {
+        return (<div className="legend leaflet-bottom leaflet-right">
+            <h4>Legend</h4>
+            <i className="friendsIcon"/><span>Friend's locations</span><br/>
+            <i className="ownIcon"/><span>Your own locations</span><br/>
+            <i className="selectedIcon"/><span>Selected location</span><br/>
+        </div>);
+    }
 
     useEffect(() => {
         if (map) {
@@ -57,10 +39,6 @@ export default function MapView() {
                     animate: true,
                     duration: 1
                 });
-                if (!legendAdded) {
-                    dispatch(setLegend(true));
-                    legend.addTo(map);
-                }
             }
             dispatch(saveLastCoords(coordinates));
         }
@@ -112,41 +90,43 @@ export default function MapView() {
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                 />
                 {locations.length !== 0 && names !== "" &&
-                    locations.filter((location) => (location.type !== "poly")).map((location) => {
-                        return (
-                            <Marker position={location.coords[0]} key={location.id} icon={location.webId !== session.info.webId ? purpleIcon : blueIcon}>
-                                <Popup className="popup">
-                                    <Typography variant="h6" component="h6">
-                                        {location.name}
-                                    </Typography>
-                                    <Divider />
-                                    <Typography>
-                                        {location.details}
-                                    </Typography>
-                                    <Typography>
-                                        Author: {location.webId.split("//")[1].split(".")[0]}
-                                    </Typography>
-                                </Popup>
-                            </Marker>
-                        )
-                    })}
+                locations.filter((location) => (location.type !== "poly")).map((location) => {
+                    return (
+                        <Marker position={location.coords[0]} key={location.id}
+                                icon={location.webId !== session.info.webId ? purpleIcon : blueIcon}>
+                            <Popup className="popup">
+                                <Typography variant="h6" component="h6">
+                                    {location.name}
+                                </Typography>
+                                <Divider/>
+                                <Typography>
+                                    {location.details}
+                                </Typography>
+                                <Typography>
+                                    Author: {location.webId.split("//")[1].split(".")[0]}
+                                </Typography>
+                            </Popup>
+                        </Marker>
+                    )
+                })}
                 {names !== "" &&
-                    < Marker position={coordinates} icon={greenIcon}>
-                        <Popup className="popup">
-                            <Typography variant="h6" component="h6">
-                                {namesSplitted[0]}
-                            </Typography>
-                            <Divider />
-                            <Typography>
-                                {namesSplitted[1]}
-                            </Typography>
-                            <Typography>
-                                Author: {namesSplitted[2].split("//")[1].split(".")[0]}
-                            </Typography>
-                        </Popup>
-                    </Marker>
+                < Marker position={coordinates} icon={greenIcon}>
+                    <Popup className="popup">
+                        <Typography variant="h6" component="h6">
+                            {namesSplitted[0]}
+                        </Typography>
+                        <Divider/>
+                        <Typography>
+                            {namesSplitted[1]}
+                        </Typography>
+                        <Typography>
+                            Author: {namesSplitted[2].split("//")[1].split(".")[0]}
+                        </Typography>
+                    </Popup>
+                </Marker>
                 }
-            </MapContainer >);
+                {legend()}
+            </MapContainer>);
     } else {
         result = (
             <MapContainer
@@ -168,6 +148,7 @@ export default function MapView() {
                     opacity={0.7}
                     smoothFactor={1}
                 />
+                {legend()}
             </MapContainer>);
     }
 
