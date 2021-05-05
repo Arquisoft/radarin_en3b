@@ -103,7 +103,7 @@ describe("Locations saving and fetching", () => {
     it("Can be created correctly", async () => {
         const response = await request(app).post("/api/locations")
             .send({webId: adminWebId, coords, timestamp})
-            .set("Accept", "application/json").set("authorization", buildTestToken(adminWebId));
+            .set("Accept", "application/json").set("authorization", buildTestToken({webId: adminWebId}));
         expect(response.statusCode).toBe(200);
         expect(response.body.webId).toBe(adminWebId);
         expect(response.body.coords.latitude).toBe(coords.latitude);
@@ -113,8 +113,8 @@ describe("Locations saving and fetching", () => {
     it("Can be listed", async () => {
         await request(app).post("/api/locations")
             .send({webId: adminWebId, coords, timestamp})
-            .set("Accept", "application/json").set("authorization", buildTestToken(adminWebId));
-        const response = await request(app).get(`/api/locations?webId=${encodeURIComponent(adminWebId)}`).set("authorization", buildTestToken(adminWebId));
+            .set("Accept", "application/json").set("authorization", buildTestToken({webId: adminWebId}));
+        const response = await request(app).get(`/api/locations?webId=${encodeURIComponent(adminWebId)}`).set("authorization", buildTestToken({webId: adminWebId}));
         const last = response.body[response.body.length - 1];
         expect(last.webId).toBe(adminWebId);
         expect(last.coords.latitude).toBe(coords.latitude);
@@ -124,11 +124,11 @@ describe("Locations saving and fetching", () => {
 
     it("Empty list if no locations", async () => {
         const response = await request(app)
-            .get(`/api/locations?webId=${encodeURIComponent(adminWebId)}`).set("authorization", buildTestToken(adminWebId));
+            .get(`/api/locations?webId=${encodeURIComponent(adminWebId)}`).set("authorization", buildTestToken({webId: adminWebId}));
         expect(response.body.length).toBe(0);
         expect(response.statusCode).toBe(200);
-        const response2 = await request(app).get(`/api/locations?webId=${encodeURIComponent(adminWebId)}?last=true`)
-            .set("authorization", buildTestToken(adminWebId));
+        const response2 = await request(app).get(`/api/locations?webId=${encodeURIComponent(adminWebId)}&last=true`)
+            .set("authorization", buildTestToken({webId: adminWebId}));
         expect(response2.body.length).toBe(0);
         expect(response2.statusCode).toBe(200);
     });
@@ -136,16 +136,16 @@ describe("Locations saving and fetching", () => {
     it("Throws an error when not passing query parameter", async () => {
         await request(app).get("/api/locations")
             .send({webId: adminWebId, coords, timestamp})
-            .set("Accept", "application/json").set("authorization", buildTestToken(adminWebId));
-        const response = await request(app).get("/api/locations").set("authorization", buildTestToken(adminWebId));
+            .set("Accept", "application/json").set("authorization", buildTestToken({webId: adminWebId}));
+        const response = await request(app).get("/api/locations").set("authorization", buildTestToken({webId: adminWebId}));
         expect(response.statusCode).toBe(400);
     });
 
     it("Gets ONLY a single (the last) location", async () => {
         await request(app).post("/api/locations")
             .send({webId: adminWebId, coords, timestamp})
-            .set("Accept", "application/json").set("authorization", buildTestToken(adminWebId));
-        const response = await request(app).get(`/api/locations?webId=${encodeURIComponent(adminWebId)}&last=true`).set("authorization", buildTestToken(adminWebId));
+            .set("Accept", "application/json").set("authorization", buildTestToken({webId: adminWebId}));
+        const response = await request(app).get(`/api/locations?webId=${encodeURIComponent(adminWebId)}&last=true`).set("authorization", buildTestToken({webId: adminWebId}));
         const last = response.body;
         expect(last.webId).toBe(adminWebId);
         expect(last.coords.latitude).toBe(coords.latitude);
@@ -156,11 +156,11 @@ describe("Locations saving and fetching", () => {
 
 describe("Locations security testing", () => {
     it("Can get friend locations", async () => {
-        const response = await request(app).get(`/api/locations?webId=${encodeURIComponent(carmenWebId)}`).set("authorization", buildTestToken(adminWebId));
+        const response = await request(app).get(`/api/locations?webId=${encodeURIComponent(carmenWebId)}`).set("authorization", buildTestToken({webId: adminWebId}));
         expect(response.statusCode).toBe(200);
     });
     it("Can't get non-added people locations", async () => {
-        const response = await request(app).get(`/api/locations?webId=${encodeURIComponent(nonAdded)}`).set("authorization", buildTestToken(adminWebId));
+        const response = await request(app).get(`/api/locations?webId=${encodeURIComponent(nonAdded)}`).set("authorization", buildTestToken({webId: adminWebId}));
         expect(response.statusCode).toBe(403);
     });
 });
@@ -172,7 +172,7 @@ describe("FriendsStore specific testing", () => {
         friendsStore._cache.set(adminWebId, radarinFriends);
 
         //Test if the request goes well when cache is hit
-        const response = await request(app).get(`/api/locations?webId=${encodeURIComponent(carmenWebId)}`).set("authorization", buildTestToken(adminWebId));
+        const response = await request(app).get(`/api/locations?webId=${encodeURIComponent(carmenWebId)}`).set("authorization", buildTestToken({webId: adminWebId}));
         expect(response.statusCode).toBe(200);
     });
 
@@ -181,7 +181,7 @@ describe("FriendsStore specific testing", () => {
         friendsStore._cache.set(carmenWebId, carmenFriends);
 
         //Test if the request goes well when cache is hit
-        const response = await request(app).get(`/api/locations?webId=${encodeURIComponent(carmenWebId)}`).set("authorization", buildTestToken(adminWebId));
+        const response = await request(app).get(`/api/locations?webId=${encodeURIComponent(carmenWebId)}`).set("authorization", buildTestToken({webId: adminWebId}));
         expect(response.statusCode).toBe(200);
     });
 });
@@ -204,12 +204,12 @@ describe("Admin endpoints testing", () => {
         await request(app).post("/api/locations")
             .send({webId: adminWebId, coords, timestamp})
             .set("Accept", "application/json");
-        const response = await request(app).get("/admin/users").set("authorization", buildTestToken(adminWebId));
+        const response = await request(app).get("/admin/users").set("authorization", buildTestToken({webId: adminWebId}));
         expect(response.statusCode).toBe(200);
     });
 
     it("Can get list of users if empty", async () => {
-        const response = await request(app).get("/admin/users").set("authorization", buildTestToken(adminWebId));
+        const response = await request(app).get("/admin/users").set("authorization", buildTestToken({webId: adminWebId}));
         expect(response.statusCode).toBe(200);
         expect(response.body.length).toBe(0);
     });
@@ -217,7 +217,7 @@ describe("Admin endpoints testing", () => {
     it("Can ban someone and banned can't use api", async () => {
         await request(app).post("/admin/blacklist")
             .send({webId: adminWebId})
-            .set("Accept", "application/json").set("authorization", buildTestToken(adminWebId));
+            .set("Accept", "application/json").set("authorization", buildTestToken({webId: adminWebId}));
 
         //Test that we are, indeed, banned
         const response = await request(app).get("/admin/users");
@@ -227,52 +227,52 @@ describe("Admin endpoints testing", () => {
     it("Test that there's no problem in banning an already banned user", async () => {
         const firstRequest = await request(app).post("/admin/blacklist")
             .send({webId: carmenWebId})
-            .set("Accept", "application/json").set("authorization", buildTestToken(adminWebId));
+            .set("Accept", "application/json").set("authorization", buildTestToken({webId: adminWebId}));
         expect(firstRequest.statusCode).toBe(200);
         const repeatedRequest = await request(app).post("/admin/blacklist")
             .send({webId: carmenWebId})
-            .set("Accept", "application/json").set("authorization", buildTestToken(adminWebId));
+            .set("Accept", "application/json").set("authorization", buildTestToken({webId: adminWebId}));
         expect(repeatedRequest.statusCode).toBe(200);
     });
 
     it("Can't use ban endpoint with empty body", async () => {
         const response = await request(app).post("/admin/blacklist")
             .send({})
-            .set("Accept", "application/json").set("authorization", buildTestToken(adminWebId));
+            .set("Accept", "application/json").set("authorization", buildTestToken({webId: adminWebId}));
         expect(response.statusCode).toBe(400);
     });
 
     it("Shows banned users", async () => {
         await request(app).post("/admin/blacklist")
             .send({webId: carmenWebId})
-            .set("Accept", "application/json").set("authorization", buildTestToken(adminWebId));
-        const response = await request(app).get("/admin/blacklist").set("authorization", buildTestToken(adminWebId));
+            .set("Accept", "application/json").set("authorization", buildTestToken({webId: adminWebId}));
+        const response = await request(app).get("/admin/blacklist").set("authorization", buildTestToken({webId: adminWebId}));
         expect(response.statusCode).toBe(200);
         const bannedUser = response.body[0];
         expect(bannedUser.webId).toBe(carmenWebId);
     });
 
     it("Can get list of banned users if empty", async () => {
-        const response = await request(app).get("/admin/blacklist").set("authorization", buildTestToken(adminWebId));
+        const response = await request(app).get("/admin/blacklist").set("authorization", buildTestToken({webId: adminWebId}));
         expect(response.statusCode).toBe(200);
     });
 
     it("Can unban someone", async () => {
         await request(app).post("/admin/blacklist")
             .send({webId: carmenWebId})
-            .set("Accept", "application/json").set("authorization", buildTestToken(adminWebId));
-        const response = await request(app).get("/admin/blacklist").set("authorization", buildTestToken(adminWebId));
+            .set("Accept", "application/json").set("authorization", buildTestToken({webId: adminWebId}));
+        const response = await request(app).get("/admin/blacklist").set("authorization", buildTestToken({webId: adminWebId}));
         expect(response.statusCode).toBe(200);
         const bannedUser = response.body[0];
         expect(bannedUser.webId).toBe(carmenWebId);
-        const deleteRequest = await request(app).delete(`/admin/blacklist/${encodeURIComponent(carmenWebId)}`).set("authorization", buildTestToken(adminWebId));
+        const deleteRequest = await request(app).delete(`/admin/blacklist/${encodeURIComponent(carmenWebId)}`).set("authorization", buildTestToken({webId: adminWebId}));
         expect(deleteRequest.statusCode).toBe(204);
-        const response2 = await request(app).get("/admin/blacklist").set("authorization", buildTestToken(adminWebId));
+        const response2 = await request(app).get("/admin/blacklist").set("authorization", buildTestToken({webId: adminWebId}));
         expect(response2.body.length).toBe(0);
     });
 
     it("Can't unban someone who is not banned", async () => {
-        const deleteRequest = await request(app).delete(`/admin/blacklist/${encodeURIComponent(carmenWebId)}`).set("authorization", buildTestToken(adminWebId));
+        const deleteRequest = await request(app).delete(`/admin/blacklist/${encodeURIComponent(carmenWebId)}`).set("authorization", buildTestToken({webId: adminWebId}));
         expect(deleteRequest.statusCode).toBe(404);
     });
 });
