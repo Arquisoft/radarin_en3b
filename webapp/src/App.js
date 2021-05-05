@@ -5,7 +5,6 @@ import About from "./components/About";
 import { Switch, Route } from "react-router-dom";
 import MainNavbar from "./components/MainNavbar";
 import { HashRouter as Router } from "react-router-dom";
-import MainFooter from "./components/MainFooter";
 import LocationsView from "./components/LocationsView";
 import UploadLocation from "./components/UploadLocation";
 import MainView from "./components/MainView";
@@ -96,7 +95,6 @@ export default function App() {
                         </Route>
                     </Switch>
                 </div>
-                <MainFooter />
             </div>
         );
     }

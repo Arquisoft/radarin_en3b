@@ -2,28 +2,88 @@ import { Divider, Typography } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import { MapContainer, TileLayer, Marker, Polyline, Popup } from "react-leaflet";
 import "react-leaflet/";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import L from "leaflet";
+import PurpleIcon from "../img/marker-icon-purple.png";
+import BlueIcon from "../img/marker-icon-blue.png";
+import GreenIcon from "../img/marker-icon-green.png";
+import Shadow from "../img/marker-shadow.png";
+import { useSession } from "@inrupt/solid-ui-react";
+import { saveLastCoords } from "../redux/slices/locationsSlice";
+
+let legendAdded = false;
 
 export default function MapView() {
+    const dispatch = useDispatch();
+    const { session } = useSession();
     const coordinates = useSelector((state) => state.locations.coordinates);
+    const lastCoords = useSelector((state) => state.locations.lastCoords);
     const names = useSelector((state) => state.locations.names);
     const polyline = useSelector((state) => state.locations.polyline);
     const [map, setMap] = useState(null);
-    console.log(names);
+    const locations = useSelector((state) => state.locations.locations);
 
     let result;
 
+    var legend = L.control({ position: "bottomright" });
+
+    legend.onAdd = function (map) {
+        var div = L.DomUtil.create("div", "legend");
+        div.innerHTML += "<h4>Legend</h4>";
+        div.innerHTML += '<i style="background: #A000A2"></i><span>Friends\' locations</span><br>';
+        div.innerHTML += '<i style="background: #3C90CE"></i><span>Your own locations</span><br>';
+        div.innerHTML += '<i style="background: #00CB18"></i><span>Selected location</span><br>';
+
+        return div;
+    };
+
     useEffect(() => {
         if (map) {
-            map.flyTo(coordinates, 15, {
-                animate: true,
-                duration: 1
-            });
+            if (lastCoords !== coordinates) {
+                map.flyTo(coordinates, 15, {
+                    animate: true,
+                    duration: 1
+                });
+                if (!legendAdded) {
+                    legendAdded = true;
+                    legend.addTo(map);
+                }
+            }
+            dispatch(saveLastCoords(coordinates));
         }
     });
 
     const namesSplitted = names.split('$');
 
+    var purpleIcon = L.icon({
+        iconUrl: PurpleIcon,
+        iconSize: [25, 41],
+        iconAnchor: [12, 41],
+        popupAnchor: [2, -35],
+        shadowUrl: Shadow,
+        shadowSize: [41, 41],
+        shadowAnchor: [15, 41]
+    });
+
+    var blueIcon = L.icon({
+        iconUrl: BlueIcon,
+        iconSize: [25, 41],
+        iconAnchor: [12, 41],
+        popupAnchor: [2, -35],
+        shadowUrl: Shadow,
+        shadowSize: [41, 41],
+        shadowAnchor: [15, 41]
+    });
+
+    var greenIcon = L.icon({
+        iconUrl: GreenIcon,
+        iconSize: [25, 41],
+        iconAnchor: [12, 41],
+        popupAnchor: [2, -35],
+        shadowUrl: Shadow,
+        shadowSize: [41, 41],
+        shadowAnchor: [15, 41]
+    });
 
     if (polyline.length === 0) {
         result = (
@@ -38,8 +98,27 @@ export default function MapView() {
                     attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                 />
+                {locations.length !== 0 && names !== "" &&
+                    locations.filter((location) => (location.type !== "poly")).map((location) => {
+                        return (
+                            <Marker position={location.coords[0]} key={location.id} icon={location.webId !== session.info.webId ? purpleIcon : blueIcon}>
+                                <Popup className="popup">
+                                    <Typography variant="h6" component="h6">
+                                        {location.name}
+                                    </Typography>
+                                    <Divider />
+                                    <Typography>
+                                        {location.details}
+                                    </Typography>
+                                    <Typography>
+                                        Author: {location.webId.split("//")[1].split(".")[0]}
+                                    </Typography>
+                                </Popup>
+                            </Marker>
+                        )
+                    })}
                 {names !== "" &&
-                    <Marker position={coordinates}>
+                    < Marker position={coordinates} icon={greenIcon}>
                         <Popup className="popup">
                             <Typography variant="h6" component="h6">
                                 {namesSplitted[0]}
@@ -54,7 +133,7 @@ export default function MapView() {
                         </Popup>
                     </Marker>
                 }
-            </MapContainer>);
+            </MapContainer >);
     } else {
         result = (
             <MapContainer

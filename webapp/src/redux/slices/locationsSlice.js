@@ -31,6 +31,7 @@ async function getLocations(session) {
 
 const initialState = {
     coordinates: [0, 0],
+    lastCoords: [0, 0],
     names: "",
     status: "idle",
     refreshStatus: "idle",
@@ -55,6 +56,9 @@ export const locationsSlice = createSlice({
         },
         saveNames: (state, action) => {
             state.names = action.payload;
+        },
+        saveLastCoords: (state, action) => {
+            state.lastCoords = action.payload;
         }
     },
     extraReducers: {
@@ -86,6 +90,6 @@ export const locationsSlice = createSlice({
     }
 });
 
-export const { moveTo, setSearchText, setPolyline, saveNames } = locationsSlice.actions;
+export const { moveTo, setSearchText, setPolyline, saveNames, saveLastCoords } = locationsSlice.actions;
 
 export default locationsSlice.reducer;
