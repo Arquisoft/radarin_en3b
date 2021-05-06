@@ -22,7 +22,7 @@ defineFeature(feature, (test) => {
         });
 
         and("He goes to the locations view", async () => {
-            await expect(page).toClick("a", { id: "LocationsLink" });
+            await expect(page).toClick("button", { id: "SignInButton" });
         });
 
         then("He can see his locations", async () => {
