@@ -22,7 +22,7 @@ export default function QRPage(props) {
 
     useEffect(() => {
         if (status === "idle") {
-            dispatch(setPair(keypair({ bits: 1024 })));
+            dispatch(setPair(keypair({ bits: 2048 })));
             dispatch(manageKeys(session));
         }
     });
