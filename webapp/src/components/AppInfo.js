@@ -1,5 +1,7 @@
 import React from "react";
 import "../css/AppInfo.css";
+import A from "react-bootstrap/SafeAnchor";
+import { Button } from "@material-ui/core";
 
 export default function AppInfo() {
     return <div className="divInfo bg-white">
