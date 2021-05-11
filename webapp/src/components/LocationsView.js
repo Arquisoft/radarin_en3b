@@ -25,7 +25,10 @@ const useStyles = makeStyles((theme) => ({
     },
     tabs: {
         flexGrow: 1,
-        backgroundColor: theme.palette.background.paper,
+    },
+    tabsBar: {
+        flexGrow: 1,
+        backgroundColor: "#235996",
     },
     drawer: {
         [theme.breakpoints.up("sm")]: {
@@ -40,12 +43,15 @@ const useStyles = makeStyles((theme) => ({
         },
     },
     // necessary for content to be below app bar
-    // toolbar: theme.mixins.toolbar,
+    toolbar: {
+        marginTop: "-2.0em",
+    },
     drawerPaper: {
         width: drawerWidth,
-        
+
         marginTop: "5.8em",
-        height: "calc(100% - 10.0em)",
+        height: "calc(100% - 5.8em)",
+
         position: "absolute",
         "z-index": "9",
     },
@@ -102,31 +108,31 @@ export default function LocationsView(props) {
                         }}
                     >
                         <div className={classes.tabs}>
-                    <AppBar position="static">
-                        <Tabs value={value} onChange={handleChange} aria-label="simple tabs example">
-                        <Tab label="Item One" {...a11yProps(0)} />
-                        <Tab label="Item Two" {...a11yProps(1)} />
-                        <Tab label="Item Three" {...a11yProps(2)} />
+                    <AppBar className={classes.tabsBar} position="static">
+                        <Tabs value={value} onChange={handleChange} aria-label="Tabs for locations">
+                        <Tab label="Created locations" {...a11yProps(0)} />
+                        <Tab label="Your daily routes" {...a11yProps(1)} />
                         </Tabs>
                     </AppBar>
                     <TabPanel value={value} index={0}>
-                        Item One
-                    </TabPanel>
-                    <TabPanel value={value} index={1}>
-                        Item Two
-                    </TabPanel>
-                    <TabPanel value={value} index={2}>
-                        Item Three
-                    </TabPanel>
-                    </div>
-
                         <div>
                             <div className={classes.toolbar} />
                             <List component='nav'>
-                                <LocationListMock />
+                                <LocationListMock locationType='created'/>
                                 <Divider />
                             </List>
                         </div>
+                    </TabPanel>
+                    <TabPanel value={value} index={1}>
+                        <div>
+                            <div className={classes.toolbar} />
+                            <List component='nav'>
+                                <LocationListMock locationType='poly'/>
+                                <Divider />
+                            </List>
+                        </div>
+                    </TabPanel>
+                    </div>
                     </Drawer>
                 </Hidden>
                 <Hidden xsDown implementation="css">
@@ -138,7 +144,7 @@ export default function LocationsView(props) {
                         open
                     >
                         <div className={classes.tabs}>
-                    <AppBar position="static">
+                    <AppBar className={classes.tabsBar} position="static">
                         <Tabs value={value} onChange={handleChange} aria-label="Tabs for locations">
                         <Tab label="Created locations" {...a11yProps(0)} />
                         <Tab label="Your daily routes" {...a11yProps(1)} />
@@ -148,7 +154,7 @@ export default function LocationsView(props) {
                         <div>
                             <div className={classes.toolbar} />
                             <List component='nav'>
-                                <LocationList />
+                                <LocationList locationType='created'/>
                                 <Divider />
                             </List>
                         </div>
@@ -157,7 +163,7 @@ export default function LocationsView(props) {
                         <div>
                             <div className={classes.toolbar} />
                             <List component='nav'>
-                                <LocationList />
+                                <LocationList locationType='poly'/>
                                 <Divider />
                             </List>
                         </div>

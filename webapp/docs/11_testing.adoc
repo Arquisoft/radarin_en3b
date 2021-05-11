@@ -1,0 +1,40 @@
+[[section-testing]]
+== Testing
+In this section, we are going to explain the approach to testing that we took
+There were three main kind of tests: Unit testing, End-to-End testing and Gatling tests.
+
+=== Unit testing
+This is our main way of testing. This tests consist on rendering the components and seing if they have the expected behaviour. Nonetheless, there were some major functionalities tested this way.
+We can divide this tests in two parts: mocked tests and simulated tests
+
+==== Mocked tests
+Inside the unit tests this represents the majority. On this tests we mocked calls both to the API and to the POD, achieving faster test times and avoiding making requests that are useless, and that could affect the performance of the real application.
+
+With the help of jest, we could define the expected result for each method, allowing us to test a failure in any point of the system. Later, we could check that either an element is visible on the screen for the case of visual components, or that the return value is the expected one for backend functions.
+
+
+==== Simulated tests
+There were some functionality that could not be tested mocking, or that it would be too complicated. That is why we decided to do these tests via simulating a real user with a valid login. We wanted to do this kind of testing with end-to-end tests, that deploy the application, but the inhability of jest on those tests to wait for a page to show new content when there is no loading time made us unable to do so.
+
+That is why we chose to look for a library that allowed us to log in via scripts.
+On these tests we simulated a real user, doing the most complicated tasks that would be unfeasable to test otherwise, basically for testing the whole context of the application.
+
+
+=== End-to-End tests
+As mentioned before this tests were not very reliable for testing the whole application, that is why implemented some basic tests that prove the general application works.
+
+On top on the reliability problem mentioned before, is important to note that they did not work every single time. This is other of the main reassons that we decided to do their purpose with unit tests.
+
+
+=== Gatling tests
+With Gatling we were able to do some load testing. There were two main tests developed, that we then modified for observing the results on different number of users.
+The first one consisted in logging in, going to the locations view with the map and moving around, then loading a new QR and logging out. These are the harest tasks in terms of resources, as updating the map generates a lot of requests, and loading the locations and the QR generates lots of requests to the POD and API.
+
+We first run the test with twenty users per second for a minute, with alarming results. After analysing them, we realised that the main bottleneck was the requests to the POD. And if for example the login request fails, that generates a chain of errors of the consequent requests, both for the POD and API, since now these requests are unouthorised.
+
+Then we decided to go with a more realistic approach, with two users per second for a minute.
+
+This was a much more reassonable test, showing results closer to what we expected. After analysing the result we concluded that 80% of the failures were due to the POD (not in the login request on this case), and for the remaining we had some requests fail for the Roboto font (probably because Google blocked our IP for a possible DDoS attack) and some css files, being 5% the requests that failed to our API. This was inside what we consider acceptable.
+
+The second test was logging in, going to the locations view with the map without moving, going to the about page and then logging out.
+This was a much lighter test. We ran it twice with the same presets as the first one, obtaining very similar results, but on a lower scale as the load per user was lower.

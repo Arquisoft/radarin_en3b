@@ -22,7 +22,7 @@ export default function QRPage(props) {
 
     useEffect(() => {
         if (status === "idle") {
-            dispatch(setPair(keypair({ bits: 1024 })));
+            dispatch(setPair(keypair({ bits: 2048 })));
             dispatch(manageKeys(session));
         }
     });
@@ -38,8 +38,8 @@ export default function QRPage(props) {
         const privateKey = lePair.private;
         const vvalue = JSON.stringify({ webId, privateKey });
         content = <div className="centerMe"><QRCode
-            level="Q"
-            size={512}
+            level="L"
+            size={800}
             value={ vvalue }
         /></div>;
 

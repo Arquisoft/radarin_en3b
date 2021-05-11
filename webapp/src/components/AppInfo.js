@@ -1,6 +1,6 @@
 import React from "react";
-import "../css/AppInfo.css";
 import A from "react-bootstrap/SafeAnchor";
+import "../css/AppInfo.css";
 import { Button } from "@material-ui/core";
 
 export default function AppInfo() {

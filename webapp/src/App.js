@@ -5,7 +5,6 @@ import About from "./components/About";
 import { Switch, Route } from "react-router-dom";
 import MainNavbar from "./components/MainNavbar";
 import { HashRouter as Router } from "react-router-dom";
-import MainFooter from "./components/MainFooter";
 import LocationsView from "./components/LocationsView";
 import UploadLocation from "./components/UploadLocation";
 import MainView from "./components/MainView";
@@ -20,12 +19,24 @@ import { useDispatch, useSelector } from "react-redux";
 import { setLogguedStatus } from "./redux/slices/userSlice";
 import { createHashHistory } from "history";
 import AdminPage from "./components/AdminPage";
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
 export default function App() {
     const dispatch = useDispatch();
     const history = createHashHistory();
     const limitedVersion = useSelector((state) => state.user.limitedVersion);
     const urlParams = useSelector((state) => state.user.urlParams);
+
+    const muiTheme = createMuiTheme ({
+        palette: {
+            primary: {
+                main: '#ffff'
+            },
+            secondary: {
+                main: '#ffff'
+            }
+        }
+    });
 
     onSessionRestore((url) => {
         //https://radarinen3bwebapp.herokuapp.com/about
@@ -96,15 +107,16 @@ export default function App() {
                         </Route>
                     </Switch>
                 </div>
-                <MainFooter />
             </div>
         );
     }
 
 
     return (
+        <MuiThemeProvider muiTheme={muiTheme}>
         <Router history={history}>
             {content}
         </Router>
+        </MuiThemeProvider>
     );
 }
