@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
     title: {
         textAlign: "center",
         align: "center",
-        marginTop: "2%",
+        marginTop: "10em",
         marginBottom: "2%",
     },
     icon: {
@@ -70,7 +70,7 @@ export default function HelpPage() {
         },
         {
             selector: "[id=\".fifth-step\"]",
-            content: "If you click here you would be able to see all options regarding your Radarin Account.",
+            content: "If you click here you would be able to see the QR for logging into the mobile application",
             position: "bottom",
         },
     ];
@@ -82,7 +82,7 @@ export default function HelpPage() {
             <Typography variant="h2" component="h2" styles={classes.title}>
         Start using Radarin
       </Typography>
-      <Grid container spacing={1} alignItems="center" justify="center" >
+      <Grid container spacing={1} alignItems="center" justify="center" className="mt-5 mb-3">
         {
           helpItems.map((item, counter) => {
             return (

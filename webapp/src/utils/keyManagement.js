@@ -24,14 +24,12 @@ export default async function keyManagement(sessionP, pairP) {
     const containerUri = `${pod}public/RadarinPKey/`;
     let dataset = await getOrCreatePublicFilePod(containerUri, session.fetch, "publicKey.ttl");
 
-    if(dataset?.error === "error")
-    {dataset = dataset.res;}
+    if (dataset?.error === "error") { dataset = dataset.res; }
 
     const privateContainerUri = `${pod}private/RadarinPrKey/`;
     let dataset2 = await getOrCreatePrivateFilePod(privateContainerUri, session.fetch);
 
-    if(dataset2?.error === "error")
-    {dataset2 = dataset2.res;}
+    if (dataset2?.error === "error") { dataset2 = dataset2.res; }
 
     addPublicKey(dataset);
     addPrivateKey(dataset2);
@@ -41,8 +39,13 @@ async function addPublicKey(pKeyFile) {
     const pKeyUrl = getSourceUrl(pKeyFile);
     const publicDataset = await getSolidDataset(pKeyUrl.split("publicKey")[0], { fetch: session.fetch });
     const existing = getThing(publicDataset, pKeyUrl);
+    let pkField;
 
-    const pkField = setStringNoLocale(existing, "https://www.w3.org/ns/auth/cert#RSAPublicKey", publicKey);
+    try {
+        pkField = setStringNoLocale(existing, "https://www.w3.org/ns/auth/cert#RSAPublicKey", publicKey);
+    } catch (e) {
+        return;
+    }
 
     const updatedPKeyFile = setThing(pKeyFile, pkField);
     await saveSolidDatasetAt(pKeyUrl, updatedPKeyFile, { fetch: session.fetch });
@@ -50,7 +53,13 @@ async function addPublicKey(pKeyFile) {
 
 async function addPrivateKey(prKeyFile) {
     const prKeyUrl = getSourceUrl(prKeyFile);
-    const publicDataset = await getSolidDataset(prKeyUrl.split("privateKey")[0], { fetch: session.fetch });
+    let publicDataset;
+
+    try {
+        publicDataset = await getSolidDataset(prKeyUrl.split("privateKey")[0], { fetch: session.fetch });
+    } catch (e) {
+        return;
+    }
     const existing = getThing(publicDataset, prKeyUrl);
 
     const prKField = setStringNoLocale(existing, "https://www.w3.org/ns/auth/cert#PrivateKey", privateKey);

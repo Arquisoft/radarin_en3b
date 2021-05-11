@@ -22,5 +22,5 @@ export const HelpItems = [
         className: "uploadLocation", 
         text: "Learn to upload locations",
         fullText: "From the mobile application, press the '+' button, fill the form with the name and the description of the location, and then pressing the upload button you will be redirected to an embedded browser where you can add a picture and upload a location. You will find more help on the mobile application. Go get it!",
-    },
+    }
 ];

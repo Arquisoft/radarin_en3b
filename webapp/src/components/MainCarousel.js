@@ -10,6 +10,7 @@ import { Link } from "react-router-dom";
 import Carousel1 from "../img/carousel_1.png";
 import Carousel2 from "../img/carousel_2.png";
 import Carousel3 from "../img/carousel_3.png";
+import A from "react-bootstrap/SafeAnchor";
 
 function SamplePrevArrow(props) {
     const { onClick } = props;
@@ -81,21 +82,23 @@ export default function MainCarousel() {
                 <div>
                     <div className="carouselText">
                         <h2>Radarin</h2>
-                        <p>Radarin allows you to store your locations and share them with your friends.
-                            You will be able to know where they are in a blink.</p>
+                        <p>Download the mobile application for start using Radarin. At the moment only Android compatible. </p>
+                        <A href="https://expo.io/artifacts/a8545f18-185e-4226-89e2-2af619ae43fe" target="_blank">
+                            <Button className="mt-4" color="primary" variant="contained">Download your APK for Android</Button>
+                        </A>
                     </div>
                     <div>
-                        <img src={Carousel1} alt="test" />
+                        <img className="mt-5" src={Carousel2} alt="test" />
                     </div>
                 </div>
                 <div>
                     <div className="carouselText">
                         <h2>Radarin</h2>
-                        <p>You can use Radarin not only on your computer with the Web App, but with any other device. On Android devices,
-                            you can also use the native App. I would not hesitate to use it! </p>
+                        <p>Radarin allows you to store your locations and share them with your friends.
+                            You will be able to know where they are in a blink.</p>
                     </div>
                     <div>
-                        <img src={Carousel2} alt="test" />
+                        <img src={Carousel1} alt="test" />
                     </div>
                 </div>
                 <div>
