@@ -19,24 +19,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { setLogguedStatus } from "./redux/slices/userSlice";
 import { createHashHistory } from "history";
 import AdminPage from "./components/AdminPage";
-import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
 export default function App() {
     const dispatch = useDispatch();
     const history = createHashHistory();
     const limitedVersion = useSelector((state) => state.user.limitedVersion);
     const urlParams = useSelector((state) => state.user.urlParams);
-
-    const muiTheme = createMuiTheme ({
-        palette: {
-            primary: {
-                main: '#ffff'
-            },
-            secondary: {
-                main: '#ffff'
-            }
-        }
-    });
 
     onSessionRestore((url) => {
         //https://radarinen3bwebapp.herokuapp.com/about
@@ -113,10 +101,8 @@ export default function App() {
 
 
     return (
-        <MuiThemeProvider muiTheme={muiTheme}>
-        <Router history={history}>
+       <Router history={history}>
             {content}
         </Router>
-        </MuiThemeProvider>
     );
 }
