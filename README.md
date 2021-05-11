@@ -4,8 +4,8 @@
 
 # Radarin project structure
 
-Link to the deployed sample application: [radarinen3b](https://radarinen3bwebapp.herokuapp.com/). Note that sometimes **
-it can take a while to load** because Heroku in the free plan, takes the containers to sleep when they are not used for
+Link to the deployed sample application: [radarinen3b](https://radarinen3bwebapp.herokuapp.com/). Note that sometimes 
+**it can take a while to load** because Heroku in the free plan, takes the containers to sleep when they are not used for
 some time and taking them up takes time.
 
 ## Quick start guide!
