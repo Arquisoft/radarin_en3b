@@ -5,3 +5,24 @@
     transform: translate(-50%, -50%);
     padding: 2em;
 }
+
+.alignTitle {
+    text-align: center;
+    margin-top: 3em;
+}
+
+.image {
+    width: 800px;
+    height: auto;
+    margin-top: 3em;
+    margin-bottom: 45em;
+}
+
+.button {
+    margin: 0;
+  position: absolute;
+  top: 55%;
+  left: 47%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}

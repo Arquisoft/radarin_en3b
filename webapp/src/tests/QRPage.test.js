@@ -1,5 +1,5 @@
 /* eslint-disable */
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom/extend-expect";
 import { Provider } from "react-redux";
 import store from "../redux/store";
@@ -26,8 +26,11 @@ test("testing qr page, key management and location fetching", async () => {
 
     expect(data).not.toBeNull();
 
-    render(<Provider store={store}><QRPage sess={sessionNew} /></Provider>);
+    const { getByRole } = render(<Provider store={store}><QRPage sess={sessionNew} /></Provider>);
 
+    const button = getByRole("button", { name: "Show QR" });
+
+    fireEvent.click(button);
 
     const loading = screen.getAllByText("Loading...")[0];
 

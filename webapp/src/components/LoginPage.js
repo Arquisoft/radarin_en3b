@@ -20,7 +20,7 @@ import Autocomplete from "@material-ui/lab/Autocomplete";
 const useStyles = makeStyles({
     root: {
         width: 450,
-        height: 470,
+        height: 570,
         position: "fixed",
         top: "50%",
         left: "50%",
@@ -52,18 +52,16 @@ const useStyles = makeStyles({
 function LoginPage(props) {
     let redirectUrl;
 
-    if(typeof props.redirectUrl === "undefined")
-    {redirectUrl = window.location.origin;}
-    else
-    {redirectUrl = window.location.origin.concat("#" + props.redirectUrl);}
+    if (typeof props.redirectUrl === "undefined") { redirectUrl = window.location.origin; }
+    else { redirectUrl = window.location.origin.concat("#" + props.redirectUrl); }
 
     const classes = useStyles();
     const [idp, setIdp] = useState("https://inrupt.net");
     const dispatch = useDispatch();
 
     const providers = [
-        {name: "Inrupt", value:"https://inrupt.net"},
-        {name: "SolidCommunity", value:"https://solidcommunity.net"},
+        { name: "Inrupt", value: "https://inrupt.net" },
+        { name: "SolidCommunity", value: "https://solidcommunity.net" },
     ];
 
     function callback() {
@@ -76,27 +74,39 @@ function LoginPage(props) {
             <CardActionArea disableRipple className={classes.removeStyles}>
                 <CardContent>
                     <Typography gutterBottom variant="h3" component="h2" align="center">
-            Radarin
+                        Radarin
                     </Typography>
                     <Typography variant="h5" component="p" align="center">
-            Sign In
+                        Sign In
                     </Typography>
+                    <TextField
+                        label="URL"
+                        helperText="Introduce your Provider URL"
+                        variant="outlined"
+                        fullWidth
+                        placeholder={idp}
+                        className={classes.input}
+                        onChange={(e) => setIdp(e.target.value)}
+                    />
                     <Autocomplete
                         options={providers}
                         getOptionLabel={(option) => option.name}
                         fullWidth
                         data-testid="provider"
-                        renderInput={(params) => <TextField {...params} label="Provider" variant="outlined"/>}
-                        onChange={(e, value) => {setIdp(value.value); console.log(value)}}
+                        renderInput={(params) => <TextField {...params} label="Provider" variant="outlined" />}
+                        onChange={(e, value) => { setIdp(value.value); console.log(value) }}
                         className={classes.input}
                     />
+                    <Typography className="mt-2" variant="subtitle2" component="p" align="center">
+                        Or select one of the above
+                    </Typography>
                 </CardContent>
             </CardActionArea>
             <CardActions className={classes.stopFlex}>
                 <Typography variant="body2" component="p" className="text-center">
-          Don't have one? You can get it here: <Link className="ml-1" href="https://inrupt.com/" target="_blank"><strong>Inrupt</strong></Link>
+                    Don't have one? You can get it here: <Link className="ml-1" href="https://inrupt.com/" target="_blank"><strong>Inrupt</strong></Link>
                 </Typography>
-                <LoginButton oidcIssuer={idp} redirectUrl={ redirectUrl }>
+                <LoginButton oidcIssuer={idp} redirectUrl={redirectUrl}>
                     <Button id="SignInButton" data-testid="button" color="primary" variant="contained" className={classes.signIn} onClick={callback}>Sign In</Button>
                 </LoginButton>
             </CardActions>

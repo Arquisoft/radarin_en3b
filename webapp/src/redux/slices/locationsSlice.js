@@ -24,7 +24,11 @@ async function getLocations(session) {
         return [{ type: "poly", id: 1, name: "You are blocked by the administrator", details: "System", coords: [[0, 0]] }];
 
     if(apiLocations.length === 0)
-        return [{ type: "poly", id: 1, name: "You dont have any locations", details: "Add some from the mobile!", coords: [[0, 0]] }];
+    return [
+        { type: "poly", id: 1, name: "You dont have any locations", details: "Add some from the mobile!", coords: [[0, 0]] },
+        { type: "poly", id: 2, name: "Click on your name, and then on QR", details: "Scan it from the Radarin application", coords: [[0, 0]] },
+        { type: "poly", id: 3, name: "Don't know how?", details: "There is more information on the help tab", coords: [[0, 0]] },
+    ];
 
     const result = podLocations.concat(podFriendsLocations).concat(apiLocations);
 
