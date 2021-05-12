@@ -18,7 +18,7 @@ test("testing search bar", async () => {
         return "succeeded";
     });
 
-    const { getAllByRole } = render(<Provider store={store}><LocationsList/></Provider>);
+    const { getAllByRole } = render(<Provider store={store}><LocationsList locationType={"created"}/></Provider>);
 
 
     const searchBar2 = getAllByRole("textbox");

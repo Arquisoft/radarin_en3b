@@ -98,6 +98,7 @@ export default async function FetchPodFriendsCreatedLocations(session, lastId) {
         let friendLocs = await fetchFriendLocations(friend, session, lastId);
 
         for (let loc of friendLocs) {
+            lastId++;
             createdLocations.push(loc);
         }
     }

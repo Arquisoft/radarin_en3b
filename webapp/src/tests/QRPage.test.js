@@ -8,7 +8,7 @@ import QRPage from "../components/QRPage";
 import fetchDBLocations from "../components/locations/FetchDBLocations";
 
 
-jest.setTimeout(20000);
+jest.setTimeout(30000);
 
 test("testing qr page, key management and location fetching", async () => {
     const client = new SolidNodeClient({

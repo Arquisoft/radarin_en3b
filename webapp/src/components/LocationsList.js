@@ -17,6 +17,9 @@ export default function LocationList(props) {
     let { session } = useSession();
     if(typeof props.sess !== "undefined")
     {session = props.sess;}
+    let { locationType } = session.info;
+    if (typeof props.locationType !== "undefined")
+    {locationType = props.locationType;}
 
     const dispatch = useDispatch();
     const locationStatus = useSelector((state) => state.locations.status);
@@ -50,8 +53,9 @@ export default function LocationList(props) {
     } else if (locationStatus === "succeeded") {
         content = (
             <List component="nav">
+                { locationType === "created" && 
                 <ListItem>
-                    <div className="table-responsible mt-3 mb-3 ml-2">
+                    <div className="table-responsible mb-3 ml-2">
                         <TextField
                             type="text"
                             placeholder="Search"
@@ -63,10 +67,12 @@ export default function LocationList(props) {
                         />
                     </div>
                 </ListItem>
+                }
+                
                 {
                     locations.filter((item) => item.name.toLowerCase().includes(filterText.toLowerCase()))
                         .map((item) => {
-                            if (item.type === "poly") {
+                            if (item.type === "poly" && locationType === "poly") {
                                 return (
                                     <Polyline
                                         key={item.id}
@@ -75,7 +81,7 @@ export default function LocationList(props) {
                                         details={item.details}
                                         coords={item.coords}
                                     />);
-                            } else {
+                            } else if (item.type !== "poly" && locationType === "created") {
                                 return (
                                     <Location
                                         key={item.id}

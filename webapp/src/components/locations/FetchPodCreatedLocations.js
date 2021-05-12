@@ -25,7 +25,7 @@ export default async function FetchPodCreatedLocations(session, lastId) {
     let counter = lastId + 1;
     const options = { year: "numeric", month: "numeric", day: "numeric" };
 
-    existing.forEach(async (location) => {
+    existing.forEach((location) => {
         const text = getStringNoLocaleAll(location, "http://schema.org/text");
 
         const name = text.filter((t) => t.includes("Title:"))[0].split("Title:")[1];
