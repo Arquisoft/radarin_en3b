@@ -78,6 +78,8 @@ export default function LocationList(props) {
                                         webId={item.webId}
                                     />
                                 );
+                            } else {
+                                return null;
                             }
                         })
                 }
