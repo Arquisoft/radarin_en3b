@@ -6,7 +6,7 @@ import "../css/QRPage.css";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { manageKeys, setPair } from "../redux/slices/keysSlice";
-
+import * as NodeRSA from "node-rsa"
 export default function QRPage(props) {
     let { session } = useSession();
     if(typeof props.sess !== "undefined")
@@ -35,7 +35,8 @@ export default function QRPage(props) {
         );
 
     } else if (status === "succeeded") {
-        const privateKey = lePair.private;
+        const k = new NodeRSA(lePair.private);
+        const privateKey = k.exportKey("pkcs8-private-pem");
         const vvalue = JSON.stringify({ webId, privateKey });
         content = <div className="centerMe"><QRCode
             level="L"
