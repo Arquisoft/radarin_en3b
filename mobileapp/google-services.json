@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "997143869168",
+    "project_id": "radarin-3fecf",
+    "storage_bucket": "radarin-3fecf.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:997143869168:android:572245f7e54ec4fdf0f435",
+        "android_client_info": {
+          "package_name": "com.uniovi.radarin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "997143869168-i17hjnr5kfid8hm4domigg4erg2npl10.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBBHrPBlSvEnjWmxAboLPdGwfQUJFh-OyQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "997143869168-i17hjnr5kfid8hm4domigg4erg2npl10.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -24,7 +24,11 @@ async function getLocations(session) {
         return [{ type: "poly", id: 1, name: "You are blocked by the administrator", details: "System", coords: [[0, 0]] }];
 
     if(apiLocations.length === 0)
-        return [{ type: "poly", id: 1, name: "You dont have any locations", details: "Add some from the mobile!", coords: [[0, 0]] }];
+    return [
+        { type: "poly", id: 1, name: "You dont have any locations", details: "Add some from the mobile!", coords: [[0, 0]] },
+        { type: "poly", id: 2, name: "Click on your name, and then on QR", details: "Scan it from the Radarin application", coords: [[0, 0]] },
+        { type: "poly", id: 3, name: "Don't know how?", details: "There is more information on the help tab", coords: [[0, 0]] },
+    ];
 
     const result = podLocations.concat(podFriendsLocations).concat(apiLocations);
 
@@ -35,13 +39,14 @@ async function getLocations(session) {
 
 const initialState = {
     coordinates: [0, 0],
+    lastCoords: [0, 0],
     names: "",
     status: "idle",
     refreshStatus: "idle",
     searchText: "",
     error: null,
     locations: [],
-    polyline: [],
+    polyline: []
 };
 
 export const locationsSlice = createSlice({
@@ -59,6 +64,9 @@ export const locationsSlice = createSlice({
         },
         saveNames: (state, action) => {
             state.names = action.payload;
+        },
+        saveLastCoords: (state, action) => {
+            state.lastCoords = action.payload;
         }
     },
     extraReducers: {
@@ -90,6 +98,6 @@ export const locationsSlice = createSlice({
     }
 });
 
-export const { moveTo, setSearchText, setPolyline, saveNames } = locationsSlice.actions;
+export const { moveTo, setSearchText, setPolyline, saveNames, saveLastCoords } = locationsSlice.actions;
 
 export default locationsSlice.reducer;

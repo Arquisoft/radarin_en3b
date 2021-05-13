@@ -7,11 +7,16 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { setSearchText } from "../redux/slices/locationsSlice";
 import "../css/LocationsList.css";
+import { useSession } from "@inrupt/solid-ui-react";
 import Polyline from "./locations/Polyline";
 import Location from "./locations/Location";
 
 
-export default function LocationList() {
+export default function LocationList(props) {
+    let { locationType } = useSession();
+    if (typeof props.locationType !== "undefined")
+    {locationType = props.locationType;}
+    
     const locationStatus = useSelector((state) => state.locations.status);
     const error = useSelector((state) => state.locations.error);
     const dispatch = useDispatch();
@@ -32,23 +37,26 @@ export default function LocationList() {
     } else if (locationStatus === "succeeded") {
         content = (
             <List component='nav'>
+                 { locationType === "created" && 
                 <ListItem>
-                    <div className="table-responsible mt-3 mb-3 ml-2">
-                        <TextField
-                            type="text"
-                            data-testid="input"
-                            placeholder="Search"
-                            className="textField"
-                            name="busqueda"
-                            onChange={onChange}
-                            value={filterText}
-                        />
-                    </div>
-                </ListItem>
+                <div className="table-responsible mt-3 mb-3 ml-2">
+                    <TextField
+                        type="text"
+                        data-testid="input"
+                        placeholder="Search"
+                        className="textField"
+                        name="busqueda"
+                        onChange={onChange}
+                        value={filterText}
+                    />
+                </div>
+            </ListItem>
+                }
+                
                 {
                     locations.filter((item) => item.name.toLowerCase().includes(filterText.toLowerCase()))
                         .map((item) => {
-                            if (item.type === "poly") {
+                            if (item.type === "poly" && locationType === "poly") {
                                 return (
                                     <Polyline
                                         key={item.id}
@@ -57,7 +65,7 @@ export default function LocationList() {
                                         details={item.details}
                                         coords={item.coords}
                                     />);
-                            } else {
+                            } else if (item.type !== "poly" && locationType === "created") {
                                 return (
                                     <Location
                                         key={item.id}
@@ -70,6 +78,8 @@ export default function LocationList() {
                                         webId={item.webId}
                                     />
                                 );
+                            } else {
+                                return null;
                             }
                         })
                 }

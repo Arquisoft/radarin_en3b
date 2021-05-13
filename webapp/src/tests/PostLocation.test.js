@@ -3,6 +3,7 @@ import { SolidNodeClient } from "solid-node-client";
 import PostLocation from "../components/locations/PostLocation";
 const solid = require("@inrupt/solid-client");
 
+jest.setTimeout(30000);
 solid.saveSolidDatasetAt = jest.fn();
 
 test("testing qr page, key management and location fetching", async () => {

@@ -2,10 +2,9 @@ import React, { useEffect } from "react";
 import { View, Image, Text, ImageBackground } from "react-native";
 import styles from "./MyStyles";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchProfile, fetchFriendsWithDistance, refreshFriends } from "./redux/slices/userSlice";
+import { fetchProfile, fetchFriendsWithDistance, refreshFriends, backToIdle } from "./redux/slices/userSlice";
 import { doOnce, setScanned } from "./redux/slices/executingSlice";
 import { showMessage } from "react-native-flash-message";
-import { setFriends } from "./redux/slices/userSlice";
 import { setNotificationsBackground } from "./SetNotifications";
 import { stopLocationAsync } from "./GetAsyncLocation";
 import * as BackgroundFetch from 'expo-background-fetch';
@@ -35,13 +34,6 @@ export default function LoadingScreen({ route, navigation }) {
       dispatch(fetchProfile(webId));
     }
 
-    //The switch is turned off on profile page
-    if (!locationStatus) {
-      dispatch(setFriends("No location"));
-      navigation.navigate("Radarin");
-
-      //the switch is on
-    } else {
       //load friends once
       if (friendsStatus === "idle") {
         dispatch(fetchFriendsWithDistance(webId));
@@ -67,9 +59,9 @@ export default function LoadingScreen({ route, navigation }) {
       else if (friendsStatus === "failed" || refreshStatus === "failed") {
         if (friendsError === 'JSON Parse error: Unexpected identifier "Unauthorized"'
           || refreshError === 'JSON Parse error: Unexpected identifier "Unauthorized"') {
+            console.log("entra");
           dispatch(setScanned(false));
           stopLocationAsync();
-          dispatch(doOnce());
           BackgroundFetch.unregisterTaskAsync("friends");
           navigation.navigate("Login", { qrUpdatedFlag: true, showSc: false });
           showMessage({
@@ -78,9 +70,10 @@ export default function LoadingScreen({ route, navigation }) {
             type: "info",
             duration: 10000,
           });
+        } else {
+          dispatch(backToIdle());
         }
       }
-    }
   });
 
   return (

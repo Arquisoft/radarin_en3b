@@ -22,7 +22,7 @@ test("testing location fetching 2", async () => {
         oidcIssuer: "https://solidcommunity.net",
     });
 
-    const { getAllByRole } = render(<Provider store={store}><LocationsList sess={sessionNew}/></Provider>);
+    const { getAllByRole } = render(<Provider store={store}><LocationsList sess={sessionNew} locationType={"created"}/></Provider>);
 
 
     const loading = screen.getAllByText("Loading...")[0];

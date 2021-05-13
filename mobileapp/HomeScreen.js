@@ -9,49 +9,51 @@ import MyCloseFriendsCard from "./HomeComponents/MyCloseFriendsCard";
 import MyFarFriendsCard from "./HomeComponents/MyFarFriendsCard";
 import MyOverlay from "./HomeComponents/MyOverlay";
 import { useDispatch, useSelector } from "react-redux";
-import { refreshFriends } from "./redux/slices/userSlice";
 import * as BackgroundFetch from 'expo-background-fetch';
 import * as TaskManager from 'expo-task-manager';
 import { schedulePushNotificationFriends, schedulePushNotificationFriendsClose} from "./SetNotifications";
 import { getLocationAsyncStatus, startLocationAsync } from "./GetAsyncLocation";
+import {getFriends} from "./FetchFriends";
 
-let dispatch;
 let friends;
-let prevfriends;
 
-TaskManager.defineTask("friends", () => {
+TaskManager.defineTask("friends", async () => {
   try {
-    const taskToExecute = () => {
+    const taskToExecute = async () => {
       console.log("Entra en la tarea");
       if (AsyncStorage.getItem("userId") !== null && AsyncStorage.getItem("userId") !== undefined && AsyncStorage.getItem("userId") != "" ){
 
-        if (dispatch !== undefined) {
-          dispatch(refreshFriends());
-        
-          if (friends != "No location"){
-            let newFriends = friends.filter(friend => !(prevfriends.some(f=>friend.webId===f.webId)));
-            console.log(newFriends);
+        if (friends !== undefined && friends !== null) {
+
+          let friendsUpdated = await getFriends(await AsyncStorage.getItem("userId"));
+
+          console.log(friends);
+          console.log(friendsUpdated);
+          
+          if (friends.length > 0 && friends[0].distance != "No location"){
             
-            if (newFriends.length > 0)
-              schedulePushNotificationFriends(newFriends);
+            if (friendsUpdated.length > friends.length)
+              schedulePushNotificationFriends();
 
               console.log("Background fetch friends executed");
 
-            let newCloseFriends = friends.filter(f => f.isClose).filter(friend => !(prevfriends.filter(f => f.isClose).some(f=>friend.webId===f.webId)));
-              
-            if (newCloseFriends.length > 0){
-              schedulePushNotificationFriendsClose(newCloseFriends);
+            let closeFriends = friendsUpdated.filter(f => f.isClose);
+            let oldCloseFriends = friends.filter(f => f.isClose);
+            
+            if (closeFriends.length > oldCloseFriends.length){
+              schedulePushNotificationFriendsClose();
             }
             console.log("Background fetch locations executed");
-  
           }
+
+          friends = friendsUpdated;
         }
       }
   
           return "Executed correctly";
       
     }
-    const receivedNewData = taskToExecute();// do your background fetch here
+    const receivedNewData = await taskToExecute();// do your background fetch here
     return receivedNewData ? BackgroundFetch.Result.NewData : BackgroundFetch.Result.NoData;
   } catch (error) {
     return BackgroundFetch.Result.Failed;
@@ -77,7 +79,6 @@ export default function HomeScreen({ navigation }) {
   let isMounted = false; 
   dispatch = useDispatch();
   friends = useSelector(state => state.user.friends);
-  prevfriends = useSelector(state => state.user.prevfriends);
   let locations = useSelector(state => state.locations.getLocationEnabled);
 
   useEffect(() => {
@@ -88,10 +89,8 @@ export default function HomeScreen({ navigation }) {
     }
 
     getLocationAsyncStatus().then(value => {
-      console.log("Taking locations"+ value);
       if (!value){
         if (locations){
-          console.log("entra");
           startLocationAsync();
         }
       }
@@ -130,7 +129,6 @@ export default function HomeScreen({ navigation }) {
   useFocusEffect(
     React.useCallback(() => {
       const onBackPress = () => {
-        console.log("happens");
         return true;
       };
 

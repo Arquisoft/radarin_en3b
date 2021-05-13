@@ -11,6 +11,8 @@ import { showMessage } from "react-native-flash-message";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { changeLocationEnabled } from "./redux/slices/LocationsSlice";
 import { backToIdle } from "./redux/slices/userSlice";
+import * as Location from "expo-location";
+import * as Notifications from 'expo-notifications';
 
 export default function LoginScreen({ navigation, route }) {
 
@@ -61,6 +63,8 @@ export default function LoginScreen({ navigation, route }) {
       (async () => {
         const { status } = await BarCodeScanner.requestPermissionsAsync();
         setHasCameraPermission(status == "granted");
+        Location.requestBackgroundPermissionsAsync();
+        Notifications.requestPermissionsAsync();
       })();
   }, [navigation]);
   
@@ -72,6 +76,7 @@ export default function LoginScreen({ navigation, route }) {
     if (webId === undefined || webId === null ) 
       throw new Error("");
     dispatch(setScanned(true));
+    
     AsyncStorage.setItem("userId",webId);
     AsyncStorage.setItem("firstLogin","true");
     dispatch(backToIdle());

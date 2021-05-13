@@ -4,12 +4,12 @@ import * as TaskManager from "expo-task-manager";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { showMessage } from "react-native-flash-message";
 
-const fiveMin = 10000; //minumum interval of time to send the location -> 5 min
-const minDistance = 0; //minimum interval of distance to send the location -> 500 m
+const minTime = 15000; //minumum interval of time to send the location -> 15 s
+const minDistance = 20; //minimum interval of distance to send the location -> 20 m
 
 const optionsAndroid = {
   accuracy: Location.LocationAccuracy.High,
-  timeInterval: fiveMin,
+  timeInterval: minTime,
   distanceInterval: minDistance,
   foregroundService: {
     notificationTitle: "Radarin update",

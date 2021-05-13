@@ -21,7 +21,7 @@ test("testing search bar", async () => {
         return "succeeded";
     });
 
-    const { getAllByRole } = render(<Provider store={store}><LocationsListMock/></Provider>);
+    const { getAllByRole } = render(<Provider store={store}><LocationsListMock locationType={"created"}/></Provider>);
 
     const searchBar2 = getAllByRole("textbox");
 
@@ -43,7 +43,7 @@ test("testing polyline", async () => {
         return "succeeded";
     });
 
-    const { getAllByRole } = render(<Provider store={store}><LocationsListMock/></Provider>);
+    const { getAllByRole } = render(<Provider store={store}><LocationsListMock locationType={"created"}/></Provider>);
 
     const searchBar2 = getAllByRole("textbox");
 

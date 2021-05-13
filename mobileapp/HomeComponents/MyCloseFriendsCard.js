@@ -10,12 +10,18 @@ export default function MyCloseFriendsCard({ navigation }) {
 
     let closeFriends = [];
 
-    console.log(friends);
-    if (friends !== null && friends[0].distance !== "No location")
-        closeFriends = friends.filter(friend => friend.isClose);
+    if (friends !== undefined && friends !== null  && friends.length > 0 && friends[0].distance !== "No location")
+        closeFriends = friends?.filter(friend => friend.isClose);
 
-
-    if (friends[0].distance == "No location") {
+    if (closeFriends.length === 0 && !(friends.length > 0 && friends[0].distance == "No location")){
+        return (
+            <Card containerStyle={styles.nofriendscard}>
+                <Card.Title style={styles.cardTitle}>Wops, you don't have any friend close to you right now</Card.Title>
+                <Card.Divider style={styles.divider} />
+                <Text style={styles.name}>Keep moving, you may find someone soon :)</Text>
+            </Card>
+        );
+    } else if ( friends !== undefined && friends !== null  && friends.length > 0 && friends[0].distance == "No location") {
         return (
             <Card containerStyle={styles.nofriendscard}>
                 <Card.Title style={styles.cardTitle}>Your location is not being taken</Card.Title>
@@ -32,7 +38,7 @@ export default function MyCloseFriendsCard({ navigation }) {
                 </View>
             </Card>
         );
-    } else if (closeFriends.length > 0) {
+    } else {
         return (
             <Card containerStyle={styles.card}>
                 <Card.Title style={styles.cardTitle}>Friends close to your location</Card.Title>
@@ -50,14 +56,6 @@ export default function MyCloseFriendsCard({ navigation }) {
                     }
 
                 </DataTable>
-            </Card>
-        );
-    } else {
-        return (
-            <Card containerStyle={styles.nofriendscard}>
-                <Card.Title style={styles.cardTitle}>Wops, you don't have any friend close to you right now</Card.Title>
-                <Card.Divider style={styles.divider} />
-                <Text style={styles.name}>Keep moving, you may find someone soon :)</Text>
             </Card>
         );
     }
