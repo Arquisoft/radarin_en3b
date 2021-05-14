@@ -12,7 +12,7 @@ import {
     overwriteFile
 } from "@inrupt/solid-client";
 
-export default async function postLocation(session, title, description, photo, coords) {
+export default async function postLocation(session, title, description, photo, coords, closeSession) {
 
     const profileDataset = await getSolidDataset(session.info.webId, {
         fetch: session.fetch,
@@ -72,5 +72,7 @@ export default async function postLocation(session, title, description, photo, c
     const updatedLocationsList = setThing(dataset, locationWithTimestamp);
 
     await saveSolidDatasetAt(locationsUrl, updatedLocationsList, { fetch: session.fetch });
-    session.logout();
+
+    if(closeSession)
+        session.logout();
 }

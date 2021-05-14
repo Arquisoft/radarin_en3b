@@ -8,85 +8,90 @@ import { makeStyles } from "@material-ui/core/styles";
 import HelpCard from "./HelpCard";
 
 const useStyles = makeStyles((theme) => ({
-    root: {
-        minWidth: "300px",
-        margin: "1em",
-        boxSizing: "border-box",
-        alignItems: "center",
-        justify: "center",
-    },
-    title: {
-        textAlign: "center",
-        align: "center",
-        marginTop: "10em",
-        marginBottom: "2%",
-    },
-    icon: {
-        marginTop: "2%",
-        fontSize: 40,
-        color: "primary",
-    },
-    appBar: {
-        position: "relative",
-    },
-    button: {
-        marginTop: "2em",
-    }
+  root: {
+    minWidth: "300px",
+    margin: "1em",
+    boxSizing: "border-box",
+    alignItems: "center",
+    justify: "center",
+  },
+  title: {
+    textAlign: "center",
+    align: "center",
+    marginTop: "10em",
+    marginBottom: "2%",
+  },
+  icon: {
+    marginTop: "2%",
+    fontSize: 40,
+    color: "primary",
+  },
+  appBar: {
+    position: "relative",
+  },
+  button: {
+    marginTop: "2em",
+  }
 
 }));
 
 
 
 export default function HelpPage() {
-    const dispatch = useDispatch();
-    const isTourOpen = useSelector((state) => state.tour.isTourOpen);
-    const isLogguedIn = useSelector((state) => state.user.logguedStatus);
-    const helpItems = HelpItems;
+  const dispatch = useDispatch();
+  const isTourOpen = useSelector((state) => state.tour.isTourOpen);
+  const isLogguedIn = useSelector((state) => state.user.logguedStatus);
+  const helpItems = HelpItems;
 
-    const classes = useStyles();
+  const classes = useStyles();
 
- 
 
-    const steps = [
-        {
-            selector: "[id=\".first-step\"]",
-            content: "Here you go to the main page",
-            position: "bottom"
-        },
-        {
-            selector: "[id=\".second-step\"]",
-            content: "Here you can see your locations and the routes that you took any day on the past",
-            position: "bottom",
-        },
-        {
-            selector: "[id=\".third-step\"]",
-            content: "Here you can see more information about the developers of the application",
-            position: "bottom"
-        },
-        {
-            selector: "[id=\".fourth-step\"]",
-            content: "Here you can obtain more information about how the app works and how to start sending locations from your mobile device",
-            position: "bottom"
-        },
-        {
-            selector: "[id=\".fifth-step\"]",
-            content: "If you click here you would be able to see the QR for logging into the mobile application",
-            position: "bottom",
-        },
-    ];
 
-    let content;
+  const steps = [
+    {
+      selector: "[id=\".first-step\"]",
+      content: "Here you go to the main page",
+      position: "bottom"
+    },
+    {
+      selector: "[id=\".second-step\"]",
+      content: "Here you can see your locations and the routes that you took any day on the past",
+      position: "bottom",
+    },
+    {
+      selector: "[id=\".third-step\"]",
+      content: "Here you can see more information about the developers of the application",
+      position: "bottom"
+    },
+    {
+      selector: "[id=\".fourth-step\"]",
+      content: "Here you can obtain more information about how the app works and how to start sending locations from your mobile device",
+      position: "bottom"
+    },
+    {
+      selector: "[id=\".fifth-step\"]",
+      content: "If you click here you would be able upload locations from the web",
+      position: "bottom",
+    },
+    {
+      selector: "[id=\".sixth-step\"]",
+      content: "If you click here you would be able to see the QR for logging into the mobile application",
+      position: "bottom",
+    },
+  ];
 
-    if (isLogguedIn) {
-        content = (<div className={classes.title}>
-            <Typography variant="h2" component="h2" styles={classes.title}>
+  let content;
+
+  if (isLogguedIn) {
+    content = (<div className={classes.title}>
+      <Typography variant="h2" component="h2" styles={classes.title}>
         Start using Radarin
       </Typography>
       <Grid container spacing={1} alignItems="center" justify="center" className="mt-5 mb-3">
         {
           helpItems.map((item, counter) => {
             return (
-              <HelpCard item={item} counter={counter}/>
+              <HelpCard item={item} counter={counter} />
             )
           })
         }
@@ -107,8 +112,8 @@ export default function HelpPage() {
       <Typography variant="h3" component="h3" className={classes.title} styles={classes.title}>
         Please log in or create an account to see the help.
             </Typography>
-        </div>);
-    }
+    </div>);
+  }
 
-    return <div>{content}</div>;
+  return <div>{content}</div>;
 }

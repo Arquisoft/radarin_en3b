@@ -55,7 +55,7 @@ export default function UploadLocation() {
     });
 
     const onClick = () => {
-        postLocation(session, title, description, photo, coords);
+        postLocation(session, title, description, photo, coords, true);
         setLocationSent(true);
     };
 

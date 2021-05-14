@@ -81,7 +81,7 @@ function NavbarSession(props) {
                 }
                 <Nav>
                     {!limitedVersion &&
-                        <NavDropdown title={dropdownTitle} className="nav-item mr-3" id=".fifth-step">
+                        <NavDropdown title={dropdownTitle} className="nav-item mr-3" id=".sixth-step">
                             
                             <NavDropdown.Item as={Link} to="/qr">
                                 <CodeIcon className="mr-2" />
