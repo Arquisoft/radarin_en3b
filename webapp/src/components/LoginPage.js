@@ -22,7 +22,7 @@ const useStyles = makeStyles({
         width: 450,
         height: 570,
         position: "fixed",
-        top: "50%",
+        top: "53%",
         left: "50%",
         transform: "translate(-50%, -50%)",
         border: "2px solid",

@@ -31,6 +31,7 @@ function SamplePrevArrow(props) {
                 transform: "translate(0, -50%)",
                 cursor: "pointer",
                 border: "none",
+                color: "white",
             }}
             onClick={onClick}
         />
@@ -56,6 +57,7 @@ function SampleNextArrow(props) {
                 transform: "translate(0, -50%)",
                 cursor: "pointer",
                 border: "none",
+                color: "white",
             }}
             onClick={onClick}
         />
@@ -81,8 +83,8 @@ export default function MainCarousel() {
             <Slider {...settings}>
                 <div>
                     <div className="carouselText">
-                        <h2>Radarin</h2>
-                        <p>Download our mobile application to start using Radarin. At the moment only compatible for Android. </p>
+                        <h2 className="text-white">Radarin</h2>
+                        <p className="text-white">Download our mobile application to start using Radarin. At the moment only compatible for Android. </p>
                         <A href="https://expo.io/artifacts/a8545f18-185e-4226-89e2-2af619ae43fe" target="_blank">
                             <Button className="mt-4" color="primary" variant="contained">Download your APK for Android</Button>
                         </A>
@@ -93,8 +95,8 @@ export default function MainCarousel() {
                 </div>
                 <div>
                     <div className="carouselText">
-                        <h2>Radarin</h2>
-                        <p>Radarin allows you to store your locations and share them with your friends.
+                        <h2 className="text-white">Radarin</h2>
+                        <p className="text-white">Radarin allows you to store your locations and share them with your friends.
                             You will be able to know where they are in a blink.</p>
                     </div>
                     <div>
@@ -103,8 +105,8 @@ export default function MainCarousel() {
                 </div>
                 <div>
                     <div className="carouselText">
-                        <h2>Radarin</h2>
-                        <p>Your Radarin friends are taken from your Solid Pod, so your data will always be protected with the most
+                        <h2 className="text-white">Radarin</h2>
+                        <p className="text-white">Your Radarin friends are taken from your Solid Pod, so your data will always be protected with the most
                             modern improvements on security. </p>
                     </div>
                     <div>

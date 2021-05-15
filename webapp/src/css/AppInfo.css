@@ -1,10 +1,51 @@
 .divInfo {
     text-align: center;
     margin-top: 5em;
-    width: 100%;
+    width: 50%;
+    margin-left: 26%;
+    border-radius: 20px;
+    margin-bottom: 3em;
+    background-color: rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(11px);
 }
 
 .pS {
     width: 13em;
     height: 5em;
+}
+
+.fullScreen5 {
+    background: url('../img/about.jpg') no-repeat center fixed;
+    background-size: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: calc(100% - 5em);
+    overflow: hidden;
+    margin-top: 5em;
+}
+
+.scroll2 {
+    position: relative;
+    overflow: auto;
+    width: 100%;
+    height: 100%;
+}
+
+
+#title1 {
+    color: white;
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 0.4em;
+    border-radius: 20px;
+}
+
+#blur2 {
+    background-color: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(11px);
+}
+
+.text-almostWhite {
+    color: rgb(220, 220, 220);
 }

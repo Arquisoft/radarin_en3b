@@ -15,12 +15,12 @@ import Labra from "../img/labra.png";
 import { Button } from "@material-ui/core";
 
 export default function About() {
-    return <Container fluid="md">
+    return <div className="fullScreen5"><div className="scroll2"><Container fluid="md">
         <Row>
             <Col>
-                <Jumbotron className="mt-4">
-                    <h1>About Radarin</h1>
-                    <p>
+                <Jumbotron className="mt-4" id="blur2">
+                    <h1 className="text-white">About Radarin</h1>
+                    <p className="text-white">
                         Radarin will be a system to facilitate meetings between friends using new technologies.
                         The application can get access to the mobile phone localization of the users who voluntarily activate it and
                         will allow other users who are their friends to know when they are near them. Everything will be build with Solid
@@ -35,7 +35,7 @@ export default function About() {
             </Col>
         </Row>
         <Row className="justify-content-center">
-            <h1>Meet Radarin devs!</h1>
+            <h1 id="title1">Meet Radarin devs!</h1>
         </Row>
         <Row xs={1} md={2} lg={4}>
             <Col>
@@ -60,5 +60,5 @@ export default function About() {
                 <AboutCard src={Juan} name="Juan Rodríguez" subtitle="UO271773"></AboutCard>
             </Col>
         </Row>
-    </Container>;
+    </Container></div></div>;
 }

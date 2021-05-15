@@ -65,6 +65,13 @@ class API {
         }
         return await response.json();
     }
+
+    async postLocation(body = {}) {
+        const response = await fetch(`${this.apiEndPoint}/locations`,
+        { method: "POST", headers: this.buildHeaders(), body: JSON.stringify(body) });
+
+        return await response;
+    }
 }
 const Api = new API();
 // Object.freeze(Api);

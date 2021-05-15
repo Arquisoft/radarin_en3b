@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
   title: {
     textAlign: "center",
     align: "center",
-    marginTop: "10em",
+    marginTop: "5em",
     marginBottom: "2%",
   },
   icon: {
@@ -32,7 +32,6 @@ const useStyles = makeStyles((theme) => ({
   button: {
     marginTop: "2em",
   }
-
 }));
 
 
@@ -65,13 +64,13 @@ export default function HelpPage() {
     },
     {
       selector: "[id=\".fourth-step\"]",
-      content: "Here you can obtain more information about how the app works and how to start sending locations from your mobile device",
-      position: "bottom"
+      content: "If you click here you would be able upload locations from the web",
+      position: "bottom",
     },
     {
       selector: "[id=\".fifth-step\"]",
-      content: "If you click here you would be able upload locations from the web",
-      position: "bottom",
+      content: "Here you can obtain more information about how the app works and how to start sending locations from your mobile device",
+      position: "bottom"
     },
     {
       selector: "[id=\".sixth-step\"]",
@@ -91,7 +90,7 @@ export default function HelpPage() {
         {
           helpItems.map((item, counter) => {
             return (
-              <HelpCard item={item} counter={counter} />
+              <HelpCard item={item} counter={counter}/>
             )
           })
         }
@@ -115,5 +114,5 @@ export default function HelpPage() {
     </div>);
   }
 
-  return <div>{content}</div>;
+  return <div className="fullScreen3">{content}</div>;
 }

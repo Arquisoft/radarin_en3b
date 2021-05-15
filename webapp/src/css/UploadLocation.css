@@ -4,7 +4,7 @@
 
 .loch2 {
     font-size: 1.3rem;
-    margin-left: 4em;
+    margin-left: 3em;
 }
 
 .loctext {
@@ -55,15 +55,8 @@
     left: 0;
     width: 100%;
     height: calc(100% - 5em);
+    overflow: hidden;
     margin-top: 5em;
-}
-
-.blurDiv {
-    padding: 2em;
-    margin-bottom: 1em;
-    border-radius: 20px;
-    background-color: rgba(0, 0, 0, 0.3);
-    backdrop-filter: blur(10px);
 }
 
 .MuiFormLabel-root {
@@ -73,3 +66,24 @@
 .MuiFormHelperText-root {
     color: white !important;
 }
+
+#pp {
+    margin-left: 4em;
+}
+
+#locationSent {
+    margin-left: 35%;
+    color: white;
+}
+
+#upload {
+    font-size: larger;
+    color: white;
+    margin-top: 1em;
+    margin-left: 1em;
+}
+
+#buttonUpload {
+     margin: 1em;
+}
+

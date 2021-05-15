@@ -37,10 +37,10 @@ export default function QRPage(props) {
 
         content = (
             <div className="alignTitle">
-                <Typography variant="h3" component="h3">
+                <Typography variant="h3" component="h3" className="text-white">
                     Scan the next QR from the mobile application to get started!
             </Typography>
-                <Typography className="mt-4">
+                <Typography className="mt-4 text-white">
                     Once you open the mobile application, press on scan and the camera will pop up. Point it to the QR for logging into the mobile application.
             </Typography>
                 <img src={Mobile} alt="qr login step 1" className="image" />
@@ -71,5 +71,5 @@ export default function QRPage(props) {
         }
     }
 
-    return <div>{content}</div>;
+    return <div id="fullScreen7"><div id="blurEverything">{content}</div></div>;
 }

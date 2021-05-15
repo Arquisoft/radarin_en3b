@@ -1,17 +1,32 @@
 import React, { useEffect, useState } from "react";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
+import PropTypes from "prop-types";
 import Col from "react-bootstrap/Col";
-import { Button, Fab, TextField, Typography } from "@material-ui/core";
+import { Button, Fab, Tabs, TextField, Tab, Box, Typography } from "@material-ui/core";
 import SendIcon from "@material-ui/icons/Send";
 import AddPhotoAlternateIcon from "@material-ui/icons/AddPhotoAlternate";
 import "../css/UploadLocation.css";
 import { useSession } from "@inrupt/solid-ui-react";
-import { useDispatch } from "react-redux";
 import postLocation from "./locations/PostLocation";
 import { makeStyles } from "@material-ui/core/styles";
+import Card from "@material-ui/core/Card";
+import { useHistory } from "react-router-dom";
+import postCurrentLocation from "./locations/PostCurrentLocation";
 
 const useStyles = makeStyles({
+    root: {
+        width: 650,
+        height: "auto",
+        position: "fixed",
+        top: "53%",
+        left: "50%",
+        transform: "translate(-50%, -50%)",
+        padding: "2em",
+        borderRadius: "25px",
+        backgroundColor: "rgba(0, 0, 0, 0.3)",
+        backdropFilter: "blur(11px)",
+    },
     textField: {
         width: "80%",
         border: "3px",
@@ -55,6 +70,13 @@ export default function UploadLocation() {
     const [status, setStatus] = useState(false);
     const [lat, setLat] = useState(null);
     const [long, setLng] = useState(null);
+    const history = useHistory();
+    const [value, setValue] = useState(0);
+    const [position, setPosition] = useState(null);
+
+    const handleChange = (event, newValue) => {
+        setValue(newValue);
+    }
 
     useEffect(() => {
         if (!navigator.geolocation) {
@@ -64,15 +86,21 @@ export default function UploadLocation() {
             navigator.geolocation.getCurrentPosition((position) => {
                 setLat(position.coords.latitude);
                 setLng(position.coords.longitude);
+                setPosition(position);
             });
         }
-    });
+    }, [setStatus]);
 
     const onClick = () => {
         console.log(desc);
         postLocation(session, title, desc, photo, "[" + lat + "," + long + "]", false);
         setLocationSent(true);
     };
+
+    const onClick2 = () => {
+        postCurrentLocation(session.info.webId, position);
+        setLocationSent(true);
+    }
 
     function uploadPhoto(event) {
         setPhoto(event.target.files[0]);
@@ -85,7 +113,12 @@ export default function UploadLocation() {
         content = <p>Geolocation is not suppported by your browser</p>;
     } else if (!locationSent) {
         content = (
-            <div>
+            <Card className={classes.root}>
+                <Tabs value={value} onChange={handleChange}>
+                    <Tab label="Custom location" className="text-white" {...a11yProps(0)}/>
+                    <Tab label="Current location" className="text-white" {...a11yProps(0)}/>
+                </Tabs>
+                <TabPanel value={value} index={0}>
                 <Row>
                     <Col>
                         <div className="mt-4 blurDiv">
@@ -108,7 +141,7 @@ export default function UploadLocation() {
                                 InputLabelProps
                             />
                             <TextField
-                                label="Desc"
+                                label="Description"
                                 helperText="And a description"
                                 variant="outlined"
                                 fullWidth
@@ -159,13 +192,67 @@ export default function UploadLocation() {
                             </Fab>
                         </div>
                     </Col>
-
                 </Row>
-            </div>
+                </TabPanel>
+                <TabPanel value={value} index={1}>
+                <Row>
+                    <Col>
+                        <div className="mt-4 blurDiv">
+                            <h1 className="loch1 text-white pt-3 pl-3">Current location</h1>
+                            <p id="upload">Upload your current location, and you would be able to see your daily routes as a polyline on the map!</p>
+                            <Button id="buttonUpload" color="secondary" variant="contained" onClick={onClick2}>Upload Location</Button>
+                        </div>
+                    </Col>
+                </Row>
+                </TabPanel>
+            </Card>
         );
     } else {
-        <p>Location sent</p>
+        content = (
+            <Card className={classes.root}>
+                <Row>
+                    <p id="locationSent">Location sent</p>
+                </Row>
+            </Card>
+        );
+
+        setTimeout(() => {
+            history.push("/locations");
+        }, 2000);
     }
 
     return <div className="fullScreen"><Container fluid="md" className={classes.container}>{content}</Container></div>;
 }
+
+function TabPanel(props) {
+    const { children, value, index, ...other } = props;
+  
+    return (
+      <div
+        role="tabpanel"
+        hidden={value !== index}
+        id={`simple-tabpanel-${index}`}
+        aria-labelledby={`simple-tab-${index}`}
+        {...other}
+      >
+        {value === index && (
+          <Box p={3}>
+            <Typography>{children}</Typography>
+          </Box>
+        )}
+      </div>
+    );
+  }
+  
+  TabPanel.propTypes = {
+    children: PropTypes.node,
+    index: PropTypes.any.isRequired,
+    value: PropTypes.any.isRequired,
+  };
+
+  function a11yProps(index) {
+    return {
+      id: `simple-tab-${index}`,
+      'aria-controls': `simple-tabpanel-${index}`,
+    };
+  }
