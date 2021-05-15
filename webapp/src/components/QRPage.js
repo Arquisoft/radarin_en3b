@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { manageKeys, setPair } from "../redux/slices/keysSlice";
 import { Button, Typography } from "@material-ui/core";
 import Mobile from "../img/mobile.png";
+import * as NodeRSA from "node-rsa"
 
 export default function QRPage(props) {
     let { session } = useSession();
@@ -22,7 +23,7 @@ export default function QRPage(props) {
 
     const show = () => {
         setShowQR(true);
-    }
+    };
 
     let content;
 
@@ -58,7 +59,8 @@ export default function QRPage(props) {
             );
 
         } else if (status === "succeeded") {
-            const privateKey = lePair.private;
+            const k = new NodeRSA(lePair.private);
+            const privateKey = k.exportKey("pkcs8-private-pem");
             const vvalue = JSON.stringify({ webId, privateKey });
             content = <div className="centerMe"><QRCode
                 level="L"
