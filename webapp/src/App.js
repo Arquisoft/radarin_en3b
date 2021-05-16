@@ -11,6 +11,7 @@ import MainView from "./components/MainView";
 import LoginPage from "./components/LoginPage";
 import QRPage from "./components/QRPage";
 import HelpPage from "./components/HelpPage";
+import UploadLocationWeb from "./components/UploadLocationWeb";
 import {
     handleIncomingRedirect,
     onSessionRestore
@@ -83,6 +84,9 @@ export default function App() {
                         </Route>
                         <Route path="/uploadLocation">
                             <UploadLocation />
+                        </Route>
+                        <Route path="/uploadLocationW">
+                            <UploadLocationWeb />
                         </Route>
                         <Route path="/help">
                             <HelpPage />

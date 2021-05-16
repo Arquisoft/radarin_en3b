@@ -21,10 +21,17 @@ export const NavbarItems = [
         id: ".third-step",
     },
     {
+        key: "uploadLocation",
+        title: "Upload Location",
+        url: "/uploadLocationW",
+        cName: "nav-links",
+        id: ".fourth-step",
+    },
+    {
         key: "help",
         title: "Help",
         url: "/help",
         cName: "nav-links",
-        id: ".fourth-step",
+        id: ".fifth-step",
     },
 ]

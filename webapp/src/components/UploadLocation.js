@@ -55,7 +55,7 @@ export default function UploadLocation() {
     });
 
     const onClick = () => {
-        postLocation(session, title, description, photo, coords);
+        postLocation(session, title, description, photo, coords, true);
         setLocationSent(true);
     };
 
@@ -81,9 +81,9 @@ export default function UploadLocation() {
                 <Col>
                     <Jumbotron className="mt-4">
                         <h2 className="loch2">Title</h2>
-                        <p className="loctext">{title}</p>
+                        <p className="loctext" id="pp">{title}</p>
                         <h2 className="loch2">Description</h2>
-                        <p className="loctext">{description}</p>
+                        <p className="loctext" id="pp">{description}</p>
                         <h2 className="loch2">Do you want to upload a picture of this location?</h2>
                         <Row>
                             <Col className="pictureButton">

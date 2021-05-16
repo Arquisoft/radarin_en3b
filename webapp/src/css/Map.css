@@ -1,11 +1,17 @@
 .mapContainer {
-    width: 81%;
+    width: calc(100% - 350px);
     height: 100%;
     position: absolute;
     top: 50%;
     -ms-transform: translateY(-50%);
     transform: translateY(-50%);
     background: rgb(245, 244, 244);
+}
+
+@media all and (min-width: 0px) and (max-width: 600px) {
+    .mapContainer {
+        width: 100%;
+    }
 }
 
 .leaflet-popup-content-wrapper {

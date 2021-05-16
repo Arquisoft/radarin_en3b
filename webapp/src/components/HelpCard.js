@@ -14,12 +14,15 @@ const useStyles = makeStyles((theme) => ({
         boxSizing: "border-box",
         alignItems: "center",
         justify: "center",
+        backgroundColor: "rgba(0, 0, 0, 0.3)",
+        backdropFilter: "blur(11px)",
     },
     title: {
         textAlign: "center",
         align: "center",
         marginTop: "2%",
         marginBottom: "2%",
+        color: "white",
     },
     icon: {
         marginTop: "2%",
@@ -31,7 +34,6 @@ const useStyles = makeStyles((theme) => ({
     dialogTitleText: {
         fontSize: 60,
     }
-
 }));
 
 const Transition = React.forwardRef(function Transition(props, ref) {

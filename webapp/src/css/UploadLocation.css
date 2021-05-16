@@ -4,6 +4,7 @@
 
 .loch2 {
     font-size: 1.3rem;
+    margin-left: 3em;
 }
 
 .loctext {
@@ -17,14 +18,17 @@
 
 .pictureButton {
     margin: 20px 20px 20px 50px;
+    margin-left: 5em;
 }
 
 .picture {
     width: 100%;
-    max-width: 150px;
+    max-width: 250px;
+    margin-left: 5em;
 }
 
 .divCenter {
+    margin-left: 23em;
     text-align: center;
 }
 
@@ -42,3 +46,44 @@
     top: 40%;
     left: 50%;
 }
+
+.fullScreen {
+    background: url('../img/uploadLocation.jpg') no-repeat center fixed;
+    background-size: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: calc(100% - 5em);
+    overflow: hidden;
+    margin-top: 5em;
+}
+
+.MuiFormLabel-root {
+    color: white !important;
+}
+
+.MuiFormHelperText-root {
+    color: white !important;
+}
+
+#pp {
+    margin-left: 4em;
+}
+
+#locationSent {
+    margin-left: 35%;
+    color: white;
+}
+
+#upload {
+    font-size: larger;
+    color: white;
+    margin-top: 1em;
+    margin-left: 1em;
+}
+
+#buttonUpload {
+     margin: 1em;
+}
+

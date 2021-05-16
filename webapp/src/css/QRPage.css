@@ -21,8 +21,31 @@
 .button {
     margin: 0;
   position: absolute;
-  top: 55%;
+  top:85%;
   left: 47%;
   -ms-transform: translateY(-50%);
   transform: translateY(-50%);
+}
+
+#fullScreen7 {
+    background: url('../img/qr.jpg') no-repeat center fixed;
+    background-size: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: calc(100% - 5em);
+    overflow: hidden;
+    margin-top: 5em;
+}
+
+#blurEverything {
+    backdrop-filter: blur(11px);
+    background-color: rgba(0, 0, 0, 0.3);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: calc(100%);
+    overflow: hidden;
 }

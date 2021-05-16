@@ -14,9 +14,6 @@ import "../css/Map.css";
 import LocationList from "./LocationsList";
 import LocationListMock from "./LocationsListMock";
 
-
-const drawerWidth = 350;
-
 const useStyles = makeStyles((theme) => ({
     
     root: {
@@ -32,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
     },
     drawer: {
         [theme.breakpoints.up("sm")]: {
-            width: drawerWidth,
+            width: 350,
             flexShrink: 0,
         },
     },
@@ -47,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
         marginTop: "-2.0em",
     },
     drawerPaper: {
-        width: drawerWidth,
+        width: 350,
 
         marginTop: "5.8em",
         height: "calc(100% - 5.8em)",
@@ -56,7 +53,7 @@ const useStyles = makeStyles((theme) => ({
         "z-index": "9",
     },
     drawerPaperInner: {
-        width: drawerWidth,
+        width: 350,
     },
     content: {
         flexGrow: 1,
