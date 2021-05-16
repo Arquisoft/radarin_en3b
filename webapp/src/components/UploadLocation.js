@@ -66,7 +66,7 @@ export default function UploadLocation() {
 
     if (!logguedStatus) {
         return (
-            <div className="divCenter">
+            <div className="divCenter2">
                 <Typography variant="h4" component="h2" className="text">
                     You need to sign in first
                 </Typography>
@@ -132,7 +132,7 @@ export default function UploadLocation() {
             );
         } else {
             return (
-                <div className="divCenter">
+                <div className="divCenter2">
                     <Typography variant="h4" component="h1" className="text">
                         You can close the embedded browser now.
                 </Typography>
