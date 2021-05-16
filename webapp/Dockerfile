@@ -10,7 +10,7 @@ ENV REACT_APP_API_URI=$API_URI
 #Create an optimized version of the webapp
 RUN npm run build
 #Install software neccesary for generating the doc
-RUN apt-get update && apt-get -y --no-install-recommends install ruby openjdk-8-jre graphviz
+RUN apt-get update && apt-get -y --no-install-recommends install ruby openjdk-8-jre graphviz libpixman-1-dev libcairo2-dev libpango1.0-dev libjpeg8-dev libgif-dev
 RUN gem install asciidoctor asciidoctor-diagram
 RUN npm install shx --save-dev
 #Generate the doc
