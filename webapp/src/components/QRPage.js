@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { manageKeys, setPair } from "../redux/slices/keysSlice";
 import { Button, Typography } from "@material-ui/core";
 import Mobile from "../img/mobile.png";
-import * as NodeRSA from "node-rsa"
+const NodeRSA = require("node-rsa");
 
 export default function QRPage(props) {
     let { session } = useSession();
