@@ -64,7 +64,7 @@ export default function QRPage(props) {
             const vvalue = JSON.stringify({ webId, privateKey });
             content = <div className="centerMe"><QRCode
                 level="L"
-                size={800}
+                size={700}
                 value={vvalue}
             /></div>;
 
@@ -73,5 +73,5 @@ export default function QRPage(props) {
         }
     }
 
-    return <div id="fullScreen7"><div id="blurEverything">{content}</div></div>;
+    return <div>{content}</div>;
 }
