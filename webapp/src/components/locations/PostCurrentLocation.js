@@ -2,7 +2,7 @@ import Api from "../../api/API";
 
 export default async function postCurrentLocation(webId, location) {
     try {
-        const coords = {coords: { 
+        const coords = { 
             accuracy: location.coords.accuracy,
             altitude: 100,
             altitudeAccuracy: 5,
@@ -10,11 +10,8 @@ export default async function postCurrentLocation(webId, location) {
             latitude: location.coords.latitude,
             longitude: location.coords.longitude,
             speed: 0
-        }};
-        console.log(coords);
-        console.log(JSON.stringify({webId, coords, timestamp: Date.now()}));
-        const response = await Api.postLocation({webId, coords});
-        console.log(response);
+        };
+        await Api.postLocation({webId, coords, timestamp: Date.now() });
     } catch(err) {
         console.log(err);
     }
