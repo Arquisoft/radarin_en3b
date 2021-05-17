@@ -2,6 +2,8 @@ import "@testing-library/jest-dom/extend-expect";
 import fetchDBLocations from "../components/locations/FetchDBLocations";
 import API from "../api/API";
 
+jest.setTimeout(20000);
+
 const solid = require("@inrupt/solid-client");
 solid.getSolidDataset = jest.fn();
 solid.getThing = jest.fn();
