@@ -107,15 +107,15 @@ export default function LocationsView(props) {
                         <div className={classes.tabs}>
                     <AppBar className={classes.tabsBar} position="static">
                         <Tabs value={value} onChange={handleChange} aria-label="Tabs for locations">
-                        <Tab label="Created locations" {...a11yProps(0)} />
-                        <Tab label="Your daily routes" {...a11yProps(1)} />
+                        <Tab label="Your daily routes" {...a11yProps(0)} />
+                        <Tab label="Created locations" {...a11yProps(1)} />
                         </Tabs>
                     </AppBar>
                     <TabPanel value={value} index={0}>
                         <div>
                             <div className={classes.toolbar} />
                             <List component='nav'>
-                                <LocationListMock locationType='created'/>
+                                <LocationListMock locationType='poly'/>
                                 <Divider />
                             </List>
                         </div>
@@ -124,7 +124,7 @@ export default function LocationsView(props) {
                         <div>
                             <div className={classes.toolbar} />
                             <List component='nav'>
-                                <LocationListMock locationType='poly'/>
+                                <LocationListMock locationType='created'/>
                                 <Divider />
                             </List>
                         </div>
@@ -143,15 +143,15 @@ export default function LocationsView(props) {
                         <div className={classes.tabs}>
                     <AppBar className={classes.tabsBar} position="static">
                         <Tabs value={value} onChange={handleChange} aria-label="Tabs for locations">
-                        <Tab label="Created locations" {...a11yProps(0)} />
-                        <Tab label="Your daily routes" {...a11yProps(1)} />
+                        <Tab label="Your daily routes" {...a11yProps(0)} />
+                        <Tab label="Created locations" {...a11yProps(1)} />
                     </Tabs>
                     </AppBar>
                     <TabPanel value={value} index={0}>
                         <div>
                             <div className={classes.toolbar} />
                             <List component='nav'>
-                                <LocationList locationType='created'/>
+                                <LocationList locationType='poly'/>
                                 <Divider />
                             </List>
                         </div>
@@ -160,7 +160,7 @@ export default function LocationsView(props) {
                         <div>
                             <div className={classes.toolbar} />
                             <List component='nav'>
-                                <LocationList locationType='poly'/>
+                                <LocationList locationType='created'/>
                                 <Divider />
                             </List>
                         </div>
