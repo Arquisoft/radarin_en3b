@@ -15,4 +15,18 @@
     overflow: auto;
     width: 100%;
     height: 100%;
+    padding: 20px;
+}
+
+.slick-slide .carouselText {
+    width: 100%;
+    margin-left: 0;
+}
+
+.slick-slider {
+
+}
+
+.contain {
+    padding: 0px;
 }

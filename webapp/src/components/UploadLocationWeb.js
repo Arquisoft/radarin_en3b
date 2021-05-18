@@ -16,21 +16,20 @@ import postCurrentLocation from "./locations/PostCurrentLocation";
 
 const useStyles = makeStyles({
     root: {
-        width: 650,
+        display: "inline-block",
         height: "auto",
-        position: "fixed",
-        top: "53%",
-        left: "50%",
-        transform: "translate(-50%, -50%)",
+        width: "auto",
         padding: "2em",
         borderRadius: "25px",
         backgroundColor: "rgba(0, 0, 0, 0.3)",
         backdropFilter: "blur(11px)",
+        overflow: "visible",
+        marginBottom: "5em",
     },
     textField: {
         width: "80%",
         border: "3px",
-        marginLeft: "10%",
+        marginLeft: "1em",
         marginTop: "3em",
     },
     input: {
@@ -47,7 +46,9 @@ const useStyles = makeStyles({
     },
     container: {
         marginTop: "5em",
-        width: "60em"
+        width: "auto",
+        height: "auto",
+        textAlign: "center",
     },
     button: {
         width: "6em",
@@ -198,8 +199,8 @@ export default function UploadLocation() {
                 <Row>
                     <Col>
                         <div className="mt-4 blurDiv">
-                            <h1 className="loch1 text-white pt-3 pl-3">Current location</h1>
-                            <p id="upload">Upload your current location, and you would be able to see your daily routes as a polyline on the map!</p>
+                            <h1 className="loch1 text-white pt-3 pl-3 mb-5">Current location</h1>
+                            <p id="upload">You would be able to see your daily routes as a polyline on the map!</p>
                             <Button id="buttonUpload" color="secondary" variant="contained" onClick={onClick2}>Upload Location</Button>
                         </div>
                     </Col>
@@ -221,7 +222,7 @@ export default function UploadLocation() {
         }, 2000);
     }
 
-    return <div className="fullScreen"><Container fluid="md" className={classes.container}>{content}</Container></div>;
+    return <div className="fullScreen"><div id="scrollC"><Container fluid="md" className={classes.container}>{content}</Container></div></div>;
 }
 
 function TabPanel(props) {

@@ -19,15 +19,11 @@ import Autocomplete from "@material-ui/lab/Autocomplete";
 
 const useStyles = makeStyles({
     root: {
-        width: 450,
-        height: 570,
-        position: "fixed",
-        top: "53%",
-        left: "50%",
-        transform: "translate(-50%, -50%)",
+        display: "inline-block",
+        marginTop: "6em",
         border: "2px solid",
         borderColor: "rgb(177, 177, 177)",
-        padding: "2em",
+        padding: "4em",
         borderRadius: "25px",
         backgroundColor: "rgba(0, 0, 0, 0.3)",
         backdropFilter: "blur(11px)",
@@ -77,7 +73,7 @@ function LoginPage(props) {
 
 
     return (
-        <div className="fullScreen2">
+        <div className="fullScreen2"><div id="scrollD">
             <Card className={classes.root}>
                 <CardActionArea disableRipple className={classes.removeStyles}>
                     <CardContent>
@@ -124,7 +120,7 @@ function LoginPage(props) {
                     </LoginButton>
                 </CardActions>
             </Card>
-        </div>
+        </div></div>
     );
 }
 export default LoginPage;
