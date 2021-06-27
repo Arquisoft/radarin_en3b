@@ -8,7 +8,7 @@ export default function AppInfo() {
         <br />
         <h2 className="mt-5 text-white">Enjoy Radarin on your Android phone</h2>
         <p className="mt-4 text-white">The ease and simplicity of Radarin, wherever you are.</p>
-        <A href="https://expo.io/artifacts/a8545f18-185e-4226-89e2-2af619ae43fe" target="_blank">
+        <A href="https://drive.google.com/file/d/1SztJvZe4w6IkaQ5EFd5jq1alxjD6qEXk/view?usp=sharing" target="_blank">
             <Button color="primary" variant="contained" className="mb-5">Download your APK for Android</Button>
         </A>
     </div>;
