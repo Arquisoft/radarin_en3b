@@ -85,7 +85,7 @@ export default function MainCarousel() {
                     <div className="carouselText">
                         <h2 className="text-white">Radarin</h2>
                         <p className="text-white">Download our mobile application to start using Radarin. At the moment only compatible for Android. </p>
-                        <A href="https://expo.io/artifacts/a8545f18-185e-4226-89e2-2af619ae43fe" target="_blank">
+                        <A href="https://drive.google.com/file/d/1SztJvZe4w6IkaQ5EFd5jq1alxjD6qEXk/view?usp=sharing" target="_blank">
                             <Button className="mt-4" color="primary" variant="contained">Download your APK for Android</Button>
                         </A>
                     </div>
