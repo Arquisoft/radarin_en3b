@@ -61,8 +61,8 @@ export default function QRPage(props) {
             const privateKey = lePair.private;
             const vvalue = JSON.stringify({ webId, privateKey });
             content = <div className="centerMe"><QRCode
-                level="L"
-                size={800}
+                level="Q"
+                size={512}
                 value={vvalue}
             /></div>;
 
